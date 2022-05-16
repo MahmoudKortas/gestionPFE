@@ -1,0 +1,6 @@
+{
+  "appTitle": "gestion_pfe",
+  "@appTitle": {
+    "description": "The title of the application"
+  }
+}
