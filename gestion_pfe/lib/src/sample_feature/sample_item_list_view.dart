@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'package:gestion_pfe/src/sample_feature/logIn.dart';
+import 'package:gestion_pfe/src/sample_feature/signIn.dart';
 import '../settings/settings_view.dart';
 import 'sample_item.dart';
-import 'sample_item_details_view.dart';
+import 'sujet_PFE.dart';
 
-/// Displays a list of SampleItems.
+
 class SampleItemListView extends StatelessWidget {
   const SampleItemListView({
     Key? key,
@@ -32,39 +33,76 @@ class SampleItemListView extends StatelessWidget {
           ),
         ],
       ),
-
-      // To work with lists that may contain a large number of items, it’s best
-      // to use the ListView.builder constructor.
-      //
-      // In contrast to the default ListView constructor, which requires
-      // building all Widgets up front, the ListView.builder constructor lazily
-      // builds Widgets as they’re scrolled into view.
-      body: ListView.builder(
-        // Providing a restorationId allows the ListView to restore the
-        // scroll position when a user leaves and returns to the app after it
-        // has been killed while running in the background.
-        restorationId: 'sampleItemListView',
-        itemCount: items.length,
-        itemBuilder: (BuildContext context, int index) {
-          final item = items[index];
-
-          return ListTile(
-            title: Text('SampleItem ${item.id}'),
-            leading: const CircleAvatar(
-              // Display the Flutter Logo image asset.
-              foregroundImage: AssetImage('assets/images/flutter_logo.png'),
+      body: SingleChildScrollView(
+        // controller: controller,
+        child: Column(
+          children: [
+            Card(
+              child: ListTile(
+                leading: const CircleAvatar(
+                  foregroundImage: AssetImage('assets/images/flutter_logo.png'),
+                ),
+                title: Text('SampleItem ${items[0].id}'),
+                subtitle: const Text(
+                    'A sufficiently long subtitle warrants three lines.'),
+                trailing: const Icon(Icons.more_vert),
+                isThreeLine: true,
+                onTap: () {
+                  // Navigate to the details page. If the user leaves and returns to
+                  // the app after it has been killed while running in the
+                  // background, the navigation stack is restored.
+                  Navigator.restorablePushNamed(
+                    context,
+                    SignIn.routeName,
+                  );
+                },
+              ),
             ),
-            onTap: () {
-              // Navigate to the details page. If the user leaves and returns to
-              // the app after it has been killed while running in the
-              // background, the navigation stack is restored.
-              Navigator.restorablePushNamed(
-                context,
-                SampleItemDetailsView.routeName,
-              );
-            }
-          );
-        },
+            Card(
+              child: ListTile(
+                leading: const CircleAvatar(
+                  foregroundImage: AssetImage('assets/images/flutter_logo.png'),
+                ),
+                title: Text('SampleItem ${items[1].id}'),
+                subtitle: const Text(
+                    'A sufficiently long subtitle warrants three lines.'),
+                trailing: const Icon(Icons.more_vert),
+                isThreeLine: true,
+                onTap: () {
+                  // Navigate to the details page. If the user leaves and returns to
+                  // the app after it has been killed while running in the
+                  // background, the navigation stack is restored.
+                  Navigator.restorablePushNamed(
+                    context,
+                    LogIn.routeName,
+                  );
+                },
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: const CircleAvatar(
+                  foregroundImage: AssetImage('assets/images/flutter_logo.png'),
+                ),
+                title: Text('SampleItem ${items[2].id}'),
+                subtitle: const Text(
+                    'A sufficiently long subtitle warrants three lines.'),
+                trailing: const Icon(Icons.more_vert),
+                isThreeLine: true,
+                onTap: () {
+                  // Navigate to the details page. If the user leaves and returns to
+                  // the app after it has been killed while running in the
+                  // background, the navigation stack is restored.
+                  Navigator.restorablePushNamed(
+                    context,
+                    SujetPFE.routeName,
+                  );
+                },
+              ),
+            ),
+         
+          ],
+        ),
       ),
     );
   }
