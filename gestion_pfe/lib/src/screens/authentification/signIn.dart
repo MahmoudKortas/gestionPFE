@@ -1,13 +1,12 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:gestion_pfe/src/screens/authentification/signUp.dart';
+import 'package:gestion_pfe/src/screens/student/choose_propse_subject.dart';
 
 /// Displays detailed information about a SampleItem.
-class LogIn extends StatelessWidget {
-  LogIn({Key? key}) : super(key: key);
+class SignIn extends StatelessWidget {
+  SignIn({Key? key}) : super(key: key);
 
-  static const routeName = '/logIn';
+  static const routeName = '/SignIn';
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -53,11 +52,27 @@ class LogIn extends StatelessWidget {
                       onPressed: () {
                         // Validate will return true if the form is valid, or false if
                         // the form is invalid.
-                        if (_formKey.currentState!.validate()) {
+                        /*if (_formKey.currentState!.validate()) {
                           // Process data.
-                        }
+                        }*/      
+                        Navigator.restorablePushNamed(
+                          context,
+                          ChoosePropseSubject.routeName,
+                        );                  
                       },
-                      child: const Text('Login'),
+                      child: const Text('Se connecter'),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.restorablePushNamed(
+                          context,
+                          SignUp.routeName,
+                        );
+                      },
+                      child: const Text('Créer votre compte'),
                     ),
                   ),
                 ],

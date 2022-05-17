@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:gestion_pfe/src/sample_feature/logIn.dart';
-import 'package:gestion_pfe/src/sample_feature/signIn.dart';
-
-import 'sample_feature/sujet_PFE.dart';
+import 'package:gestion_pfe/src/screens/internship_service/calander.dart';
+import 'package:gestion_pfe/src/screens/internship_service/dashboard.dart';
+import 'package:gestion_pfe/src/screens/internship_service/document.dart';
+import 'package:gestion_pfe/src/screens/internship_service/juries_list.dart';
+import 'package:gestion_pfe/src/screens/internship_service/pfe_subject.dart';
+import 'package:gestion_pfe/src/screens/internship_service/result.dart';
+import 'package:gestion_pfe/src/screens/internship_service/students.dart';
+import 'package:gestion_pfe/src/screens/internship_service/teachers.dart';
 import 'sample_feature/sample_item_list_view.dart';
+import 'screens/authentification/signIn.dart';
+import 'screens/authentification/signUp.dart';
+import 'screens/student/follow_pfe.dart';
+import 'screens/student/choose_propse_subject.dart';
+import 'screens/teacher/manage_pfe.dart';
+import 'screens/teacher/manage_requests.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
 
@@ -71,15 +81,38 @@ class MyApp extends StatelessWidget {
                 switch (routeSettings.name) {
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
-                  case LogIn.routeName:
-                    return LogIn();
                   case SignIn.routeName:
-                    return  SignIn();
-                  case SujetPFE.routeName:
-                    return const SujetPFE();
+                    return SignIn();
+                  case SignUp.routeName:
+                    return SignUp();
+                  case ChoosePropseSubject.routeName:
+                    return const ChoosePropseSubject();
+                  case FollowPFE.routeName:
+                    return FollowPFE();
+                  case ManageRequests.routeName:
+                    return ManageRequests();
+                  case ManagePFE.routeName:
+                    return ManagePFE();
+                  case Dashboard.routeName:
+                    return Dashboard();
+                  case Result.routeName:
+                    return Result();
+                  case PFESubject.routeName:
+                    return PFESubject();
+                  case Document.routeName:
+                    return Document();
+                  case Teachers.routeName:
+                    return Teachers();
+                  case Calander.routeName:
+                    return Calander();
+                  case Students.routeName:
+                    return Students();
+                  case JuriesList.routeName:
+                    return JuriesList();
                   case SampleItemListView.routeName:
-                  default:
                     return const SampleItemListView();
+                  default:
+                    return SignIn();
                 }
               },
             );

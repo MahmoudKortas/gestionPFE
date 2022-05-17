@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/screens/authentification/signIn.dart';
 
 /// Displays detailed information about a SampleItem.
-class SujetPFE extends StatelessWidget {
-  const SujetPFE({Key? key}) : super(key: key);
+class JuriesList extends StatelessWidget {
+  JuriesList({Key? key}) : super(key: key);
 
-  static const routeName = '/sujet_PFE';
+  static const routeName = '/JuriesList';
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SujetPFE'),
+        title: const Text('Gérer liste des jurys'),
       ),
       body: SingleChildScrollView(
         // controller: controller,
@@ -27,54 +29,9 @@ class SujetPFE extends StatelessWidget {
                 trailing: const Icon(Icons.more_vert),
                 isThreeLine: true,
                 onTap: () {
-                  // Navigate to the details page. If the user leaves and returns to
-                  // the app after it has been killed while running in the
-                  // background, the navigation stack is restored.
                   /*Navigator.restorablePushNamed(
                     context,
-                    LogIn.routeName,
-                  );*/
-                },
-              ),
-            ),
-            Card(
-              child: ListTile(
-                leading: const CircleAvatar(
-                  foregroundImage: AssetImage('assets/images/flutter_logo.png'),
-                ),
-                title: Text('SampleItem'),
-                subtitle: const Text(
-                    'A sufficiently long subtitle warrants three lines.'),
-                trailing: const Icon(Icons.more_vert),
-                isThreeLine: true,
-                onTap: () {
-                  // Navigate to the details page. If the user leaves and returns to
-                  // the app after it has been killed while running in the
-                  // background, the navigation stack is restored.
-                  /*Navigator.restorablePushNamed(
-                    context,
-                    LogIn.routeName,
-                  );*/
-                },
-              ),
-            ),
-            Card(
-              child: ListTile(
-                leading: const CircleAvatar(
-                  foregroundImage: AssetImage('assets/images/flutter_logo.png'),
-                ),
-                title: Text('SampleItem'),
-                subtitle: const Text(
-                    'A sufficiently long subtitle warrants three lines.'),
-                trailing: const Icon(Icons.more_vert),
-                isThreeLine: true,
-                onTap: () {
-                  // Navigate to the details page. If the user leaves and returns to
-                  // the app after it has been killed while running in the
-                  // background, the navigation stack is restored.
-                  /*Navigator.restorablePushNamed(
-                    context,
-                    LogIn.routeName,
+                    FollowPFE.routeName,
                   );*/
                 },
               ),
