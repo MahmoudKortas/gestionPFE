@@ -26,6 +26,50 @@ class SignIn extends StatelessWidget {
                 children: <Widget>[
                   TextFormField(
                     decoration: const InputDecoration(
+                      hintText: 'Enter your nom',
+                    ),
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: 'Enter your prenom',
+                    ),
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: 'Enter your telephone',
+                    ),
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: 'Enter your adresse',
+                    ),
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
                       hintText: 'Enter your email',
                     ),
                     validator: (String? value) {
@@ -38,6 +82,17 @@ class SignIn extends StatelessWidget {
                   TextFormField(
                     decoration: const InputDecoration(
                       hintText: 'Enter your password',
+                    ),
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: 'Enter your role',
                     ),
                     validator: (String? value) {
                       if (value == null || value.isEmpty) {

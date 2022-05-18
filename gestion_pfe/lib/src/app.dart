@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:gestion_pfe/src/screens/internship_service/calander.dart';
-import 'package:gestion_pfe/src/screens/internship_service/dashboard.dart';
-import 'package:gestion_pfe/src/screens/internship_service/document.dart';
-import 'package:gestion_pfe/src/screens/internship_service/juries_list.dart';
-import 'package:gestion_pfe/src/screens/internship_service/pfe_subject.dart';
-import 'package:gestion_pfe/src/screens/internship_service/result.dart';
-import 'package:gestion_pfe/src/screens/internship_service/students.dart';
-import 'package:gestion_pfe/src/screens/internship_service/teachers.dart';
-import 'sample_feature/sample_item_list_view.dart';
+import 'screens/internship_service/calander.dart';
+import 'screens/internship_service/dashboard.dart';
+import 'screens/internship_service/document.dart';
+import 'screens/internship_service/juries_list.dart';
+import 'screens/internship_service/pfe_subject.dart';
+import 'screens/internship_service/result.dart';
+import 'screens/internship_service/students.dart';
+import 'screens/internship_service/teachers.dart';
 import 'screens/authentification/signIn.dart';
 import 'screens/authentification/signUp.dart';
 import 'screens/student/follow_pfe.dart';
@@ -109,8 +108,6 @@ class MyApp extends StatelessWidget {
                     return Students();
                   case JuriesList.routeName:
                     return JuriesList();
-                  case SampleItemListView.routeName:
-                    return const SampleItemListView();
                   default:
                     return SignIn();
                 }
