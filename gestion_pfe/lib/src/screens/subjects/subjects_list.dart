@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:gestion_pfe/src/screens/teacher/manage_pfe.dart';
-
-import '../internship_service/dashboard.dart';
-import '../subjects/propose_subject.dart';
-import '../subjects/subjects_list.dart';
-import '../teacher/manage_requests.dart';
-import 'follow_pfe.dart';
+import 'package:gestion_pfe/src/screens/authentification/signIn.dart';
 
 /// Displays detailed information about a SampleItem.
-class ChoosePropseSubject extends StatelessWidget {
-  const ChoosePropseSubject({Key? key}) : super(key: key);
+class SubjectsList extends StatelessWidget {
+  SubjectsList({Key? key}) : super(key: key);
 
-  static const routeName = '/Choose_propse_subject';
+  static const routeName = '/SubjectsList';
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Choisir ou proposer votre sujet '),
+        title: const Text('Liste des sujets'),
       ),
       body: SingleChildScrollView(
         // controller: controller,
@@ -28,52 +23,16 @@ class ChoosePropseSubject extends StatelessWidget {
                 leading: const CircleAvatar(
                   foregroundImage: AssetImage('assets/images/flutter_logo.png'),
                 ),
-                title: Text('Proposer votre sujet'),
+                title: Text('SampleItem'),
                 subtitle: const Text(
                     'A sufficiently long subtitle warrants three lines.'),
                 trailing: const Icon(Icons.more_vert),
                 isThreeLine: true,
                 onTap: () {
-                  Navigator.restorablePushNamed(
-                    context,
-                    ProposeSubject.routeName,
-                  );
-                },
-              ),
-            ),
-            Card(
-              child: ListTile(
-                leading: const CircleAvatar(
-                  foregroundImage: AssetImage('assets/images/flutter_logo.png'),
-                ),
-                title: Text('choisir sujet'),
-                subtitle: const Text(
-                    'A sufficiently long subtitle warrants three lines.'),
-                trailing: const Icon(Icons.more_vert),
-                isThreeLine: true,
-                onTap: () {
-                  Navigator.restorablePushNamed(
-                    context,
-                    SubjectsList.routeName,
-                  );
-                },
-              ),
-            ),
-            Card(
-              child: ListTile(
-                leading: const CircleAvatar(
-                  foregroundImage: AssetImage('assets/images/flutter_logo.png'),
-                ),
-                title: Text('Suivre PFE'),
-                subtitle: const Text(
-                    'A sufficiently long subtitle warrants three lines.'),
-                trailing: const Icon(Icons.more_vert),
-                isThreeLine: true,
-                onTap: () {
-                  Navigator.restorablePushNamed(
+                  /*Navigator.restorablePushNamed(
                     context,
                     FollowPFE.routeName,
-                  );
+                  );*/
                 },
               ),
             ),
@@ -82,7 +41,7 @@ class ChoosePropseSubject extends StatelessWidget {
                 leading: const CircleAvatar(
                   foregroundImage: AssetImage('assets/images/flutter_logo.png'),
                 ),
-                title: Text('Gerer demande de sujets'),
+                title: Text('SampleItem'),
                 subtitle: const Text(
                     'A sufficiently long subtitle warrants three lines.'),
                 trailing: const Icon(Icons.more_vert),
@@ -91,10 +50,10 @@ class ChoosePropseSubject extends StatelessWidget {
                   // Navigate to the details page. If the user leaves and returns to
                   // the app after it has been killed while running in the
                   // background, the navigation stack is restored.
-                  Navigator.restorablePushNamed(
+                  /*Navigator.restorablePushNamed(
                     context,
-                    ManageRequests.routeName,
-                  );
+                    LogIn.routeName,
+                  );*/
                 },
               ),
             ),
@@ -103,7 +62,7 @@ class ChoosePropseSubject extends StatelessWidget {
                 leading: const CircleAvatar(
                   foregroundImage: AssetImage('assets/images/flutter_logo.png'),
                 ),
-                title: Text('Tableau de bord'),
+                title: Text('SampleItem'),
                 subtitle: const Text(
                     'A sufficiently long subtitle warrants three lines.'),
                 trailing: const Icon(Icons.more_vert),
@@ -112,10 +71,31 @@ class ChoosePropseSubject extends StatelessWidget {
                   // Navigate to the details page. If the user leaves and returns to
                   // the app after it has been killed while running in the
                   // background, the navigation stack is restored.
-                  Navigator.restorablePushNamed(
+                  /*Navigator.restorablePushNamed(
                     context,
-                    Dashboard.routeName,
-                  );
+                    LogIn.routeName,
+                  );*/
+                },
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: const CircleAvatar(
+                  foregroundImage: AssetImage('assets/images/flutter_logo.png'),
+                ),
+                title: Text('SampleItem'),
+                subtitle: const Text(
+                    'A sufficiently long subtitle warrants three lines.'),
+                trailing: const Icon(Icons.more_vert),
+                isThreeLine: true,
+                onTap: () {
+                  // Navigate to the details page. If the user leaves and returns to
+                  // the app after it has been killed while running in the
+                  // background, the navigation stack is restored.
+                  /*Navigator.restorablePushNamed(
+                    context,
+                    LogIn.routeName,
+                  );*/
                 },
               ),
             ),

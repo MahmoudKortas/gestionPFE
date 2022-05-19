@@ -11,8 +11,10 @@ import 'screens/internship_service/students.dart';
 import 'screens/internship_service/teachers.dart';
 import 'screens/authentification/signIn.dart';
 import 'screens/authentification/signUp.dart';
+import 'screens/subjects/propose_subject.dart';
 import 'screens/student/follow_pfe.dart';
 import 'screens/student/choose_propse_subject.dart';
+import 'screens/subjects/subjects_list.dart';
 import 'screens/teacher/manage_pfe.dart';
 import 'screens/teacher/manage_requests.dart';
 import 'settings/settings_controller.dart';
@@ -108,6 +110,10 @@ class MyApp extends StatelessWidget {
                     return Students();
                   case JuriesList.routeName:
                     return JuriesList();
+                  case ProposeSubject.routeName:
+                    return ProposeSubject();
+                  case SubjectsList.routeName:
+                    return SubjectsList();
                   default:
                     return SignIn();
                 }

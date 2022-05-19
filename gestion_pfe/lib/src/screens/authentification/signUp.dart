@@ -25,7 +25,7 @@ class SignUp extends StatelessWidget {
                 children: <Widget>[
                   TextFormField(
                     decoration: const InputDecoration(
-                      hintText: 'Enter your email',
+                      hintText: 'Saisir votre nom',
                     ),
                     validator: (String? value) {
                       if (value == null || value.isEmpty) {
@@ -36,7 +36,84 @@ class SignUp extends StatelessWidget {
                   ),
                   TextFormField(
                     decoration: const InputDecoration(
-                      hintText: 'Enter your password',
+                      hintText: 'Saisir votre prenom',
+                    ),
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: 'Saisir votre telephone',
+                    ),
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: 'Saisir votre adresse',
+                    ),
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: 'Saisir votre email',
+                    ),
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: 'Saisir votre password',
+                    ),
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: 'Saisir votre role',
+                    ),
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: 'Saisir votre specialité',
+                    ),
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: 'Saisir votre specialité',
                     ),
                     validator: (String? value) {
                       if (value == null || value.isEmpty) {

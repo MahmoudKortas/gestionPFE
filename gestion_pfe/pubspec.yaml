@@ -12,9 +12,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-    http: ^0.13.4
   flutter_localizations:
     sdk: flutter
+  flutter_native_splash: ^2.2.0+1
+  syncfusion_flutter_calendar: ^20.1.56
 
 dev_dependencies:
   flutter_test:

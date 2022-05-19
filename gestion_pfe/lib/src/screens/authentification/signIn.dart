@@ -24,9 +24,11 @@ class SignIn extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+
+                  
                   TextFormField(
                     decoration: const InputDecoration(
-                      hintText: 'Enter your nom',
+                      hintText: 'Saisir votre email',
                     ),
                     validator: (String? value) {
                       if (value == null || value.isEmpty) {
@@ -37,7 +39,7 @@ class SignIn extends StatelessWidget {
                   ),
                   TextFormField(
                     decoration: const InputDecoration(
-                      hintText: 'Enter your prenom',
+                      hintText: 'Saisir votre password',
                     ),
                     validator: (String? value) {
                       if (value == null || value.isEmpty) {
@@ -46,61 +48,7 @@ class SignIn extends StatelessWidget {
                       return null;
                     },
                   ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: 'Enter your telephone',
-                    ),
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: 'Enter your adresse',
-                    ),
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: 'Enter your email',
-                    ),
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: 'Enter your password',
-                    ),
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: 'Enter your role',
-                    ),
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                  ),
+                  
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: ElevatedButton(

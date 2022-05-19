@@ -12,7 +12,7 @@ class FollowPFE extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('FollowPFE'),
+        title: const Text('Suivre PFE'),
       ),
       body: SingleChildScrollView(
         // controller: controller,
