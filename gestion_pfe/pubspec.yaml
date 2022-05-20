@@ -15,7 +15,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_native_splash: ^2.2.0+1
-  syncfusion_flutter_calendar: ^20.1.56
+  table_calendar: ^3.0.5
 
 dev_dependencies:
   flutter_test:
