@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/entites/description.dart';
 import 'package:gestion_pfe/src/screens/authentification/signIn.dart';
+import 'package:intl/intl.dart';
 
 /// Displays detailed information about a SampleItem.
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   SignUp({Key? key}) : super(key: key);
-
   static const routeName = '/signUp';
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _items = [
+    'informatique',
+    'mecanique',
+    'electrique',
+    'genie civile',
+    'langues',
+    'mathematique'
+  ];
+  String? value;
+
+  Description? _description;
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +139,45 @@ class SignUp extends StatelessWidget {
                       return null;
                     },
                   ),
+                  Column(
+                    children: <Widget>[
+                      ListTile(
+                        title: const Text('Enseignant'),
+                        leading: Radio(
+                          value: Description.enseignant,
+                          groupValue: _description,
+                          onChanged: (Description? value) {
+                            setState(() {
+                              _description = value!;
+                            });
+                          },
+                        ),
+                      ),
+                      ListTile(
+                        title: const Text('Etudiant'),
+                        leading: Radio(
+                          value: Description.etudiant,
+                          groupValue: _description,
+                          onChanged: (Description? value) {
+                            setState(() {
+                              _description = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                    hint: const Text("choisir votre domaine"),
+                    value: value,
+                    iconSize: 36,
+                    icon:
+                        const Icon(Icons.arrow_drop_down, color: Colors.black),
+                    isExpanded: true,
+                    items: _items.map(buildMenuItem).toList(),
+                    onChanged: (value) => setState(() => this.value = value),
+                  )),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: ElevatedButton(
@@ -147,4 +203,12 @@ class SignUp extends StatelessWidget {
       ),
     );
   }
+
+  DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
+        value: item,
+        child: Text(
+          item,
+          // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ), // Text
+      ); // DropdownMenuItem
 }
