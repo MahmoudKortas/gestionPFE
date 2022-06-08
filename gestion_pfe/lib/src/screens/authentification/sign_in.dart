@@ -1,6 +1,9 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
-import 'package:gestion_pfe/src/screens/authentification/signUp.dart';
+import 'package:gestion_pfe/src/screens/authentification/sign_up.dart';
 import 'package:gestion_pfe/src/screens/student/choose_propse_subject.dart';
+
+import '../../color_hex.dart';
 
 /// Displays detailed information about a SampleItem.
 class SignIn extends StatelessWidget {
@@ -22,10 +25,7 @@ class SignIn extends StatelessWidget {
             Form(
               key: _formKey,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-
-                  
                   TextFormField(
                     decoration: const InputDecoration(
                       hintText: 'Saisir votre email',
@@ -39,7 +39,7 @@ class SignIn extends StatelessWidget {
                   ),
                   TextFormField(
                     decoration: const InputDecoration(
-                      hintText: 'Saisir votre password',
+                      hintText: 'Saisir votre mot de passe',
                     ),
                     validator: (String? value) {
                       if (value == null || value.isEmpty) {
@@ -48,7 +48,6 @@ class SignIn extends StatelessWidget {
                       return null;
                     },
                   ),
-                  
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: ElevatedButton(
@@ -57,27 +56,27 @@ class SignIn extends StatelessWidget {
                         // the form is invalid.
                         /*if (_formKey.currentState!.validate()) {
                           // Process data.
-                        }*/      
+                        }*/
                         Navigator.restorablePushNamed(
                           context,
                           ChoosePropseSubject.routeName,
-                        );                  
-                      },
-                      child: const Text('Se connecter'),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.restorablePushNamed(
-                          context,
-                          SignUp.routeName,
                         );
                       },
-                      child: const Text('Créer votre compte'),
+                      child: const Text('Connexion'),
                     ),
                   ),
+                  GestureDetector(
+                    child: Text("Inscription",
+                        style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: HexColor("c9242e"))),
+                    onTap: () {
+                      Navigator.restorablePushNamed(
+                        context,
+                        SignUp.routeName,
+                      );
+                    },
+                  )
                 ],
               ),
             ),

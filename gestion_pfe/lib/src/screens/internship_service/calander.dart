@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
-
-import '../pages/basics_example.dart';
-import '../pages/complex_example.dart';
 import '../pages/events_example.dart';
-import '../pages/multi_example.dart';
-import '../pages/range_example.dart';
 
 /// Displays detailed information about a SampleItem.
 class Calander extends StatelessWidget {
-  Calander({Key? key}) : super(key: key);
+  const Calander({Key? key}) : super(key: key);
 
   static const routeName = '/Calander';
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,47 +15,15 @@ class Calander extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(height: 20.0),
+          
           ElevatedButton(
-            child: Text('Basics'),
+            child: const Text('Events'),
             onPressed: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => TableBasicsExample()),
+              MaterialPageRoute(builder: (_) => const TableEventsExample()),
             ),
           ),
-          const SizedBox(height: 12.0),
-          ElevatedButton(
-            child: Text('Range Selection'),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => TableRangeExample()),
-            ),
-          ),
-          const SizedBox(height: 12.0),
-          ElevatedButton(
-            child: Text('Events'),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => TableEventsExample()),
-            ),
-          ),
-          const SizedBox(height: 12.0),
-          ElevatedButton(
-            child: Text('Multiple Selection'),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => TableMultiExample()),
-            ),
-          ),
-          const SizedBox(height: 12.0),
-          ElevatedButton(
-            child: Text('Complex'),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => TableComplexExample()),
-            ),
-          ),
-          const SizedBox(height: 20.0),
+         
         ],
       ),
     ));

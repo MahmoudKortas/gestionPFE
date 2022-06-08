@@ -7,7 +7,10 @@ import 'package:table_calendar/table_calendar.dart';
 import '../../utils.dart';
 
 class TableBasicsExample extends StatefulWidget {
+  const TableBasicsExample({Key? key}) : super(key: key);
+
   @override
+  // ignore: library_private_types_in_public_api
   _TableBasicsExampleState createState() => _TableBasicsExampleState();
 }
 
@@ -20,7 +23,7 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('TableCalendar - Basics'),
+        title: const Text('TableCalendar - Basics'),
       ),
       body: TableCalendar(
         firstDay: kFirstDay,

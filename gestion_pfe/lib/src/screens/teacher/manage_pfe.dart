@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gestion_pfe/src/screens/authentification/signIn.dart';
-import 'package:gestion_pfe/src/screens/teacher/manage_requests.dart';
 
 /// Displays detailed information about a SampleItem.
 class ManagePFE extends StatelessWidget {
-  ManagePFE({Key? key}) : super(key: key);
+  const ManagePFE({Key? key}) : super(key: key);
 
   static const routeName = '/ManagePFE';
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,7 @@ class ManagePFE extends StatelessWidget {
                 leading: const CircleAvatar(
                   foregroundImage: AssetImage('assets/images/flutter_logo.png'),
                 ),
-                title: Text('Etudiant 1'),
+                title: const Text('Etudiant 1'),
                 subtitle: const Text(
                     'A sufficiently long subtitle warrants three lines.'),
                 trailing: const Icon(Icons.more_vert),
@@ -42,7 +40,7 @@ class ManagePFE extends StatelessWidget {
                 leading: const CircleAvatar(
                   foregroundImage: AssetImage('assets/images/flutter_logo.png'),
                 ),
-                title: Text('Etudiant 2'),
+                title: const Text('Etudiant 2'),
                 subtitle: const Text(
                     'A sufficiently long subtitle warrants three lines.'),
                 trailing: const Icon(Icons.more_vert),
@@ -60,7 +58,7 @@ class ManagePFE extends StatelessWidget {
                 leading: const CircleAvatar(
                   foregroundImage: AssetImage('assets/images/flutter_logo.png'),
                 ),
-                title: Text('Etudiant 3'),
+                title: const Text('Etudiant 3'),
                 subtitle: const Text(
                     'A sufficiently long subtitle warrants three lines.'),
                 trailing: const Icon(Icons.more_vert),
@@ -78,7 +76,7 @@ class ManagePFE extends StatelessWidget {
                 leading: const CircleAvatar(
                   foregroundImage: AssetImage('assets/images/flutter_logo.png'),
                 ),
-                title: Text('Etudiant 4'),
+                title: const Text('Etudiant 4'),
                 subtitle: const Text(
                     'A sufficiently long subtitle warrants three lines.'),
                 trailing: const Icon(Icons.more_vert),

@@ -6,6 +6,7 @@ import '../constants.dart';
 class ApiService {
   Future<List<Utilisateur>?> getUsers() async {
     try {
+      // ignore: unused_local_variable
       var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.usersEndpoint);
       // var response = await http.get(url);
       // if (response.statusCode == 200) {
@@ -15,5 +16,6 @@ class ApiService {
     } catch (e) {
       log(e.toString());
     }
+    return null;
   }
 }

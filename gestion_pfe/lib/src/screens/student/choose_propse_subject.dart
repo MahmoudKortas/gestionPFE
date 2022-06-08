@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gestion_pfe/src/screens/teacher/manage_pfe.dart';
 
 import '../internship_service/dashboard.dart';
 import '../subjects/propose_subject.dart';
@@ -28,7 +27,7 @@ class ChoosePropseSubject extends StatelessWidget {
                 leading: const CircleAvatar(
                   foregroundImage: AssetImage('assets/images/flutter_logo.png'),
                 ),
-                title: Text('Proposer votre sujet'),
+                title: const Text('Proposer votre sujet'),
                 subtitle: const Text(
                     'A sufficiently long subtitle warrants three lines.'),
                 trailing: const Icon(Icons.more_vert),
@@ -46,7 +45,7 @@ class ChoosePropseSubject extends StatelessWidget {
                 leading: const CircleAvatar(
                   foregroundImage: AssetImage('assets/images/flutter_logo.png'),
                 ),
-                title: Text('choisir sujet'),
+                title: const Text('choisir sujet'),
                 subtitle: const Text(
                     'A sufficiently long subtitle warrants three lines.'),
                 trailing: const Icon(Icons.more_vert),
@@ -64,7 +63,7 @@ class ChoosePropseSubject extends StatelessWidget {
                 leading: const CircleAvatar(
                   foregroundImage: AssetImage('assets/images/flutter_logo.png'),
                 ),
-                title: Text('Suivre PFE'),
+                title: const Text('Suivre PFE'),
                 subtitle: const Text(
                     'A sufficiently long subtitle warrants three lines.'),
                 trailing: const Icon(Icons.more_vert),
@@ -82,7 +81,7 @@ class ChoosePropseSubject extends StatelessWidget {
                 leading: const CircleAvatar(
                   foregroundImage: AssetImage('assets/images/flutter_logo.png'),
                 ),
-                title: Text('Gerer demande de sujets'),
+                title: const Text('Gerer demande de sujets'),
                 subtitle: const Text(
                     'A sufficiently long subtitle warrants three lines.'),
                 trailing: const Icon(Icons.more_vert),
@@ -103,7 +102,7 @@ class ChoosePropseSubject extends StatelessWidget {
                 leading: const CircleAvatar(
                   foregroundImage: AssetImage('assets/images/flutter_logo.png'),
                 ),
-                title: Text('Tableau de bord'),
+                title: const Text('Tableau de bord'),
                 subtitle: const Text(
                     'A sufficiently long subtitle warrants three lines.'),
                 trailing: const Icon(Icons.more_vert),

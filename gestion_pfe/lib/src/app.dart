@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'custom_theme.dart';
 import 'screens/internship_service/calander.dart';
 import 'screens/internship_service/dashboard.dart';
 import 'screens/internship_service/document.dart';
@@ -9,8 +10,8 @@ import 'screens/internship_service/pfe_subject.dart';
 import 'screens/internship_service/result.dart';
 import 'screens/internship_service/students.dart';
 import 'screens/internship_service/teachers.dart';
-import 'screens/authentification/signIn.dart';
-import 'screens/authentification/signUp.dart';
+import 'screens/authentification/sign_in.dart';
+import 'screens/authentification/sign_up.dart';
 import 'screens/subjects/propose_subject.dart';
 import 'screens/student/follow_pfe.dart';
 import 'screens/student/choose_propse_subject.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
       animation: settingsController,
       builder: (BuildContext context, Widget? child) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           // Providing a restorationScopeId allows the Navigator built by the
           // MaterialApp to restore the navigation stack when a user leaves and
           // returns to the app after it has been killed while running in the
@@ -69,10 +71,12 @@ class MyApp extends StatelessWidget {
           // Define a light and dark color theme. Then, read the user's
           // preferred ThemeMode (light, dark, or system default) from the
           // SettingsController to display the correct theme.
-          theme: ThemeData(),
+          /*theme: ThemeData(),
           darkTheme: ThemeData.dark(),
-          themeMode: settingsController.themeMode,
-
+          themeMode: settingsController.themeMode,*/
+          darkTheme:lightTheme, //darkTheme,
+          theme: lightTheme,
+          themeMode: ThemeMode.system,
           // Define a function to handle named routes in order to support
           // Flutter web url navigation and deep linking.
           onGenerateRoute: (RouteSettings routeSettings) {
@@ -85,35 +89,35 @@ class MyApp extends StatelessWidget {
                   case SignIn.routeName:
                     return SignIn();
                   case SignUp.routeName:
-                    return SignUp();
+                    return const SignUp();
                   case ChoosePropseSubject.routeName:
                     return const ChoosePropseSubject();
                   case FollowPFE.routeName:
-                    return FollowPFE();
+                    return const FollowPFE();
                   case ManageRequests.routeName:
-                    return ManageRequests();
+                    return const ManageRequests();
                   case ManagePFE.routeName:
-                    return ManagePFE();
+                    return const ManagePFE();
                   case Dashboard.routeName:
-                    return Dashboard();
+                    return const Dashboard();
                   case Result.routeName:
-                    return Result();
+                    return const Result();
                   case PFESubject.routeName:
-                    return PFESubject();
+                    return const PFESubject();
                   case Document.routeName:
-                    return Document();
+                    return const Document();
                   case Teachers.routeName:
-                    return Teachers();
+                    return const Teachers();
                   case Calander.routeName:
-                    return Calander();
+                    return const Calander();
                   case Students.routeName:
-                    return Students();
+                    return const Students();
                   case JuriesList.routeName:
-                    return JuriesList();
+                    return const JuriesList();
                   case ProposeSubject.routeName:
-                    return ProposeSubject();
+                    return const ProposeSubject();
                   case SubjectsList.routeName:
-                    return SubjectsList();
+                    return const SubjectsList();
                   default:
                     return SignIn();
                 }

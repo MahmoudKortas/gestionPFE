@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:gestion_pfe/src/screens/authentification/signIn.dart';
 
 import 'manage_pfe.dart';
 
 /// Displays detailed information about a SampleItem.
 class ManageRequests extends StatelessWidget {
-  ManageRequests({Key? key}) : super(key: key);
+  const ManageRequests({Key? key}) : super(key: key);
 
   static const routeName = '/ManageRequests';
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +24,7 @@ class ManageRequests extends StatelessWidget {
                 leading: const CircleAvatar(
                   foregroundImage: AssetImage('assets/images/flutter_logo.png'),
                 ),
-                title: Text('Gèrer PFE étudiant'),
+                title: const Text('Gèrer PFE étudiant'),
                 subtitle: const Text(
                     'A sufficiently long subtitle warrants three lines.'),
                 trailing: const Icon(Icons.more_vert),
@@ -43,7 +42,7 @@ class ManageRequests extends StatelessWidget {
                 leading: const CircleAvatar(
                   foregroundImage: AssetImage('assets/images/flutter_logo.png'),
                 ),
-                title: Text('SampleItem'),
+                title: const Text('SampleItem'),
                 subtitle: const Text(
                     'A sufficiently long subtitle warrants three lines.'),
                 trailing: const Icon(Icons.more_vert),
@@ -64,7 +63,7 @@ class ManageRequests extends StatelessWidget {
                 leading: const CircleAvatar(
                   foregroundImage: AssetImage('assets/images/flutter_logo.png'),
                 ),
-                title: Text('SampleItem'),
+                title: const Text('SampleItem'),
                 subtitle: const Text(
                     'A sufficiently long subtitle warrants three lines.'),
                 trailing: const Icon(Icons.more_vert),
@@ -85,7 +84,7 @@ class ManageRequests extends StatelessWidget {
                 leading: const CircleAvatar(
                   foregroundImage: AssetImage('assets/images/flutter_logo.png'),
                 ),
-                title: Text('SampleItem'),
+                title: const Text('SampleItem'),
                 subtitle: const Text(
                     'A sufficiently long subtitle warrants three lines.'),
                 trailing: const Icon(Icons.more_vert),
