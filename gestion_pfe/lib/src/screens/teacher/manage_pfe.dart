@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../resize_widget.dart';
+
 /// Displays detailed information about a SampleItem.
 class ManagePFE extends StatelessWidget {
   const ManagePFE({Key? key}) : super(key: key);
@@ -15,82 +17,90 @@ class ManagePFE extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         // controller: controller,
-        child: Column(
-          children: [
-            Card(
-              child: ListTile(
-                leading: const CircleAvatar(
-                  foregroundImage: AssetImage('assets/images/flutter_logo.png'),
-                ),
-                title: const Text('Etudiant 1'),
-                subtitle: const Text(
-                    'A sufficiently long subtitle warrants three lines.'),
-                trailing: const Icon(Icons.more_vert),
-                isThreeLine: true,
-                onTap: () {
-                  /*Navigator.restorablePushNamed(
+        child: Center(
+          child: resiseWidget(
+            context: context,
+            child: Column(
+              children: [
+                Card(
+                  child: ListTile(
+                    leading: const CircleAvatar(
+                      foregroundImage:
+                          AssetImage('assets/images/flutter_logo.png'),
+                    ),
+                    title: const Text('Etudiant 1'),
+                    subtitle: const Text(
+                        'A sufficiently long subtitle warrants three lines.'),
+                    trailing: const Icon(Icons.more_vert),
+                    isThreeLine: true,
+                    onTap: () {
+                      /*Navigator.restorablePushNamed(
                     context,
                     ManageRequests.routeName,
                   );*/
-                },
-              ),
-            ),
-            Card(
-              child: ListTile(
-                leading: const CircleAvatar(
-                  foregroundImage: AssetImage('assets/images/flutter_logo.png'),
+                    },
+                  ),
                 ),
-                title: const Text('Etudiant 2'),
-                subtitle: const Text(
-                    'A sufficiently long subtitle warrants three lines.'),
-                trailing: const Icon(Icons.more_vert),
-                isThreeLine: true,
-                onTap: () {
-                  /*Navigator.restorablePushNamed(
+                Card(
+                  child: ListTile(
+                    leading: const CircleAvatar(
+                      foregroundImage:
+                          AssetImage('assets/images/flutter_logo.png'),
+                    ),
+                    title: const Text('Etudiant 2'),
+                    subtitle: const Text(
+                        'A sufficiently long subtitle warrants three lines.'),
+                    trailing: const Icon(Icons.more_vert),
+                    isThreeLine: true,
+                    onTap: () {
+                      /*Navigator.restorablePushNamed(
                     context,
                     ManageRequests.routeName,
                   );*/
-                },
-              ),
-            ),
-            Card(
-              child: ListTile(
-                leading: const CircleAvatar(
-                  foregroundImage: AssetImage('assets/images/flutter_logo.png'),
+                    },
+                  ),
                 ),
-                title: const Text('Etudiant 3'),
-                subtitle: const Text(
-                    'A sufficiently long subtitle warrants three lines.'),
-                trailing: const Icon(Icons.more_vert),
-                isThreeLine: true,
-                onTap: () {
-                  /*Navigator.restorablePushNamed(
+                Card(
+                  child: ListTile(
+                    leading: const CircleAvatar(
+                      foregroundImage:
+                          AssetImage('assets/images/flutter_logo.png'),
+                    ),
+                    title: const Text('Etudiant 3'),
+                    subtitle: const Text(
+                        'A sufficiently long subtitle warrants three lines.'),
+                    trailing: const Icon(Icons.more_vert),
+                    isThreeLine: true,
+                    onTap: () {
+                      /*Navigator.restorablePushNamed(
                     context,
                     ManageRequests.routeName,
                   );*/
-                },
-              ),
-            ),
-            Card(
-              child: ListTile(
-                leading: const CircleAvatar(
-                  foregroundImage: AssetImage('assets/images/flutter_logo.png'),
+                    },
+                  ),
                 ),
-                title: const Text('Etudiant 4'),
-                subtitle: const Text(
-                    'A sufficiently long subtitle warrants three lines.'),
-                trailing: const Icon(Icons.more_vert),
-                isThreeLine: true,
-                onTap: () {
-                  /*Navigator.restorablePushNamed(
+                Card(
+                  child: ListTile(
+                    leading: const CircleAvatar(
+                      foregroundImage:
+                          AssetImage('assets/images/flutter_logo.png'),
+                    ),
+                    title: const Text('Etudiant 4'),
+                    subtitle: const Text(
+                        'A sufficiently long subtitle warrants three lines.'),
+                    trailing: const Icon(Icons.more_vert),
+                    isThreeLine: true,
+                    onTap: () {
+                      /*Navigator.restorablePushNamed(
                     context,
                     ManageRequests.routeName,
                   );*/
-                },
-              ),
+                    },
+                  ),
+                ),
+              ],
             ),
-          
-           ],
+          ),
         ),
       ),
     );

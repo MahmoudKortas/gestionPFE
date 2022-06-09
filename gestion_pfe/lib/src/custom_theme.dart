@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/color_hex.dart';
 
 ThemeData lightTheme = ThemeData(
-    textSelectionTheme: TextSelectionThemeData(
+    textSelectionTheme: const TextSelectionThemeData(
       cursorColor: Colors.black, //thereby
     ),
     appBarTheme: AppBarTheme(
@@ -16,7 +16,7 @@ ThemeData lightTheme = ThemeData(
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      border: OutlineInputBorder(),
+      border: const OutlineInputBorder(),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
           color: HexColor("5b5b5c"),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../resize_widget.dart';
+
 /// Displays detailed information about a SampleItem.
 class JuriesList extends StatelessWidget {
   const JuriesList({Key? key}) : super(key: key);
@@ -15,90 +17,99 @@ class JuriesList extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         // controller: controller,
-        child: Column(
-          children: [
-            Card(
-              child: ListTile(
-                leading: const CircleAvatar(
-                  foregroundImage: AssetImage('assets/images/flutter_logo.png'),
-                ),
-                title: const Text('SampleItem'),
-                subtitle: const Text(
-                    'A sufficiently long subtitle warrants three lines.'),
-                trailing: const Icon(Icons.more_vert),
-                isThreeLine: true,
-                onTap: () {
-                  /*Navigator.restorablePushNamed(
+        child: Center(
+          child: resiseWidget(
+            context: context,
+            child: Column(
+              children: [
+                Card(
+                  child: ListTile(
+                    leading: const CircleAvatar(
+                      foregroundImage:
+                          AssetImage('assets/images/flutter_logo.png'),
+                    ),
+                    title: const Text('SampleItem'),
+                    subtitle: const Text(
+                        'A sufficiently long subtitle warrants three lines.'),
+                    trailing: const Icon(Icons.more_vert),
+                    isThreeLine: true,
+                    onTap: () {
+                      /*Navigator.restorablePushNamed(
                     context,
                     FollowPFE.routeName,
                   );*/
-                },
-              ),
-            ),
-            Card(
-              child: ListTile(
-                leading: const CircleAvatar(
-                  foregroundImage: AssetImage('assets/images/flutter_logo.png'),
+                    },
+                  ),
                 ),
-                title: const Text('SampleItem'),
-                subtitle: const Text(
-                    'A sufficiently long subtitle warrants three lines.'),
-                trailing: const Icon(Icons.more_vert),
-                isThreeLine: true,
-                onTap: () {
-                  // Navigate to the details page. If the user leaves and returns to
-                  // the app after it has been killed while running in the
-                  // background, the navigation stack is restored.
-                  /*Navigator.restorablePushNamed(
+                Card(
+                  child: ListTile(
+                    leading: const CircleAvatar(
+                      foregroundImage:
+                          AssetImage('assets/images/flutter_logo.png'),
+                    ),
+                    title: const Text('SampleItem'),
+                    subtitle: const Text(
+                        'A sufficiently long subtitle warrants three lines.'),
+                    trailing: const Icon(Icons.more_vert),
+                    isThreeLine: true,
+                    onTap: () {
+                      // Navigate to the details page. If the user leaves and returns to
+                      // the app after it has been killed while running in the
+                      // background, the navigation stack is restored.
+                      /*Navigator.restorablePushNamed(
                     context,
                     LogIn.routeName,
                   );*/
-                },
-              ),
-            ),
-            Card(
-              child: ListTile(
-                leading: const CircleAvatar(
-                  foregroundImage: AssetImage('assets/images/flutter_logo.png'),
+                    },
+                  ),
                 ),
-                title: const Text('SampleItem'),
-                subtitle: const Text(
-                    'A sufficiently long subtitle warrants three lines.'),
-                trailing: const Icon(Icons.more_vert),
-                isThreeLine: true,
-                onTap: () {
-                  // Navigate to the details page. If the user leaves and returns to
-                  // the app after it has been killed while running in the
-                  // background, the navigation stack is restored.
-                  /*Navigator.restorablePushNamed(
+                Card(
+                  child: ListTile(
+                    leading: const CircleAvatar(
+                      foregroundImage:
+                          AssetImage('assets/images/flutter_logo.png'),
+                    ),
+                    title: const Text('SampleItem'),
+                    subtitle: const Text(
+                        'A sufficiently long subtitle warrants three lines.'),
+                    trailing: const Icon(Icons.more_vert),
+                    isThreeLine: true,
+                    onTap: () {
+                      // Navigate to the details page. If the user leaves and returns to
+                      // the app after it has been killed while running in the
+                      // background, the navigation stack is restored.
+                      /*Navigator.restorablePushNamed(
                     context,
                     LogIn.routeName,
                   );*/
-                },
-              ),
-            ),
-            Card(
-              child: ListTile(
-                leading: const CircleAvatar(
-                  foregroundImage: AssetImage('assets/images/flutter_logo.png'),
+                    },
+                  ),
                 ),
-                title: const Text('SampleItem'),
-                subtitle: const Text(
-                    'A sufficiently long subtitle warrants three lines.'),
-                trailing: const Icon(Icons.more_vert),
-                isThreeLine: true,
-                onTap: () {
-                  // Navigate to the details page. If the user leaves and returns to
-                  // the app after it has been killed while running in the
-                  // background, the navigation stack is restored.
-                  /*Navigator.restorablePushNamed(
+                Card(
+                  child: ListTile(
+                    leading: const CircleAvatar(
+                      foregroundImage:
+                          AssetImage('assets/images/flutter_logo.png'),
+                    ),
+                    title: const Text('SampleItem'),
+                    subtitle: const Text(
+                        'A sufficiently long subtitle warrants three lines.'),
+                    trailing: const Icon(Icons.more_vert),
+                    isThreeLine: true,
+                    onTap: () {
+                      // Navigate to the details page. If the user leaves and returns to
+                      // the app after it has been killed while running in the
+                      // background, the navigation stack is restored.
+                      /*Navigator.restorablePushNamed(
                     context,
                     LogIn.routeName,
                   );*/
-                },
-              ),
+                    },
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

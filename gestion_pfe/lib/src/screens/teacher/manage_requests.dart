@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../resize_widget.dart';
 import 'manage_pfe.dart';
 
 /// Displays detailed information about a SampleItem.
@@ -17,7 +18,10 @@ class ManageRequests extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         // controller: controller,
-        child: Column(
+        child:Center(
+          child: resiseWidget(
+            context: context,
+            child: Column(
           children: [
             Card(
               child: ListTile(
@@ -103,6 +107,6 @@ class ManageRequests extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ),),);
   }
 }
