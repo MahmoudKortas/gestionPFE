@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gestion_pfe/src/screens/internship_service/document.dart';
-import 'package:gestion_pfe/src/screens/internship_service/juries_list.dart';
-import 'package:gestion_pfe/src/screens/internship_service/pfe_subject.dart';
-import 'package:gestion_pfe/src/screens/internship_service/result.dart';
-import 'package:gestion_pfe/src/screens/internship_service/students.dart';
-import 'package:gestion_pfe/src/screens/internship_service/teachers.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/document.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/juries_list.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/pfe_subject.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/result.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/students.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_enseignants.dart';
 
 import '../../resize_widget.dart';
 import '../calendar/events_example.dart';
@@ -109,7 +109,7 @@ class Dashboard extends StatelessWidget {
                       // background, the navigation stack is restored.
                       Navigator.restorablePushNamed(
                         context,
-                        Teachers.routeName,
+                        GererEnseignant.routeName,
                       );
                     },
                   ),

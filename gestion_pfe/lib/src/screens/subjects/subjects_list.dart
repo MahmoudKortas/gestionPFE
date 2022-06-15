@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../resize_widget.dart';
+import 'consulter_planning.dart';
+import 'detail_sujet.dart';
 
 /// Displays detailed information about a SampleItem.
-class SubjectsList extends StatelessWidget {
-  const SubjectsList({Key? key}) : super(key: key);
+class ListeDesSujets extends StatelessWidget {
+  const ListeDesSujets({Key? key}) : super(key: key);
 
-  static const routeName = '/SubjectsList';
+  static const routeName = '/ListeDesSujets';
   // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -34,10 +36,10 @@ class SubjectsList extends StatelessWidget {
                     trailing: const Icon(Icons.more_vert),
                     isThreeLine: true,
                     onTap: () {
-                      /*Navigator.restorablePushNamed(
-                    context,
-                    FollowPFE.routeName,
-                  );*/
+                      Navigator.restorablePushNamed(
+                        context,
+                        DetailSujet.routeName,
+                      );
                     },
                   ),
                 ),
@@ -53,13 +55,10 @@ class SubjectsList extends StatelessWidget {
                     trailing: const Icon(Icons.more_vert),
                     isThreeLine: true,
                     onTap: () {
-                      // Navigate to the details page. If the user leaves and returns to
-                      // the app after it has been killed while running in the
-                      // background, the navigation stack is restored.
-                      /*Navigator.restorablePushNamed(
-                    context,
-                    LogIn.routeName,
-                  );*/
+                      Navigator.restorablePushNamed(
+                        context,
+                        DetailSujet.routeName,
+                      );
                     },
                   ),
                 ),
@@ -75,13 +74,10 @@ class SubjectsList extends StatelessWidget {
                     trailing: const Icon(Icons.more_vert),
                     isThreeLine: true,
                     onTap: () {
-                      // Navigate to the details page. If the user leaves and returns to
-                      // the app after it has been killed while running in the
-                      // background, the navigation stack is restored.
-                      /*Navigator.restorablePushNamed(
-                    context,
-                    LogIn.routeName,
-                  );*/
+                      Navigator.restorablePushNamed(
+                        context,
+                        DetailSujet.routeName,
+                      );
                     },
                   ),
                 ),
@@ -97,13 +93,10 @@ class SubjectsList extends StatelessWidget {
                     trailing: const Icon(Icons.more_vert),
                     isThreeLine: true,
                     onTap: () {
-                      // Navigate to the details page. If the user leaves and returns to
-                      // the app after it has been killed while running in the
-                      // background, the navigation stack is restored.
-                      /*Navigator.restorablePushNamed(
-                    context,
-                    LogIn.routeName,
-                  );*/
+                      Navigator.restorablePushNamed(
+                        context,
+                        DetailSujet.routeName,
+                      );
                     },
                   ),
                 ),

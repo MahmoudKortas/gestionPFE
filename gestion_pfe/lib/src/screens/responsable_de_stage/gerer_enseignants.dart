@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.
-class ManagePFE extends StatelessWidget {
-  const ManagePFE({Key? key}) : super(key: key);
+class GererEnseignant extends StatelessWidget {
+  const GererEnseignant({Key? key}) : super(key: key);
 
-  static const routeName = '/ManagePFE';
+  static const routeName = '/GererEnseignant';
   // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gèrer PFE étudiant'),
+        title: const Text('Gérer enseignants'),
       ),
       body: SingleChildScrollView(
         // controller: controller,
@@ -22,13 +22,17 @@ class ManagePFE extends StatelessWidget {
             context: context,
             child: Column(
               children: [
+                const ElevatedButton(
+                  onPressed: null,
+                  child: Text("Ajouter"),
+                ),
                 Card(
                   child: ListTile(
                     leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),
-                    title: const Text('Etudiant 1'),
+                    title: const Text('Enseignant 1'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
@@ -36,7 +40,7 @@ class ManagePFE extends StatelessWidget {
                     onTap: () {
                       /*Navigator.restorablePushNamed(
                     context,
-                    ManageRequests.routeName,
+                    FollowPFE.routeName,
                   );*/
                     },
                   ),
@@ -47,15 +51,18 @@ class ManagePFE extends StatelessWidget {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),
-                    title: const Text('Etudiant 2'),
+                    title: const Text('Enseignant 2'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
                     isThreeLine: true,
                     onTap: () {
+                      // Navigate to the details page. If the user leaves and returns to
+                      // the app after it has been killed while running in the
+                      // background, the navigation stack is restored.
                       /*Navigator.restorablePushNamed(
                     context,
-                    ManageRequests.routeName,
+                    LogIn.routeName,
                   );*/
                     },
                   ),
@@ -66,15 +73,18 @@ class ManagePFE extends StatelessWidget {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),
-                    title: const Text('Etudiant 3'),
+                    title: const Text('Enseignant 2'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
                     isThreeLine: true,
                     onTap: () {
+                      // Navigate to the details page. If the user leaves and returns to
+                      // the app after it has been killed while running in the
+                      // background, the navigation stack is restored.
                       /*Navigator.restorablePushNamed(
                     context,
-                    ManageRequests.routeName,
+                    LogIn.routeName,
                   );*/
                     },
                   ),
@@ -85,15 +95,18 @@ class ManagePFE extends StatelessWidget {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),
-                    title: const Text('Etudiant 4'),
+                    title: const Text('Enseignant 3'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
                     isThreeLine: true,
                     onTap: () {
+                      // Navigate to the details page. If the user leaves and returns to
+                      // the app after it has been killed while running in the
+                      // background, the navigation stack is restored.
                       /*Navigator.restorablePushNamed(
                     context,
-                    ManageRequests.routeName,
+                    LogIn.routeName,
                   );*/
                     },
                   ),

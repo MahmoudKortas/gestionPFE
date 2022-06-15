@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/entites/description.dart';
-import 'package:gestion_pfe/src/screens/authentification/sign_in.dart';
+import 'package:gestion_pfe/src/screens/authentification/authentification.dart';
 
 import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.
-class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
-  static const routeName = '/signUp';
+class Inscription extends StatefulWidget {
+  const Inscription({Key? key}) : super(key: key);
+  static const routeName = '/inscription';
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<Inscription> createState() => _InscriptionState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _InscriptionState extends State<Inscription> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _items = [
     'informatique',
@@ -30,7 +30,7 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('signIn'),
+        title: const Text("S'inscrire"),
       ),
       body: SingleChildScrollView(
         // controller: controller,
@@ -45,105 +45,138 @@ class _SignUpState extends State<SignUp> {
                     children: <Widget>[
                       TextFormField(
                         decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.person),
                           hintText: 'Saisir votre nom',
                         ),
                         validator: (String? value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
+                            return 'Entrez votre nom';
                           }
                           return null;
                         },
                       ),
                       TextFormField(
                         decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.person),
                           hintText: 'Saisir votre prenom',
                         ),
                         validator: (String? value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
+                            return 'Entrez votre prenom';
                           }
                           return null;
                         },
                       ),
                       TextFormField(
                         decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.phone),
                           hintText: 'Saisir votre telephone',
                         ),
                         validator: (String? value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
+                            return 'Entrez votre telephone';
                           }
                           return null;
                         },
                       ),
                       TextFormField(
                         decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.location_city),
                           hintText: 'Saisir votre adresse',
                         ),
                         validator: (String? value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
+                            return 'Entrez votre adresse';
                           }
                           return null;
                         },
                       ),
                       TextFormField(
                         decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.email),
                           hintText: 'Saisir votre email',
                         ),
                         validator: (String? value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
+                            return 'Entrez votre email';
                           }
                           return null;
                         },
                       ),
                       TextFormField(
                         decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.lock),
                           hintText: 'Saisir votre password',
                         ),
                         validator: (String? value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
+                            return 'Entrez votre password';
                           }
                           return null;
                         },
                       ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: 'Saisir votre role',
-                        ),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
+                      DropdownButton<String>(
+                        hint: const Text("choisir votre domaine"),
+                        value: value,
+                        iconSize: 36,
+                        icon: const Icon(Icons.arrow_drop_down,
+                            color: Colors.black),
+                        items: _items.map(buildMenuItem).toList(),
+                        onChanged: (value) =>
+                            setState(() => this.value = value),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10.0)),
                       ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: 'Saisir votre specialité',
-                        ),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
+                      DropdownButton<String>(
+                        hint: const Text("choisir votre diplome"),
+                        value: value,
+                        iconSize: 36,
+                        icon: const Icon(Icons.arrow_drop_down,
+                            color: Colors.black),
+                        items: _items.map(buildMenuItem).toList(),
+                        onChanged: (value) =>
+                            setState(() => this.value = value),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10.0)),
                       ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: 'Saisir votre specialité',
-                        ),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
+                      DropdownButton<String>(
+                        hint: const Text("choisir votre departement"),
+                        value: value,
+                        iconSize: 36,
+                        icon: const Icon(Icons.arrow_drop_down,
+                            color: Colors.black),
+                        items: _items.map(buildMenuItem).toList(),
+                        onChanged: (value) =>
+                            setState(() => this.value = value),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10.0)),
                       ),
-                      Column(   
-                        //TODO: center attributes                     
+                      DropdownButton<String>(
+                        hint: const Text("choisir votre niveau"),
+                        value: value,
+                        iconSize: 36,
+                        icon: const Icon(Icons.arrow_drop_down,
+                            color: Colors.black),
+                        items: _items.map(buildMenuItem).toList(),
+                        onChanged: (value) =>
+                            setState(() => this.value = value),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                      DropdownButton<String>(
+                        hint: const Text("choisir votre specialité"),
+                        value: value,
+                        iconSize: 36,
+                        icon: const Icon(Icons.arrow_drop_down,
+                            color: Colors.black),
+                        items: _items.map(buildMenuItem).toList(),
+                        onChanged: (value) =>
+                            setState(() => this.value = value),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                      Column(
+                        //TODO: center attributes
                         children: <Widget>[
                           ListTile(
                             title: const Text('Enseignant'),
@@ -171,18 +204,6 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ],
                       ),
-                      DropdownButton<String>(
-                        hint: const Text("choisir votre domaine"),
-                        value: value,
-                        iconSize: 36,
-                        icon: const Icon(Icons.arrow_drop_down,
-                            color: Colors.black),
-                        items: _items.map(buildMenuItem).toList(),
-                        onChanged: (value) =>
-                            setState(() => this.value = value),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10.0)),
-                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: ElevatedButton(
@@ -193,9 +214,7 @@ class _SignUpState extends State<SignUp> {
                           // Process data.
                         }*/
                             Navigator.restorablePushNamed(
-                              context,
-                              SignIn.routeName,
-                            );
+                                context, Authentification.routeName);
                           },
                           child: const Text("S'inscrire"),
                         ),

@@ -1,17 +1,17 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
-import 'package:gestion_pfe/src/screens/authentification/sign_up.dart';
-import 'package:gestion_pfe/src/screens/student/choose_propse_subject.dart';
+import 'package:gestion_pfe/src/screens/authentification/inscription.dart';
+import 'package:gestion_pfe/src/screens/accueil/accueil.dart';
 
 import '../../color_hex.dart';
 import '../../resize_widget.dart';
 import '../../size_config.dart';
 
 /// Displays detailed information about a SampleItem.
-class SignIn extends StatelessWidget {
-  SignIn({Key? key}) : super(key: key);
+class Authentification extends StatelessWidget {
+  Authentification({Key? key}) : super(key: key);
 
-  static const routeName = '/SignIn';
+  static const routeName = '/Authentification';
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -19,7 +19,7 @@ class SignIn extends StatelessWidget {
     SizeConfig().init(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('logIn'),
+        title: const Text("S'authentifier"),
       ),
       body: SingleChildScrollView(
         // controller: controller,
@@ -28,28 +28,31 @@ class SignIn extends StatelessWidget {
             context: context,
             child: Column(
               children: [
+                Image.asset("assets/images/logo-epi.png"),
                 Form(
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
                       TextFormField(
                         decoration: const InputDecoration(
-                          hintText: 'Saisir votre email',
+                          prefixIcon: Icon(Icons.person),
+                          hintText: 'Saisir votre login',
                         ),
                         validator: (String? value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
+                            return 'entrez votre login';
                           }
                           return null;
                         },
                       ),
                       TextFormField(
                         decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.lock),
                           hintText: 'Saisir votre mot de passe',
                         ),
                         validator: (String? value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
+                            return 'entrez votre mot de passe';
                           }
                           return null;
                         },
@@ -65,7 +68,7 @@ class SignIn extends StatelessWidget {
                         }*/
                             Navigator.restorablePushNamed(
                               context,
-                              ChoosePropseSubject.routeName,
+                              Accueil.routeName,
                             );
                           },
                           child: const Text('Connexion'),
@@ -75,14 +78,15 @@ class SignIn extends StatelessWidget {
                         child: Text("Inscription",
                             style: TextStyle(
                                 decoration: TextDecoration.underline,
+                                decorationThickness: 1.5,
                                 color: HexColor("c9242e"))),
                         onTap: () {
                           Navigator.restorablePushNamed(
                             context,
-                            SignUp.routeName,
+                            Inscription.routeName,
                           );
                         },
-                      )
+                      ),
                     ],
                   ),
                 ),

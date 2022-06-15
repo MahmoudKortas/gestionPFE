@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'custom_theme.dart';
-import 'screens/internship_service/calander.dart';
-import 'screens/internship_service/dashboard.dart';
-import 'screens/internship_service/document.dart';
-import 'screens/internship_service/juries_list.dart';
-import 'screens/internship_service/pfe_subject.dart';
-import 'screens/internship_service/result.dart';
-import 'screens/internship_service/students.dart';
-import 'screens/internship_service/teachers.dart';
-import 'screens/authentification/sign_in.dart';
-import 'screens/authentification/sign_up.dart';
-import 'screens/subjects/propose_subject.dart';
-import 'screens/student/follow_pfe.dart';
-import 'screens/student/choose_propse_subject.dart';
+import 'screens/responsable_de_stage/calander.dart';
+import 'screens/responsable_de_stage/dashboard.dart';
+import 'screens/responsable_de_stage/document.dart';
+import 'screens/responsable_de_stage/juries_list.dart';
+import 'screens/responsable_de_stage/pfe_subject.dart';
+import 'screens/responsable_de_stage/result.dart';
+import 'screens/responsable_de_stage/students.dart';
+import 'screens/responsable_de_stage/gerer_enseignants.dart';
+import 'screens/authentification/authentification.dart';
+import 'screens/authentification/inscription.dart';
+import 'screens/subjects/detail_sujet.dart';
+import 'screens/subjects/proposer_sujet.dart';
+import 'screens/subjects/consulter_planning.dart';
+import 'screens/accueil/accueil.dart';
 import 'screens/subjects/subjects_list.dart';
-import 'screens/teacher/manage_pfe.dart';
-import 'screens/teacher/manage_requests.dart';
+import 'screens/teacher/gerer_demande_des_sujets.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
 
@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
           /*theme: ThemeData(),
           darkTheme: ThemeData.dark(),
           themeMode: settingsController.themeMode,*/
-          darkTheme:lightTheme, //darkTheme,
+          darkTheme: lightTheme, //darkTheme,
           theme: lightTheme,
           themeMode: ThemeMode.system,
           // Define a function to handle named routes in order to support
@@ -86,18 +86,16 @@ class MyApp extends StatelessWidget {
                 switch (routeSettings.name) {
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
-                  case SignIn.routeName:
-                    return SignIn();
-                  case SignUp.routeName:
-                    return const SignUp();
-                  case ChoosePropseSubject.routeName:
-                    return const ChoosePropseSubject();
-                  case FollowPFE.routeName:
-                    return const FollowPFE();
-                  case ManageRequests.routeName:
-                    return const ManageRequests();
-                  case ManagePFE.routeName:
-                    return const ManagePFE();
+                  case Authentification.routeName:
+                    return Authentification();
+                  case Inscription.routeName:
+                    return const Inscription();
+                  case Accueil.routeName:
+                    return const Accueil();
+                  case ConsulterPlanning.routeName:
+                    return const ConsulterPlanning();
+                  case GererDemandeDesSujetsPFE.routeName:
+                    return const GererDemandeDesSujetsPFE();
                   case Dashboard.routeName:
                     return const Dashboard();
                   case Result.routeName:
@@ -106,20 +104,22 @@ class MyApp extends StatelessWidget {
                     return const PFESubject();
                   case Document.routeName:
                     return const Document();
-                  case Teachers.routeName:
-                    return const Teachers();
+                  case GererEnseignant.routeName:
+                    return const GererEnseignant();
                   case Calander.routeName:
                     return const Calander();
                   case Students.routeName:
                     return const Students();
                   case JuriesList.routeName:
                     return const JuriesList();
-                  case ProposeSubject.routeName:
-                    return const ProposeSubject();
-                  case SubjectsList.routeName:
-                    return const SubjectsList();
+                  case ProposerSujet.routeName:
+                    return ProposerSujet();
+                  case ListeDesSujets.routeName:
+                    return const ListeDesSujets();
+                  case DetailSujet.routeName:
+                    return const DetailSujet();
                   default:
-                    return SignIn();
+                    return Authentification();
                 }
               },
             );
