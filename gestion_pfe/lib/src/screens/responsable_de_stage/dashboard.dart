@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gestion_pfe/src/screens/responsable_de_stage/document.dart';
-import 'package:gestion_pfe/src/screens/responsable_de_stage/juries_list.dart';
-import 'package:gestion_pfe/src/screens/responsable_de_stage/pfe_subject.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_document.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_liste_des_juries_list.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_sujets_pfe.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/result.dart';
-import 'package:gestion_pfe/src/screens/responsable_de_stage/students.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_etudiant.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_enseignants.dart';
 
 import '../../resize_widget.dart';
@@ -65,7 +65,7 @@ class Dashboard extends StatelessWidget {
                       // background, the navigation stack is restored.
                       Navigator.restorablePushNamed(
                         context,
-                        PFESubject.routeName,
+                        GererSujetsPFE.routeName,
                       );
                     },
                   ),
@@ -87,7 +87,7 @@ class Dashboard extends StatelessWidget {
                       // background, the navigation stack is restored.
                       Navigator.restorablePushNamed(
                         context,
-                        Document.routeName,
+                        GererDocument.routeName,
                       );
                     },
                   ),
@@ -154,7 +154,7 @@ class Dashboard extends StatelessWidget {
                       // background, the navigation stack is restored.
                       Navigator.restorablePushNamed(
                         context,
-                        Students.routeName,
+                        GererEtudiant.routeName,
                       );
                     },
                   ),
@@ -176,7 +176,7 @@ class Dashboard extends StatelessWidget {
                       // background, the navigation stack is restored.
                       Navigator.restorablePushNamed(
                         context,
-                        JuriesList.routeName,
+                        GererListeDesJuries.routeName,
                       );
                     },
                   ),

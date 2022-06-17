@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:gestion_pfe/src/screens/subjects/detail_sujet.dart';
 
 import '../../resize_widget.dart';
+import 'consulter_planning.dart';
+import 'detail_sujet.dart';
 
 /// Displays detailed information about a SampleItem.
-class GererDemandeDesSujetsPFE extends StatelessWidget {
-  const GererDemandeDesSujetsPFE({Key? key}) : super(key: key);
+class ListeDesSujets extends StatelessWidget {
+  const ListeDesSujets({Key? key}) : super(key: key);
 
-  static const routeName = '/GererDemandeDesSujetsPFE';
+  static const routeName = '/ListeDesSujets';
   // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gérer demandes des sujets des PFE'),
+        title: const Text('Liste des sujets'),
       ),
       body: SingleChildScrollView(
         // controller: controller,
@@ -29,16 +30,16 @@ class GererDemandeDesSujetsPFE extends StatelessWidget {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),
-                    title: const Text('Sujet 1'),
+                    title: const Text('sujet 1'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
                     isThreeLine: true,
                     onTap: () {
-                      Navigator.restorablePushNamed(
-                        context,
-                        DetailSujet.routeName,
-                      );
+                      Navigator.pushNamed(context, DetailSujet.routeName,
+                          arguments: DetailSujet(
+                            fonction: "etudiant",
+                          ));
                     },
                   ),
                 ),
@@ -48,16 +49,16 @@ class GererDemandeDesSujetsPFE extends StatelessWidget {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),
-                    title: const Text('Sujet 2'),
+                    title: const Text('sujet 2'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
                     isThreeLine: true,
                     onTap: () {
-                      Navigator.restorablePushNamed(
-                        context,
-                        DetailSujet.routeName,
-                      );
+                      Navigator.pushNamed(context, DetailSujet.routeName,
+                          arguments: DetailSujet(
+                            fonction: "etudiant",
+                          ));
                     },
                   ),
                 ),
@@ -67,16 +68,16 @@ class GererDemandeDesSujetsPFE extends StatelessWidget {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),
-                    title: const Text('Sujet 3'),
+                    title: const Text('sujet 3'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
                     isThreeLine: true,
                     onTap: () {
-                      Navigator.restorablePushNamed(
-                        context,
-                        DetailSujet.routeName,
-                      );
+                      Navigator.pushNamed(context, DetailSujet.routeName,
+                          arguments: DetailSujet(
+                            fonction: "etudiant",
+                          ));
                     },
                   ),
                 ),
@@ -86,16 +87,16 @@ class GererDemandeDesSujetsPFE extends StatelessWidget {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),
-                    title: const Text('Sujet 4'),
+                    title: const Text('sujet 4'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
                     isThreeLine: true,
                     onTap: () {
-                      Navigator.restorablePushNamed(
-                        context,
-                        DetailSujet.routeName,
-                      );
+                      Navigator.pushNamed(context, DetailSujet.routeName,
+                          arguments: DetailSujet(
+                            fonction: "etudiant",
+                          ));
                     },
                   ),
                 ),

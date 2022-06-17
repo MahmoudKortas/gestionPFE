@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+
 import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.
-class GererEnseignant extends StatefulWidget {
-  GererEnseignant({Key? key}) : super(key: key);
-  static const routeName = '/GererEnseignant';
+class GererEtudiant extends StatefulWidget {
+  GererEtudiant({Key? key}) : super(key: key);
+
+  static const routeName = '/GererEtudiant';
   @override
-  State<GererEnseignant> createState() => _GererEnseignantState();
+  State<GererEtudiant> createState() => _GererEtudiantState();
 }
 
-class _GererEnseignantState extends State<GererEnseignant> {
+class _GererEtudiantState extends State<GererEtudiant> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final _items = [
@@ -26,7 +28,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gérer enseignants'),
+        title: const Text('Gérer Etudiants'),
       ),
       body: SingleChildScrollView(
         // controller: controller,
@@ -116,10 +118,45 @@ class _GererEnseignantState extends State<GererEnseignant> {
                   onChanged: (value) => setState(() => this.value = value),
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                 ),
-                 ElevatedButton(
-                  // ignore: avoid_print
-                  onPressed: ()=>print("object"),
-                  child:const Text("Ajouter"),
+                DropdownButton<String>(
+                  hint: const Text("choisir votre diplome"),
+                  value: value,
+                  iconSize: 36,
+                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+                  items: _items.map(buildMenuItem).toList(),
+                  onChanged: (value) => setState(() => this.value = value),
+                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                ),
+                DropdownButton<String>(
+                  hint: const Text("choisir votre departement"),
+                  value: value,
+                  iconSize: 36,
+                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+                  items: _items.map(buildMenuItem).toList(),
+                  onChanged: (value) => setState(() => this.value = value),
+                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                ),
+                DropdownButton<String>(
+                  hint: const Text("choisir votre niveau"),
+                  value: value,
+                  iconSize: 36,
+                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+                  items: _items.map(buildMenuItem).toList(),
+                  onChanged: (value) => setState(() => this.value = value),
+                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                ),
+                DropdownButton<String>(
+                  hint: const Text("choisir votre specialité"),
+                  value: value,
+                  iconSize: 36,
+                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+                  items: _items.map(buildMenuItem).toList(),
+                  onChanged: (value) => setState(() => this.value = value),
+                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                ),
+                const ElevatedButton(
+                  onPressed: null,
+                  child: Text("Ajouter"),
                 ),
                 Card(
                   child: ListTile(
@@ -127,7 +164,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),
-                    title: const Text('Enseignant 1'),
+                    title: const Text('Etudiant 1'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
@@ -135,7 +172,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
                     onTap: () => showDialog<String>(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
-                        title: const Text('Modifier / Supprimer enseignant'),
+                        title: const Text('Modifier / Supprimer etudiant'),
                         content: SingleChildScrollView(
                           child: Column(
                             children: [
@@ -223,6 +260,54 @@ class _GererEnseignantState extends State<GererEnseignant> {
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(10.0)),
                               ),
+                              DropdownButton<String>(
+                                hint: const Text("choisir votre diplome"),
+                                value: value,
+                                iconSize: 36,
+                                icon: const Icon(Icons.arrow_drop_down,
+                                    color: Colors.black),
+                                items: _items.map(buildMenuItem).toList(),
+                                onChanged: (value) =>
+                                    setState(() => this.value = value),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0)),
+                              ),
+                              DropdownButton<String>(
+                                hint: const Text("choisir votre departement"),
+                                value: value,
+                                iconSize: 36,
+                                icon: const Icon(Icons.arrow_drop_down,
+                                    color: Colors.black),
+                                items: _items.map(buildMenuItem).toList(),
+                                onChanged: (value) =>
+                                    setState(() => this.value = value),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0)),
+                              ),
+                              DropdownButton<String>(
+                                hint: const Text("choisir votre niveau"),
+                                value: value,
+                                iconSize: 36,
+                                icon: const Icon(Icons.arrow_drop_down,
+                                    color: Colors.black),
+                                items: _items.map(buildMenuItem).toList(),
+                                onChanged: (value) =>
+                                    setState(() => this.value = value),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0)),
+                              ),
+                              DropdownButton<String>(
+                                hint: const Text("choisir votre specialité"),
+                                value: value,
+                                iconSize: 36,
+                                icon: const Icon(Icons.arrow_drop_down,
+                                    color: Colors.black),
+                                items: _items.map(buildMenuItem).toList(),
+                                onChanged: (value) =>
+                                    setState(() => this.value = value),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0)),
+                              ),
                             ],
                           ),
                         ),
@@ -247,7 +332,6 @@ class _GererEnseignantState extends State<GererEnseignant> {
                         ],
                       ),
                     ),
-                  
                   ),
                 ),
                 Card(
@@ -256,7 +340,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),
-                    title: const Text('Enseignant 2'),
+                    title: const Text('Etudiant 2'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
@@ -278,7 +362,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),
-                    title: const Text('Enseignant 2'),
+                    title: const Text('Etudiant 2'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
@@ -300,7 +384,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),
-                    title: const Text('Enseignant 3'),
+                    title: const Text('Etudiant 3'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),

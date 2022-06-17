@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.
-class PFESubject extends StatelessWidget {
-  const PFESubject({Key? key}) : super(key: key);
+class GererSujetsPFE extends StatelessWidget {
+  const GererSujetsPFE({Key? key}) : super(key: key);
 
   static const routeName = '/PFESubject';
   // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -24,17 +24,6 @@ class PFESubject extends StatelessWidget {
               children: [
                 TextFormField(
                   decoration: const InputDecoration(
-                    hintText: 'Saisir id du PFE',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
                     hintText: 'Saisir le note du PFE',
                   ),
                   validator: (String? value) {
@@ -46,7 +35,7 @@ class PFESubject extends StatelessWidget {
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
-                    hintText: 'Saisir id du PFE',
+                    hintText: 'Saisir le titre du PFE',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
@@ -57,7 +46,7 @@ class PFESubject extends StatelessWidget {
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
-                    hintText: 'Saisir le note du PFE',
+                    hintText: 'Saisir le domaine du PFE',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
@@ -68,7 +57,7 @@ class PFESubject extends StatelessWidget {
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
-                    hintText: 'Saisir id du PFE',
+                    hintText: "Saisir l'encadreur du PFE",
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
@@ -79,7 +68,7 @@ class PFESubject extends StatelessWidget {
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
-                    hintText: 'Saisir le note du PFE',
+                    hintText: "Saisir l'etudiant' du PFE",
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
@@ -90,7 +79,7 @@ class PFESubject extends StatelessWidget {
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
-                    hintText: 'Saisir id du PFE',
+                    hintText: 'Saisir date debut du PFE',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
@@ -101,7 +90,7 @@ class PFESubject extends StatelessWidget {
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
-                    hintText: 'Saisir le note du PFE',
+                    hintText: 'Saisir date fin du PFE',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
@@ -112,7 +101,7 @@ class PFESubject extends StatelessWidget {
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
-                    hintText: 'Saisir id du PFE',
+                    hintText: 'Saisir note PFE',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
@@ -123,7 +112,7 @@ class PFESubject extends StatelessWidget {
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
-                    hintText: 'Saisir le note du PFE',
+                    hintText: 'Saisir date soutenance du PFE',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
@@ -134,7 +123,7 @@ class PFESubject extends StatelessWidget {
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
-                    hintText: 'Saisir id du PFE',
+                    hintText: 'Saisir document du PFE',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
@@ -143,149 +132,7 @@ class PFESubject extends StatelessWidget {
                     return null;
                   },
                 ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Saisir le note du PFE',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Saisir id du PFE',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Saisir le note du PFE',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Saisir id du PFE',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Saisir le note du PFE',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Saisir id du PFE',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Saisir le note du PFE',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Saisir id du PFE',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Saisir le note du PFE',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Saisir id du PFE',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Saisir le note du PFE',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Saisir id du PFE',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Saisir le note du PFE',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
+                
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: ElevatedButton(

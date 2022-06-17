@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.
-class JuriesList extends StatelessWidget {
-  const JuriesList({Key? key}) : super(key: key);
+class GererListeDesJuries extends StatelessWidget {
+  const GererListeDesJuries({Key? key}) : super(key: key);
 
   static const routeName = '/JuriesList';
   // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();

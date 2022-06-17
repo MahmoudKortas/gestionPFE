@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/iconWidget.dart';
 
 import '../../resize_widget.dart';
+import '../calendar/events_example.dart';
 import '../responsable_de_stage/dashboard.dart';
 import '../subjects/proposer_sujet.dart';
-import '../subjects/subjects_list.dart';
-import '../teacher/gerer_demande_des_sujets.dart';
+import '../subjects/liste_des_sujets.dart';
+import '../enseignant/gerer_demande_des_sujets.dart';
 import '../subjects/consulter_planning.dart';
 
 /// Displays detailed information about a SampleItem.
@@ -28,10 +30,7 @@ class Accueil extends StatelessWidget {
               children: [
                 Card(
                   child: ListTile(
-                    leading: const CircleAvatar(
-                      foregroundImage:
-                          AssetImage('assets/images/flutter_logo.png'),
-                    ),
+                    leading: iconWidget(Icons.add_chart),
                     title: const Text('Proposer votre sujet'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
@@ -47,10 +46,7 @@ class Accueil extends StatelessWidget {
                 ),
                 Card(
                   child: ListTile(
-                    leading: const CircleAvatar(
-                      foregroundImage:
-                          AssetImage('assets/images/flutter_logo.png'),
-                    ),
+                    leading: iconWidget(Icons.offline_pin),
                     title: const Text('choisir sujet'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
@@ -66,29 +62,29 @@ class Accueil extends StatelessWidget {
                 ),
                 Card(
                   child: ListTile(
-                    leading: const CircleAvatar(
-                      foregroundImage:
-                          AssetImage('assets/images/flutter_logo.png'),
-                    ),
+                    leading: iconWidget(Icons.calendar_month),
                     title: const Text('Consulter le planning du PFE'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
                     isThreeLine: true,
                     onTap: () {
-                      Navigator.restorablePushNamed(
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const TableEventsExample(),
+                        ),
+                      );
+                      /*Navigator.restorablePushNamed(
                         context,
                         ConsulterPlanning.routeName,
-                      );
+                      );*/
                     },
                   ),
                 ),
                 Card(
                   child: ListTile(
-                    leading: const CircleAvatar(
-                      foregroundImage:
-                          AssetImage('assets/images/flutter_logo.png'),
-                    ),
+                    leading: iconWidget(Icons.offline_pin),
                     title: const Text('Gerer demande des sujets PFE'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
@@ -107,10 +103,7 @@ class Accueil extends StatelessWidget {
                 ),
                 Card(
                   child: ListTile(
-                    leading: const CircleAvatar(
-                      foregroundImage:
-                          AssetImage('assets/images/flutter_logo.png'),
-                    ),
+                    leading: iconWidget(Icons.dashboard),
                     title: const Text('Tableau de bord'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),

@@ -75,11 +75,15 @@ class Authentification extends StatelessWidget {
                         ),
                       ),
                       GestureDetector(
-                        child: Text("Inscription",
-                            style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                decorationThickness: 1.5,
-                                color: HexColor("c9242e"))),
+                        child: Text(
+                          "Inscription",
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            decorationThickness: 1.5,
+                            color: HexColor("c9242e"),
+                            fontSize: 20,
+                          ),
+                        ),
                         onTap: () {
                           Navigator.restorablePushNamed(
                             context,

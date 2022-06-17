@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/entites/description.dart';
 import 'package:gestion_pfe/src/screens/authentification/authentification.dart';
@@ -115,66 +116,6 @@ class _InscriptionState extends State<Inscription> {
                           return null;
                         },
                       ),
-                      DropdownButton<String>(
-                        hint: const Text("choisir votre domaine"),
-                        value: value,
-                        iconSize: 36,
-                        icon: const Icon(Icons.arrow_drop_down,
-                            color: Colors.black),
-                        items: _items.map(buildMenuItem).toList(),
-                        onChanged: (value) =>
-                            setState(() => this.value = value),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10.0)),
-                      ),
-                      DropdownButton<String>(
-                        hint: const Text("choisir votre diplome"),
-                        value: value,
-                        iconSize: 36,
-                        icon: const Icon(Icons.arrow_drop_down,
-                            color: Colors.black),
-                        items: _items.map(buildMenuItem).toList(),
-                        onChanged: (value) =>
-                            setState(() => this.value = value),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10.0)),
-                      ),
-                      DropdownButton<String>(
-                        hint: const Text("choisir votre departement"),
-                        value: value,
-                        iconSize: 36,
-                        icon: const Icon(Icons.arrow_drop_down,
-                            color: Colors.black),
-                        items: _items.map(buildMenuItem).toList(),
-                        onChanged: (value) =>
-                            setState(() => this.value = value),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10.0)),
-                      ),
-                      DropdownButton<String>(
-                        hint: const Text("choisir votre niveau"),
-                        value: value,
-                        iconSize: 36,
-                        icon: const Icon(Icons.arrow_drop_down,
-                            color: Colors.black),
-                        items: _items.map(buildMenuItem).toList(),
-                        onChanged: (value) =>
-                            setState(() => this.value = value),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10.0)),
-                      ),
-                      DropdownButton<String>(
-                        hint: const Text("choisir votre specialité"),
-                        value: value,
-                        iconSize: 36,
-                        icon: const Icon(Icons.arrow_drop_down,
-                            color: Colors.black),
-                        items: _items.map(buildMenuItem).toList(),
-                        onChanged: (value) =>
-                            setState(() => this.value = value),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10.0)),
-                      ),
                       Column(
                         //TODO: center attributes
                         children: <Widget>[
@@ -184,9 +125,7 @@ class _InscriptionState extends State<Inscription> {
                               value: Description.enseignant,
                               groupValue: _description,
                               onChanged: (Description? value) {
-                                setState(() {
-                                  _description = value!;
-                                });
+                                radiochange(value);
                               },
                             ),
                           ),
@@ -196,14 +135,77 @@ class _InscriptionState extends State<Inscription> {
                               value: Description.etudiant,
                               groupValue: _description,
                               onChanged: (Description? value) {
-                                setState(() {
-                                  _description = value!;
-                                });
+                                radiochange(value);
                               },
                             ),
                           ),
                         ],
                       ),
+                      _description.toString().contains("enseignant")
+                          ? DropdownButton<String>(
+                              hint: const Text("choisir votre domaine"),
+                              value: value,
+                              iconSize: 36,
+                              icon: const Icon(Icons.arrow_drop_down,
+                                  color: Colors.black),
+                              items: _items.map(buildMenuItem).toList(),
+                              onChanged: (value) =>
+                                  setState(() => this.value = value),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10.0)),
+                            )
+                          : Column(
+                              children: [
+                                DropdownButton<String>(
+                                  hint: const Text("choisir votre diplome"),
+                                  value: value,
+                                  iconSize: 36,
+                                  icon: const Icon(Icons.arrow_drop_down,
+                                      color: Colors.black),
+                                  items: _items.map(buildMenuItem).toList(),
+                                  onChanged: (value) =>
+                                      setState(() => this.value = value),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10.0)),
+                                ),
+                                DropdownButton<String>(
+                                  hint: const Text("choisir votre departement"),
+                                  value: value,
+                                  iconSize: 36,
+                                  icon: const Icon(Icons.arrow_drop_down,
+                                      color: Colors.black),
+                                  items: _items.map(buildMenuItem).toList(),
+                                  onChanged: (value) =>
+                                      setState(() => this.value = value),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10.0)),
+                                ),
+                                DropdownButton<String>(
+                                  hint: const Text("choisir votre niveau"),
+                                  value: value,
+                                  iconSize: 36,
+                                  icon: const Icon(Icons.arrow_drop_down,
+                                      color: Colors.black),
+                                  items: _items.map(buildMenuItem).toList(),
+                                  onChanged: (value) =>
+                                      setState(() => this.value = value),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10.0)),
+                                ),
+                                DropdownButton<String>(
+                                  hint: const Text("choisir votre specialité"),
+                                  value: value,
+                                  iconSize: 36,
+                                  icon: const Icon(Icons.arrow_drop_down,
+                                      color: Colors.black),
+                                  items: _items.map(buildMenuItem).toList(),
+                                  onChanged: (value) =>
+                                      setState(() => this.value = value),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10.0)),
+                                ),
+                              ],
+                            ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: ElevatedButton(
@@ -228,6 +230,16 @@ class _InscriptionState extends State<Inscription> {
         ),
       ),
     );
+  }
+
+  void radiochange(Description? value) {
+    setState(() {
+      _description = value!;
+    });
+    /*if (kDebugMode) {
+      print("_description::$_description");
+      print("value::$value");
+    }*/
   }
 
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(

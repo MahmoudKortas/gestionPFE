@@ -4,11 +4,11 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'custom_theme.dart';
 import 'screens/responsable_de_stage/calander.dart';
 import 'screens/responsable_de_stage/dashboard.dart';
-import 'screens/responsable_de_stage/document.dart';
-import 'screens/responsable_de_stage/juries_list.dart';
-import 'screens/responsable_de_stage/pfe_subject.dart';
+import 'screens/responsable_de_stage/gerer_document.dart';
+import 'screens/responsable_de_stage/gerer_liste_des_juries_list.dart';
+import 'screens/responsable_de_stage/gerer_sujets_pfe.dart';
 import 'screens/responsable_de_stage/result.dart';
-import 'screens/responsable_de_stage/students.dart';
+import 'screens/responsable_de_stage/gerer_etudiant.dart';
 import 'screens/responsable_de_stage/gerer_enseignants.dart';
 import 'screens/authentification/authentification.dart';
 import 'screens/authentification/inscription.dart';
@@ -16,8 +16,8 @@ import 'screens/subjects/detail_sujet.dart';
 import 'screens/subjects/proposer_sujet.dart';
 import 'screens/subjects/consulter_planning.dart';
 import 'screens/accueil/accueil.dart';
-import 'screens/subjects/subjects_list.dart';
-import 'screens/teacher/gerer_demande_des_sujets.dart';
+import 'screens/subjects/liste_des_sujets.dart';
+import 'screens/enseignant/gerer_demande_des_sujets.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
 
@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
           // Define a function to handle named routes in order to support
           // Flutter web url navigation and deep linking.
           onGenerateRoute: (RouteSettings routeSettings) {
-            return MaterialPageRoute<void>(
+            return MaterialPageRoute(
               settings: routeSettings,
               builder: (BuildContext context) {
                 switch (routeSettings.name) {
@@ -100,24 +100,27 @@ class MyApp extends StatelessWidget {
                     return const Dashboard();
                   case Result.routeName:
                     return const Result();
-                  case PFESubject.routeName:
-                    return const PFESubject();
-                  case Document.routeName:
-                    return const Document();
+                  case GererSujetsPFE.routeName:
+                    return const GererSujetsPFE();
+                  case GererDocument.routeName:
+                    return const GererDocument();
                   case GererEnseignant.routeName:
-                    return const GererEnseignant();
+                    return GererEnseignant();
                   case Calander.routeName:
                     return const Calander();
-                  case Students.routeName:
-                    return const Students();
-                  case JuriesList.routeName:
-                    return const JuriesList();
+                  case GererEtudiant.routeName:
+                    return GererEtudiant();
+                  case GererListeDesJuries.routeName:
+                    return const GererListeDesJuries();
                   case ProposerSujet.routeName:
                     return ProposerSujet();
                   case ListeDesSujets.routeName:
                     return const ListeDesSujets();
                   case DetailSujet.routeName:
-                    return const DetailSujet();
+                    final args = routeSettings.arguments as DetailSujet;
+                    return DetailSujet(
+                      fonction: args.fonction,
+                    );
                   default:
                     return Authentification();
                 }
