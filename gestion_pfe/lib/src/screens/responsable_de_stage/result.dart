@@ -171,4 +171,5 @@ class Result extends StatelessWidget {
       ),
     );
   }
+
 }

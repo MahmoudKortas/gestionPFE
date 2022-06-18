@@ -9,7 +9,7 @@ import 'package:table_calendar/table_calendar.dart';
 class Event {
   final String title;
 
-  const Event(this.title);
+   Event(this.title);
 
   @override
   String toString() => title;
@@ -34,8 +34,8 @@ final _kEventSource = {
         item % 4 + 1, (index) => Event('Event $item | ${index + 1}'))
 }..addAll({
     kToday: [
-      const Event('Today\'s Event 1'),
-      const Event('Today\'s Event 2'),
+       Event('Today\'s Event 1'),
+       Event('Today\'s Event 2'),
     ],
   });
 

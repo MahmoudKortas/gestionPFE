@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../resize_widget.dart';
@@ -15,102 +16,102 @@ class GererListeDesJuries extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Gérer liste des jurys'),
       ),
-      body: SingleChildScrollView(
+      body: Center(
+        // child: SingleChildScrollView(
         // controller: controller,
-        child: Center(
-          child: resiseWidget(
-            context: context,
-            child: Column(
-              children: [
-                Card(
-                  child: ListTile(
-                    leading: const CircleAvatar(
-                      foregroundImage:
-                          AssetImage('assets/images/flutter_logo.png'),
-                    ),
-                    title: const Text('SampleItem'),
-                    subtitle: const Text(
-                        'A sufficiently long subtitle warrants three lines.'),
-                    trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
-                    onTap: () {
-                      /*Navigator.restorablePushNamed(
-                    context,
-                    FollowPFE.routeName,
-                  );*/
+
+        child: resiseWidget(
+          context: context,
+          child: ListView.builder(
+            itemCount: 3,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                child: ListTile(
+                  leading: ElevatedButton(
+                    onPressed: () {
+                      dialog(context);
+                      if (kDebugMode) {
+                        print("pfe${index + 1}");
+                      }
                     },
+                    child: Text("PFE ${index + 1}"),
                   ),
-                ),
-                Card(
-                  child: ListTile(
-                    leading: const CircleAvatar(
-                      foregroundImage:
-                          AssetImage('assets/images/flutter_logo.png'),
-                    ),
-                    title: const Text('SampleItem'),
-                    subtitle: const Text(
-                        'A sufficiently long subtitle warrants three lines.'),
-                    trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
-                    onTap: () {
-                      // Navigate to the details page. If the user leaves and returns to
-                      // the app after it has been killed while running in the
-                      // background, the navigation stack is restored.
-                      /*Navigator.restorablePushNamed(
-                    context,
-                    LogIn.routeName,
-                  );*/
+                  title: ElevatedButton(
+                    onPressed: () {
+                      dialog(context);
+                      if (kDebugMode) {
+                        print("Papporteur PFE ${index + 1}");
+                      }
                     },
+                    child: Text("Papporteur PFE ${index + 1}"),
                   ),
-                ),
-                Card(
-                  child: ListTile(
-                    leading: const CircleAvatar(
-                      foregroundImage:
-                          AssetImage('assets/images/flutter_logo.png'),
-                    ),
-                    title: const Text('SampleItem'),
-                    subtitle: const Text(
-                        'A sufficiently long subtitle warrants three lines.'),
-                    trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
-                    onTap: () {
-                      // Navigate to the details page. If the user leaves and returns to
-                      // the app after it has been killed while running in the
-                      // background, the navigation stack is restored.
-                      /*Navigator.restorablePushNamed(
-                    context,
-                    LogIn.routeName,
-                  );*/
+                  subtitle: ElevatedButton(
+                    onPressed: () {
+                      dialog(context);
+                      if (kDebugMode) {
+                        print("Président PFE ${index + 1}");
+                      }
                     },
+                    child: Text("Président PFE ${index + 1}"),
                   ),
+                  isThreeLine: true,
                 ),
-                Card(
-                  child: ListTile(
-                    leading: const CircleAvatar(
-                      foregroundImage:
-                          AssetImage('assets/images/flutter_logo.png'),
-                    ),
-                    title: const Text('SampleItem'),
-                    subtitle: const Text(
-                        'A sufficiently long subtitle warrants three lines.'),
-                    trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
-                    onTap: () {
-                      // Navigate to the details page. If the user leaves and returns to
-                      // the app after it has been killed while running in the
-                      // background, the navigation stack is restored.
-                      /*Navigator.restorablePushNamed(
-                    context,
-                    LogIn.routeName,
-                  );*/
-                    },
-                  ),
-                ),
-              ],
-            ),
+              );
+            },
           ),
         ),
+        // ),
+      ),
+    );
+  }
+
+  Future<String?> dialog(BuildContext context) {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Modifier / Supprimer document'),
+        content: SingleChildScrollView(
+          child: Column(
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  hintText: 'Saisir id du PFE',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  hintText: 'Saisir le note du PFE',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
+              ),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Annuler'),
+            child: const Text('Annuler'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Modifer'),
+            child: const Text('Modifer'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Supprimer'),
+            child: const Text('Supprimer'),
+          ),
+        ],
       ),
     );
   }
