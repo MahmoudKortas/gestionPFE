@@ -7,7 +7,6 @@ import 'screens/responsable_de_stage/dashboard.dart';
 import 'screens/responsable_de_stage/gerer_document.dart';
 import 'screens/responsable_de_stage/gerer_liste_des_juries_list.dart';
 import 'screens/responsable_de_stage/gerer_sujets_pfe.dart';
-import 'screens/responsable_de_stage/result.dart';
 import 'screens/responsable_de_stage/gerer_etudiant.dart';
 import 'screens/responsable_de_stage/gerer_enseignants.dart';
 import 'screens/authentification/authentification.dart';
@@ -98,8 +97,6 @@ class MyApp extends StatelessWidget {
                     return const GererDemandeDesSujetsPFE();
                   case Dashboard.routeName:
                     return const Dashboard();
-                  case Result.routeName:
-                    return const Result();
                   case GererSujetsPFE.routeName:
                     return const GererSujetsPFE();
                   case GererDocument.routeName:
@@ -111,7 +108,7 @@ class MyApp extends StatelessWidget {
                   case GererEtudiant.routeName:
                     return GererEtudiant();
                   case GererListeDesJuries.routeName:
-                    return const GererListeDesJuries();
+                    return  GererListeDesJuries();
                   case ProposerSujet.routeName:
                     return ProposerSujet();
                   case ListeDesSujets.routeName:

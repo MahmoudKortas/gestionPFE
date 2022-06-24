@@ -35,6 +35,9 @@ class _GererEnseignantState extends State<GererEnseignant> {
             context: context,
             child: Column(
               children: [
+                const SizedBox(
+                  height: 10,
+                ),
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.person),
@@ -46,6 +49,9 @@ class _GererEnseignantState extends State<GererEnseignant> {
                     }
                     return null;
                   },
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
@@ -59,6 +65,9 @@ class _GererEnseignantState extends State<GererEnseignant> {
                     return null;
                   },
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.phone),
@@ -70,6 +79,9 @@ class _GererEnseignantState extends State<GererEnseignant> {
                     }
                     return null;
                   },
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
@@ -83,6 +95,9 @@ class _GererEnseignantState extends State<GererEnseignant> {
                     return null;
                   },
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.email),
@@ -94,6 +109,9 @@ class _GererEnseignantState extends State<GererEnseignant> {
                     }
                     return null;
                   },
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
@@ -116,17 +134,17 @@ class _GererEnseignantState extends State<GererEnseignant> {
                   onChanged: (value) => setState(() => this.value = value),
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                 ),
-                 ElevatedButton(
+                ElevatedButton(
                   // ignore: avoid_print
-                  onPressed: ()=>print("object"),
-                  child:const Text("Ajouter"),
+                  onPressed: () => print("object"),
+                  child: const Text("Ajouter"),
                 ),
                 Card(
                   child: ListTile(
-                    leading: const CircleAvatar(
+                    /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
-                    ),
+                    ),*/
                     title: const Text('Enseignant 1'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
@@ -151,6 +169,9 @@ class _GererEnseignantState extends State<GererEnseignant> {
                                   return null;
                                 },
                               ),
+                              const SizedBox(
+                                height: 10,
+                              ),
                               TextFormField(
                                 decoration: const InputDecoration(
                                   prefixIcon: Icon(Icons.person),
@@ -162,6 +183,9 @@ class _GererEnseignantState extends State<GererEnseignant> {
                                   }
                                   return null;
                                 },
+                              ),
+                              const SizedBox(
+                                height: 10,
                               ),
                               TextFormField(
                                 decoration: const InputDecoration(
@@ -175,6 +199,9 @@ class _GererEnseignantState extends State<GererEnseignant> {
                                   return null;
                                 },
                               ),
+                              const SizedBox(
+                                height: 10,
+                              ),
                               TextFormField(
                                 decoration: const InputDecoration(
                                   prefixIcon: Icon(Icons.location_city),
@@ -187,6 +214,9 @@ class _GererEnseignantState extends State<GererEnseignant> {
                                   return null;
                                 },
                               ),
+                              const SizedBox(
+                                height: 10,
+                              ),
                               TextFormField(
                                 decoration: const InputDecoration(
                                   prefixIcon: Icon(Icons.email),
@@ -198,6 +228,9 @@ class _GererEnseignantState extends State<GererEnseignant> {
                                   }
                                   return null;
                                 },
+                              ),
+                              const SizedBox(
+                                height: 10,
                               ),
                               TextFormField(
                                 decoration: const InputDecoration(
@@ -247,15 +280,14 @@ class _GererEnseignantState extends State<GererEnseignant> {
                         ],
                       ),
                     ),
-                  
                   ),
                 ),
                 Card(
                   child: ListTile(
-                    leading: const CircleAvatar(
+                    /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
-                    ),
+                    ),*/
                     title: const Text('Enseignant 2'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
@@ -274,10 +306,10 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 ),
                 Card(
                   child: ListTile(
-                    leading: const CircleAvatar(
+                    /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
-                    ),
+                    ),*/
                     title: const Text('Enseignant 2'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
@@ -296,10 +328,10 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 ),
                 Card(
                   child: ListTile(
-                    leading: const CircleAvatar(
+                    /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
-                    ),
+                    ),*/
                     title: const Text('Enseignant 3'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),

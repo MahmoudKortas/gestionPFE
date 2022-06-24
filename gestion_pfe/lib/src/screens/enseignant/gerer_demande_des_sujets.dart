@@ -25,10 +25,10 @@ class GererDemandeDesSujetsPFE extends StatelessWidget {
               children: [
                 Card(
                   child: ListTile(
-                    leading: const CircleAvatar(
+                    /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
-                    ),
+                    ),*/
                     title: const Text('Sujet 1'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
@@ -44,10 +44,10 @@ class GererDemandeDesSujetsPFE extends StatelessWidget {
                 ),
                 Card(
                   child: ListTile(
-                    leading: const CircleAvatar(
+                    /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
-                    ),
+                    ),*/
                     title: const Text('Sujet 2'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
@@ -63,10 +63,10 @@ class GererDemandeDesSujetsPFE extends StatelessWidget {
                 ),
                 Card(
                   child: ListTile(
-                    leading: const CircleAvatar(
+                    /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
-                    ),
+                    ),*/
                     title: const Text('Sujet 3'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
@@ -82,10 +82,10 @@ class GererDemandeDesSujetsPFE extends StatelessWidget {
                 ),
                 Card(
                   child: ListTile(
-                    leading: const CircleAvatar(
+                    /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
-                    ),
+                    ),*/
                     title: const Text('Sujet 4'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),

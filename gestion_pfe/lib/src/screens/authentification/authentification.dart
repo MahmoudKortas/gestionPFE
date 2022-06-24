@@ -28,15 +28,18 @@ class Authentification extends StatelessWidget {
             context: context,
             child: Column(
               children: [
-                Image.asset("assets/images/logo-epi.png"),
+                Image.asset("assets/images/logo-epi.png",scale: 3,),
                 Form(
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
+                      const SizedBox(
+                        height: 10,
+                      ),
                       TextFormField(
                         decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.person),
-                          hintText: 'Saisir votre login',
+                          hintText: 'Saisir votre e-mail',
                         ),
                         validator: (String? value) {
                           if (value == null || value.isEmpty) {
@@ -44,6 +47,9 @@ class Authentification extends StatelessWidget {
                           }
                           return null;
                         },
+                      ),
+                      const SizedBox(
+                        height: 10,
                       ),
                       TextFormField(
                         decoration: const InputDecoration(

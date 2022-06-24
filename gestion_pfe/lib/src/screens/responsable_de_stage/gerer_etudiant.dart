@@ -37,7 +37,11 @@ class _GererEtudiantState extends State<GererEtudiant> {
             context: context,
             child: Column(
               children: [
-                TextFormField(
+                const SizedBox(
+                        height: 10,
+                      ),const SizedBox(
+                        height: 10,
+                      ),TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.person),
                     hintText: 'Saisir votre nom',
@@ -49,7 +53,11 @@ class _GererEtudiantState extends State<GererEtudiant> {
                     return null;
                   },
                 ),
-                TextFormField(
+                const SizedBox(
+                        height: 10,
+                      ),const SizedBox(
+                        height: 10,
+                      ),TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.person),
                     hintText: 'Saisir votre prenom',
@@ -61,7 +69,11 @@ class _GererEtudiantState extends State<GererEtudiant> {
                     return null;
                   },
                 ),
-                TextFormField(
+                const SizedBox(
+                        height: 10,
+                      ),const SizedBox(
+                        height: 10,
+                      ),TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.phone),
                     hintText: 'Saisir votre telephone',
@@ -73,7 +85,11 @@ class _GererEtudiantState extends State<GererEtudiant> {
                     return null;
                   },
                 ),
-                TextFormField(
+                const SizedBox(
+                        height: 10,
+                      ),const SizedBox(
+                        height: 10,
+                      ),TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.location_city),
                     hintText: 'Saisir votre adresse',
@@ -85,7 +101,11 @@ class _GererEtudiantState extends State<GererEtudiant> {
                     return null;
                   },
                 ),
-                TextFormField(
+                const SizedBox(
+                        height: 10,
+                      ),const SizedBox(
+                        height: 10,
+                      ),TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.email),
                     hintText: 'Saisir votre email',
@@ -97,7 +117,11 @@ class _GererEtudiantState extends State<GererEtudiant> {
                     return null;
                   },
                 ),
-                TextFormField(
+                const SizedBox(
+                        height: 10,
+                      ),const SizedBox(
+                        height: 10,
+                      ),TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.lock),
                     hintText: 'Saisir votre password',
@@ -160,10 +184,10 @@ class _GererEtudiantState extends State<GererEtudiant> {
                 ),
                 Card(
                   child: ListTile(
-                    leading: const CircleAvatar(
+                    /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
-                    ),
+                    ),*/
                     title: const Text('Etudiant 1'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
@@ -176,7 +200,9 @@ class _GererEtudiantState extends State<GererEtudiant> {
                         content: SingleChildScrollView(
                           child: Column(
                             children: [
-                              TextFormField(
+                              const SizedBox(
+                        height: 10,
+                      ),TextFormField(
                                 decoration: const InputDecoration(
                                   prefixIcon: Icon(Icons.person),
                                   hintText: 'Saisir votre nom',
@@ -188,7 +214,11 @@ class _GererEtudiantState extends State<GererEtudiant> {
                                   return null;
                                 },
                               ),
-                              TextFormField(
+                              const SizedBox(
+                        height: 10,
+                      ),const SizedBox(
+                        height: 10,
+                      ),TextFormField(
                                 decoration: const InputDecoration(
                                   prefixIcon: Icon(Icons.person),
                                   hintText: 'Saisir votre prenom',
@@ -200,7 +230,11 @@ class _GererEtudiantState extends State<GererEtudiant> {
                                   return null;
                                 },
                               ),
-                              TextFormField(
+                              const SizedBox(
+                        height: 10,
+                      ),const SizedBox(
+                        height: 10,
+                      ),TextFormField(
                                 decoration: const InputDecoration(
                                   prefixIcon: Icon(Icons.phone),
                                   hintText: 'Saisir votre telephone',
@@ -212,7 +246,11 @@ class _GererEtudiantState extends State<GererEtudiant> {
                                   return null;
                                 },
                               ),
-                              TextFormField(
+                              const SizedBox(
+                        height: 10,
+                      ),const SizedBox(
+                        height: 10,
+                      ),TextFormField(
                                 decoration: const InputDecoration(
                                   prefixIcon: Icon(Icons.location_city),
                                   hintText: 'Saisir votre adresse',
@@ -224,7 +262,11 @@ class _GererEtudiantState extends State<GererEtudiant> {
                                   return null;
                                 },
                               ),
-                              TextFormField(
+                              const SizedBox(
+                        height: 10,
+                      ),const SizedBox(
+                        height: 10,
+                      ),TextFormField(
                                 decoration: const InputDecoration(
                                   prefixIcon: Icon(Icons.email),
                                   hintText: 'Saisir votre email',
@@ -236,7 +278,11 @@ class _GererEtudiantState extends State<GererEtudiant> {
                                   return null;
                                 },
                               ),
-                              TextFormField(
+                              const SizedBox(
+                        height: 10,
+                      ),const SizedBox(
+                        height: 10,
+                      ),TextFormField(
                                 decoration: const InputDecoration(
                                   prefixIcon: Icon(Icons.lock),
                                   hintText: 'Saisir votre password',
@@ -336,10 +382,10 @@ class _GererEtudiantState extends State<GererEtudiant> {
                 ),
                 Card(
                   child: ListTile(
-                    leading: const CircleAvatar(
+                    /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
-                    ),
+                    ),*/
                     title: const Text('Etudiant 2'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
@@ -358,10 +404,10 @@ class _GererEtudiantState extends State<GererEtudiant> {
                 ),
                 Card(
                   child: ListTile(
-                    leading: const CircleAvatar(
+                    /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
-                    ),
+                    ),*/
                     title: const Text('Etudiant 2'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
@@ -380,10 +426,10 @@ class _GererEtudiantState extends State<GererEtudiant> {
                 ),
                 Card(
                   child: ListTile(
-                    leading: const CircleAvatar(
+                    /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
-                    ),
+                    ),*/
                     title: const Text('Etudiant 3'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),

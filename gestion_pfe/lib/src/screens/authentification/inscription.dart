@@ -44,6 +44,9 @@ class _InscriptionState extends State<Inscription> {
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
+                      const SizedBox(
+                        height: 10,
+                      ),
                       TextFormField(
                         decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.person),
@@ -55,6 +58,9 @@ class _InscriptionState extends State<Inscription> {
                           }
                           return null;
                         },
+                      ),
+                      const SizedBox(
+                        height: 10,
                       ),
                       TextFormField(
                         decoration: const InputDecoration(
@@ -68,6 +74,9 @@ class _InscriptionState extends State<Inscription> {
                           return null;
                         },
                       ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       TextFormField(
                         decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.phone),
@@ -79,6 +88,9 @@ class _InscriptionState extends State<Inscription> {
                           }
                           return null;
                         },
+                      ),
+                      const SizedBox(
+                        height: 10,
                       ),
                       TextFormField(
                         decoration: const InputDecoration(
@@ -92,6 +104,9 @@ class _InscriptionState extends State<Inscription> {
                           return null;
                         },
                       ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       TextFormField(
                         decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.email),
@@ -103,6 +118,9 @@ class _InscriptionState extends State<Inscription> {
                           }
                           return null;
                         },
+                      ),
+                      const SizedBox(
+                        height: 10,
                       ),
                       TextFormField(
                         decoration: const InputDecoration(

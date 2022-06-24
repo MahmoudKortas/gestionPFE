@@ -23,7 +23,7 @@ class _DetailSujetState extends State<DetailSujet> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detail du sujet'),
+        title: const Text('Détail du sujet'),
       ),
       body: SingleChildScrollView(
         // controller: controller,
@@ -43,11 +43,11 @@ class _DetailSujetState extends State<DetailSujet> {
                             children: const [
                               MaterialButton(
                                 onPressed: null,
-                                child: Text("Valider"),
+                                child: Text("Annuler"),
                               ),
                               MaterialButton(
                                 onPressed: null,
-                                child: Text("Annuler"),
+                                child: Text("Valider"),
                               ),
                             ],
                           )

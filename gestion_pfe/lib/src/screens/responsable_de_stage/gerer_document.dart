@@ -30,10 +30,10 @@ class GererDocument extends StatelessWidget {
                 ),
                 Card(
                   child: ListTile(
-                      leading: const CircleAvatar(
-                        foregroundImage:
-                            AssetImage('assets/images/flutter_logo.png'),
-                      ),
+                      /*leading: const CircleAvatar(
+                      foregroundImage:
+                          AssetImage('assets/images/flutter_logo.png'),
+                    ),*/
                       title: const Text('SampleItem'),
                       subtitle: const Text(
                           'A sufficiently long subtitle warrants three lines.'),
@@ -43,10 +43,10 @@ class GererDocument extends StatelessWidget {
                 ),
                 Card(
                   child: ListTile(
-                    leading: const CircleAvatar(
+                    /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
-                    ),
+                    ),*/
                     title: const Text('SampleItem'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
@@ -57,10 +57,10 @@ class GererDocument extends StatelessWidget {
                 ),
                 Card(
                   child: ListTile(
-                    leading: const CircleAvatar(
+                    /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
-                    ),
+                    ),*/
                     title: const Text('SampleItem'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
@@ -71,10 +71,10 @@ class GererDocument extends StatelessWidget {
                 ),
                 Card(
                   child: ListTile(
-                    leading: const CircleAvatar(
+                    /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
-                    ),
+                    ),*/
                     title: const Text('SampleItem'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),

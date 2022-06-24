@@ -4,11 +4,18 @@ import 'package:flutter/material.dart';
 import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.
-class GererListeDesJuries extends StatelessWidget {
-  const GererListeDesJuries({Key? key}) : super(key: key);
+class GererListeDesJuries extends StatefulWidget {
+  GererListeDesJuries({Key? key}) : super(key: key);
 
   static const routeName = '/JuriesList';
+  @override
+  State<GererListeDesJuries> createState() => _GererListeDesJuriesState();
+}
+
+class _GererListeDesJuriesState extends State<GererListeDesJuries> {
   // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  List<String> president = ["president"];
+  List<String> Papporteur = ["Papporteur"];
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +36,11 @@ class GererListeDesJuries extends StatelessWidget {
                 child: ListTile(
                   leading: ElevatedButton(
                     onPressed: () {
-                      dialog(context);
                       if (kDebugMode) {
                         print("pfe${index + 1}");
                       }
                     },
-                    child: Text("PFE ${index + 1}"),
+                    child: Text("Enseignant ${index + 1}"),
                   ),
                   title: ElevatedButton(
                     onPressed: () {
@@ -70,48 +76,49 @@ class GererListeDesJuries extends StatelessWidget {
       context: context,
       builder: (BuildContext context) => AlertDialog(
         title: const Text('Modifier / Supprimer document'),
-        content: SingleChildScrollView(
-          child: Column(
-            children: [
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Saisir id du PFE',
-                ),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
+        content: StatefulBuilder(
+          builder: (context, setState) {
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  for (var i in president)
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            decoration: const InputDecoration(
+                              hintText: 'Saisir id du PFE',
+                            ),
+                            validator: (String? value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter some text';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            print("i::${i}");
+                            president.remove("president");
+                            setState(() {});
+                          },
+                          icon: const Icon(Icons.close,color: Colors.red,),
+                        ),
+                      ],
+                    ),
+                  IconButton(
+                    onPressed: () {
+                      president.add("president");
+                      setState(() {});
+                    },
+                    icon: const Icon(Icons.add_circle_outlined,color: Colors.green,),
+                  ),
+                ],
               ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Saisir le note du PFE',
-                ),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-            ],
-          ),
+            );
+          },
         ),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.pop(context, 'Annuler'),
-            child: const Text('Annuler'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, 'Modifer'),
-            child: const Text('Modifer'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, 'Supprimer'),
-            child: const Text('Supprimer'),
-          ),
-        ],
       ),
     );
   }
