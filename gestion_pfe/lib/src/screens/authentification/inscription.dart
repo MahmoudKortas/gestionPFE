@@ -1,8 +1,12 @@
-import 'package:flutter/foundation.dart';
+import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:gestion_pfe/src/entites/description.dart';
+import 'package:gestion_pfe/src/models/document.dart';
+import 'package:gestion_pfe/src/models/enseignant.dart';
 import 'package:gestion_pfe/src/screens/authentification/authentification.dart';
 
+import '../../entites/description.dart';
+import '../../helpers/api_service.dart';
+import '../../models/etudiant.dart';
 import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.
@@ -23,9 +27,49 @@ class _InscriptionState extends State<Inscription> {
     'langues',
     'mathematique'
   ];
-  String? value;
+  String? domaineValue;
+  String? diplomeValue;
+  String? departementValue;
+  String? niveauValue;
+  String? specialiteValue;
 
   Description? _description;
+  final nomController = TextEditingController();
+  final prenomController = TextEditingController();
+  final telephoneController = TextEditingController();
+  final adresseController = TextEditingController();
+  final emailController = TextEditingController();
+  final motDePasseController = TextEditingController();
+
+  /*final domaineController = TextEditingController();
+  final diplomeController = TextEditingController();
+  final departementController = TextEditingController();
+  final niveauController = TextEditingController();
+  final specialiteController = TextEditingController();*/
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    nomController.dispose();
+    prenomController.dispose();
+    telephoneController.dispose();
+    adresseController.dispose();
+    emailController.dispose();
+    motDePasseController.dispose();
+
+    /*domaineController.dispose();
+    diplomeController.dispose();
+    departementController.dispose();
+    niveauController.dispose();
+    specialiteController.dispose();*/
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +102,7 @@ class _InscriptionState extends State<Inscription> {
                           }
                           return null;
                         },
+                        controller: nomController,
                       ),
                       const SizedBox(
                         height: 10,
@@ -73,6 +118,7 @@ class _InscriptionState extends State<Inscription> {
                           }
                           return null;
                         },
+                        controller: prenomController,
                       ),
                       const SizedBox(
                         height: 10,
@@ -88,6 +134,7 @@ class _InscriptionState extends State<Inscription> {
                           }
                           return null;
                         },
+                        controller: telephoneController,
                       ),
                       const SizedBox(
                         height: 10,
@@ -103,6 +150,7 @@ class _InscriptionState extends State<Inscription> {
                           }
                           return null;
                         },
+                        controller: adresseController,
                       ),
                       const SizedBox(
                         height: 10,
@@ -118,6 +166,7 @@ class _InscriptionState extends State<Inscription> {
                           }
                           return null;
                         },
+                        controller: emailController,
                       ),
                       const SizedBox(
                         height: 10,
@@ -125,14 +174,15 @@ class _InscriptionState extends State<Inscription> {
                       TextFormField(
                         decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.lock),
-                          hintText: 'Saisir votre password',
+                          hintText: 'Saisir votre mot de passe',
                         ),
                         validator: (String? value) {
                           if (value == null || value.isEmpty) {
-                            return 'Entrez votre password';
+                            return 'Entrez votre mot de passe';
                           }
                           return null;
                         },
+                        controller: motDePasseController,
                       ),
                       Column(
                         //TODO: center attributes
@@ -162,79 +212,108 @@ class _InscriptionState extends State<Inscription> {
                       _description.toString().contains("enseignant")
                           ? DropdownButton<String>(
                               hint: const Text("choisir votre domaine"),
-                              value: value,
+                              value: domaineValue,
                               iconSize: 36,
                               icon: const Icon(Icons.arrow_drop_down,
                                   color: Colors.black),
                               items: _items.map(buildMenuItem).toList(),
                               onChanged: (value) =>
-                                  setState(() => this.value = value),
+                                  setState(() => domaineValue = value),
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(10.0)),
                             )
-                          : Column(
-                              children: [
-                                DropdownButton<String>(
-                                  hint: const Text("choisir votre diplome"),
-                                  value: value,
-                                  iconSize: 36,
-                                  icon: const Icon(Icons.arrow_drop_down,
-                                      color: Colors.black),
-                                  items: _items.map(buildMenuItem).toList(),
-                                  onChanged: (value) =>
-                                      setState(() => this.value = value),
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(10.0)),
-                                ),
-                                DropdownButton<String>(
-                                  hint: const Text("choisir votre departement"),
-                                  value: value,
-                                  iconSize: 36,
-                                  icon: const Icon(Icons.arrow_drop_down,
-                                      color: Colors.black),
-                                  items: _items.map(buildMenuItem).toList(),
-                                  onChanged: (value) =>
-                                      setState(() => this.value = value),
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(10.0)),
-                                ),
-                                DropdownButton<String>(
-                                  hint: const Text("choisir votre niveau"),
-                                  value: value,
-                                  iconSize: 36,
-                                  icon: const Icon(Icons.arrow_drop_down,
-                                      color: Colors.black),
-                                  items: _items.map(buildMenuItem).toList(),
-                                  onChanged: (value) =>
-                                      setState(() => this.value = value),
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(10.0)),
-                                ),
-                                DropdownButton<String>(
-                                  hint: const Text("choisir votre specialité"),
-                                  value: value,
-                                  iconSize: 36,
-                                  icon: const Icon(Icons.arrow_drop_down,
-                                      color: Colors.black),
-                                  items: _items.map(buildMenuItem).toList(),
-                                  onChanged: (value) =>
-                                      setState(() => this.value = value),
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(10.0)),
-                                ),
-                              ],
-                            ),
+                          : _description.toString().contains("etudiant")
+                              ? Column(
+                                  children: [
+                                    DropdownButton<String>(
+                                      hint: const Text("choisir votre diplome"),
+                                      value: diplomeValue,
+                                      iconSize: 36,
+                                      icon: const Icon(Icons.arrow_drop_down,
+                                          color: Colors.black),
+                                      items: _items.map(buildMenuItem).toList(),
+                                      onChanged: (value) =>
+                                          setState(() => diplomeValue = value),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                    ),
+                                    DropdownButton<String>(
+                                      hint: const Text(
+                                          "choisir votre departement"),
+                                      value: departementValue,
+                                      iconSize: 36,
+                                      icon: const Icon(Icons.arrow_drop_down,
+                                          color: Colors.black),
+                                      items: _items.map(buildMenuItem).toList(),
+                                      onChanged: (value) => setState(
+                                          () => departementValue = value),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                    ),
+                                    DropdownButton<String>(
+                                      hint: const Text("choisir votre niveau"),
+                                      value: niveauValue,
+                                      iconSize: 36,
+                                      icon: const Icon(Icons.arrow_drop_down,
+                                          color: Colors.black),
+                                      items: _items.map(buildMenuItem).toList(),
+                                      onChanged: (value) =>
+                                          setState(() => niveauValue = value),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                    ),
+                                    DropdownButton<String>(
+                                      hint: const Text(
+                                          "choisir votre specialité"),
+                                      value: specialiteValue,
+                                      iconSize: 36,
+                                      icon: const Icon(Icons.arrow_drop_down,
+                                          color: Colors.black),
+                                      items: _items.map(buildMenuItem).toList(),
+                                      onChanged: (value) => setState(
+                                          () => specialiteValue = value),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                    ),
+                                  ],
+                                )
+                              : Container(),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: ElevatedButton(
                           onPressed: () {
+                            log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text} ${_description.toString()} $domaineValue $diplomeValue $departementValue $niveauValue $specialiteValue");
+                            _description.toString().contains("enseignant")
+                                ? addEnseignant(
+                                    nom: nomController.text,
+                                    prenom: prenomController.text,
+                                    telephone: telephoneController.text,
+                                    adresse: adresseController.text,
+                                    email: emailController.text,
+                                    motDePasse: motDePasseController.text,
+                                    domaine: domaineValue)
+                                : _description.toString().contains("etudiant")
+                                    ? addStudent(
+                                        nom: nomController.text,
+                                        prenom: prenomController.text,
+                                        telephone: telephoneController.text,
+                                        adresse: adresseController.text,
+                                        email: emailController.text,
+                                        motDePasse: motDePasseController.text,
+                                        diplome: diplomeValue,
+                                        departement: departementValue,
+                                        niveau: niveauValue,
+                                        specialite: specialiteValue)
+                                    : log("select function");
                             // Validate will return true if the form is valid, or false if
                             // the form is invalid.
                             /*if (_formKey.currentState!.validate()) {
                           // Process data.
                         }*/
-                            Navigator.restorablePushNamed(
-                                context, Authentification.routeName);
+                            /*Navigator.restorablePushNamed(
+                                context, Authentification.routeName);*/
+
+                            //
                           },
                           child: const Text("S'inscrire"),
                         ),
@@ -248,6 +327,61 @@ class _InscriptionState extends State<Inscription> {
         ),
       ),
     );
+  }
+
+  /*void getData() async {
+    //await ApiService().updateEtudiants("3");
+    //await ApiService().deleteEtudiants("17");
+    _etudiant = await ApiService().getEtudiants();
+    _enseignant = await ApiService().getEnseignant();
+    log("_etudiant::$_etudiant");
+    log("_enseignant::$_enseignant");
+  }*/
+
+  void addStudent({
+    String? nom = "",
+    String? prenom = "",
+    String? telephone = "",
+    String? adresse = "",
+    String? email = "",
+    String? motDePasse = "",
+    String? diplome = "",
+    String? departement = "",
+    String? niveau = "",
+    String? specialite = "",
+  }) async {
+    log("addStudent");
+    await ApiService().addEtudiants(
+        nom: nom,
+        prenom: prenom,
+        telephone: telephone,
+        adresse: adresse,
+        email: email,
+        motDePasse: motDePasse,
+        diplome: diplome,
+        departement: departement,
+        niveau: niveau,
+        specialite: specialite);
+  }
+
+  void addEnseignant({
+    String? nom = "",
+    String? prenom = "",
+    String? telephone = "",
+    String? adresse = "",
+    String? email = "",
+    String? motDePasse = "",
+    String? domaine = "",
+  }) async {
+    log("addEnseignant");
+    await ApiService().addEnseignant(
+        nom: nom,
+        prenom: prenom,
+        telephone: telephone,
+        adresse: adresse,
+        email: email,
+        motDePasse: motDePasse,
+        domaine: domaine);
   }
 
   void radiochange(Description? value) {

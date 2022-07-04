@@ -108,7 +108,7 @@ class MyApp extends StatelessWidget {
                   case GererEtudiant.routeName:
                     return GererEtudiant();
                   case GererListeDesJuries.routeName:
-                    return  GererListeDesJuries();
+                    return GererListeDesJuries();
                   case ProposerSujet.routeName:
                     return ProposerSujet();
                   case ListeDesSujets.routeName:

@@ -2,32 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/color_hex.dart';
 
 ThemeData lightTheme = ThemeData(
-    textSelectionTheme: const TextSelectionThemeData(
-      cursorColor: Colors.black, //thereby
-    ),
-    appBarTheme: AppBarTheme(
-      color: HexColor("c9242e"),
-    ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(
-          HexColor("c9242e"),
-        ),
+  textSelectionTheme: const TextSelectionThemeData(
+    cursorColor: Colors.black, //thereby
+  ),
+  appBarTheme: AppBarTheme(
+    color: HexColor("c9242e"),
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.all(
+        HexColor("c9242e"),
       ),
     ),
-    inputDecorationTheme: InputDecorationTheme(
-      border: const OutlineInputBorder(),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: HexColor("5b5b5c"),
-        ),
+  ),
+  inputDecorationTheme: InputDecorationTheme(
+    border: const OutlineInputBorder(),
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(
+        color: HexColor("5b5b5c"),
       ),
     ),
-    
-    
+  ),
 
-
-    /*textButtonTheme: TextButtonThemeData(
+  /*textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
       primary: Colors.teal,
     ),
@@ -39,7 +36,7 @@ ThemeData lightTheme = ThemeData(
   ).apply(
     bodyColor: Colors.teal[800],
   ),*/
-    );
+);
 
 ThemeData darkTheme = ThemeData(
   appBarTheme: const AppBarTheme(

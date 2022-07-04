@@ -39,7 +39,8 @@ class _DetailSujetState extends State<DetailSujet> {
                         child: Text("choisir"),
                       )
                     : widget.fonction.contains("enseignant")
-                        ? Row( mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: const [
                               MaterialButton(
                                 onPressed: null,

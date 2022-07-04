@@ -1,4 +1,6 @@
 // ignore: file_names
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/screens/authentification/inscription.dart';
 import 'package:gestion_pfe/src/screens/accueil/accueil.dart';
@@ -8,11 +10,25 @@ import '../../resize_widget.dart';
 import '../../size_config.dart';
 
 /// Displays detailed information about a SampleItem.
-class Authentification extends StatelessWidget {
+class Authentification extends StatefulWidget {
   Authentification({Key? key}) : super(key: key);
 
   static const routeName = '/Authentification';
+  @override
+  State<Authentification> createState() => _AuthentificationState();
+}
+
+class _AuthentificationState extends State<Authentification> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final motDePasseController = TextEditingController();
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    emailController.dispose();
+    motDePasseController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +44,10 @@ class Authentification extends StatelessWidget {
             context: context,
             child: Column(
               children: [
-                Image.asset("assets/images/logo-epi.png",scale: 3,),
+                Image.asset(
+                  "assets/images/logo-epi.png",
+                  scale: 3,
+                ),
                 Form(
                   key: _formKey,
                   child: Column(
@@ -47,6 +66,7 @@ class Authentification extends StatelessWidget {
                           }
                           return null;
                         },
+                        controller: emailController,
                       ),
                       const SizedBox(
                         height: 10,
@@ -62,6 +82,7 @@ class Authentification extends StatelessWidget {
                           }
                           return null;
                         },
+                        controller: motDePasseController,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -91,6 +112,7 @@ class Authentification extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
+                          log("${emailController.text} ${motDePasseController.text} ");
                           Navigator.restorablePushNamed(
                             context,
                             Inscription.routeName,

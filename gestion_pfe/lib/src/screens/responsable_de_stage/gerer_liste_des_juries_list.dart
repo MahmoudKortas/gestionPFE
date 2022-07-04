@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../helpers/api_service.dart';
+import '../../models/enseignant.dart';
 import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.
@@ -14,8 +18,15 @@ class GererListeDesJuries extends StatefulWidget {
 
 class _GererListeDesJuriesState extends State<GererListeDesJuries> {
   // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late List<Enseignant>? _enseignant = [];
   List<String> president = ["president"];
   List<String> Papporteur = ["Papporteur"];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +40,10 @@ class _GererListeDesJuriesState extends State<GererListeDesJuries> {
 
         child: resiseWidget(
           context: context,
-          child: ListView.builder(
-            itemCount: 3,
+          child:_enseignant!.isEmpty
+                    ? const Text("aucun document existe")
+                    : ListView.builder(
+            itemCount: _enseignant!.length,
             itemBuilder: (BuildContext context, int index) {
               return Card(
                 child: ListTile(
@@ -75,7 +88,7 @@ class _GererListeDesJuriesState extends State<GererListeDesJuries> {
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Modifier / Supprimer document'),
+        title: const Text('Modifier / Supprimer rapporteur'),
         content: StatefulBuilder(
           builder: (context, setState) {
             return SingleChildScrollView(
@@ -103,7 +116,10 @@ class _GererListeDesJuriesState extends State<GererListeDesJuries> {
                             president.remove("president");
                             setState(() {});
                           },
-                          icon: const Icon(Icons.close,color: Colors.red,),
+                          icon: const Icon(
+                            Icons.close,
+                            color: Colors.red,
+                          ),
                         ),
                       ],
                     ),
@@ -112,7 +128,10 @@ class _GererListeDesJuriesState extends State<GererListeDesJuries> {
                       president.add("president");
                       setState(() {});
                     },
-                    icon: const Icon(Icons.add_circle_outlined,color: Colors.green,),
+                    icon: const Icon(
+                      Icons.add_circle_outlined,
+                      color: Colors.green,
+                    ),
                   ),
                 ],
               ),
@@ -121,5 +140,16 @@ class _GererListeDesJuriesState extends State<GererListeDesJuries> {
         ),
       ),
     );
+  }
+
+  void getData() async {
+    //await ApiService().updateEtudiants("3");
+    //await ApiService().deleteEtudiants("17");
+    // await ApiService().addEtudiants();
+    // await ApiService().addDocument();
+    //await ApiService().addEnseignant();
+    _enseignant = await ApiService().getEnseignant();
+    log("_enseignant::$_enseignant");
+    Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }
 }

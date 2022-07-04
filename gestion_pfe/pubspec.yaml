@@ -16,7 +16,8 @@ dependencies:
     sdk: flutter
   flutter_native_splash: ^2.2.0+1
   intl: ^0.17.0
-  table_calendar: ^3.0.5
+  table_calendar: ^3.0.5  
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:

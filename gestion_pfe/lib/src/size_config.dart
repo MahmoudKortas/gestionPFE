@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+
 // SizeConfig().init(context); //in build methods
 class SizeConfig {
   static MediaQueryData? _mediaQueryData;

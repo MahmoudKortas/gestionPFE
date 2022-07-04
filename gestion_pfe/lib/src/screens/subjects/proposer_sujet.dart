@@ -39,7 +39,7 @@ class _ProposerSujetState extends State<ProposerSujet> {
                   child: Text("upload file"),
                 ),
                 DropdownButton<String>(
-                  hint: const Text("choisir l'encadreur"),
+                  hint: const Text("choisir l'encadrant"),
                   value: value,
                   iconSize: 36,
                   icon: const Icon(Icons.arrow_drop_down, color: Colors.black),

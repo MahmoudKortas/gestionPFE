@@ -125,49 +125,56 @@ class _TableEventsExampleState extends State<TableEventsExample> {
           context: context,
           builder: (context) => AlertDialog(
             title: const Text("Ajouter soutenance"),
-            content: Column(
-              children: [
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Saisir le id du PFE',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Saisir le salle du PFE',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Saisir le heure debut du PFE',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-              ],
-            ),
+            content: IntrinsicHeight(
+                child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            hintText: 'Saisir le id du PFE',
+                          ),
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            hintText: 'Saisir le salle du PFE',
+                          ),
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            hintText: 'Saisir heure début du PFE',
+                          ),
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                        ),
+                      ],
+                    ),
+                  )
+                ])),
             actions: [
               TextButton(
                 child: Text("Cancel"),
@@ -197,7 +204,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             ],
           ),
         ),
-        label: Text("Add Event"),
+        label: Text("Ajouter soutenance"),
         icon: Icon(Icons.add),
       ),
     );

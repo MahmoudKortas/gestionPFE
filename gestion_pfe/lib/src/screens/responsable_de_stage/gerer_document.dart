@@ -1,13 +1,29 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
+import '../../helpers/api_service.dart';
+import '../../models/document.dart';
 import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.
-class GererDocument extends StatelessWidget {
+class GererDocument extends StatefulWidget {
   const GererDocument({Key? key}) : super(key: key);
 
   static const routeName = '/Document';
-  // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  @override
+  State<GererDocument> createState() => _GererDocumentState();
+}
+
+class _GererDocumentState extends State<GererDocument> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late List<Document>? _document = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +32,7 @@ class GererDocument extends StatelessWidget {
         title: const Text('Gérer documents'),
       ),
       body: SingleChildScrollView(
+        physics: const ScrollPhysics(),
         // controller: controller,
         child: Center(
           child: resiseWidget(
@@ -25,10 +42,32 @@ class GererDocument extends StatelessWidget {
                 Image.asset("assets/images/logo-epi.png"),
                 ElevatedButton(
                   // ignore: avoid_print
-                  onPressed: () => print("object"),
+                  onPressed: () => addDocument(),
                   child: const Text("Ajouter"),
                 ),
-                Card(
+                /*_document == null
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    :*/
+                _document!.isEmpty
+                    ? const Text("aucun document existe")
+                    : ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: _document!.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            child: ListTile(
+                                title:  Text('document $index'),
+                                subtitle: const Text(
+                                    'A sufficiently long subtitle warrants three lines.'),
+                                trailing: const Icon(Icons.more_vert),
+                                isThreeLine: true,
+                                onTap: () => dialog(context)),
+                          );
+                        },
+                      ) /*Card(
                   child: ListTile(
                       /*leading: const CircleAvatar(
                       foregroundImage:
@@ -83,6 +122,7 @@ class GererDocument extends StatelessWidget {
                     onTap: () => dialog(context),
                   ),
                 ),
+             */
               ],
             ),
           ),
@@ -123,5 +163,22 @@ class GererDocument extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void getData() async {
+    //await ApiService().updateEtudiants("3");
+    //await ApiService().deleteEtudiants("17");
+    // await ApiService().addEtudiants();
+    // await ApiService().addDocument();
+    //await ApiService().addEnseignant();
+    _document = await ApiService().getDocument();
+
+    //log("_document::$_document");
+    Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
+  }
+  
+  addDocument() async {
+     await ApiService().addDocument();
+    getData();
   }
 }

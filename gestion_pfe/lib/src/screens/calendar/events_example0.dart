@@ -37,7 +37,6 @@ class _TableEventsExampleState extends State<TableEventsExample> {
 
   @override
   void dispose() {
-    
     _eventController.dispose();
     _selectedEvents.dispose();
     super.dispose();
@@ -111,7 +110,8 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                 rangeEndDay: _rangeEnd,
                 calendarFormat: _calendarFormat,
                 rangeSelectionMode: _rangeSelectionMode,
-                eventLoader:_getEventsForDay, /*(day) {
+                eventLoader: _getEventsForDay,
+                /*(day) {
                   if (day.weekday == DateTime.monday) {
                     return [Event('Cyclic event')];
                   }
@@ -191,7 +191,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
           ),
         ),
       ),
-    floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () => showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -208,22 +208,18 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                 child: Text("Ok"),
                 onPressed: () {
                   if (_eventController.text.isEmpty) {
-
                   } else {
                     if (_selectedEvents.value != null) {
                       _selectedEvents.value.add(
                         Event(_eventController.text),
                       );
                     } else {
-                      _selectedEvents.value = [
-                        Event(_eventController.text)
-                      ];
+                      _selectedEvents.value = [Event(_eventController.text)];
                     }
-
                   }
                   Navigator.pop(context);
                   _eventController.clear();
-                  setState((){});
+                  setState(() {});
                   return;
                 },
               ),
@@ -233,7 +229,6 @@ class _TableEventsExampleState extends State<TableEventsExample> {
         label: Text("Add Event"),
         icon: Icon(Icons.add),
       ),
-    )
-    ;
+    );
   }
 }
