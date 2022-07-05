@@ -26,13 +26,34 @@ class _GererEtudiantState extends State<GererEtudiant> {
     'langues',
     'mathematique'
   ];
-  String? value;
   late List<Etudiant>? _etudiant = [];
+
+  String? diplomeValue;
+  String? departementValue;
+  String? niveauValue;
+  String? specialiteValue;
+  final nomController = TextEditingController();
+  final prenomController = TextEditingController();
+  final telephoneController = TextEditingController();
+  final adresseController = TextEditingController();
+  final emailController = TextEditingController();
+  final motDePasseController = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getData();
+  }
+
+  @override
+  void dispose() {
+    nomController.dispose();
+    prenomController.dispose();
+    telephoneController.dispose();
+    adresseController.dispose();
+    emailController.dispose();
+    motDePasseController.dispose();
+    super.dispose();
   }
 
   @override
@@ -66,6 +87,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                     }
                     return null;
                   },
+                  controller: nomController,
                 ),
                 const SizedBox(
                   height: 10,
@@ -84,6 +106,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                     }
                     return null;
                   },
+                  controller: prenomController,
                 ),
                 const SizedBox(
                   height: 10,
@@ -102,6 +125,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                     }
                     return null;
                   },
+                  controller: telephoneController,
                 ),
                 const SizedBox(
                   height: 10,
@@ -120,6 +144,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                     }
                     return null;
                   },
+                  controller: adresseController,
                 ),
                 const SizedBox(
                   height: 10,
@@ -138,6 +163,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                     }
                     return null;
                   },
+                  controller: emailController,
                 ),
                 const SizedBox(
                   height: 10,
@@ -146,6 +172,9 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   height: 10,
                 ),
                 TextFormField(
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.lock),
                     hintText: 'Saisir votre password',
@@ -156,54 +185,61 @@ class _GererEtudiantState extends State<GererEtudiant> {
                     }
                     return null;
                   },
-                ),
-                DropdownButton<String>(
-                  hint: const Text("choisir votre domaine"),
-                  value: value,
-                  iconSize: 36,
-                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                  items: _items.map(buildMenuItem).toList(),
-                  onChanged: (value) => setState(() => this.value = value),
-                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                  controller: motDePasseController,
                 ),
                 DropdownButton<String>(
                   hint: const Text("choisir votre diplome"),
-                  value: value,
+                  value: diplomeValue,
                   iconSize: 36,
                   icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                   items: _items.map(buildMenuItem).toList(),
-                  onChanged: (value) => setState(() => this.value = value),
+                  onChanged: (value) => setState(() => diplomeValue = value),
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                 ),
                 DropdownButton<String>(
                   hint: const Text("choisir votre departement"),
-                  value: value,
+                  value: departementValue,
                   iconSize: 36,
                   icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                   items: _items.map(buildMenuItem).toList(),
-                  onChanged: (value) => setState(() => this.value = value),
+                  onChanged: (value) =>
+                      setState(() => departementValue = value),
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                 ),
                 DropdownButton<String>(
                   hint: const Text("choisir votre niveau"),
-                  value: value,
+                  value: niveauValue,
                   iconSize: 36,
                   icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                   items: _items.map(buildMenuItem).toList(),
-                  onChanged: (value) => setState(() => this.value = value),
+                  onChanged: (value) => setState(() => niveauValue = value),
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                 ),
                 DropdownButton<String>(
                   hint: const Text("choisir votre specialité"),
-                  value: value,
+                  value: specialiteValue,
                   iconSize: 36,
                   icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                   items: _items.map(buildMenuItem).toList(),
-                  onChanged: (value) => setState(() => this.value = value),
+                  onChanged: (value) => setState(() => specialiteValue = value),
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                 ),
                 ElevatedButton(
-                  onPressed: () => addData(),
+                  onPressed: () {
+                    log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text}  $diplomeValue $departementValue $niveauValue $specialiteValue");
+
+                    addData(
+                        nom: nomController.text,
+                        prenom: prenomController.text,
+                        telephone: telephoneController.text,
+                        adresse: adresseController.text,
+                        email: emailController.text,
+                        motDePasse: motDePasseController.text,
+                        diplome: diplomeValue,
+                        departement: departementValue,
+                        niveau: niveauValue,
+                        specialite: specialiteValue);
+                  },
                   child: const Text("Ajouter"),
                 ),
                 _etudiant!.isEmpty
@@ -326,6 +362,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   }
                   return null;
                 },
+                        controller: nomController,
               ),
               const SizedBox(
                 height: 10,
@@ -344,6 +381,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   }
                   return null;
                 },
+                        controller: prenomController,
               ),
               const SizedBox(
                 height: 10,
@@ -362,6 +400,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   }
                   return null;
                 },
+                        controller: telephoneController,
               ),
               const SizedBox(
                 height: 10,
@@ -380,6 +419,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   }
                   return null;
                 },
+                        controller: adresseController,
               ),
               const SizedBox(
                 height: 10,
@@ -398,6 +438,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   }
                   return null;
                 },
+                        controller: emailController,
               ),
               const SizedBox(
                 height: 10,
@@ -406,6 +447,9 @@ class _GererEtudiantState extends State<GererEtudiant> {
                 height: 10,
               ),
               TextFormField(
+                        obscureText: true,
+                        enableSuggestions: false,
+                        autocorrect: false,
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.lock),
                   hintText: 'Saisir votre password',
@@ -416,50 +460,42 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   }
                   return null;
                 },
-              ),
-              DropdownButton<String>(
-                hint: const Text("choisir votre domaine"),
-                value: value,
-                iconSize: 36,
-                icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                items: _items.map(buildMenuItem).toList(),
-                onChanged: (value) => setState(() => this.value = value),
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                        controller: motDePasseController,
               ),
               DropdownButton<String>(
                 hint: const Text("choisir votre diplome"),
-                value: value,
+                value: diplomeValue,
                 iconSize: 36,
                 icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                 items: _items.map(buildMenuItem).toList(),
-                onChanged: (value) => setState(() => this.value = value),
+                onChanged: (value) => setState(() => diplomeValue = value),
                 borderRadius: const BorderRadius.all(Radius.circular(10.0)),
               ),
               DropdownButton<String>(
                 hint: const Text("choisir votre departement"),
-                value: value,
+                value: departementValue,
                 iconSize: 36,
                 icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                 items: _items.map(buildMenuItem).toList(),
-                onChanged: (value) => setState(() => this.value = value),
+                onChanged: (value) => setState(() => departementValue = value),
                 borderRadius: const BorderRadius.all(Radius.circular(10.0)),
               ),
               DropdownButton<String>(
                 hint: const Text("choisir votre niveau"),
-                value: value,
+                value: niveauValue,
                 iconSize: 36,
                 icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                 items: _items.map(buildMenuItem).toList(),
-                onChanged: (value) => setState(() => this.value = value),
+                onChanged: (value) => setState(() => niveauValue = value),
                 borderRadius: const BorderRadius.all(Radius.circular(10.0)),
               ),
               DropdownButton<String>(
                 hint: const Text("choisir votre specialité"),
-                value: value,
+                value: specialiteValue,
                 iconSize: 36,
                 icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                 items: _items.map(buildMenuItem).toList(),
-                onChanged: (value) => setState(() => this.value = value),
+                onChanged: (value) => setState(() => specialiteValue = value),
                 borderRadius: const BorderRadius.all(Radius.circular(10.0)),
               ),
             ],
@@ -499,13 +535,30 @@ class _GererEtudiantState extends State<GererEtudiant> {
     Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }
 
-  void addData() async {
-    log("add");
-    //await ApiService().updateEtudiants("3");
-    //await ApiService().deleteEtudiants("17");
-     await ApiService().addEtudiants();
-    // await ApiService().addDocument();
-    //await ApiService().addEnseignant();
+  void addData({
+    String? nom = "",
+    String? prenom = "",
+    String? telephone = "",
+    String? adresse = "",
+    String? email = "",
+    String? motDePasse = "",
+    String? diplome = "",
+    String? departement = "",
+    String? niveau = "",
+    String? specialite = "",
+  }) async {
+    log("addStudent");
+    await ApiService().addEtudiants(
+        nom: nom,
+        prenom: prenom,
+        telephone: telephone,
+        adresse: adresse,
+        email: email,
+        motDePasse: motDePasse,
+        diplome: diplome,
+        departement: departement,
+        niveau: niveau,
+        specialite: specialite);
     getData();
   }
 

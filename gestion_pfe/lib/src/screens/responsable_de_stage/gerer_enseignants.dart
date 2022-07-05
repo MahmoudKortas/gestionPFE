@@ -25,12 +25,29 @@ class _GererEnseignantState extends State<GererEnseignant> {
     'langues',
     'mathematique'
   ];
-  String? value;
+  String? domaineValue;
+  final nomController = TextEditingController();
+  final prenomController = TextEditingController();
+  final telephoneController = TextEditingController();
+  final adresseController = TextEditingController();
+  final emailController = TextEditingController();
+  final motDePasseController = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getData();
+  }
+
+  @override
+  void dispose() {
+    nomController.dispose();
+    prenomController.dispose();
+    telephoneController.dispose();
+    adresseController.dispose();
+    emailController.dispose();
+    motDePasseController.dispose();
+    super.dispose();
   }
 
   @override
@@ -61,6 +78,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
                     }
                     return null;
                   },
+                  controller: nomController,
                 ),
                 const SizedBox(
                   height: 10,
@@ -76,6 +94,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
                     }
                     return null;
                   },
+                  controller: prenomController,
                 ),
                 const SizedBox(
                   height: 10,
@@ -91,6 +110,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
                     }
                     return null;
                   },
+                  controller: telephoneController,
                 ),
                 const SizedBox(
                   height: 10,
@@ -106,6 +126,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
                     }
                     return null;
                   },
+                  controller: adresseController,
                 ),
                 const SizedBox(
                   height: 10,
@@ -121,11 +142,15 @@ class _GererEnseignantState extends State<GererEnseignant> {
                     }
                     return null;
                   },
+                  controller: emailController,
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.lock),
                     hintText: 'Saisir votre password',
@@ -136,19 +161,31 @@ class _GererEnseignantState extends State<GererEnseignant> {
                     }
                     return null;
                   },
+                  controller: motDePasseController,
                 ),
                 DropdownButton<String>(
                   hint: const Text("choisir votre domaine"),
-                  value: value,
+                  value: domaineValue,
                   iconSize: 36,
                   icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                   items: _items.map(buildMenuItem).toList(),
-                  onChanged: (value) => setState(() => this.value = value),
+                  onChanged: (value) => setState(() => domaineValue = value),
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                 ),
                 ElevatedButton(
                   // ignore: avoid_print
-                  onPressed: () => addData(),
+                  onPressed: () {
+                    log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text} $domaineValue");
+
+                    addData(
+                        nom: nomController.text,
+                        prenom: prenomController.text,
+                        telephone: telephoneController.text,
+                        adresse: adresseController.text,
+                        email: emailController.text,
+                        motDePasse: motDePasseController.text,
+                        domaine: domaineValue);
+                  },
                   child: const Text("Ajouter"),
                 ),
                 /*_document == null
@@ -169,12 +206,12 @@ class _GererEnseignantState extends State<GererEnseignant> {
                                   foregroundImage:
                                   AssetImage('assets/images/flutter_logo.png'),
                                   ),*/
-                              title:  Text('Enseignant $index'),
+                              title: Text('Enseignant $index'),
                               subtitle: const Text(
                                   'A sufficiently long subtitle warrants three lines.'),
                               trailing: const Icon(Icons.more_vert),
                               isThreeLine: true,
-                              onTap: () {
+                              onTap: () {dialog(context);
                                 // Navigate to the details page. If the user leaves and returns to
                                 // the app after it has been killed while running in the
                                 // background, the navigation stack is restored.
@@ -242,6 +279,163 @@ class _GererEnseignantState extends State<GererEnseignant> {
     );
   }
 
+  Future<String?> dialog(BuildContext context) {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Modifier / Supprimer etudiant'),
+        content: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.person),
+                  hintText: 'Saisir votre nom',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Entrez votre nom';
+                  }
+                  return null;
+                },
+                        controller: nomController,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.person),
+                  hintText: 'Saisir votre prenom',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Entrez votre prenom';
+                  }
+                  return null;
+                },
+                        controller: prenomController,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.phone),
+                  hintText: 'Saisir votre telephone',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Entrez votre telephone';
+                  }
+                  return null;
+                },
+                        controller: telephoneController,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.location_city),
+                  hintText: 'Saisir votre adresse',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Entrez votre adresse';
+                  }
+                  return null;
+                },
+                        controller: adresseController,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.email),
+                  hintText: 'Saisir votre email',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Entrez votre email';
+                  }
+                  return null;
+                },
+                        controller: emailController,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                        obscureText: true,
+                        enableSuggestions: false,
+                        autocorrect: false,
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.lock),
+                  hintText: 'Saisir votre password',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Entrez votre password';
+                  }
+                  return null;
+                },
+                        controller: motDePasseController,
+              ),
+              DropdownButton<String>(
+                hint: const Text("choisir votre domaine"),
+                value: domaineValue,
+                iconSize: 36,
+                icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+                items: _items.map(buildMenuItem).toList(),
+                onChanged: (value) => setState(() => domaineValue = value),
+                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+              ),
+        
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Annuler'),
+            child: const Text('Annuler'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Modifer'),
+            child: const Text('Modifer'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Supprimer'),
+            child: const Text('Supprimer'),
+          ),
+          /*TextButton(
+                            onPressed: () => Navigator.pop(context, 'OK'),
+                            child: const Text('OK'),
+                          ),*/
+        ],
+      ),
+    );
+  }
+
   void getData() async {
     //await ApiService().updateEtudiants("3");
     //await ApiService().deleteEtudiants("17");
@@ -252,12 +446,29 @@ class _GererEnseignantState extends State<GererEnseignant> {
     log("_enseignant::$_enseignant");
     Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }
-  void addData() async {
+
+  void addData({
+    String? nom = "",
+    String? prenom = "",
+    String? telephone = "",
+    String? adresse = "",
+    String? email = "",
+    String? motDePasse = "",
+    String? domaine = "",
+  }) async {
     //await ApiService().updateEtudiants("3");
     //await ApiService().deleteEtudiants("17");
     // await ApiService().addEtudiants();
     // await ApiService().addDocument();
-    await ApiService().addEnseignant();
+    log("addEnseignant");
+    await ApiService().addEnseignant(
+        nom: nom,
+        prenom: prenom,
+        telephone: telephone,
+        adresse: adresse,
+        email: email,
+        motDePasse: motDePasse,
+        domaine: domaine);
     getData();
   }
 

@@ -2,10 +2,13 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/screens/accueil/accueil_enseignant.dart';
+import 'package:gestion_pfe/src/screens/accueil/accueil_etudiant.dart';
 import 'package:gestion_pfe/src/screens/authentification/inscription.dart';
-import 'package:gestion_pfe/src/screens/accueil/accueil.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/dashboard.dart';
 
 import '../../color_hex.dart';
+import '../../helpers/api_service.dart';
 import '../../resize_widget.dart';
 import '../../size_config.dart';
 
@@ -22,6 +25,15 @@ class _AuthentificationState extends State<Authentification> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final motDePasseController = TextEditingController();
+  var _enseignant;
+  var _etudiant;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -72,6 +84,9 @@ class _AuthentificationState extends State<Authentification> {
                         height: 10,
                       ),
                       TextFormField(
+                        obscureText: true,
+                        enableSuggestions: false,
+                        autocorrect: false,
                         decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.lock),
                           hintText: 'Saisir votre mot de passe',
@@ -93,10 +108,10 @@ class _AuthentificationState extends State<Authentification> {
                             /*if (_formKey.currentState!.validate()) {
                           // Process data.
                         }*/
-                            Navigator.restorablePushNamed(
-                              context,
-                              Accueil.routeName,
-                            );
+
+                            verificationInscription(
+                                email: emailController.text,
+                                motDepasse: motDePasseController.text);
                           },
                           child: const Text('Connexion'),
                         ),
@@ -112,7 +127,6 @@ class _AuthentificationState extends State<Authentification> {
                           ),
                         ),
                         onTap: () {
-                          log("${emailController.text} ${motDePasseController.text} ");
                           Navigator.restorablePushNamed(
                             context,
                             Inscription.routeName,
@@ -128,5 +142,52 @@ class _AuthentificationState extends State<Authentification> {
         ),
       ),
     );
+  }
+
+  void getData() async {
+    _etudiant = await ApiService().getEtudiants();
+    _enseignant = await ApiService().getEnseignant();
+    log("_etudiant::$_etudiant");
+    log("_enseignant::$_enseignant");
+  }
+
+  void verificationInscription({String? email = "", String? motDepasse = ""}) {
+    getData();
+    log("verificationInscription::$email $motDepasse");
+
+    /*log("_etudiant::$_etudiant");
+    log("_enseignant::$_enseignant");*/
+    if (email == "admin" && motDepasse == "admin") {
+      Navigator.restorablePushNamed(
+        context,
+        Dashboard.routeName,
+      );
+    } else {
+      for (var etudiant in _etudiant) {
+        // log("etudiant::${etudiant.email} ${etudiant.motdepasse}");
+        if (etudiant.email == email && etudiant.motdepasse == motDepasse) {
+          log("etudiant yess");
+          Navigator.restorablePushNamed(
+            context,
+            AccueilEtudiant.routeName,
+          );
+        }
+      }
+      for (var enseignant in _enseignant) {
+        // log("enseignant::${enseignant.email} ${enseignant.motdepasse}");
+        if (enseignant.email == email && enseignant.motdepasse == motDepasse) {
+          log("enseignant yess");
+          Navigator.restorablePushNamed(
+            context,
+            AccueilEnseignant.routeName,
+          );
+        }
+      }
+    }
+
+    /*Navigator.restorablePushNamed(
+                              context,
+                              Accueil.routeName,
+                            );*/
   }
 }

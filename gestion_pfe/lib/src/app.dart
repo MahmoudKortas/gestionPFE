@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'custom_theme.dart';
+import 'screens/accueil/accueil_enseignant.dart';
+import 'screens/accueil/accueil_etudiant.dart';
 import 'screens/responsable_de_stage/calander.dart';
 import 'screens/responsable_de_stage/dashboard.dart';
 import 'screens/responsable_de_stage/gerer_document.dart';
@@ -14,7 +16,6 @@ import 'screens/authentification/inscription.dart';
 import 'screens/subjects/detail_sujet.dart';
 import 'screens/subjects/proposer_sujet.dart';
 import 'screens/subjects/consulter_planning.dart';
-import 'screens/accueil/accueil.dart';
 import 'screens/subjects/liste_des_sujets.dart';
 import 'screens/enseignant/gerer_demande_des_sujets.dart';
 import 'settings/settings_controller.dart';
@@ -89,8 +90,10 @@ class MyApp extends StatelessWidget {
                     return Authentification();
                   case Inscription.routeName:
                     return const Inscription();
-                  case Accueil.routeName:
-                    return const Accueil();
+                  case AccueilEnseignant.routeName:
+                    return const AccueilEnseignant();
+                  case AccueilEtudiant.routeName:
+                    return const AccueilEtudiant();
                   case ConsulterPlanning.routeName:
                     return const ConsulterPlanning();
                   case GererDemandeDesSujetsPFE.routeName:

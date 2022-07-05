@@ -108,6 +108,9 @@ class _InscriptionState extends State<Inscription> {
                         height: 10,
                       ),
                       TextFormField(
+                        obscureText: true,
+                        enableSuggestions: false,
+                        autocorrect: false,
                         decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.person),
                           hintText: 'Saisir votre prenom',
@@ -172,6 +175,9 @@ class _InscriptionState extends State<Inscription> {
                         height: 10,
                       ),
                       TextFormField(
+                        obscureText: true,
+                        enableSuggestions: false,
+                        autocorrect: false,
                         decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.lock),
                           hintText: 'Saisir votre mot de passe',

@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
+import '../../helpers/api_service.dart';
 import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.
@@ -20,7 +23,15 @@ class _ProposerSujetState extends State<ProposerSujet> {
     'langues',
     'mathematique'
   ];
+  var _enseignant;
+  var _listeEnseignant=[''];
   String? value;
+   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +54,7 @@ class _ProposerSujetState extends State<ProposerSujet> {
                   value: value,
                   iconSize: 36,
                   icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                  items: _items.map(buildMenuItem).toList(),
+                  items:_listeEnseignant.map(buildMenuItem).toList(), //_items.map(buildMenuItem).toList(),
                   onChanged: (value) => setState(() => this.value = value),
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                 ),
@@ -67,7 +78,17 @@ class _ProposerSujetState extends State<ProposerSujet> {
       ),
     );
   }
+void getData() async {
+    _enseignant = await ApiService().getEnseignant();
+    log("_enseignant::$_enseignant");
+    _listeEnseignant.clear();
+    _enseignant.map((l)=>{_listeEnseignant.add(l.nom+' '+l.prenom)}).toList();
+    
+    log("_listeEnseignant::$_listeEnseignant");
+       
+    Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
 
+  }
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
         value: item,
         child: Text(

@@ -10,10 +10,10 @@ import '../enseignant/gerer_demande_des_sujets.dart';
 import '../subjects/consulter_planning.dart';
 
 /// Displays detailed information about a SampleItem.
-class Accueil extends StatelessWidget {
-  const Accueil({Key? key}) : super(key: key);
+class AccueilEnseignant extends StatelessWidget {
+  const AccueilEnseignant({Key? key}) : super(key: key);
 
-  static const routeName = '/Choose_propse_subject';
+  static const routeName = '/AccueilEnseignant';
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class Accueil extends StatelessWidget {
                     },
                   ),
                 ),
-                Card(
+                /*Card(
                   child: ListTile(
                     leading: iconWidget(Icons.offline_pin),
                     title: const Text('choisir sujet'),
@@ -59,7 +59,7 @@ class Accueil extends StatelessWidget {
                       );
                     },
                   ),
-                ),
+                ),*/
                 Card(
                   child: ListTile(
                     leading: iconWidget(Icons.calendar_month),
@@ -101,7 +101,7 @@ class Accueil extends StatelessWidget {
                     },
                   ),
                 ),
-                Card(
+                /*Card(
                   child: ListTile(
                     leading: iconWidget(Icons.dashboard),
                     title: const Text('Tableau de bord'),
@@ -119,7 +119,7 @@ class Accueil extends StatelessWidget {
                       );
                     },
                   ),
-                ),
+                ),*/
               ],
             ),
           ),
