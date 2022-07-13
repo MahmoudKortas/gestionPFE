@@ -8,22 +8,21 @@ List<Etudiant> etudiantFromJson(String str) =>
     List<Etudiant>.from(json.decode(str).map((x) => Etudiant.fromJson(x)));
 
 String etudiantToJson(List<Etudiant> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+    json.encode(List<Etudiant>.from(data.map((x) => x.toJson())));
 
 class Etudiant {
   Etudiant({
-     this.idEtud,
-     this.nom,
-     this.prenom,
-     this.tel,
-     this.adresse,
-     this.niveau,
-     this.specialite,
-     this.diplome,
-     this.departement,
-     this.email,
-     this.motdepasse,
-     required this.etudiants,
+    this.idEtud,
+    this.nom,
+    this.prenom,
+    this.tel,
+    this.adresse,
+    this.niveau,
+    this.specialite,
+    this.diplome,
+    this.departement,
+    this.email,
+    this.motdepasse,
   });
 
   int? idEtud;
@@ -37,7 +36,6 @@ class Etudiant {
   dynamic departement;
   String? email;
   String? motdepasse;
-  List<dynamic> etudiants;
 
   factory Etudiant.fromJson(Map<String, dynamic> json) => Etudiant(
         idEtud: json["idEtud"],
@@ -51,7 +49,6 @@ class Etudiant {
         departement: json["departement"],
         email: json["email"],
         motdepasse: json["motdepasse"],
-        etudiants: List<dynamic>.from(json["etudiants"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -66,10 +63,9 @@ class Etudiant {
         "departement": departement,
         "email": email,
         "motdepasse": motdepasse,
-        "etudiants": List<dynamic>.from(etudiants.map((x) => x)),
       };
-       @override
+  @override
   String toString() {
-    return 'Etudiant(idEtud: $idEtud, nom: $nom, prenom: $prenom, tel: $tel, adresse: $adresse, niveau: $niveau, specialite: $specialite, diplome: $diplome, departement: $departement, email: $email, motdepasse: $motdepasse, etudiants: $etudiants)';
+    return 'Etudiant(idEtud: $idEtud, nom: $nom, prenom: $prenom, tel: $tel, adresse: $adresse, niveau: $niveau, specialite: $specialite, diplome: $diplome, departement: $departement, email: $email, motdepasse: $motdepasse)';
   }
 }

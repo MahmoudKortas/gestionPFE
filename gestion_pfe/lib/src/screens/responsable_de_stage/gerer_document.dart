@@ -1,7 +1,7 @@
-import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
-
+import 'package:image_picker/image_picker.dart';
 import '../../helpers/api_service.dart';
 import '../../models/document.dart';
 import '../../resize_widget.dart';
@@ -16,11 +16,19 @@ class GererDocument extends StatefulWidget {
 }
 
 class _GererDocumentState extends State<GererDocument> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late List<Document>? _document = [];
+
+  var _enseignant;
+  var _listeEnseignant = [''];
+  String? value;
+  File? _image;
+  final picker = ImagePicker();
+  Document document = Document();
+  final dateController = TextEditingController();
+  final descriptionController = TextEditingController();
+  final titreController = TextEditingController();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getData();
   }
@@ -39,7 +47,57 @@ class _GererDocumentState extends State<GererDocument> {
             context: context,
             child: Column(
               children: [
-                Image.asset("assets/images/logo-epi.png"),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.calendar_month),
+                    hintText: 'Saisir date de depot',
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'entrez votre login';
+                    }
+                    return null;
+                  },
+                  controller: dateController,
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.description),
+                    hintText: 'Saisir description',
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'entrez votre login';
+                    }
+                    return null;
+                  },
+                  controller: descriptionController,
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.description),
+                    hintText: 'Saisir titre',
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'entrez votre login';
+                    }
+                    return null;
+                  },
+                  controller: titreController,
+                ),
+                DropdownButton<String>(
+                  hint: const Text("choisir l'encadrant"),
+                  value: value,
+                  iconSize: 36,
+                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+                  items: _listeEnseignant
+                      .map(buildMenuItem)
+                      .toList(), //_items.map(buildMenuItem).toList(),
+                  onChanged: (value) => setState(() => this.value = value),
+                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                ),
+                TextButton(onPressed: getImage, child: _buildImage()),
                 ElevatedButton(
                   // ignore: avoid_print
                   onPressed: () => addDocument(),
@@ -59,12 +117,12 @@ class _GererDocumentState extends State<GererDocument> {
                         itemBuilder: (context, index) {
                           return Card(
                             child: ListTile(
-                                title:  Text('document $index'),
+                                title: Text('document $index'),
                                 subtitle: const Text(
                                     'A sufficiently long subtitle warrants three lines.'),
                                 trailing: const Icon(Icons.more_vert),
                                 isThreeLine: true,
-                                onTap: () => dialog(context)),
+                                onTap: () => dialog(context, index: index)),
                           );
                         },
                       ) /*Card(
@@ -131,7 +189,7 @@ class _GererDocumentState extends State<GererDocument> {
     );
   }
 
-  Future<String?> dialog(BuildContext context) {
+  Future<String?> dialog(BuildContext context, {int? index = 0}) {
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -166,6 +224,11 @@ class _GererDocumentState extends State<GererDocument> {
   }
 
   void getData() async {
+    _enseignant = await ApiService().getEnseignant();
+    _listeEnseignant.clear();
+    _enseignant
+        .map((l) => {_listeEnseignant.add(l.nom + ' ' + l.prenom)})
+        .toList();
     //await ApiService().updateEtudiants("3");
     //await ApiService().deleteEtudiants("17");
     // await ApiService().addEtudiants();
@@ -176,9 +239,42 @@ class _GererDocumentState extends State<GererDocument> {
     //log("_document::$_document");
     Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }
-  
+
   addDocument() async {
-     await ApiService().addDocument();
+    await ApiService().addDocument(document: document, filepath: _image!.path);
+
     getData();
+  }
+
+  DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
+        value: item,
+        child: Text(
+          item,
+          // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ), // Text
+      );
+  Future getImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Widget _buildImage() {
+    if (_image == null) {
+      return const Padding(
+        padding: EdgeInsets.all(5),
+        child: Icon(
+          Icons.add,
+          color: Colors.grey,
+        ),
+      );
+    } else {
+      return Text(_image!.path);
+    }
   }
 }

@@ -1,10 +1,10 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-
-import '../../resize_widget.dart';
 import '../../utils.dart';
 
 class TableEventsExample extends StatefulWidget {
@@ -21,6 +21,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
 
+  // ignore: prefer_final_fields
   TextEditingController _eventController = TextEditingController();
 
   @override
@@ -43,7 +44,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Calendrier des soutenances"),
+        title: const Text("Calendrier des soutenances"),
         centerTitle: true,
       ),
       body: Column(
@@ -53,9 +54,9 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             firstDay: DateTime(1990),
             lastDay: DateTime(2050),
             calendarFormat: format,
-            onFormatChanged: (CalendarFormat _format) {
+            onFormatChanged: (CalendarFormat format) {
               setState(() {
-                format = _format;
+                format = format;
               });
             },
             startingDayOfWeek: StartingDayOfWeek.sunday,
@@ -67,7 +68,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                 selectedDay = selectDay;
                 focusedDay = focusDay;
               });
-              print(focusedDay);
+              log(focusedDay.toString());
             },
             selectedDayPredicate: (DateTime date) {
               return isSameDay(selectedDay, date);
@@ -83,7 +84,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.circular(5.0),
               ),
-              selectedTextStyle: TextStyle(color: Colors.white),
+              selectedTextStyle: const TextStyle(color: Colors.white),
               todayDecoration: BoxDecoration(
                 color: Colors.purpleAccent,
                 shape: BoxShape.rectangle,
@@ -106,7 +107,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                 color: Colors.blue,
                 borderRadius: BorderRadius.circular(5.0),
               ),
-              formatButtonTextStyle: TextStyle(
+              formatButtonTextStyle: const TextStyle(
                 color: Colors.white,
               ),
             ),
@@ -177,11 +178,11 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                 ])),
             actions: [
               TextButton(
-                child: Text("Cancel"),
+                child: const Text("Cancel"),
                 onPressed: () => Navigator.pop(context),
               ),
               TextButton(
-                child: Text("Ok"),
+                child: const Text("Ok"),
                 onPressed: () {
                   if (_eventController.text.isEmpty) {
                   } else {
@@ -204,8 +205,8 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             ],
           ),
         ),
-        label: Text("Ajouter soutenance"),
-        icon: Icon(Icons.add),
+        label: const Text("Ajouter soutenance"),
+        icon: const Icon(Icons.add),
       ),
     );
   }

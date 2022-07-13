@@ -1,6 +1,8 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -25,6 +27,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
 
+  // ignore: prefer_final_fields
   TextEditingController _eventController = TextEditingController();
 
   @override
@@ -57,7 +60,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
   }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
-    print("selectedDay::$selectedDay::focusedDay::$focusedDay");
+    log("selectedDay::$selectedDay::focusedDay::$focusedDay");
     if (!isSameDay(_selectedDay, selectedDay)) {
       setState(() {
         _selectedDay = selectedDay;
@@ -195,20 +198,21 @@ class _TableEventsExampleState extends State<TableEventsExample> {
         onPressed: () => showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text("Add Event"),
+            title: const Text("Add Event"),
             content: TextFormField(
               controller: _eventController,
             ),
             actions: [
               TextButton(
-                child: Text("Cancel"),
+                child: const Text("Cancel"),
                 onPressed: () => Navigator.pop(context),
               ),
               TextButton(
-                child: Text("Ok"),
+                child: const Text("Ok"),
                 onPressed: () {
                   if (_eventController.text.isEmpty) {
                   } else {
+                    // ignore: unnecessary_null_comparison
                     if (_selectedEvents.value != null) {
                       _selectedEvents.value.add(
                         Event(_eventController.text),
@@ -226,8 +230,8 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             ],
           ),
         ),
-        label: Text("Add Event"),
-        icon: Icon(Icons.add),
+        label: const Text("Add Event"),
+        icon: const Icon(Icons.add),
       ),
     );
   }

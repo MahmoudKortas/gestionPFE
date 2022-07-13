@@ -4,18 +4,20 @@ import 'package:flutter/material.dart';
 import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.
+// ignore: must_be_immutable
 class DetailSujet extends StatefulWidget {
   String fonction;
 
-  DetailSujet({Key? key, required this.fonction}) : super(key: key);
+  DetailSujet({
+    Key? key,
+    required this.fonction,
+  }) : super(key: key);
+  @override
   State<DetailSujet> createState() => _DetailSujetState();
   static const routeName = '/DetailSujet';
 }
 
 class _DetailSujetState extends State<DetailSujet> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     if (kDebugMode) {

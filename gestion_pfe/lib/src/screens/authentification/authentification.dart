@@ -1,5 +1,4 @@
-// ignore: file_names
-import 'dart:developer';
+// ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/screens/accueil/accueil_enseignant.dart';
@@ -14,7 +13,7 @@ import '../../size_config.dart';
 
 /// Displays detailed information about a SampleItem.
 class Authentification extends StatefulWidget {
-  Authentification({Key? key}) : super(key: key);
+  const Authentification({Key? key}) : super(key: key);
 
   static const routeName = '/Authentification';
   @override
@@ -27,9 +26,9 @@ class _AuthentificationState extends State<Authentification> {
   final motDePasseController = TextEditingController();
   var _enseignant;
   var _etudiant;
+  var _responsable;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getData();
   }
@@ -145,49 +144,39 @@ class _AuthentificationState extends State<Authentification> {
   }
 
   void getData() async {
+    _responsable = await ApiService().getResponsable();
     _etudiant = await ApiService().getEtudiants();
     _enseignant = await ApiService().getEnseignant();
-    log("_etudiant::$_etudiant");
-    log("_enseignant::$_enseignant");
+    // log("_responsable::$_responsable");
+    // log("_etudiant::$_etudiant");
+    // log("_enseignant::$_enseignant");
   }
 
   void verificationInscription({String? email = "", String? motDepasse = ""}) {
     getData();
-    log("verificationInscription::$email $motDepasse");
-
-    /*log("_etudiant::$_etudiant");
-    log("_enseignant::$_enseignant");*/
-    if (email == "admin" && motDepasse == "admin") {
-      Navigator.restorablePushNamed(
-        context,
-        Dashboard.routeName,
-      );
-    } else {
-      for (var etudiant in _etudiant) {
-        // log("etudiant::${etudiant.email} ${etudiant.motdepasse}");
-        if (etudiant.email == email && etudiant.motdepasse == motDepasse) {
-          log("etudiant yess");
-          Navigator.restorablePushNamed(
-            context,
-            AccueilEtudiant.routeName,
-          );
-        }
-      }
-      for (var enseignant in _enseignant) {
-        // log("enseignant::${enseignant.email} ${enseignant.motdepasse}");
-        if (enseignant.email == email && enseignant.motdepasse == motDepasse) {
-          log("enseignant yess");
-          Navigator.restorablePushNamed(
-            context,
-            AccueilEnseignant.routeName,
-          );
-        }
+    for (var responsable in _responsable) {
+      if (responsable.login == email && responsable.motdepasse == motDepasse) {
+        Navigator.restorablePushNamed(
+          context,
+          Dashboard.routeName,
+        );
       }
     }
-
-    /*Navigator.restorablePushNamed(
-                              context,
-                              Accueil.routeName,
-                            );*/
+    for (var etudiant in _etudiant) {
+      if (etudiant.email == email && etudiant.motdepasse == motDepasse) {
+        Navigator.restorablePushNamed(
+          context,
+          AccueilEtudiant.routeName,
+        );
+      }
+    }
+    for (var enseignant in _enseignant) {
+      if (enseignant.email == email && enseignant.motdepasse == motDepasse) {
+        Navigator.restorablePushNamed(
+          context,
+          AccueilEnseignant.routeName,
+        );
+      }
+    }
   }
 }

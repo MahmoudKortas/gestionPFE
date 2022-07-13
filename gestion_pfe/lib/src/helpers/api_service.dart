@@ -3,10 +3,12 @@ import 'dart:developer';
 
 import 'package:gestion_pfe/src/models/document.dart';
 import 'package:gestion_pfe/src/models/enseignant.dart';
+import 'package:gestion_pfe/src/models/pfe.dart';
+import 'package:gestion_pfe/src/models/soutenance.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import '../constants/constants.dart';
 import '../models/etudiant.dart';
+import '../models/responsable.dart';
 
 class ApiService {
   Future<List<Etudiant>?> getEtudiants({String? id = ""}) async {
@@ -15,12 +17,13 @@ class ApiService {
 
       var response = await http.get(url);
       if (response.statusCode == 200) {
-        List<Etudiant> _model = etudiantFromJson(response.body);
-        return _model;
+        List<Etudiant> model = etudiantFromJson(response.body);
+        return model;
       }
     } catch (e) {
       log(e.toString());
     }
+    return null;
   }
 
   Future<List<Etudiant>?> addEtudiants({
@@ -39,6 +42,7 @@ class ApiService {
       var url =
           Uri.parse("${ApiConstants.baseUrl}${ApiConstants.etudiants}add");
 
+      // ignore: unused_local_variable
       var response = await http.post(
         url,
         headers: <String, String>{
@@ -60,7 +64,7 @@ class ApiService {
           },
         ),
       );
-      log("addEtudiants::${response.body}");
+      // log("addEtudiants::${response.body}");
       /*if (response.statusCode == 200) {
         List<Etudiant> _model = etudiantFromJson(response.body);
         return _model;
@@ -68,13 +72,14 @@ class ApiService {
     } catch (e) {
       log(e.toString());
     }
+    return null;
   }
 
   Future<List<Etudiant>?> updateEtudiants(String? id) async {
     try {
       var url =
           Uri.parse("${ApiConstants.baseUrl}${ApiConstants.etudiants}update/");
-
+      // ignore: unused_local_variable
       var response = await http.put(
         url,
         headers: <String, String>{
@@ -92,12 +97,11 @@ class ApiService {
             "prenom": "p",
             "tel": 1,
             "departement": "d",
-            "specialite": "s",
-            "etudiants": []
+            "specialite": "s"
           },
         ),
       );
-      log("updateEtudiants::${response.body}");
+      // log("updateEtudiants::${response.body}");
       /*if (response.statusCode == 200) {
         List<Etudiant> _model = etudiantFromJson(response.body);
         return _model;
@@ -105,20 +109,22 @@ class ApiService {
     } catch (e) {
       log(e.toString());
     }
+    return null;
   }
 
   Future<List<Etudiant>?> deleteEtudiants(String? id) async {
     try {
       var url =
           Uri.parse("${ApiConstants.baseUrl}${ApiConstants.etudiants}$id");
-
+// ignore: unused_local_variable
       var response = await http.delete(
         url,
       );
-      log("deleteEtudiants::${response.body}");
+      // log("deleteEtudiants::${response.body}");
     } catch (e) {
       log(e.toString());
     }
+    return null;
   }
 
   Future<List<Document>?> getDocument({String? id = ""}) async {
@@ -126,54 +132,50 @@ class ApiService {
       var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.document + id!);
       var response = await http.get(url);
       if (response.statusCode == 200) {
-        List<Document> _model = documentFromJson(response.body);
-        return _model;
+        List<Document> model = documentFromJson(response.body);
+        return model;
       }
     } catch (e) {
       log(e.toString());
     }
+    return null;
   }
 
-  Future<List<Document>?> addDocument({String? id = ""}) async {
+  Future<List<Document>?> addDocument(
+      {String? id = "",
+      String? filepath = "",
+      required Document document}) async {
     try {
-      var url = Uri.parse("${ApiConstants.baseUrl}${ApiConstants.document}add");
+      // var urll = Uri.parse("${ApiConstants.baseUrl}${ApiConstants.document}add");
+      String url = "${ApiConstants.baseUrl}${ApiConstants.document}add";
+      Map<String, String> headers = {
+        'Content-Type': 'multipart/form-data',
+      };
 
-      var response = await http.post(
-        url,
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(
-          {
-            "dateDepot": "2022-06-30T12:57:27.000+00:00",
-            "description": "d",
-            "proprietaire": "e",
-            "titre": "m",
-            "documents": []
-          },
-        ),
-      );
-      log("addDocument::${response.body}");
-      /*if (response.statusCode == 200) {
-        List<Etudiant> _model = etudiantFromJson(response.body);
-        return _model;
-      }*/
+      var request = http.MultipartRequest('POST', Uri.parse(url))
+        ..fields['Document'] = json.encode(document.toJson())
+        ..headers.addAll(headers)
+        ..files.add(await http.MultipartFile.fromPath('file', filepath!));
+      var response = await request.send();
+      log(request.fields.toString());
     } catch (e) {
       log(e.toString());
     }
+    return null;
   }
 
   Future<List<Document>?> deleteDocument(String? id) async {
     try {
       var url = Uri.parse("${ApiConstants.baseUrl}${ApiConstants.document}$id");
-
+// ignore: unused_local_variable
       var response = await http.delete(
         url,
       );
-      log("deleteDocument::${response.body}");
+      // log("deleteDocument::${response.body}");
     } catch (e) {
       log(e.toString());
     }
+    return null;
   }
 
   Future<List<Enseignant>?> getEnseignant({String? id = ""}) async {
@@ -183,12 +185,13 @@ class ApiService {
 
       var response = await http.get(url);
       if (response.statusCode == 200) {
-        List<Enseignant> _model = enseignantFromJson(response.body);
-        return _model;
+        List<Enseignant> model = enseignantFromJson(response.body);
+        return model;
       }
     } catch (e) {
       log(e.toString());
     }
+    return null;
   }
 
   Future<List<Enseignant>?> addEnseignant({
@@ -203,7 +206,7 @@ class ApiService {
     try {
       var url =
           Uri.parse("${ApiConstants.baseUrl}${ApiConstants.enseignants}add");
-
+// ignore: unused_local_variable
       var response = await http.post(
         url,
         headers: <String, String>{
@@ -221,7 +224,7 @@ class ApiService {
           },
         ),
       );
-      log("addEnseignant::${response.body}");
+      // log("addEnseignant::${response.body}");
       /*if (response.statusCode == 200) {
         List<Etudiant> _model = etudiantFromJson(response.body);
         return _model;
@@ -229,19 +232,142 @@ class ApiService {
     } catch (e) {
       log(e.toString());
     }
+    return null;
   }
 
   Future<List<Enseignant>?> deleteEnseignant(String? id) async {
     try {
       var url =
           Uri.parse("${ApiConstants.baseUrl}${ApiConstants.enseignants}$id");
-
+// ignore: unused_local_variable
       var response = await http.delete(
         url,
       );
-      log("deleteEnseignant::${response.body}");
+      // log("deleteEnseignant::${response.body}");
     } catch (e) {
       log(e.toString());
     }
+    return null;
   }
+
+  Future<List<PFE>?> getPFE({String? id = ""}) async {
+    try {
+      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.pfe + id!);
+
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        // log("response.body::${response.body}");
+        List<PFE> model = pfeFromJson(response.body);
+        return model;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
+
+  Future<List<PFE>?> addPFE({
+    String? nom = "",
+    String? prenom = "",
+    String? telephone = "",
+    String? adresse = "",
+    String? email = "",
+    String? motDePasse = "",
+    String? note = "",
+    String? titre = "",
+    String? domaine = "",
+    String? encadreur = "",
+    String? etudiant = "",
+    String? dateDebut = "",
+    String? dateFin = "",
+    String? dateSoutenance = "",
+    String? document = "",
+  }) async {
+    try {
+      var url = Uri.parse("${ApiConstants.baseUrl}${ApiConstants.pfe}add");
+
+      var response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(
+          {
+            "nom": nom,
+            "prenom": prenom,
+            "telephone": int.parse(telephone ?? "-1"),
+            "adresse": adresse,
+            "email": email,
+            "motDePasse": motDePasse,
+            "note": int.parse(note ?? "-1"),
+            "titre": titre,
+            "domaine": domaine,
+            "encadreur": encadreur,
+            "etudiant": etudiant,
+            "dateDebut": dateDebut,
+            "dateFin": dateFin,
+            "dateSoutenance": dateSoutenance,
+            "document": document,
+          },
+        ),
+      );
+      log("addPFE::${response.body}");
+      if (response.statusCode == 200) {
+        List<PFE> model = pfeFromJson(response.body);
+        return model;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
+
+  Future<List<Soutenance>?> getSoutenance({String? id = ""}) async {
+    try {
+      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.soutenance + id!);
+
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        // log("response.body::${response.body}");
+        List<Soutenance> model = soutenanceFromJson(response.body);
+        return model;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
+
+  Future<List<Responsable>?> getResponsable({String? id = ""}) async {
+    try {
+      var url =
+          Uri.parse(ApiConstants.baseUrl + ApiConstants.responsable + id!);
+
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        // log("response.body::${response.body}");
+        List<Responsable> model = responsableFromJson(response.body);
+        return model;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
+
+  /*Future<String> uploadImageToS3(MultipartFile multipartFile) async {
+    try {
+      var url =
+          Uri.parse(ApiConstants.baseUrl + ApiConstants.responsable );
+      final formData = FormData.fromMap({
+        'file': multipartFile,
+        'bucket': "hubscategoriesicons2/profilePictures"
+      });
+      final response = await uploadImageDio.post(url, data: formData);
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }*/
+
 }

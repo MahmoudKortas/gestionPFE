@@ -20,9 +20,6 @@ class Enseignant {
     this.domaine,
     this.email,
     this.motdepasse,
-    required this.rappoteurs,
-    required this.presidents,
-    required this.encadreurs,
   });
 
   int? idEns;
@@ -33,9 +30,6 @@ class Enseignant {
   String? domaine;
   String? email;
   String? motdepasse;
-  List<dynamic> rappoteurs;
-  List<dynamic> presidents;
-  List<dynamic> encadreurs;
 
   factory Enseignant.fromJson(Map<String, dynamic> json) => Enseignant(
         idEns: json["idEns"],
@@ -46,9 +40,6 @@ class Enseignant {
         domaine: json["domaine"],
         email: json["email"],
         motdepasse: json["motdepasse"],
-        rappoteurs: List<dynamic>.from(json["rappoteurs"].map((x) => x)),
-        presidents: List<dynamic>.from(json["presidents"].map((x) => x)),
-        encadreurs: List<dynamic>.from(json["encadreurs"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -60,12 +51,9 @@ class Enseignant {
         "domaine": domaine,
         "email": email,
         "motdepasse": motdepasse,
-        "rappoteurs": List<dynamic>.from(rappoteurs.map((x) => x)),
-        "presidents": List<dynamic>.from(presidents.map((x) => x)),
-        "encadreurs": List<dynamic>.from(encadreurs.map((x) => x)),
       };
   @override
   String toString() {
-    return 'Enseignant(idEns: $idEns, nom: $nom, prenom: $prenom, tel: $tel, adresse: $adresse, domaine: $domaine, email: $email, motdepasse: $motdepasse, rappoteurs: $rappoteurs, presidents: $presidents, encadreurs: $encadreurs)';
+    return 'Enseignant(idEns: $idEns, nom: $nom, prenom: $prenom, tel: $tel, adresse: $adresse, domaine: $domaine, email: $email, motdepasse: $motdepasse)';
   }
 }

@@ -16,7 +16,7 @@ import 'screens/authentification/inscription.dart';
 import 'screens/subjects/detail_sujet.dart';
 import 'screens/subjects/proposer_sujet.dart';
 import 'screens/subjects/consulter_planning.dart';
-import 'screens/subjects/liste_des_sujets.dart';
+import 'screens/etudiant/liste_des_sujets.dart';
 import 'screens/enseignant/gerer_demande_des_sujets.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
@@ -87,7 +87,7 @@ class MyApp extends StatelessWidget {
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
                   case Authentification.routeName:
-                    return Authentification();
+                    return const Authentification();
                   case Inscription.routeName:
                     return const Inscription();
                   case AccueilEnseignant.routeName:
@@ -105,15 +105,15 @@ class MyApp extends StatelessWidget {
                   case GererDocument.routeName:
                     return const GererDocument();
                   case GererEnseignant.routeName:
-                    return GererEnseignant();
+                    return const GererEnseignant();
                   case Calander.routeName:
                     return const Calander();
                   case GererEtudiant.routeName:
-                    return GererEtudiant();
+                    return const GererEtudiant();
                   case GererListeDesJuries.routeName:
-                    return GererListeDesJuries();
+                    return const GererListeDesJuries();
                   case ProposerSujet.routeName:
-                    return ProposerSujet();
+                    return const ProposerSujet();
                   case ListeDesSujets.routeName:
                     return const ListeDesSujets();
                   case DetailSujet.routeName:
@@ -122,7 +122,7 @@ class MyApp extends StatelessWidget {
                       fonction: args.fonction,
                     );
                   default:
-                    return Authentification();
+                    return const Authentification();
                 }
               },
             );

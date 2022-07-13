@@ -8,7 +8,7 @@ import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.
 class GererEtudiant extends StatefulWidget {
-  GererEtudiant({Key? key}) : super(key: key);
+  const GererEtudiant({Key? key}) : super(key: key);
 
   static const routeName = '/GererEtudiant';
   @override
@@ -16,8 +16,6 @@ class GererEtudiant extends StatefulWidget {
 }
 
 class _GererEtudiantState extends State<GererEtudiant> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   final _items = [
     'informatique',
     'mecanique',
@@ -40,7 +38,6 @@ class _GererEtudiantState extends State<GererEtudiant> {
   final motDePasseController = TextEditingController();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getData();
   }
@@ -362,7 +359,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   }
                   return null;
                 },
-                        controller: nomController,
+                controller: nomController,
               ),
               const SizedBox(
                 height: 10,
@@ -381,7 +378,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   }
                   return null;
                 },
-                        controller: prenomController,
+                controller: prenomController,
               ),
               const SizedBox(
                 height: 10,
@@ -400,7 +397,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   }
                   return null;
                 },
-                        controller: telephoneController,
+                controller: telephoneController,
               ),
               const SizedBox(
                 height: 10,
@@ -419,7 +416,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   }
                   return null;
                 },
-                        controller: adresseController,
+                controller: adresseController,
               ),
               const SizedBox(
                 height: 10,
@@ -438,7 +435,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   }
                   return null;
                 },
-                        controller: emailController,
+                controller: emailController,
               ),
               const SizedBox(
                 height: 10,
@@ -447,9 +444,9 @@ class _GererEtudiantState extends State<GererEtudiant> {
                 height: 10,
               ),
               TextFormField(
-                        obscureText: true,
-                        enableSuggestions: false,
-                        autocorrect: false,
+                obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.lock),
                   hintText: 'Saisir votre password',
@@ -460,7 +457,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   }
                   return null;
                 },
-                        controller: motDePasseController,
+                controller: motDePasseController,
               ),
               DropdownButton<String>(
                 hint: const Text("choisir votre diplome"),

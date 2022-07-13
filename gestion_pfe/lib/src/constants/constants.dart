@@ -5,4 +5,6 @@ class ApiConstants {
   static String etudiants = "/etudiants/";
   static String enseignants = "/enseignants/";
   static String document = "/document/";
+  static String responsable = "/responsable/";
 }
+

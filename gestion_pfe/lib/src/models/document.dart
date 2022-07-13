@@ -9,43 +9,47 @@ List<Document> documentFromJson(String str) =>
 
 String documentToJson(List<Document> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String documentToJsonn(List<Document> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Document {
-  Document({
-     this.idDoc,
-     this.titre,
-     this.description,
-     this.proprietaire,
-     this.dateDepot,
-     required this.documents,
-  });
-
   int? idDoc;
   String? titre;
   String? description;
   String? proprietaire;
-  DateTime? dateDepot;
-  List<dynamic> documents;
+  String? datedepot;
+  String? photo;
 
-  factory Document.fromJson(Map<String, dynamic> json) => Document(
-        idDoc: json["idDoc"],
-        titre: json["titre"],
-        description: json["description"],
-        proprietaire: json["proprietaire"],
-        dateDepot: DateTime.parse(json["dateDepot"]),
-        documents: List<dynamic>.from(json["documents"].map((x) => x)),
-      );
+  Document(
+      {this.idDoc,
+      this.titre,
+      this.description,
+      this.proprietaire,
+      this.datedepot,
+      this.photo});
 
-  Map<String, dynamic> toJson() => {
-        "idDoc": idDoc,
-        "titre": titre,
-        "description": description,
-        "proprietaire": proprietaire,
-        "dateDepot": dateDepot?.toIso8601String(),
-        "documents": List<dynamic>.from(documents.map((x) => x)),
-      };
+  Document.fromJson(Map<String, dynamic> json) {
+    idDoc = json['idDoc'];
+    titre = json['titre'];
+    description = json['description'];
+    proprietaire = json['proprietaire'];
+    datedepot = json['datedepot'];
+    photo = json['photo'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['idDoc'] = idDoc;
+    data['titre'] = titre;
+    data['description'] = description;
+    data['proprietaire'] = proprietaire;
+    data['datedepot'] = datedepot;
+    data['photo'] = photo;
+    return data;
+  }
+
   @override
   String toString() {
-    return 'Document(idDoc: $idDoc, titre: $titre, description: $description, proprietaire: $proprietaire, dateDepot: $dateDepot, documents: $documents)';
+    return 'Document(idDoc: $idDoc, titre: $titre, description: $description, proprietaire: $proprietaire, dateDepot: $datedepot, photo: $photo)';
   }
 }

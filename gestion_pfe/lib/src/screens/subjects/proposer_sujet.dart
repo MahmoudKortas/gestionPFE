@@ -1,20 +1,25 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, prefer_final_fields
+
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/models/document.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../helpers/api_service.dart';
 import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.
 class ProposerSujet extends StatefulWidget {
-  ProposerSujet({Key? key}) : super(key: key);
+  const ProposerSujet({Key? key}) : super(key: key);
   static const routeName = '/ProposerSujet';
   @override
   State<ProposerSujet> createState() => _ProposerSujetState();
 }
 
 class _ProposerSujetState extends State<ProposerSujet> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  // ignore: unused_field
   final _items = [
     'informatique',
     'mecanique',
@@ -24,14 +29,22 @@ class _ProposerSujetState extends State<ProposerSujet> {
     'mathematique'
   ];
   var _enseignant;
-  var _listeEnseignant=[''];
+  var _listeEnseignant = [''];
   String? value;
-   @override
+  File? _image;
+  final picker = ImagePicker();
+  Document document=Document();
+  
+  final dateController = TextEditingController();  
+  final descriptionController = TextEditingController();
+  final titreController = TextEditingController();
+
+  @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getData();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,19 +58,57 @@ class _ProposerSujetState extends State<ProposerSujet> {
             context: context,
             child: Column(
               children: [
-                const TextButton(
-                  onPressed: null,
-                  child: Text("upload file"),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.calendar_month),
+                    hintText: 'Saisir date de depot',
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'entrez votre login';
+                    }
+                    return null;
+                  },
+                  controller: dateController,
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.description),
+                    hintText: 'Saisir description',
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'entrez votre login';
+                    }
+                    return null;
+                  },
+                  controller: descriptionController,
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.description),
+                    hintText: 'Saisir titre',
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'entrez votre login';
+                    }
+                    return null;
+                  },
+                  controller: titreController,
                 ),
                 DropdownButton<String>(
                   hint: const Text("choisir l'encadrant"),
                   value: value,
                   iconSize: 36,
                   icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                  items:_listeEnseignant.map(buildMenuItem).toList(), //_items.map(buildMenuItem).toList(),
+                  items: _listeEnseignant
+                      .map(buildMenuItem)
+                      .toList(), //_items.map(buildMenuItem).toList(),
                   onChanged: (value) => setState(() => this.value = value),
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                 ),
+                TextButton(onPressed: getImage, child: _buildImage()),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: ElevatedButton(
@@ -67,6 +118,14 @@ class _ProposerSujetState extends State<ProposerSujet> {
                       /*if (_formKey.currentState!.validate()) {
                           // Process data.
                         }*/
+                        document.datedepot="2022-06-30T12:57:27.000+00:00";
+                        document.description=descriptionController.text;
+                        document.proprietaire=value??"";
+                        document.titre=titreController.text;
+                        document.idDoc=0;
+                        log("document::$document");
+                      ApiService()
+                          .addDocument(document:document, filepath: _image!.path);
                     },
                     child: const Text("upload"),
                   ),
@@ -78,17 +137,20 @@ class _ProposerSujetState extends State<ProposerSujet> {
       ),
     );
   }
-void getData() async {
+
+  void getData() async {
     _enseignant = await ApiService().getEnseignant();
     log("_enseignant::$_enseignant");
     _listeEnseignant.clear();
-    _enseignant.map((l)=>{_listeEnseignant.add(l.nom+' '+l.prenom)}).toList();
-    
-    log("_listeEnseignant::$_listeEnseignant");
-       
-    Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
+    _enseignant
+        .map((l) => {_listeEnseignant.add(l.nom + ' ' + l.prenom)})
+        .toList();
 
+    log("_listeEnseignant::$_listeEnseignant");
+
+    Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }
+
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
         value: item,
         child: Text(
@@ -96,4 +158,28 @@ void getData() async {
           // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ), // Text
       );
+  Future getImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Widget _buildImage() {
+    if (_image == null) {
+      return const Padding(
+        padding: EdgeInsets.all(5),
+        child: Icon(
+          Icons.add,
+          color: Colors.grey,
+        ),
+      );
+    } else {
+      return Text(_image!.path);
+    }
+  }
 }

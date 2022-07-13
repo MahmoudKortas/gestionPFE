@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gestion_pfe/src/iconWidget.dart';
+import 'package:gestion_pfe/src/icon_widget.dart';
 
 import '../../resize_widget.dart';
 import '../calendar/events_example.dart';
-import '../responsable_de_stage/dashboard.dart';
 import '../subjects/proposer_sujet.dart';
-import '../subjects/liste_des_sujets.dart';
 import '../enseignant/gerer_demande_des_sujets.dart';
-import '../subjects/consulter_planning.dart';
 
 /// Displays detailed information about a SampleItem.
 class AccueilEnseignant extends StatelessWidget {

@@ -1,12 +1,11 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/models/document.dart';
-import 'package:gestion_pfe/src/models/enseignant.dart';
-import 'package:gestion_pfe/src/screens/authentification/authentification.dart';
+import 'package:gestion_pfe/src/models/pfe.dart';
+import 'package:gestion_pfe/src/models/soutenance.dart';
 
-import '../../entites/description.dart';
+import '../../description.dart';
 import '../../helpers/api_service.dart';
-import '../../models/etudiant.dart';
 import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.
@@ -19,13 +18,11 @@ class Inscription extends StatefulWidget {
 
 class _InscriptionState extends State<Inscription> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _items = [
-    'informatique',
-    'mecanique',
-    'electrique',
-    'genie civile',
-    'langues',
-    'mathematique'
+  final _items = ['Informatique', 'Mecanique', 'Electrique', 'Genie civile'];
+  final _niveauItems = [
+    'Licence',
+    'Ingenieurie',
+    'Mastère',
   ];
   String? domaineValue;
   String? diplomeValue;
@@ -46,11 +43,14 @@ class _InscriptionState extends State<Inscription> {
   final departementController = TextEditingController();
   final niveauController = TextEditingController();
   final specialiteController = TextEditingController();*/
+  List<PFE>? _pfe = [];
+  List<Document>? _document = [];
+  List<Soutenance>? _soutenance = [];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    getData();
   }
 
   @override
@@ -108,9 +108,6 @@ class _InscriptionState extends State<Inscription> {
                         height: 10,
                       ),
                       TextFormField(
-                        obscureText: true,
-                        enableSuggestions: false,
-                        autocorrect: false,
                         decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.person),
                           hintText: 'Saisir votre prenom',
@@ -191,7 +188,6 @@ class _InscriptionState extends State<Inscription> {
                         controller: motDePasseController,
                       ),
                       Column(
-                        //TODO: center attributes
                         children: <Widget>[
                           ListTile(
                             title: const Text('Enseignant'),
@@ -262,7 +258,9 @@ class _InscriptionState extends State<Inscription> {
                                       iconSize: 36,
                                       icon: const Icon(Icons.arrow_drop_down,
                                           color: Colors.black),
-                                      items: _items.map(buildMenuItem).toList(),
+                                      items: _niveauItems
+                                          .map(buildMenuItem)
+                                          .toList(),
                                       onChanged: (value) =>
                                           setState(() => niveauValue = value),
                                       borderRadius: const BorderRadius.all(
@@ -335,6 +333,14 @@ class _InscriptionState extends State<Inscription> {
     );
   }
 
+  void getData() async {
+    _pfe = await ApiService().getPFE();
+    _document = await ApiService().getDocument();
+    _soutenance = await ApiService().getSoutenance();
+    log("_soutenance::$_soutenance");
+    log("pfe::$_pfe");
+    log("_document::$_document");
+  }
   /*void getData() async {
     //await ApiService().updateEtudiants("3");
     //await ApiService().deleteEtudiants("17");
