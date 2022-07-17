@@ -31,9 +31,9 @@ class Etudiant {
   int? tel;
   String? adresse;
   String? niveau;
-  dynamic specialite;
+  String? specialite;
   String? diplome;
-  dynamic departement;
+  String? departement;
   String? email;
   String? motdepasse;
 

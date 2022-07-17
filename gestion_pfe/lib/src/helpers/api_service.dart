@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:convert';
 import 'dart:developer';
 
@@ -41,8 +43,6 @@ class ApiService {
     try {
       var url =
           Uri.parse("${ApiConstants.baseUrl}${ApiConstants.etudiants}add");
-
-      // ignore: unused_local_variable
       var response = await http.post(
         url,
         headers: <String, String>{
@@ -59,18 +59,17 @@ class ApiService {
             "prenom": prenom,
             "tel": int.parse(telephone!),
             "departement": departement,
-            "specialite": specialite,
-            "etudiants": []
+            "specialite": specialite
           },
         ),
       );
-      // log("addEtudiants::${response.body}");
-      /*if (response.statusCode == 200) {
-        List<Etudiant> _model = etudiantFromJson(response.body);
-        return _model;
-      }*/
+      log("addEtudiantsstatusCode::${response.body}");
+      if (response.statusCode == 200) {
+        // List<Etudiant> _model = etudiantFromJson(response.body);
+        // return _model;
+      }
     } catch (e) {
-      log(e.toString());
+      log("adddEtudiantException:${e.toString()}");
     }
     return null;
   }
@@ -79,7 +78,6 @@ class ApiService {
     try {
       var url =
           Uri.parse("${ApiConstants.baseUrl}${ApiConstants.etudiants}update/");
-      // ignore: unused_local_variable
       var response = await http.put(
         url,
         headers: <String, String>{
@@ -116,7 +114,6 @@ class ApiService {
     try {
       var url =
           Uri.parse("${ApiConstants.baseUrl}${ApiConstants.etudiants}$id");
-// ignore: unused_local_variable
       var response = await http.delete(
         url,
       );
@@ -167,7 +164,6 @@ class ApiService {
   Future<List<Document>?> deleteDocument(String? id) async {
     try {
       var url = Uri.parse("${ApiConstants.baseUrl}${ApiConstants.document}$id");
-// ignore: unused_local_variable
       var response = await http.delete(
         url,
       );
@@ -206,7 +202,6 @@ class ApiService {
     try {
       var url =
           Uri.parse("${ApiConstants.baseUrl}${ApiConstants.enseignants}add");
-// ignore: unused_local_variable
       var response = await http.post(
         url,
         headers: <String, String>{
@@ -239,7 +234,6 @@ class ApiService {
     try {
       var url =
           Uri.parse("${ApiConstants.baseUrl}${ApiConstants.enseignants}$id");
-// ignore: unused_local_variable
       var response = await http.delete(
         url,
       );
@@ -328,7 +322,7 @@ class ApiService {
 
       var response = await http.get(url);
       if (response.statusCode == 200) {
-        // log("response.body::${response.body}");
+        log("response.body::${response.body}");
         List<Soutenance> model = soutenanceFromJson(response.body);
         return model;
       }

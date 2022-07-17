@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -7,10 +9,12 @@ import '../../resize_widget.dart';
 // ignore: must_be_immutable
 class DetailSujet extends StatefulWidget {
   String fonction;
+  int id;
 
   DetailSujet({
     Key? key,
     required this.fonction,
+    required this.id,
   }) : super(key: key);
   @override
   State<DetailSujet> createState() => _DetailSujetState();
@@ -20,9 +24,9 @@ class DetailSujet extends StatefulWidget {
 class _DetailSujetState extends State<DetailSujet> {
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode) {
-      print("fonction::${widget.fonction}");
-    }
+    log("fonction::${widget.fonction}");
+    log("id::${widget.id}");
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Détail du sujet'),

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, prefer_final_fields
+// ignore_for_file: prefer_typing_uninitialized_variables, prefer_final_fields, must_be_immutable
 
 import 'dart:developer';
 import 'dart:io';
@@ -6,36 +6,32 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/models/document.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 import '../../helpers/api_service.dart';
 import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.
 class ProposerSujet extends StatefulWidget {
-  const ProposerSujet({Key? key}) : super(key: key);
+  String fonction;
+  ProposerSujet({
+    Key? key,
+    required this.fonction,
+  }) : super(key: key);
   static const routeName = '/ProposerSujet';
   @override
   State<ProposerSujet> createState() => _ProposerSujetState();
 }
 
 class _ProposerSujetState extends State<ProposerSujet> {
-  // ignore: unused_field
-  final _items = [
-    'informatique',
-    'mecanique',
-    'electrique',
-    'genie civile',
-    'langues',
-    'mathematique'
-  ];
   var _enseignant;
   var _listeEnseignant = [''];
   String? value;
   File? _image;
   final picker = ImagePicker();
-  Document document=Document();
-  
-  final dateController = TextEditingController();  
+  Document document = Document();
+
+  final dateController = TextEditingController();
   final descriptionController = TextEditingController();
   final titreController = TextEditingController();
 
@@ -47,6 +43,7 @@ class _ProposerSujetState extends State<ProposerSujet> {
 
   @override
   Widget build(BuildContext context) {
+    log(widget.fonction);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Proposer sujet'),
@@ -58,7 +55,7 @@ class _ProposerSujetState extends State<ProposerSujet> {
             context: context,
             child: Column(
               children: [
-                TextFormField(
+                /*TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.calendar_month),
                     hintText: 'Saisir date de depot',
@@ -70,6 +67,19 @@ class _ProposerSujetState extends State<ProposerSujet> {
                     return null;
                   },
                   controller: dateController,
+                ),*/
+                TextFormField(
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.description),
+                    hintText: 'Saisir titre',
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'entrez le titre du sujet';
+                    }
+                    return null;
+                  },
+                  controller: titreController,
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
@@ -78,36 +88,28 @@ class _ProposerSujetState extends State<ProposerSujet> {
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return 'entrez votre login';
+                      return 'entrez la description du sujet';
                     }
                     return null;
                   },
                   controller: descriptionController,
                 ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.description),
-                    hintText: 'Saisir titre',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'entrez votre login';
-                    }
-                    return null;
-                  },
-                  controller: titreController,
-                ),
-                DropdownButton<String>(
-                  hint: const Text("choisir l'encadrant"),
-                  value: value,
-                  iconSize: 36,
-                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                  items: _listeEnseignant
-                      .map(buildMenuItem)
-                      .toList(), //_items.map(buildMenuItem).toList(),
-                  onChanged: (value) => setState(() => this.value = value),
-                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                ),
+                widget.fonction == "etudiant"
+                    ? DropdownButton<String>(
+                        hint: const Text("choisir l'encadrant"),
+                        value: value,
+                        iconSize: 36,
+                        icon: const Icon(Icons.arrow_drop_down,
+                            color: Colors.black),
+                        items: _listeEnseignant
+                            .map(buildMenuItem)
+                            .toList(), //_items.map(buildMenuItem).toList(),
+                        onChanged: (value) =>
+                            setState(() => this.value = value),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10.0)),
+                      )
+                    : Container(),
                 TextButton(onPressed: getImage, child: _buildImage()),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -118,16 +120,17 @@ class _ProposerSujetState extends State<ProposerSujet> {
                       /*if (_formKey.currentState!.validate()) {
                           // Process data.
                         }*/
-                        document.datedepot="2022-06-30T12:57:27.000+00:00";
-                        document.description=descriptionController.text;
-                        document.proprietaire=value??"";
-                        document.titre=titreController.text;
-                        document.idDoc=0;
-                        log("document::$document");
-                      ApiService()
-                          .addDocument(document:document, filepath: _image!.path);
+                      document.datedepot =
+                          "2022-06-30T12:57:27.000+00:00"; //DateFormat('yyyy-MM-dd hh:mm:ss.SSSS').format(DateTime.now()).toString();
+                      document.description = descriptionController.text;
+                      document.proprietaire = value ?? "";
+                      document.titre = titreController.text;
+                      document.idDoc = 0;
+                      log("document::$document");
+                      ApiService().addDocument(
+                          document: document, filepath: _image!.path);
                     },
-                    child: const Text("upload"),
+                    child: const Text("Valider"),
                   ),
                 ),
               ],
@@ -164,7 +167,7 @@ class _ProposerSujetState extends State<ProposerSujet> {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
       } else {
-        print('No image selected.');
+        log('No image selected.');
       }
     });
   }

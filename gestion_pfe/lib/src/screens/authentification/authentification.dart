@@ -5,7 +5,6 @@ import 'package:gestion_pfe/src/screens/accueil/accueil_enseignant.dart';
 import 'package:gestion_pfe/src/screens/accueil/accueil_etudiant.dart';
 import 'package:gestion_pfe/src/screens/authentification/inscription.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/dashboard.dart';
-
 import '../../color_hex.dart';
 import '../../helpers/api_service.dart';
 import '../../resize_widget.dart';
@@ -164,9 +163,12 @@ class _AuthentificationState extends State<Authentification> {
     }
     for (var etudiant in _etudiant) {
       if (etudiant.email == email && etudiant.motdepasse == motDepasse) {
-        Navigator.restorablePushNamed(
+        Navigator.pushNamed(
           context,
           AccueilEtudiant.routeName,
+          arguments: AccueilEtudiant(
+            etudiant:etudiant,
+          ),
         );
       }
     }

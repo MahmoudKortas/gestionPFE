@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/models/document.dart';
 
 import '../../helpers/api_service.dart';
 import '../../resize_widget.dart';
@@ -20,6 +21,7 @@ class _ListeDesSujetsState extends State<ListeDesSujets> {
 
   // ignore: prefer_typing_uninitialized_variables
   var _document;
+  Document?  doc;
   @override
   void initState() {
     super.initState();
@@ -40,25 +42,26 @@ class _ListeDesSujetsState extends State<ListeDesSujets> {
             context: context,
             child: Column(
               children: [
-                _document.isEmpty
+                _document == null || _document.isEmpty
                     ? const Text("aucun document existe")
                     : ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: _document!.length,
                         itemBuilder: (context, index) {
+                           log(_document[index].titre.toString());
                           return Card(
                             child: ListTile(
-                              title: Text('sujet $index'),
-                              subtitle: const Text(
-                                  'A sufficiently long subtitle warrants three lines.'),
+                              title: Text(_document[index].titre.toString()),
+                               subtitle:  Text(_document[index].description.toString()),
                               trailing: const Icon(Icons.more_vert),
-                              isThreeLine: true,
+                              // isThreeLine: true,
                               onTap: () {
                                 Navigator.pushNamed(
                                   context,
                                   DetailSujet.routeName,
                                   arguments: DetailSujet(
+                                    id: _document[index].idDoc,
                                     fonction: "etudiant",
                                   ),
                                 );

@@ -17,7 +17,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
   late List<Enseignant>? _enseignant = [];
   final _items = [
     'informatique',
-    'mecanique',
+    'Mecanique',
     'electrique',
     'genie civile',
     'langues',
@@ -203,9 +203,10 @@ class _GererEnseignantState extends State<GererEnseignant> {
                                   foregroundImage:
                                   AssetImage('assets/images/flutter_logo.png'),
                                   ),*/
-                              title: Text('Enseignant $index'),
-                              subtitle: const Text(
-                                  'A sufficiently long subtitle warrants three lines.'),
+                              title: Text(
+                                  "${_enseignant![index].prenom} ${_enseignant![index].nom}"),
+                              subtitle:
+                                  Text(_enseignant![index].adresse.toString()),
                               trailing: const Icon(Icons.more_vert),
                               isThreeLine: true,
                               onTap: () {
@@ -284,7 +285,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
     var adressevalue = _enseignant?[index!].adresse;
     var emailvalue = _enseignant?[index!].email;
     var passwordvalue = _enseignant?[index!].motdepasse;
-    var domaineValue = _enseignant?[index!].domaine;
+    var domaineValue = _enseignant?[index!].domaine.toString();
     log("${_enseignant?[index!]}");
     log("$nomvalue $prenomvalue $telephonevalue $adressevalue $emailvalue $passwordvalue $domaineValue");
     return showDialog<String>(
@@ -409,7 +410,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 },
                 controller: motDePasseController..text = passwordvalue!,
               ),
-              DropdownButton<String>(
+              /*DropdownButton<String>(
                 hint: const Text("choisir votre domaine"),
                 value: domaineValue,
                 iconSize: 36,
@@ -417,7 +418,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 items: _items.map(buildMenuItem).toList(),
                 onChanged: (value) => setState(() => domaineValue = value),
                 borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              ),
+              ),*/
             ],
           ),
         ),

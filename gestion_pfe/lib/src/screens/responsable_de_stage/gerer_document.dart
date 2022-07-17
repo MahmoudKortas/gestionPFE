@@ -1,15 +1,14 @@
-import 'dart:io';
+// ignore_for_file: prefer_typing_uninitialized_variables, prefer_final_fields
 
+import 'dart:developer';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../helpers/api_service.dart';
 import '../../models/document.dart';
 import '../../resize_widget.dart';
-
-/// Displays detailed information about a SampleItem.
 class GererDocument extends StatefulWidget {
   const GererDocument({Key? key}) : super(key: key);
-
   static const routeName = '/Document';
   @override
   State<GererDocument> createState() => _GererDocumentState();
@@ -17,7 +16,6 @@ class GererDocument extends StatefulWidget {
 
 class _GererDocumentState extends State<GererDocument> {
   late List<Document>? _document = [];
-
   var _enseignant;
   var _listeEnseignant = [''];
   String? value;
@@ -47,7 +45,7 @@ class _GererDocumentState extends State<GererDocument> {
             context: context,
             child: Column(
               children: [
-                TextFormField(
+                /*TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.calendar_month),
                     hintText: 'Saisir date de depot',
@@ -59,6 +57,19 @@ class _GererDocumentState extends State<GererDocument> {
                     return null;
                   },
                   controller: dateController,
+                ),*/
+                TextFormField(
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.description),
+                    hintText: 'Saisir titre',
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'entrez le titre du sujet';
+                    }
+                    return null;
+                  },
+                  controller: titreController,
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
@@ -67,24 +78,11 @@ class _GererDocumentState extends State<GererDocument> {
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return 'entrez votre login';
+                      return 'entrez la description du sujet';
                     }
                     return null;
                   },
                   controller: descriptionController,
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.description),
-                    hintText: 'Saisir titre',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'entrez votre login';
-                    }
-                    return null;
-                  },
-                  controller: titreController,
                 ),
                 DropdownButton<String>(
                   hint: const Text("choisir l'encadrant"),
@@ -117,12 +115,12 @@ class _GererDocumentState extends State<GererDocument> {
                         itemBuilder: (context, index) {
                           return Card(
                             child: ListTile(
-                                title: Text('document $index'),
-                                subtitle: const Text(
-                                    'A sufficiently long subtitle warrants three lines.'),
-                                trailing: const Icon(Icons.more_vert),
-                                isThreeLine: true,
-                                onTap: () => dialog(context, index: index)),
+                                 title: Text(_document![index].titre.toString()),
+                              subtitle:
+                                  Text(_document![index].description.toString()),
+                              trailing: const Icon(Icons.more_vert),
+                              // isThreeLine: true,
+                              onTap: () => dialog(context, index: index)),
                           );
                         },
                       ) /*Card(
@@ -259,7 +257,7 @@ class _GererDocumentState extends State<GererDocument> {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
       } else {
-        print('No image selected.');
+        log('No image selected.');
       }
     });
   }

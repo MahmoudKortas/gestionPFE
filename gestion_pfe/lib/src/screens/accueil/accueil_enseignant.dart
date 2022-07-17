@@ -16,7 +16,7 @@ class AccueilEnseignant extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bonjour user'),
+        title: const Text('Bonjour Enseignant'),
       ),
       body: SingleChildScrollView(
         // controller: controller,
@@ -29,42 +29,29 @@ class AccueilEnseignant extends StatelessWidget {
                   child: ListTile(
                     leading: iconWidget(Icons.add_chart),
                     title: const Text('Proposer votre sujet'),
-                    subtitle: const Text(
-                        'A sufficiently long subtitle warrants three lines.'),
+                    // subtitle: const Text(
+                    // 'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
+                    //isThreeLine: true,
                     onTap: () {
-                      Navigator.restorablePushNamed(
+                      Navigator.pushNamed(
                         context,
                         ProposerSujet.routeName,
+                        arguments: ProposerSujet(
+                          fonction: 'Enseignant',
+                        ),
                       );
                     },
                   ),
                 ),
-                /*Card(
-                  child: ListTile(
-                    leading: iconWidget(Icons.offline_pin),
-                    title: const Text('choisir sujet'),
-                    subtitle: const Text(
-                        'A sufficiently long subtitle warrants three lines.'),
-                    trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
-                    onTap: () {
-                      Navigator.restorablePushNamed(
-                        context,
-                        ListeDesSujets.routeName,
-                      );
-                    },
-                  ),
-                ),*/
                 Card(
                   child: ListTile(
                     leading: iconWidget(Icons.calendar_month),
                     title: const Text('Consulter le planning du PFE'),
-                    subtitle: const Text(
-                        'A sufficiently long subtitle warrants three lines.'),
+                    // subtitle: const Text(
+                    // 'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
+                    //isThreeLine: true,
                     onTap: () {
                       Navigator.push(
                         context,
@@ -83,10 +70,10 @@ class AccueilEnseignant extends StatelessWidget {
                   child: ListTile(
                     leading: iconWidget(Icons.offline_pin),
                     title: const Text('Gerer demande des sujets PFE'),
-                    subtitle: const Text(
-                        'A sufficiently long subtitle warrants three lines.'),
+                    // subtitle: const Text(
+                    // 'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
+                    //isThreeLine: true,
                     onTap: () {
                       // Navigate to the details page. If the user leaves and returns to
                       // the app after it has been killed while running in the
@@ -98,25 +85,6 @@ class AccueilEnseignant extends StatelessWidget {
                     },
                   ),
                 ),
-                /*Card(
-                  child: ListTile(
-                    leading: iconWidget(Icons.dashboard),
-                    title: const Text('Tableau de bord'),
-                    subtitle: const Text(
-                        'A sufficiently long subtitle warrants three lines.'),
-                    trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
-                    onTap: () {
-                      // Navigate to the details page. If the user leaves and returns to
-                      // the app after it has been killed while running in the
-                      // background, the navigation stack is restored.
-                      Navigator.restorablePushNamed(
-                        context,
-                        Dashboard.routeName,
-                      );
-                    },
-                  ),
-                ),*/
               ],
             ),
           ),

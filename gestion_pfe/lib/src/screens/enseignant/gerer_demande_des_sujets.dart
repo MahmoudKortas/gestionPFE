@@ -41,7 +41,7 @@ class _GererDemandeDesSujetsPFEState extends State<GererDemandeDesSujetsPFE> {
             context: context,
             child: Column(
               children: [
-                _document.isEmpty
+                _document == null || _document.isEmpty
                     ? const Text("aucun document existe")
                     : ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
@@ -50,20 +50,17 @@ class _GererDemandeDesSujetsPFEState extends State<GererDemandeDesSujetsPFE> {
                         itemBuilder: (context, index) {
                           return Card(
                             child: ListTile(
-                              /*leading: const CircleAvatar(
-                      foregroundImage:
-                          AssetImage('assets/images/flutter_logo.png'),
-                    ),*/
-                              title: Text('Sujet $index'),
-                              subtitle: const Text(
-                                  'A sufficiently long subtitle warrants three lines.'),
+                              title: Text(_document[index].titre.toString()),
+                              subtitle:
+                                  Text(_document[index].description.toString()),
                               trailing: const Icon(Icons.more_vert),
-                              isThreeLine: true,
+                              // isThreeLine: true,
                               onTap: () {
                                 Navigator.pushNamed(
                                   context,
                                   DetailSujet.routeName,
                                   arguments: DetailSujet(
+                                    id: _document[index].idDoc,
                                     fonction: "enseignant",
                                   ),
                                 );

@@ -16,13 +16,11 @@ class GererEtudiant extends StatefulWidget {
 }
 
 class _GererEtudiantState extends State<GererEtudiant> {
-  final _items = [
-    'informatique',
-    'mecanique',
-    'electrique',
-    'genie civile',
-    'langues',
-    'mathematique'
+  final _items = ['Informatique', 'Mecanique', 'Electrique', 'Genie civile'];
+  final _niveauItems = [
+    'Licence',
+    'Ingenieurie',
+    'Mastère',
   ];
   late List<Etudiant>? _etudiant = [];
 
@@ -208,7 +206,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   value: niveauValue,
                   iconSize: 36,
                   icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                  items: _items.map(buildMenuItem).toList(),
+                  items: _niveauItems.map(buildMenuItem).toList(),
                   onChanged: (value) => setState(() => niveauValue = value),
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                 ),
@@ -252,9 +250,10 @@ class _GererEtudiantState extends State<GererEtudiant> {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                                title: Text('Etudiant $index'),
-                                subtitle: const Text(
-                                    'A sufficiently long subtitle warrants three lines.'),
+                                title: Text(
+                                    "${_etudiant![index].prenom} ${_etudiant![index].nom}"),
+                                subtitle:  Text(
+                                    _etudiant![index].email.toString()),
                                 trailing: const Icon(Icons.more_vert),
                                 isThreeLine: true,
                                 onTap: () => dialog(context)),
@@ -482,7 +481,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                 value: niveauValue,
                 iconSize: 36,
                 icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                items: _items.map(buildMenuItem).toList(),
+                items: _niveauItems.map(buildMenuItem).toList(),
                 onChanged: (value) => setState(() => niveauValue = value),
                 borderRadius: const BorderRadius.all(Radius.circular(10.0)),
               ),

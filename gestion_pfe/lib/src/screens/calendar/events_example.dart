@@ -1,10 +1,13 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import '../../helpers/api_service.dart';
 import '../../utils.dart';
 
 class TableEventsExample extends StatefulWidget {
@@ -21,6 +24,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
 
+  var _listeSoutenance;
   // ignore: prefer_final_fields
   TextEditingController _eventController = TextEditingController();
 
@@ -28,6 +32,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
   void initState() {
     selectedEvents = {};
     super.initState();
+    getData();
   }
 
   List<Event> _getEventsfromDay(DateTime date) {
@@ -123,91 +128,97 @@ class _TableEventsExampleState extends State<TableEventsExample> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text("Ajouter soutenance"),
-            content: IntrinsicHeight(
-                child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            hintText: 'Saisir le id du PFE',
-                          ),
-                          validator: (String? value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            hintText: 'Saisir le salle du PFE',
-                          ),
-                          validator: (String? value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            hintText: 'Saisir heure début du PFE',
-                          ),
-                          validator: (String? value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                    ),
-                  )
-                ])),
-            actions: [
-              TextButton(
-                child: const Text("Cancel"),
-                onPressed: () => Navigator.pop(context),
-              ),
-              TextButton(
-                child: const Text("Ok"),
-                onPressed: () {
-                  if (_eventController.text.isEmpty) {
-                  } else {
-                    if (selectedEvents[selectedDay] != null) {
-                      selectedEvents[selectedDay]?.add(
-                        Event(_eventController.text),
-                      );
-                    } else {
-                      selectedEvents[selectedDay] = [
-                        Event(_eventController.text)
-                      ];
-                    }
-                  }
-                  Navigator.pop(context);
-                  _eventController.clear();
-                  setState(() {});
-                  return;
-                },
-              ),
-            ],
-          ),
-        ),
+            context: context, builder: (context) => ajoutSoutenance()),
         label: const Text("Ajouter soutenance"),
         icon: const Icon(Icons.add),
       ),
     );
+  }
+
+  Widget ajoutSoutenance() {
+    return AlertDialog(
+      title: const Text("Ajouter soutenance"),
+      content: IntrinsicHeight(
+          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Expanded(
+          child: Column(
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  hintText: 'Saisir le id du PFE',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  hintText: 'Saisir le salle du PFE',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
+                controller: _eventController,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  hintText: 'Saisir heure début du PFE',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
+              ),
+            ],
+          ),
+        )
+      ])),
+      actions: [
+        TextButton(
+          child: const Text("Cancel"),
+          onPressed: () => Navigator.pop(context),
+        ),
+        TextButton(
+          child: const Text("Ok"),
+          onPressed: () {
+            log("selectedEvents::$selectedEvents");
+            if (_eventController.text.isEmpty) {
+            } else {
+              if (selectedEvents[selectedDay] != null) {
+                selectedEvents[selectedDay]?.add(
+                  Event(_eventController.text),
+                );
+              } else {
+                selectedEvents[selectedDay] = [Event(_eventController.text)];
+              }
+            }
+            Navigator.pop(context);
+            _eventController.clear();
+            setState(() {});
+            return;
+          },
+        ),
+      ],
+    );
+  }
+
+  void getData() async {
+    _listeSoutenance = await ApiService().getSoutenance();
+    log("_listeSoutenance::$_listeSoutenance");
+    Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }
 }
