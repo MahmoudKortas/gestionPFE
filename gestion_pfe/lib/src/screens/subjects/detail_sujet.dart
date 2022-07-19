@@ -41,37 +41,41 @@ class _DetailSujetState extends State<DetailSujet> {
               children: [
                 Image.network(
                     "http://10.0.2.2:8080/api/document/image/${widget.doc.idDoc}"),
-                widget.fonction.contains("etudiant")
-                    ? Column(
-                        children: [
-                          Text("Déscription: ${widget.doc.description!}"),
-                          const MaterialButton(
+                Column(
+                  children: [
+                    Text("Proprietaire: ${widget.doc.proprietaire!}"),
+                    Text("Déscription: ${widget.doc.description!}"),
+                    Text("Date dépot: ${widget.doc.datedepot!}"),
+                    widget.fonction.contains("etudiant")
+                        ? const MaterialButton(
                             onPressed: null,
                             child: Text("choisir"),
                           )
-                        ],
-                      )
-                    : widget.fonction.contains("enseignant")
-                        ? Column(
-                            children: [
-                              Text("Déscription: ${widget.doc.description!}"),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: const [
-                                  MaterialButton(
-                                    onPressed: null,
-                                    child: Text("Annuler"),
-                                  ),
-                                  MaterialButton(
-                                    onPressed: null,
-                                    child: Text("Valider"),
-                                  ),
-                                ],
-                              )
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: const [
+                              MaterialButton(
+                                onPressed: null,
+                                child: Text("Annuler"),
+                              ),
+                              MaterialButton(
+                                onPressed: null,
+                                child: Text("Valider"),
+                              ),
                             ],
                           )
-                        : Container()
+                  ],
+                )
+                /* : widget.fonction.contains("enseignant")
+                        ? Column(
+                            children: [
+                          Text("Proprietaire: ${widget.doc.proprietaire!}"),
+                          Text("Déscription: ${widget.doc.description!}"),
+                          Text("Date dépot: ${widget.doc.datedepot!}"),
+                             
+                            ],
+                          )
+                        : Container()*/
               ],
             ),
           ),

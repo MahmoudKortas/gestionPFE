@@ -386,7 +386,7 @@ class _InscriptionState extends State<Inscription> {
     String? domaine = "",
   }) async {
     log("addEnseignant");
-    await ApiService().addEnseignant(
+    var e = await ApiService().addEnseignant(
         nom: nom,
         prenom: prenom,
         telephone: telephone,
@@ -394,6 +394,7 @@ class _InscriptionState extends State<Inscription> {
         email: email,
         motDePasse: motDePasse,
         domaine: domaine);
+    e!.isNotEmpty ? log("addEnseignantENotEmpty::$e") : log("addEnseignantEempty::$e");
   }
 
   void radiochange(Description? value) {

@@ -161,15 +161,15 @@ class ApiService {
     return null;
   }
 
-  Future<List<Document>?> deleteDocument(String? id) async {
+  Future<List<Document>?> deleteDocument({String? id}) async {
     try {
       var url = Uri.parse("${ApiConstants.baseUrl}${ApiConstants.document}$id");
       var response = await http.delete(
         url,
       );
-      // log("deleteDocument::${response.body}");
+       log("deleteDocument::${response.body}");
     } catch (e) {
-      log(e.toString());
+      log("exceptionDeleteDocument::${e.toString()}");
     }
     return null;
   }
@@ -220,10 +220,10 @@ class ApiService {
         ),
       );
       // log("addEnseignant::${response.body}");
-      /*if (response.statusCode == 200) {
-        List<Etudiant> _model = etudiantFromJson(response.body);
+      if (response.statusCode == 200) {
+        List<Enseignant> _model = enseignantFromJson(response.body);
         return _model;
-      }*/
+      }
     } catch (e) {
       log(e.toString());
     }

@@ -53,7 +53,11 @@ class _TableEventsExampleState extends State<TableEventsExample> {
 
   @override
   Widget build(BuildContext context) {
+    selectedEvents = {
+      DateTime.now(): [Event(3.toString(), "salle", "heureDeb")]
+    };
     log(widget.fonction);
+    log("selectedEvents::$selectedEvents");
     return Scaffold(
         appBar: AppBar(
           title: const Text("Calendrier des soutenances"),
@@ -138,8 +142,13 @@ class _TableEventsExampleState extends State<TableEventsExample> {
         ),
         floatingActionButton: widget.fonction.contains("admin")
             ? FloatingActionButton.extended(
-                onPressed: () => showDialog(
-                    context: context, builder: (context) => ajoutSoutenance()),
+                onPressed: () //=>
+                    {
+                   log("selectedEventsss::$selectedEvents");
+                  showDialog(
+                      context: context,
+                      builder: (context) => ajoutSoutenance());
+                },
                 label: const Text("Ajouter soutenance"),
                 icon: const Icon(Icons.add),
               )
@@ -147,6 +156,8 @@ class _TableEventsExampleState extends State<TableEventsExample> {
   }
 
   Widget ajoutSoutenance() {
+  log("selectedEventsss::$selectedEvents");
+    log(_idController.text + _eventController.text + _heureController.text);
     return AlertDialog(
       title: const Text("Ajouter soutenance"),
       content: IntrinsicHeight(
@@ -213,6 +224,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
               log(_eventController.text.isEmpty.toString());
             } else {
               if (selectedEvents?[selectedDay] != null) {
+                log("nulllll");
                 /*selectedEvents?[selectedDay]?.add(
                   Event(_eventController.text),
                 );
@@ -223,14 +235,19 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                   Event(_idController.text),
                 );*/
               } else {
-                log(selectedEvents![selectedDay].toString());
+                // log(selectedEvents![selectedDay].toString());
                 log("no");
+                log("selectedDay::$selectedDay");
+                selectedEvents?[selectedDay]?.add(
+                  Event(_idController.text, _eventController.text,
+                      _heureController.text),
+                );
                 selectedEvents?[selectedDay] = [
                   Event(_idController.text, _eventController.text,
                       _heureController.text)
                 ];
+                log("selectedEvents:::::$selectedEvents");
               }
-              log("selectedEvents::$selectedEvents");
             }
             Navigator.pop(context);
             _eventController.clear();

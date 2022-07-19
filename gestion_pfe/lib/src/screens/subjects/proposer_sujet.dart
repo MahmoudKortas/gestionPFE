@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/models/document.dart';
+import 'package:gestion_pfe/src/models/etudiant.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
@@ -14,9 +15,14 @@ import '../../resize_widget.dart';
 /// Displays detailed information about a SampleItem.
 class ProposerSujet extends StatefulWidget {
   String fonction;
+  var etudiant;
+  var enseignant;
+
   ProposerSujet({
     Key? key,
     required this.fonction,
+    this.enseignant,
+    this.etudiant,
   }) : super(key: key);
   static const routeName = '/ProposerSujet';
   @override
@@ -123,7 +129,13 @@ class _ProposerSujetState extends State<ProposerSujet> {
                       document.datedepot =
                           "2022-06-30T12:57:27.000+00:00"; //DateFormat('yyyy-MM-dd hh:mm:ss.SSSS').format(DateTime.now()).toString();
                       document.description = descriptionController.text;
-                      document.proprietaire = value ?? "";
+                      document.proprietaire = widget.fonction == "Enseignant"
+                          ? widget.enseignant.nom +
+                              " " +
+                              widget.enseignant.prenom
+                          : widget.etudiant.nom +
+                              " " +
+                              widget.etudiant.prenom; // value ?? "";
                       document.titre = titreController.text;
                       document.idDoc = 0;
                       log("document::$document");

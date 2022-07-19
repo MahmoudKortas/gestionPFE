@@ -47,6 +47,7 @@ class _AccueilEtudiantState extends State<AccueilEtudiant> {
                         ProposerSujet.routeName,
                         arguments: ProposerSujet(
                           fonction: 'Etudiant',
+                          etudiant: widget.etudiant,
                         ),
                       );
                     },

@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/screens/accueil/accueil_enseignant.dart';
 import 'package:gestion_pfe/src/screens/accueil/accueil_etudiant.dart';
@@ -106,6 +108,7 @@ class _AuthentificationState extends State<Authentification> {
                             /*if (_formKey.currentState!.validate()) {
                           // Process data.
                         }*/
+                            log("signin");
 
                             verificationInscription(
                                 email: emailController.text,
@@ -146,14 +149,17 @@ class _AuthentificationState extends State<Authentification> {
     _responsable = await ApiService().getResponsable();
     _etudiant = await ApiService().getEtudiants();
     _enseignant = await ApiService().getEnseignant();
-    // log("_responsable::$_responsable");
-    // log("_etudiant::$_etudiant");
-    // log("_enseignant::$_enseignant");
+    log("_responsable::$_responsable");
+    log("_etudiant::$_etudiant");
+    log("_enseignant::$_enseignant");
   }
 
   void verificationInscription({String? email = "", String? motDepasse = ""}) {
     getData();
+    log("+");
+
     for (var responsable in _responsable) {
+      log(".");
       if (responsable.login == email && responsable.motdepasse == motDepasse) {
         Navigator.restorablePushNamed(
           context,
@@ -162,21 +168,24 @@ class _AuthentificationState extends State<Authentification> {
       }
     }
     for (var etudiant in _etudiant) {
+      log("-");
       if (etudiant.email == email && etudiant.motdepasse == motDepasse) {
         Navigator.pushNamed(
           context,
           AccueilEtudiant.routeName,
           arguments: AccueilEtudiant(
-            etudiant:etudiant,
+            etudiant: etudiant,
           ),
         );
       }
     }
     for (var enseignant in _enseignant) {
+      log("_");
       if (enseignant.email == email && enseignant.motdepasse == motDepasse) {
-        Navigator.restorablePushNamed(
+        Navigator.pushNamed(
           context,
           AccueilEnseignant.routeName,
+          arguments: AccueilEnseignant(enseignant: enseignant)
         );
       }
     }

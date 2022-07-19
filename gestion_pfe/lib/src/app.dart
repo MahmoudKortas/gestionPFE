@@ -91,7 +91,8 @@ class MyApp extends StatelessWidget {
                   case Inscription.routeName:
                     return const Inscription();
                   case AccueilEnseignant.routeName:
-                    return const AccueilEnseignant();
+                    final args = routeSettings.arguments as AccueilEnseignant;
+                    return  AccueilEnseignant(enseignant: args.enseignant);
                   case AccueilEtudiant.routeName:
                     final args = routeSettings.arguments as AccueilEtudiant;
                     return AccueilEtudiant(
@@ -119,6 +120,8 @@ class MyApp extends StatelessWidget {
                     final args = routeSettings.arguments as ProposerSujet;
                     return ProposerSujet(
                       fonction: args.fonction,
+                      enseignant: args.enseignant,
+                      etudiant: args.etudiant,
                     );
                   case ListeDesSujets.routeName:
                     return const ListeDesSujets();

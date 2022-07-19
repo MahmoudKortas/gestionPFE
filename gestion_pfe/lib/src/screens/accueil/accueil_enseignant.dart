@@ -1,16 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/icon_widget.dart';
+import 'package:gestion_pfe/src/models/enseignant.dart';
 
 import '../../resize_widget.dart';
 import '../calendar/events_example.dart';
-import '../subjects/proposer_sujet.dart';
 import '../enseignant/gerer_demande_des_sujets.dart';
+import '../subjects/proposer_sujet.dart';
 
 /// Displays detailed information about a SampleItem.
-class AccueilEnseignant extends StatelessWidget {
-  const AccueilEnseignant({Key? key}) : super(key: key);
+class AccueilEnseignant extends StatefulWidget {
+  Enseignant enseignant;
+  AccueilEnseignant({
+    Key? key,
+    required this.enseignant,
+  }) : super(key: key);
 
   static const routeName = '/AccueilEnseignant';
+   @override
+  State<AccueilEnseignant> createState() => _AccueilEnseignantState();
+}
+
+class _AccueilEnseignantState extends State<AccueilEnseignant> {
+
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +50,7 @@ class AccueilEnseignant extends StatelessWidget {
                         ProposerSujet.routeName,
                         arguments: ProposerSujet(
                           fonction: 'Enseignant',
+                          enseignant: widget.enseignant,
                         ),
                       );
                     },

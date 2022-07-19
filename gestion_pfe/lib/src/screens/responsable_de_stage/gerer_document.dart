@@ -198,6 +198,7 @@ class _GererDocumentState extends State<GererDocument> {
           child: Column(
             children: [
               Image.network("http://10.0.2.2:8080/api/document/image/${index}"),
+
               // Image.asset("assets/images/logo-epi.png"),
             ],
           ),
@@ -213,8 +214,13 @@ class _GererDocumentState extends State<GererDocument> {
           ),
           TextButton(
             onPressed: () async {
+              log(index.toString());
               var _documentt;
-              // _documentt=await ApiService.deleteSoutenance(id:index.toString()) ;
+              _documentt =
+                  await ApiService().deleteDocument(id: index.toString());
+              log("_documentt::$_documentt");
+              getData();
+              Navigator.pop(context, 'Supprimer');
             },
             child: const Text('Supprimer'),
           ),
@@ -238,6 +244,7 @@ class _GererDocumentState extends State<GererDocument> {
     // await ApiService().addEtudiants();
     // await ApiService().addDocument();
     //await ApiService().addEnseignant();
+
     _document = await ApiService().getDocument();
 
     //log("_document::$_document");
