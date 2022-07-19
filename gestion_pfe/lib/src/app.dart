@@ -125,7 +125,7 @@ class MyApp extends StatelessWidget {
                   case DetailSujet.routeName:
                     final args = routeSettings.arguments as DetailSujet;
                     return DetailSujet(
-                      id: args.id,
+                      doc: args.doc,
                       fonction: args.fonction,
                     );
                   default:

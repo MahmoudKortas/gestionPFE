@@ -29,6 +29,6 @@ class Responsable {
 
   @override
   String toString() {
-    return 'Document(idUser: $idUser, login: $login, motdepasse: $motdepasse)';
+    return 'Responsable(idUser: $idUser, login: $login, motdepasse: $motdepasse)';
   }
 }

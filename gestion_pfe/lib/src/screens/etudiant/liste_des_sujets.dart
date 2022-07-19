@@ -61,7 +61,7 @@ class _ListeDesSujetsState extends State<ListeDesSujets> {
                                   context,
                                   DetailSujet.routeName,
                                   arguments: DetailSujet(
-                                    id: _document[index].idDoc,
+                                    doc: _document[index],
                                     fonction: "etudiant",
                                   ),
                                 );

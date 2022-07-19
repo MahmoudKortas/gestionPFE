@@ -319,7 +319,6 @@ class ApiService {
   Future<List<Soutenance>?> getSoutenance({String? id = ""}) async {
     try {
       var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.soutenance + id!);
-
       var response = await http.get(url);
       if (response.statusCode == 200) {
         log("response.body::${response.body}");
@@ -327,10 +326,26 @@ class ApiService {
         return model;
       }
     } catch (e) {
-      log(e.toString());
+      log("soutenanceException::${e.toString()}");
     }
     return null;
   }
+  
+  Future<List<Soutenance>?> deleteSoutenance({String? id = ""}) async {
+    try {
+      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.soutenance + id!);
+      var response = await http.delete(url);
+      if (response.statusCode == 200) {
+        log("response.body::${response.body}");
+        List<Soutenance> model = soutenanceFromJson(response.body);
+        return model;
+      }
+    } catch (e) {
+      log("soutenanceException::${e.toString()}");
+    }
+    return null;
+  }
+  
 
   Future<List<Responsable>?> getResponsable({String? id = ""}) async {
     try {

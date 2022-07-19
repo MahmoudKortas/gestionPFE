@@ -78,7 +78,7 @@ class _AccueilEtudiantState extends State<AccueilEtudiant> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => const TableEventsExample(),
+                          builder: (_) =>  TableEventsExample(fonction: 'etudiant',),
                         ),
                       );
                       /*Navigator.restorablePushNamed(

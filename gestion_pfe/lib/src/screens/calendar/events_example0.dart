@@ -214,11 +214,11 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                   } else {
                     // ignore: unnecessary_null_comparison
                     if (_selectedEvents.value != null) {
-                      _selectedEvents.value.add(
-                        Event(_eventController.text),
-                      );
+                      /* _selectedEvents.value.add(
+                       Event(_eventController.text),
+                      );*/
                     } else {
-                      _selectedEvents.value = [Event(_eventController.text)];
+                      // _selectedEvents.value = [Event(_eventController.text)];
                     }
                   }
                   Navigator.pop(context);

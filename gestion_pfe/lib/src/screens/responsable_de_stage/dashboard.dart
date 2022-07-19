@@ -112,7 +112,7 @@ class Dashboard extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (_) => const TableEventsExample()),
+                            builder: (_) =>  TableEventsExample(fonction: 'admin',)),
                       );
                     },
                   ),

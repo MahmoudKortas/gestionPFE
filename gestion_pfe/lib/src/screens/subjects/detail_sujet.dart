@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/models/document.dart';
 
 import '../../resize_widget.dart';
 
@@ -9,12 +10,12 @@ import '../../resize_widget.dart';
 // ignore: must_be_immutable
 class DetailSujet extends StatefulWidget {
   String fonction;
-  int id;
+  Document doc;
 
   DetailSujet({
     Key? key,
     required this.fonction,
-    required this.id,
+    required this.doc,
   }) : super(key: key);
   @override
   State<DetailSujet> createState() => _DetailSujetState();
@@ -25,7 +26,7 @@ class _DetailSujetState extends State<DetailSujet> {
   @override
   Widget build(BuildContext context) {
     log("fonction::${widget.fonction}");
-    log("id::${widget.id}");
+    log("doc::${widget.doc}");
 
     return Scaffold(
       appBar: AppBar(
@@ -38,24 +39,36 @@ class _DetailSujetState extends State<DetailSujet> {
             context: context,
             child: Column(
               children: [
-                Image.asset("assets/images/logo-epi.png"),
+                Image.network(
+                    "http://10.0.2.2:8080/api/document/image/${widget.doc.idDoc}"),
                 widget.fonction.contains("etudiant")
-                    ? const MaterialButton(
-                        onPressed: null,
-                        child: Text("choisir"),
+                    ? Column(
+                        children: [
+                          Text("Déscription: ${widget.doc.description!}"),
+                          const MaterialButton(
+                            onPressed: null,
+                            child: Text("choisir"),
+                          )
+                        ],
                       )
                     : widget.fonction.contains("enseignant")
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: const [
-                              MaterialButton(
-                                onPressed: null,
-                                child: Text("Annuler"),
-                              ),
-                              MaterialButton(
-                                onPressed: null,
-                                child: Text("Valider"),
-                              ),
+                        ? Column(
+                            children: [
+                              Text("Déscription: ${widget.doc.description!}"),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: const [
+                                  MaterialButton(
+                                    onPressed: null,
+                                    child: Text("Annuler"),
+                                  ),
+                                  MaterialButton(
+                                    onPressed: null,
+                                    child: Text("Valider"),
+                                  ),
+                                ],
+                              )
                             ],
                           )
                         : Container()

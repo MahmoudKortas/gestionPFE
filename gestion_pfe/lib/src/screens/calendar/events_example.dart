@@ -1,7 +1,7 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
-// ignore_for_file: prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_typing_uninitialized_variables, prefer_final_fields
 
 import 'dart:developer';
 
@@ -11,7 +11,11 @@ import '../../helpers/api_service.dart';
 import '../../utils.dart';
 
 class TableEventsExample extends StatefulWidget {
-  const TableEventsExample({Key? key}) : super(key: key);
+  String fonction;
+  TableEventsExample({
+    Key? key,
+    required this.fonction,
+  }) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -19,120 +23,127 @@ class TableEventsExample extends StatefulWidget {
 }
 
 class _TableEventsExampleState extends State<TableEventsExample> {
-  late Map<DateTime, List<Event>> selectedEvents;
+  Map<DateTime, List<Event>>? selectedEvents;
   CalendarFormat format = CalendarFormat.month;
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
 
   var _listeSoutenance;
-  // ignore: prefer_final_fields
   TextEditingController _eventController = TextEditingController();
+  TextEditingController _idController = TextEditingController();
+  TextEditingController _heureController = TextEditingController();
 
   @override
   void initState() {
-    selectedEvents = {};
     super.initState();
     getData();
   }
 
   List<Event> _getEventsfromDay(DateTime date) {
-    return selectedEvents[date] ?? [];
+    return selectedEvents?[date] ?? [];
   }
 
   @override
   void dispose() {
     _eventController.dispose();
+    _idController.dispose();
+    _heureController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    log(widget.fonction);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Calendrier des soutenances"),
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          TableCalendar(
-            focusedDay: selectedDay,
-            firstDay: DateTime(1990),
-            lastDay: DateTime(2050),
-            calendarFormat: format,
-            onFormatChanged: (CalendarFormat format) {
-              setState(() {
-                format = format;
-              });
-            },
-            startingDayOfWeek: StartingDayOfWeek.sunday,
-            daysOfWeekVisible: true,
+        appBar: AppBar(
+          title: const Text("Calendrier des soutenances"),
+          centerTitle: true,
+        ),
+        body: Column(
+          children: [
+            TableCalendar(
+              focusedDay: selectedDay,
+              firstDay: DateTime(1990),
+              lastDay: DateTime(2050),
+              calendarFormat: format,
+              onFormatChanged: (CalendarFormat format) {
+                setState(() {
+                  format = format;
+                });
+              },
+              startingDayOfWeek: StartingDayOfWeek.sunday,
+              daysOfWeekVisible: true,
 
-            //Day Changed
-            onDaySelected: (DateTime selectDay, DateTime focusDay) {
-              setState(() {
-                selectedDay = selectDay;
-                focusedDay = focusDay;
-              });
-              log(focusedDay.toString());
-            },
-            selectedDayPredicate: (DateTime date) {
-              return isSameDay(selectedDay, date);
-            },
+              //Day Changed
+              onDaySelected: (DateTime selectDay, DateTime focusDay) {
+                setState(() {
+                  selectedDay = selectDay;
+                  focusedDay = focusDay;
+                });
+                log(focusedDay.toString());
+              },
+              selectedDayPredicate: (DateTime date) {
+                return isSameDay(selectedDay, date);
+              },
 
-            eventLoader: _getEventsfromDay,
+              eventLoader: _getEventsfromDay,
 
-            //To style the Calendar
-            calendarStyle: CalendarStyle(
-              isTodayHighlighted: true,
-              selectedDecoration: BoxDecoration(
-                color: Colors.blue,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5.0),
+              //To style the Calendar
+              calendarStyle: CalendarStyle(
+                isTodayHighlighted: true,
+                selectedDecoration: BoxDecoration(
+                  color: Colors.blue,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                selectedTextStyle: const TextStyle(color: Colors.white),
+                todayDecoration: BoxDecoration(
+                  color: Colors.purpleAccent,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                defaultDecoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                weekendDecoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
               ),
-              selectedTextStyle: const TextStyle(color: Colors.white),
-              todayDecoration: BoxDecoration(
-                color: Colors.purpleAccent,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              defaultDecoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              weekendDecoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5.0),
+              headerStyle: HeaderStyle(
+                formatButtonVisible: true,
+                titleCentered: true,
+                formatButtonShowsNext: false,
+                formatButtonDecoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                formatButtonTextStyle: const TextStyle(
+                  color: Colors.white,
+                ),
               ),
             ),
-            headerStyle: HeaderStyle(
-              formatButtonVisible: true,
-              titleCentered: true,
-              formatButtonShowsNext: false,
-              formatButtonDecoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              formatButtonTextStyle: const TextStyle(
-                color: Colors.white,
-              ),
+            ..._getEventsfromDay(selectedDay).map(
+              (Event event) => ListTile(
+                  title: Column(
+                children: [
+                  Text(
+                    "idPFE:${event.idPfe}  Salle soutenance:${event.salle}  herure début:${event.heureDeb}",
+                  ),
+                ],
+              )),
             ),
-          ),
-          ..._getEventsfromDay(selectedDay).map(
-            (Event event) => ListTile(
-              title: Text(
-                event.title,
-              ),
-            ),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => showDialog(
-            context: context, builder: (context) => ajoutSoutenance()),
-        label: const Text("Ajouter soutenance"),
-        icon: const Icon(Icons.add),
-      ),
-    );
+          ],
+        ),
+        floatingActionButton: widget.fonction.contains("admin")
+            ? FloatingActionButton.extended(
+                onPressed: () => showDialog(
+                    context: context, builder: (context) => ajoutSoutenance()),
+                label: const Text("Ajouter soutenance"),
+                icon: const Icon(Icons.add),
+              )
+            : Container());
   }
 
   Widget ajoutSoutenance() {
@@ -153,6 +164,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                   }
                   return null;
                 },
+                controller: _idController,
               ),
               const SizedBox(
                 height: 10,
@@ -182,6 +194,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                   }
                   return null;
                 },
+                controller: _heureController,
               ),
             ],
           ),
@@ -197,17 +210,32 @@ class _TableEventsExampleState extends State<TableEventsExample> {
           onPressed: () {
             log("selectedEvents::$selectedEvents");
             if (_eventController.text.isEmpty) {
+              log(_eventController.text.isEmpty.toString());
             } else {
-              if (selectedEvents[selectedDay] != null) {
-                selectedEvents[selectedDay]?.add(
+              if (selectedEvents?[selectedDay] != null) {
+                /*selectedEvents?[selectedDay]?.add(
                   Event(_eventController.text),
                 );
+                selectedEvents?[selectedDay]?.add(
+                  Event(_heureController.text),
+                );
+                selectedEvents?[selectedDay]?.add(
+                  Event(_idController.text),
+                );*/
               } else {
-                selectedEvents[selectedDay] = [Event(_eventController.text)];
+                log(selectedEvents![selectedDay].toString());
+                log("no");
+                selectedEvents?[selectedDay] = [
+                  Event(_idController.text, _eventController.text,
+                      _heureController.text)
+                ];
               }
+              log("selectedEvents::$selectedEvents");
             }
             Navigator.pop(context);
             _eventController.clear();
+            _heureController.clear();
+            _idController.clear();
             setState(() {});
             return;
           },
@@ -217,6 +245,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
   }
 
   void getData() async {
+    selectedEvents?[DateTime(2022, 7, 21)] = [Event("1", "E1S2", "15h")];
     _listeSoutenance = await ApiService().getSoutenance();
     log("_listeSoutenance::$_listeSoutenance");
     Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));

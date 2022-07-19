@@ -26,7 +26,7 @@ class ConsulterPlanning extends StatelessWidget {
                 child: const Text('Events'),
                 onPressed: () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => const TableEventsExample()),
+                  MaterialPageRoute(builder: (_) =>  TableEventsExample(fonction: 'SS',)),
                 ),
               ),
             ],

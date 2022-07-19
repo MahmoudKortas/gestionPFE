@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../helpers/api_service.dart';
 import '../../models/document.dart';
 import '../../resize_widget.dart';
+
 class GererDocument extends StatefulWidget {
   const GererDocument({Key? key}) : super(key: key);
   static const routeName = '/Document';
@@ -115,12 +116,13 @@ class _GererDocumentState extends State<GererDocument> {
                         itemBuilder: (context, index) {
                           return Card(
                             child: ListTile(
-                                 title: Text(_document![index].titre.toString()),
-                              subtitle:
-                                  Text(_document![index].description.toString()),
-                              trailing: const Icon(Icons.more_vert),
-                              // isThreeLine: true,
-                              onTap: () => dialog(context, index: index)),
+                                title: Text(_document![index].titre.toString()),
+                                subtitle: Text(
+                                    _document![index].description.toString()),
+                                trailing: const Icon(Icons.more_vert),
+                                // isThreeLine: true,
+                                onTap: () => dialog(context,
+                                    index: _document![index].idDoc)),
                           );
                         },
                       ) /*Card(
@@ -195,7 +197,8 @@ class _GererDocumentState extends State<GererDocument> {
         content: SingleChildScrollView(
           child: Column(
             children: [
-              Image.asset("assets/images/logo-epi.png"),
+              Image.network("http://10.0.2.2:8080/api/document/image/${index}"),
+              // Image.asset("assets/images/logo-epi.png"),
             ],
           ),
         ),
@@ -209,7 +212,10 @@ class _GererDocumentState extends State<GererDocument> {
             child: const Text('Modifer'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, 'Supprimer'),
+            onPressed: () async {
+              var _documentt;
+              // _documentt=await ApiService.deleteSoutenance(id:index.toString()) ;
+            },
             child: const Text('Supprimer'),
           ),
           /*TextButton(

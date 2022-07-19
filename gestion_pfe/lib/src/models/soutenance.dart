@@ -18,7 +18,6 @@ class Soutenance {
   Enseignant? rapporteur;
   Enseignant? president;
   PFE? pfe;
-
   Soutenance(
       {this.idSout,
       this.date,
@@ -61,5 +60,10 @@ class Soutenance {
       data['pfe'] = pfe!.toJson();
     }
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'Soutenance(idSout: $idSout, date: $date, heuredebut: $heuredebut, heurefin: $heurefin,salle: $salle, rapporteur: $rapporteur, president: $president, pfe: $pfe)';
   }
 }

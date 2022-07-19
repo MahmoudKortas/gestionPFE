@@ -60,7 +60,7 @@ class _GererDemandeDesSujetsPFEState extends State<GererDemandeDesSujetsPFE> {
                                   context,
                                   DetailSujet.routeName,
                                   arguments: DetailSujet(
-                                    id: _document[index].idDoc,
+                                    doc: _document[index],
                                     fonction: "enseignant",
                                   ),
                                 );
