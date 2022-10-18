@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -210,7 +212,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
                               trailing: const Icon(Icons.more_vert),
                               isThreeLine: true,
                               onTap: () {
-                                dialog(context, index: index);
+                                dialog(context, _enseignant![index]);
                                 // Navigate to the details page. If the user leaves and returns to
                                 // the app after it has been killed while running in the
                                 // background, the navigation stack is restored.
@@ -278,16 +280,10 @@ class _GererEnseignantState extends State<GererEnseignant> {
     );
   }
 
-  Future<String?> dialog(BuildContext context, {int? index = 0}) {
-    var nomvalue = _enseignant?[index!].nom;
-    var prenomvalue = _enseignant?[index!].prenom;
-    var telephonevalue = _enseignant?[index!].tel;
-    var adressevalue = _enseignant?[index!].adresse;
-    var emailvalue = _enseignant?[index!].email;
-    var passwordvalue = _enseignant?[index!].motdepasse;
-    var domaineValue = _enseignant?[index!].domaine.toString();
-    log("${_enseignant?[index!]}");
-    log("$nomvalue $prenomvalue $telephonevalue $adressevalue $emailvalue $passwordvalue $domaineValue");
+  Future<String?> dialog(BuildContext context, Enseignant enseignant) {
+     domaineValue = enseignant.domaine.toString();
+    log("${_enseignant}");
+    //log("$nomvalue $prenomvalue $telephonevalue $adressevalue $emailvalue $passwordvalue $domaineValue");
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -299,9 +295,9 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 height: 10,
               ),
               TextFormField(
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.person),
-                  hintText: 'Saisir votre nom',
+                decoration:  InputDecoration(
+                  prefixIcon:const Icon(Icons.person),
+                  hintText: enseignant.nom,
                 ),
                 validator: (nomvalue) {
                   if (nomvalue == null || nomvalue.isEmpty) {
@@ -309,7 +305,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
                   }
                   return null;
                 },
-                controller: nomController..text = nomvalue!,
+                controller: nomController,
               ),
               const SizedBox(
                 height: 10,
@@ -318,9 +314,9 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 height: 10,
               ),
               TextFormField(
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.person),
-                  hintText: 'Saisir votre prenom',
+                decoration:  InputDecoration(
+                  prefixIcon:const Icon(Icons.person),
+                  hintText: enseignant.prenom,
                 ),
                 validator: (prenomvalue) {
                   if (prenomvalue == null || prenomvalue.isEmpty) {
@@ -328,7 +324,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
                   }
                   return null;
                 },
-                controller: prenomController..text = prenomvalue!,
+                controller: prenomController,
               ),
               const SizedBox(
                 height: 10,
@@ -337,9 +333,9 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 height: 10,
               ),
               TextFormField(
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.phone),
-                  hintText: 'Saisir votre telephone',
+                decoration:  InputDecoration(
+                  prefixIcon:const Icon(Icons.phone),
+                  hintText: enseignant.tel.toString(),
                 ),
                 validator: (telephonevalue) {
                   if (telephonevalue == null || telephonevalue.isEmpty) {
@@ -347,8 +343,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
                   }
                   return null;
                 },
-                controller: telephoneController
-                  ..text = telephonevalue.toString(),
+                controller: telephoneController,
               ),
               const SizedBox(
                 height: 10,
@@ -357,9 +352,9 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 height: 10,
               ),
               TextFormField(
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.location_city),
-                  hintText: 'Saisir votre adresse',
+                decoration:  InputDecoration(
+                  prefixIcon:const Icon(Icons.location_city),
+                  hintText: enseignant.adresse,
                 ),
                 validator: (adressevalue) {
                   if (adressevalue == null || adressevalue.isEmpty) {
@@ -367,7 +362,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
                   }
                   return null;
                 },
-                controller: adresseController..text = adressevalue!,
+                controller: adresseController ,
               ),
               const SizedBox(
                 height: 10,
@@ -376,9 +371,9 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 height: 10,
               ),
               TextFormField(
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.email),
-                  hintText: 'Saisir votre email',
+                decoration:  InputDecoration(
+                  prefixIcon:const Icon(Icons.email),
+                  hintText: enseignant.email,
                 ),
                 validator: (emailvalue) {
                   if (emailvalue == null || emailvalue.isEmpty) {
@@ -386,7 +381,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
                   }
                   return null;
                 },
-                controller: emailController..text = emailvalue!,
+                controller: emailController ,
               ),
               const SizedBox(
                 height: 10,
@@ -398,9 +393,9 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 obscureText: true,
                 enableSuggestions: false,
                 autocorrect: false,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.lock),
-                  hintText: 'Saisir votre password',
+                decoration:  InputDecoration(
+                  prefixIcon:const Icon(Icons.lock),
+                  hintText: enseignant.motdepasse,
                 ),
                 validator: (passwordvalue) {
                   if (passwordvalue == null || passwordvalue.isEmpty) {
@@ -408,9 +403,9 @@ class _GererEnseignantState extends State<GererEnseignant> {
                   }
                   return null;
                 },
-                controller: motDePasseController..text = passwordvalue!,
+                controller: motDePasseController,
               ),
-              /*DropdownButton<String>(
+              DropdownButton<String>(
                 hint: const Text("choisir votre domaine"),
                 value: domaineValue,
                 iconSize: 36,
@@ -418,7 +413,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 items: _items.map(buildMenuItem).toList(),
                 onChanged: (value) => setState(() => domaineValue = value),
                 borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              ),*/
+              ),
             ],
           ),
         ),
@@ -433,7 +428,10 @@ class _GererEnseignantState extends State<GererEnseignant> {
             child: const Text('Modifer'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, 'Supprimer'),
+            onPressed: () {
+              deleteEnseignant(id: enseignant.idEns);
+              Navigator.pop(context, 'Supprimer');
+            } ,
             child: const Text('Supprimer'),
           ),
           /*TextButton(
@@ -480,7 +478,11 @@ class _GererEnseignantState extends State<GererEnseignant> {
         domaine: domaine);
     getData();
   }
-
+void deleteEnseignant({int? id}) async {
+    log("deleteEnseignant");
+    await ApiService().deleteEnseignant(id.toString());
+    getData();
+  }
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
         value: item,
         child: Text(

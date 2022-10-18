@@ -238,7 +238,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                                   'A sufficiently long subtitle warrants three lines.'),
                               trailing: const Icon(Icons.more_vert),
                               isThreeLine: true,
-                              onTap: () => dialog(context, index: index),
+                              onTap: () => dialog(context, _pfe![index]),
                             ),
                           );
                         },
@@ -294,7 +294,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
     );
   }
 
-  Future<String?> dialog(BuildContext context, {int? index = 0}) {
+  Future<String?> dialog(BuildContext context, PFE pfe) {
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -441,7 +441,10 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
             child: const Text('Modifer'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, 'Supprimer'),
+            onPressed: () {
+              deleteSujetPfe(pfe.idPFE);
+              Navigator.pop(context, 'Supprimer');
+            } ,
             child: const Text('Supprimer'),
           ),
           /*TextButton(
@@ -496,6 +499,12 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
         dateFin: dateFin,
         dateSoutenance: dateSoutenance,
         document: document);
+    getData();
+  }
+  
+  void deleteSujetPfe(int? id) async {
+    log("deleteSujetPfe");
+    await ApiService().deleteSoutenance(id: id.toString());
     getData();
   }
 }

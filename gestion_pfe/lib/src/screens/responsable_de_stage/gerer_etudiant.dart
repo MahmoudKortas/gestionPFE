@@ -246,88 +246,19 @@ class _GererEtudiantState extends State<GererEtudiant> {
                         itemBuilder: (context, index) {
                           return Card(
                             child: ListTile(
-                                /*leading: const CircleAvatar(
-                      foregroundImage:
-                          AssetImage('assets/images/flutter_logo.png'),
-                    ),*/
-                                title: Text(
-                                    "${_etudiant![index].prenom} ${_etudiant![index].nom}"),
-                                subtitle:  Text(
-                                    _etudiant![index].email.toString()),
-                                trailing: const Icon(Icons.more_vert),
-                                isThreeLine: true,
-                                onTap: () => dialog(context)),
+                              title: Text(
+                                  "${_etudiant![index].prenom} ${_etudiant![index].nom}"),
+                              subtitle: Text(
+                                _etudiant![index].email.toString(),
+                              ),
+                              trailing: const Icon(Icons.more_vert),
+                              isThreeLine: true,
+                              onTap: () =>
+                                  dialog(context, _etudiant![index] ),
+                            ),
                           );
                         },
                       ),
-
-                /*Card(
-                  child: ListTile(
-                    /*leading: const CircleAvatar(
-                      foregroundImage:
-                          AssetImage('assets/images/flutter_logo.png'),
-                    ),*/
-                    title: const Text('Etudiant 2'),
-                    subtitle: const Text(
-                        'A sufficiently long subtitle warrants three lines.'),
-                    trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
-                    onTap: () {
-                      // Navigate to the details page. If the user leaves and returns to
-                      // the app after it has been killed while running in the
-                      // background, the navigation stack is restored.
-                      /*Navigator.restorablePushNamed(
-                    context,
-                    LogIn.routeName,
-                  );*/
-                    },
-                  ),
-                ),
-                Card(
-                  child: ListTile(
-                    /*leading: const CircleAvatar(
-                      foregroundImage:
-                          AssetImage('assets/images/flutter_logo.png'),
-                    ),*/
-                    title: const Text('Etudiant 2'),
-                    subtitle: const Text(
-                        'A sufficiently long subtitle warrants three lines.'),
-                    trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
-                    onTap: () {
-                      // Navigate to the details page. If the user leaves and returns to
-                      // the app after it has been killed while running in the
-                      // background, the navigation stack is restored.
-                      /*Navigator.restorablePushNamed(
-                    context,
-                    LogIn.routeName,
-                  );*/
-                    },
-                  ),
-                ),
-                Card(
-                  child: ListTile(
-                    /*leading: const CircleAvatar(
-                      foregroundImage:
-                          AssetImage('assets/images/flutter_logo.png'),
-                    ),*/
-                    title: const Text('Etudiant 3'),
-                    subtitle: const Text(
-                        'A sufficiently long subtitle warrants three lines.'),
-                    trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
-                    onTap: () {
-                      // Navigate to the details page. If the user leaves and returns to
-                      // the app after it has been killed while running in the
-                      // background, the navigation stack is restored.
-                      /*Navigator.restorablePushNamed(
-                    context,
-                    LogIn.routeName,
-                  );*/
-                    },
-                  ),
-                ),
-              */
               ],
             ),
           ),
@@ -336,7 +267,11 @@ class _GererEtudiantState extends State<GererEtudiant> {
     );
   }
 
-  Future<String?> dialog(BuildContext context) {
+  Future<String?> dialog(BuildContext context, Etudiant etudiant ) {
+    diplomeValue = etudiant.diplome;
+    departementValue = etudiant.departement;
+    niveauValue = etudiant.niveau;
+    specialiteValue = etudiant.specialite;
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -348,9 +283,9 @@ class _GererEtudiantState extends State<GererEtudiant> {
                 height: 10,
               ),
               TextFormField(
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.person),
-                  hintText: 'Saisir votre nom',
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.person),
+                  hintText: etudiant.nom,
                 ),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
@@ -367,9 +302,9 @@ class _GererEtudiantState extends State<GererEtudiant> {
                 height: 10,
               ),
               TextFormField(
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.person),
-                  hintText: 'Saisir votre prenom',
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.person),
+                  hintText: etudiant.prenom,
                 ),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
@@ -386,9 +321,9 @@ class _GererEtudiantState extends State<GererEtudiant> {
                 height: 10,
               ),
               TextFormField(
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.phone),
-                  hintText: 'Saisir votre telephone',
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.phone),
+                  hintText: etudiant.tel.toString(),
                 ),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
@@ -405,9 +340,9 @@ class _GererEtudiantState extends State<GererEtudiant> {
                 height: 10,
               ),
               TextFormField(
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.location_city),
-                  hintText: 'Saisir votre adresse',
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.location_city),
+                  hintText: etudiant.adresse,
                 ),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
@@ -424,9 +359,9 @@ class _GererEtudiantState extends State<GererEtudiant> {
                 height: 10,
               ),
               TextFormField(
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.email),
-                  hintText: 'Saisir votre email',
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.email),
+                  hintText: etudiant.email,
                 ),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
@@ -446,9 +381,9 @@ class _GererEtudiantState extends State<GererEtudiant> {
                 obscureText: true,
                 enableSuggestions: false,
                 autocorrect: false,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.lock),
-                  hintText: 'Saisir votre password',
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.lock),
+                  hintText: etudiant.motdepasse,
                 ),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
@@ -507,7 +442,10 @@ class _GererEtudiantState extends State<GererEtudiant> {
             child: const Text('Modifer'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, 'Supprimer'),
+            onPressed: () {
+              deleteStudent(id: etudiant.idEtud);
+              Navigator.pop(context, 'Supprimer');
+            },
             child: const Text('Supprimer'),
           ),
           /*TextButton(
@@ -555,6 +493,12 @@ class _GererEtudiantState extends State<GererEtudiant> {
         departement: departement,
         niveau: niveau,
         specialite: specialite);
+    getData();
+  }
+
+  void deleteStudent({int? id}) async {
+    log("deleteStudent");
+    await ApiService().deleteEtudiant(id: id.toString());
     getData();
   }
 

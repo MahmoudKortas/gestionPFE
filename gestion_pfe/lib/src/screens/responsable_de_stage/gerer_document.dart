@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, prefer_final_fields
+// ignore_for_file: prefer_typing_uninitialized_variables, prefer_final_fields, no_leading_underscores_for_local_identifiers
 
 import 'dart:developer';
 import 'dart:io';
@@ -122,7 +122,7 @@ class _GererDocumentState extends State<GererDocument> {
                                 trailing: const Icon(Icons.more_vert),
                                 // isThreeLine: true,
                                 onTap: () => dialog(context,
-                                    index: _document![index].idDoc)),
+                                    _document![index])),
                           );
                         },
                       ) /*Card(
@@ -189,7 +189,7 @@ class _GererDocumentState extends State<GererDocument> {
     );
   }
 
-  Future<String?> dialog(BuildContext context, {int? index = 0}) {
+  Future<String?> dialog(BuildContext context, Document document) {
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -197,7 +197,7 @@ class _GererDocumentState extends State<GererDocument> {
         content: SingleChildScrollView(
           child: Column(
             children: [
-              Image.network("http://10.0.2.2:8080/api/document/image/${index}"),
+              Image.network("http://10.0.2.2:8080/api/document/image/${document.idDoc}"),
 
               // Image.asset("assets/images/logo-epi.png"),
             ],
@@ -214,10 +214,10 @@ class _GererDocumentState extends State<GererDocument> {
           ),
           TextButton(
             onPressed: () async {
-              log(index.toString());
+              log(document.idDoc.toString());
               var _documentt;
               _documentt =
-                  await ApiService().deleteDocument(id: index.toString());
+                  await ApiService().deleteDocument(id: document.idDoc.toString());
               log("_documentt::$_documentt");
               getData();
               Navigator.pop(context, 'Supprimer');

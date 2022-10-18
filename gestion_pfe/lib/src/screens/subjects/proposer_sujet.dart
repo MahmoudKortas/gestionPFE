@@ -5,9 +5,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/models/document.dart';
-import 'package:gestion_pfe/src/models/etudiant.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 
 import '../../helpers/api_service.dart';
 import '../../resize_widget.dart';

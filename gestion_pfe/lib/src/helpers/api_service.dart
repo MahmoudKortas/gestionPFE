@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable
+// ignore_for_file: unused_local_variable, no_leading_underscores_for_local_identifiers
 
 import 'dart:convert';
 import 'dart:developer';
@@ -110,7 +110,7 @@ class ApiService {
     return null;
   }
 
-  Future<List<Etudiant>?> deleteEtudiants(String? id) async {
+  Future<List<Etudiant>?> deleteEtudiant({required String id}) async {
     try {
       var url =
           Uri.parse("${ApiConstants.baseUrl}${ApiConstants.etudiants}$id");
