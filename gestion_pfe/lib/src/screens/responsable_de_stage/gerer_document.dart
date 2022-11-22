@@ -252,6 +252,11 @@ class _GererDocumentState extends State<GererDocument> {
   }
 
   addDocument() async {
+    document.description=descriptionController.text;
+    document.titre=titreController.text;
+    document.proprietaire="value";
+    document.datedepot= DateTime.now().toIso8601String();
+    document.photo="e";
     await ApiService().addDocument(document: document, filepath: _image!.path);
 
     getData();

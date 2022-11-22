@@ -74,10 +74,10 @@ class ApiService {
     return null;
   }
 
-  Future<List<Etudiant>?> updateEtudiants(String? id) async {
+  Future<List<Etudiant>?> updateEtudiants(Etudiant etudiant) async {
     try {
       var url =
-          Uri.parse("${ApiConstants.baseUrl}${ApiConstants.etudiants}update/");
+          Uri.parse("${ApiConstants.baseUrl}${ApiConstants.etudiants}/${etudiant.idEtud}");
       var response = await http.put(
         url,
         headers: <String, String>{
@@ -85,17 +85,17 @@ class ApiService {
         },
         body: jsonEncode(
           {
-            "id_etud": 3,
-            "adresse": "aaaaa",
-            "diplome": "d",
-            "email": "e",
-            "motdepasse": "m",
-            "niveau": "n",
-            "nom": "n",
-            "prenom": "p",
-            "tel": 1,
-            "departement": "d",
-            "specialite": "s"
+            "id_etud": etudiant.idEtud,
+            "adresse": etudiant.adresse,
+            "diplome": etudiant.diplome,
+            "email": "etudiant.email",
+            "motdepasse": etudiant.motdepasse,
+            "niveau":etudiant.niveau,
+            "nom": "etudiant.nom",
+            "prenom": "etudiant.prenom",
+            "tel": etudiant.tel,
+            "departement": etudiant.departement,
+            "specialite": etudiant.specialite
           },
         ),
       );

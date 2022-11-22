@@ -438,7 +438,10 @@ class _GererEtudiantState extends State<GererEtudiant> {
             child: const Text('Annuler'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, 'Modifer'),
+            onPressed: () {
+              editStudent( etudiant);
+              Navigator.pop(context, 'Modifer');
+            },
             child: const Text('Modifer'),
           ),
           TextButton(
@@ -499,6 +502,12 @@ class _GererEtudiantState extends State<GererEtudiant> {
   void deleteStudent({int? id}) async {
     log("deleteStudent");
     await ApiService().deleteEtudiant(id: id.toString());
+    getData();
+  }
+  
+  void editStudent(Etudiant etudiant) async {
+    log("editStudent");
+    await ApiService().updateEtudiants( etudiant).then((value) => log("updateEtudiants::$value"));
     getData();
   }
 
