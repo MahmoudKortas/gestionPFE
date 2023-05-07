@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:gestion_pfe/src/screens/etudiant/enquete_satisfaction.dart';
 import 'custom_theme.dart';
 import 'screens/accueil/accueil_enseignant.dart';
 import 'screens/accueil/accueil_etudiant.dart';
@@ -92,7 +93,7 @@ class MyApp extends StatelessWidget {
                     return const Inscription();
                   case AccueilEnseignant.routeName:
                     final args = routeSettings.arguments as AccueilEnseignant;
-                    return  AccueilEnseignant(enseignant: args.enseignant);
+                    return AccueilEnseignant(enseignant: args.enseignant);
                   case AccueilEtudiant.routeName:
                     final args = routeSettings.arguments as AccueilEtudiant;
                     return AccueilEtudiant(
@@ -131,6 +132,8 @@ class MyApp extends StatelessWidget {
                       doc: args.doc,
                       fonction: args.fonction,
                     );
+                  case EnqueteSatisfaction.routeName:
+                    return const EnqueteSatisfaction();
                   default:
                     return const Authentification();
                 }

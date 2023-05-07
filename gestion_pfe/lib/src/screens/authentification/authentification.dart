@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/screens/accueil/accueil_enseignant.dart';
 import 'package:gestion_pfe/src/screens/accueil/accueil_etudiant.dart';
 import 'package:gestion_pfe/src/screens/authentification/inscription.dart';
+import 'package:gestion_pfe/src/screens/etudiant/enquete_satisfaction.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/dashboard.dart';
 import '../../color_hex.dart';
 import '../../helpers/api_service.dart';
@@ -134,6 +135,23 @@ class _AuthentificationState extends State<Authentification> {
                           );
                         },
                       ),
+                      GestureDetector(
+                        child: Text(
+                          "satisfaction",
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            decorationThickness: 1.5,
+                            color: HexColor("c9242e"),
+                            fontSize: 20,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.restorablePushNamed(
+                              context, EnqueteSatisfaction.routeName
+                              // Inscription.routeName,
+                              );
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -182,11 +200,8 @@ class _AuthentificationState extends State<Authentification> {
     for (var enseignant in _enseignant) {
       log("_");
       if (enseignant.email == email && enseignant.motdepasse == motDepasse) {
-        Navigator.pushNamed(
-          context,
-          AccueilEnseignant.routeName,
-          arguments: AccueilEnseignant(enseignant: enseignant)
-        );
+        Navigator.pushNamed(context, AccueilEnseignant.routeName,
+            arguments: AccueilEnseignant(enseignant: enseignant));
       }
     }
   }

@@ -23,10 +23,14 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
   final titreController = TextEditingController();
   final domaineController = TextEditingController();
   final encadreurController = TextEditingController();
+  final presidentController = TextEditingController();
+  final rapporteurController = TextEditingController();
   final etudiantController = TextEditingController();
   final dateDebutController = TextEditingController();
   final dateFinController = TextEditingController();
   final dateSoutenanceController = TextEditingController();
+  final salleController = TextEditingController();
+  final seanceController = TextEditingController();
   final documentController = TextEditingController();
   @override
   void initState() {
@@ -40,10 +44,14 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
     titreController.dispose();
     domaineController.dispose();
     encadreurController.dispose();
+    presidentController.dispose();
+    rapporteurController.dispose();
     etudiantController.dispose();
     dateDebutController.dispose();
     dateFinController.dispose();
     dateSoutenanceController.dispose();
+    salleController.dispose();
+    seanceController.dispose();
     documentController.dispose();
     super.dispose();
   }
@@ -126,6 +134,36 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                   height: 10,
                 ),
                 TextFormField(
+                  controller: presidentController,
+                  decoration: const InputDecoration(
+                    hintText: "Saisir le président du PFE",
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  controller: rapporteurController,
+                  decoration: const InputDecoration(
+                    hintText: "Saisir le rapporteur du PFE",
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
                   controller: etudiantController,
                   decoration: const InputDecoration(
                     hintText: "Saisir l'etudiant' du PFE",
@@ -189,6 +227,36 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                   height: 10,
                 ),
                 TextFormField(
+                  controller: salleController,
+                  decoration: const InputDecoration(
+                    hintText: 'Saisir salle du PFE',
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  controller: seanceController,
+                  decoration: const InputDecoration(
+                    hintText: 'Saisir date seance du PFE',
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
                   controller: documentController,
                   decoration: const InputDecoration(
                     hintText: 'Saisir document du PFE',
@@ -204,16 +272,20 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      log("${noteController.text} ${titreController.text} ${domaineController.text} ${encadreurController.text} ${etudiantController.text} ${dateDebutController.text} ${dateFinController.text} ${dateSoutenanceController.text} ${documentController.text} ");
+                      log("${noteController.text} ${titreController.text} ${domaineController.text} ${encadreurController.text} ${presidentController.text} ${rapporteurController.text} ${etudiantController.text} ${dateDebutController.text} ${dateFinController.text} ${dateSoutenanceController.text} ${salleController.text} ${seanceController.text} ${documentController.text} ");
                       addData(
                         note: noteController.text,
                         titre: titreController.text,
                         domaine: domaineController.text,
                         encadreur: encadreurController.text,
+                        president: presidentController.text,
+                        rapporteur: rapporteurController.text,
                         etudiant: etudiantController.text,
                         dateDebut: dateDebutController.text,
                         dateFin: dateFinController.text,
                         dateSoutenance: dateSoutenanceController.text,
+                        salle: salleController.text,
+                        seance: seanceController.text,
                         document: documentController.text,
                       );
                     },
@@ -444,7 +516,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
             onPressed: () {
               deleteSujetPfe(pfe.idPFE);
               Navigator.pop(context, 'Supprimer');
-            } ,
+            },
             child: const Text('Supprimer'),
           ),
           /*TextButton(
@@ -478,10 +550,14 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
     String? titre = "",
     String? domaine = "",
     String? encadreur = "",
+    String? president = "",
+    String? rapporteur = "",
     String? etudiant = "",
     String? dateDebut = "",
     String? dateFin = "",
     String? dateSoutenance = "",
+    String? salle = "",
+    String? seance = "",
     String? document = "",
   }) async {
     //await ApiService().updateEtudiants("3");
@@ -494,14 +570,18 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
         titre: titre,
         domaine: domaine,
         encadreur: encadreur,
+        president: president,
+        rapporteur: rapporteur,
         etudiant: etudiant,
         dateDebut: dateDebut,
         dateFin: dateFin,
         dateSoutenance: dateSoutenance,
+        salle: salle,
+        seance: seance,
         document: document);
     getData();
   }
-  
+
   void deleteSujetPfe(int? id) async {
     log("deleteSujetPfe");
     await ApiService().deleteSoutenance(id: id.toString());
