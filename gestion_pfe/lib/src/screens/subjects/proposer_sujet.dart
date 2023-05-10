@@ -4,6 +4,8 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/helpers/document_api.dart';
+import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
 import 'package:gestion_pfe/src/models/document.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -137,7 +139,7 @@ class _ProposerSujetState extends State<ProposerSujet> {
                       document.titre = titreController.text;
                       document.idDoc = 0;
                       log("document::$document");
-                      ApiService().addDocument(
+                      ApiDocument().addDocument(
                           document: document, filepath: _image!.path);
                     },
                     child: const Text("Valider"),
@@ -152,7 +154,7 @@ class _ProposerSujetState extends State<ProposerSujet> {
   }
 
   void getData() async {
-    _enseignant = await ApiService().getEnseignant();
+    _enseignant = await ApiEnseignant().getEnseignant();
     log("_enseignant::$_enseignant");
     _listeEnseignant.clear();
     _enseignant

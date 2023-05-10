@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/helpers/document_api.dart';
 import 'package:gestion_pfe/src/models/document.dart';
 
 import '../../helpers/api_service.dart';
@@ -21,7 +22,7 @@ class _ListeDesSujetsState extends State<ListeDesSujets> {
 
   // ignore: prefer_typing_uninitialized_variables
   var _document;
-  Document?  doc;
+  Document? doc;
   @override
   void initState() {
     super.initState();
@@ -49,11 +50,12 @@ class _ListeDesSujetsState extends State<ListeDesSujets> {
                         shrinkWrap: true,
                         itemCount: _document!.length,
                         itemBuilder: (context, index) {
-                           log(_document[index].titre.toString());
+                          log(_document[index].titre.toString());
                           return Card(
                             child: ListTile(
                               title: Text(_document[index].titre.toString()),
-                               subtitle:  Text(_document[index].description.toString()),
+                              subtitle:
+                                  Text(_document[index].description.toString()),
                               trailing: const Icon(Icons.more_vert),
                               // isThreeLine: true,
                               onTap: () {
@@ -156,7 +158,7 @@ class _ListeDesSujetsState extends State<ListeDesSujets> {
   }
 
   void getData() async {
-    _document = await ApiService().getDocument();
+    _document = await ApiDocument().getDocument();
     log("_document::$_document");
     Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }

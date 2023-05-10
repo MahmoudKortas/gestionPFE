@@ -1,5 +1,10 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/helpers/document_api.dart';
+import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
+import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
+import 'package:gestion_pfe/src/helpers/pfe_api.dart';
+import 'package:gestion_pfe/src/helpers/soutenance_api.dart';
 import 'package:gestion_pfe/src/models/document.dart';
 import 'package:gestion_pfe/src/models/pfe.dart';
 import 'package:gestion_pfe/src/models/soutenance.dart';
@@ -334,9 +339,9 @@ class _InscriptionState extends State<Inscription> {
   }
 
   void getData() async {
-    _pfe = await ApiService().getPFE();
-    _document = await ApiService().getDocument();
-    _soutenance = await ApiService().getSoutenance();
+    _pfe = await ApiPfe().getPFE();
+    _document = await ApiDocument().getDocument();
+    _soutenance = await ApiSoutenance().getSoutenance();
     log("_soutenance::$_soutenance");
     log("pfe::$_pfe");
     log("_document::$_document");
@@ -363,7 +368,7 @@ class _InscriptionState extends State<Inscription> {
     String? specialite = "",
   }) async {
     log("addStudent");
-    await ApiService().addEtudiants(
+    await ApiEtudiant().addEtudiants(
         nom: nom,
         prenom: prenom,
         telephone: telephone,
@@ -386,7 +391,7 @@ class _InscriptionState extends State<Inscription> {
     String? domaine = "",
   }) async {
     log("addEnseignant");
-    var e = await ApiService().addEnseignant(
+    var e = await ApiEnseignant().addEnseignant(
         nom: nom,
         prenom: prenom,
         telephone: telephone,
@@ -394,7 +399,9 @@ class _InscriptionState extends State<Inscription> {
         email: email,
         motDePasse: motDePasse,
         domaine: domaine);
-    e!.isNotEmpty ? log("addEnseignantENotEmpty::$e") : log("addEnseignantEempty::$e");
+    e!.isNotEmpty
+        ? log("addEnseignantENotEmpty::$e")
+        : log("addEnseignantEempty::$e");
   }
 
   void radiochange(Description? value) {

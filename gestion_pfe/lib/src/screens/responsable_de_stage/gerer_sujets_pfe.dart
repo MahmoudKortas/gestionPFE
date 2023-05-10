@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/helpers/pfe_api.dart';
+import 'package:gestion_pfe/src/helpers/soutenance_api.dart';
 
 import '../../helpers/api_service.dart';
 import '../../models/pfe.dart';
@@ -305,12 +307,12 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                              title: Text('SampleItem $index'),
-                              subtitle: const Text(
-                                  'A sufficiently long subtitle warrants three lines.'),
+                              title: Text('${_pfe?[index].title} $index'),
+                              subtitle: Text(
+                                  '${_pfe?[index].etudiant?.nom} ${_pfe?[index].etudiant?.prenom}-${_pfe?[index].encadreur?.nom} ${_pfe?[index].encadreur?.prenom}'),
                               trailing: const Icon(Icons.more_vert),
                               isThreeLine: true,
-                              onTap: () => dialog(context, _pfe![index]),
+                              onTap: () => dialogStep1(context, _pfe![index]),
                             ),
                           );
                         },
@@ -528,14 +530,194 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
     );
   }
 
+  Future<String?> dialogStep1(BuildContext context, PFE pfe) {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text('Ajouter jury'),
+        // title: Text('Ajouter jury ${pfe} '),
+        content: SingleChildScrollView(
+          child: Column(
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  hintText: "Saisir l'encadreur du PFE",
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  hintText: "Saisir l'president du PFE",
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  hintText: "Saisir l'rapporteur du PFE",
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Annuler'),
+            child: const Text('Annuler'),
+          ),
+          TextButton(
+            onPressed: () {
+              //  pfe.encadreur=encadreur;
+              //  pfe.president=encadreur;
+              //  pfe.rapporteur=encadreur;
+              // editPfe(pfe);
+              dialogStep2(context, pfe);
+              // Navigator.pop(context, 'Modifer');
+            },
+            child: const Text('suivant'),
+          ),
+
+          /*TextButton(
+                            onPressed: () => Navigator.pop(context, 'OK'),
+                            child: const Text('OK'),
+                          ),*/
+        ],
+      ),
+    );
+  }
+
+  Future<String?> dialogStep2(BuildContext context, PFE pfe) {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text('Ajouter salle '),
+        // title: Text('Ajouter salle ${pfe} '),
+        content: SingleChildScrollView(
+          child: Column(
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  hintText: "Saisir Salle du PFE",
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Annuler'),
+            child: const Text('Annuler'),
+          ),
+          TextButton(
+            onPressed: () {
+              //  pfe.salle=salle;
+              // editPfe(pfe);
+              dialogStep3(context, pfe);
+              // Navigator.pop(context, 'Modifer');
+            },
+            child: const Text('suivant'),
+          ),
+
+          /*TextButton(
+                            onPressed: () => Navigator.pop(context, 'OK'),
+                            child: const Text('OK'),
+                          ),*/
+        ],
+      ),
+    );
+  }
+
+  Future<String?> dialogStep3(BuildContext context, PFE pfe) {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text('Ajouter seance '),
+        // title: Text('Ajouter seance ${pfe} '),
+        content: SingleChildScrollView(
+          child: Column(
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  hintText: "Saisir seance du PFE",
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Annuler'),
+            child: const Text('Annuler'),
+          ),
+          TextButton(
+            onPressed: () {
+              //  pfe.seance=seance;
+              // editPfe(pfe);
+              // dialogStep3(context, pfe);
+              // Navigator.pop(context, 'Modifer');
+            },
+            child: const Text('valider'),
+          ),
+
+          /*TextButton(
+                            onPressed: () => Navigator.pop(context, 'OK'),
+                            child: const Text('OK'),
+                          ),*/
+        ],
+      ),
+    );
+  }
+
   void getData() async {
     //await ApiService().updateEtudiants("3");
     //await ApiService().deleteEtudiants("17");
     // await ApiService().addEtudiants();
     // await ApiService().addDocument();
     //await ApiService().addEnseignant();
-    _pfe = await ApiService().getPFE();
-    log("_enseignant::$_pfe");
+    _pfe = await ApiPfe().getPFE();
+    log("_pfe::$_pfe");
     Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }
 
@@ -564,8 +746,8 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
     //await ApiService().deleteEtudiants("17");
     // await ApiService().addEtudiants();
     // await ApiService().addDocument();
-    log("addEnseignant");
-    await ApiService().addPFE(
+    log("addPFE::");
+    await ApiPfe().addPFE(
         note: noteController.text,
         titre: titre,
         domaine: domaine,
@@ -584,7 +766,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
 
   void deleteSujetPfe(int? id) async {
     log("deleteSujetPfe");
-    await ApiService().deleteSoutenance(id: id.toString());
+    await ApiSoutenance().deleteSoutenance(id: id.toString());
     getData();
   }
 }

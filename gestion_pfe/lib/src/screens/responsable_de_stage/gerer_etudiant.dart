@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
 
 import '../../helpers/api_service.dart';
 import '../../models/etudiant.dart';
@@ -253,8 +254,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                               ),
                               trailing: const Icon(Icons.more_vert),
                               isThreeLine: true,
-                              onTap: () =>
-                                  dialog(context, _etudiant![index] ),
+                              onTap: () => dialog(context, _etudiant![index]),
                             ),
                           );
                         },
@@ -267,7 +267,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
     );
   }
 
-  Future<String?> dialog(BuildContext context, Etudiant etudiant ) {
+  Future<String?> dialog(BuildContext context, Etudiant etudiant) {
     diplomeValue = etudiant.diplome;
     departementValue = etudiant.departement;
     niveauValue = etudiant.niveau;
@@ -439,7 +439,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
           ),
           TextButton(
             onPressed: () {
-              editStudent( etudiant);
+              editStudent(etudiant);
               Navigator.pop(context, 'Modifer');
             },
             child: const Text('Modifer'),
@@ -467,7 +467,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
     // await ApiService().addDocument();
     //await ApiService().addEnseignant();
     log("get");
-    _etudiant = await ApiService().getEtudiants();
+    _etudiant = await ApiEtudiant().getEtudiants();
     log("_etudiant::$_etudiant");
     Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }
@@ -485,7 +485,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
     String? specialite = "",
   }) async {
     log("addStudent");
-    await ApiService().addEtudiants(
+    await ApiEtudiant().addEtudiants(
         nom: nom,
         prenom: prenom,
         telephone: telephone,
@@ -501,13 +501,15 @@ class _GererEtudiantState extends State<GererEtudiant> {
 
   void deleteStudent({int? id}) async {
     log("deleteStudent");
-    await ApiService().deleteEtudiant(id: id.toString());
+    await ApiEtudiant().deleteEtudiant(id: id.toString());
     getData();
   }
-  
+
   void editStudent(Etudiant etudiant) async {
     log("editStudent");
-    await ApiService().updateEtudiants( etudiant).then((value) => log("updateEtudiants::$value"));
+    await ApiEtudiant()
+        .updateEtudiants(etudiant)
+        .then((value) => log("updateEtudiants::$value"));
     getData();
   }
 

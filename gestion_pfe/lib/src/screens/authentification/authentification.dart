@@ -3,6 +3,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
+import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
+import 'package:gestion_pfe/src/helpers/responsable_api.dart';
 import 'package:gestion_pfe/src/screens/accueil/accueil_enseignant.dart';
 import 'package:gestion_pfe/src/screens/accueil/accueil_etudiant.dart';
 import 'package:gestion_pfe/src/screens/authentification/inscription.dart';
@@ -164,9 +167,9 @@ class _AuthentificationState extends State<Authentification> {
   }
 
   void getData() async {
-    _responsable = await ApiService().getResponsable();
-    _etudiant = await ApiService().getEtudiants();
-    _enseignant = await ApiService().getEnseignant();
+    _responsable = await ApiResponsable().getResponsable();
+    _etudiant = await ApiEtudiant().getEtudiants();
+    _enseignant = await ApiEnseignant().getEnseignant();
     log("_responsable::$_responsable");
     log("_etudiant::$_etudiant");
     log("_enseignant::$_enseignant");

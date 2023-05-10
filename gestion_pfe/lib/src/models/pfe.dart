@@ -20,6 +20,10 @@ class PFE {
   double? note;
   Etudiant? etudiant;
   Enseignant? encadreur;
+  Enseignant? president;
+  Enseignant? rapporteur;
+  String? salle;
+  String? seance;
   Document? document;
 
   PFE(
@@ -31,6 +35,10 @@ class PFE {
       this.note,
       this.etudiant,
       this.encadreur,
+      this.president,
+      this.rapporteur,
+      this.salle,
+      this.seance,
       this.document});
 
   PFE.fromJson(Map<String, dynamic> json) {
@@ -45,6 +53,14 @@ class PFE {
     encadreur = json['encadreur'] != null
         ? Enseignant.fromJson(json['encadreur'])
         : null;
+    encadreur = json['president'] != null
+        ? Enseignant.fromJson(json['president'])
+        : null;
+    encadreur = json['rapporteur'] != null
+        ? Enseignant.fromJson(json['rapporteur'])
+        : null;
+    title = json['salle'];
+    title = json['seance'];
     document =
         json['document'] != null ? Document.fromJson(json['document']) : null;
   }
@@ -63,6 +79,14 @@ class PFE {
     if (encadreur != null) {
       data['encadreur'] = encadreur!.toJson();
     }
+    if (encadreur != null) {
+      data['president'] = encadreur!.toJson();
+    }
+    if (encadreur != null) {
+      data['rapporteur'] = encadreur!.toJson();
+    }
+    data['salle'] = title;
+    data['seance'] = title;
     if (document != null) {
       data['document'] = document!.toJson();
     }
@@ -71,6 +95,6 @@ class PFE {
 
   @override
   String toString() {
-    return 'PFE(idPFE: $idPFE, title: $title, dateDebut: $dateDebut, dateFin: $dateFin, domaine: $domaine, note: $note, etudiant: $etudiant, encadreur: $encadreur, document: $document)';
+    return 'PFE(idPFE: $idPFE, title: $title, dateDebut: $dateDebut, dateFin: $dateFin, domaine: $domaine, note: $note, etudiant: $etudiant, encadreur: $encadreur, president: $president, rapporteur: $rapporteur, salle: $salle, seance: $seance, document: $document)';
   }
 }

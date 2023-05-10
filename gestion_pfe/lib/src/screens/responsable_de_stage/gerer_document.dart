@@ -3,6 +3,8 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/helpers/document_api.dart';
+import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../helpers/api_service.dart';
 import '../../models/document.dart';
@@ -217,7 +219,7 @@ class _GererDocumentState extends State<GererDocument> {
               log(document.idDoc.toString());
               var _documentt;
               _documentt =
-                  await ApiService().deleteDocument(id: document.idDoc.toString());
+                  await ApiDocument().deleteDocument(id: document.idDoc.toString());
               log("_documentt::$_documentt");
               getData();
               Navigator.pop(context, 'Supprimer');
@@ -234,7 +236,7 @@ class _GererDocumentState extends State<GererDocument> {
   }
 
   void getData() async {
-    _enseignant = await ApiService().getEnseignant();
+    _enseignant = await ApiEnseignant().getEnseignant();
     _listeEnseignant.clear();
     _enseignant
         .map((l) => {_listeEnseignant.add(l.nom + ' ' + l.prenom)})
@@ -245,7 +247,7 @@ class _GererDocumentState extends State<GererDocument> {
     // await ApiService().addDocument();
     //await ApiService().addEnseignant();
 
-    _document = await ApiService().getDocument();
+    _document = await ApiDocument().getDocument();
 
     //log("_document::$_document");
     Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
@@ -257,7 +259,7 @@ class _GererDocumentState extends State<GererDocument> {
     document.proprietaire="value";
     document.datedepot= DateTime.now().toIso8601String();
     document.photo="e";
-    await ApiService().addDocument(document: document, filepath: _image!.path);
+    await ApiDocument().addDocument(document: document, filepath: _image!.path);
 
     getData();
   }

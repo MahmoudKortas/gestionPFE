@@ -6,6 +6,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/helpers/soutenance_api.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../helpers/api_service.dart';
 import '../../utils.dart';
@@ -144,7 +145,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             ? FloatingActionButton.extended(
                 onPressed: () //=>
                     {
-                   log("selectedEventsss::$selectedEvents");
+                  log("selectedEventsss::$selectedEvents");
                   showDialog(
                       context: context,
                       builder: (context) => ajoutSoutenance());
@@ -156,7 +157,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
   }
 
   Widget ajoutSoutenance() {
-  log("selectedEventsss::$selectedEvents");
+    log("selectedEventsss::$selectedEvents");
     log(_idController.text + _eventController.text + _heureController.text);
     return AlertDialog(
       title: const Text("Ajouter soutenance"),
@@ -263,7 +264,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
 
   void getData() async {
     selectedEvents?[DateTime(2022, 7, 21)] = [Event("1", "E1S2", "15h")];
-    _listeSoutenance = await ApiService().getSoutenance();
+    _listeSoutenance = await ApiSoutenance().getSoutenance();
     log("_listeSoutenance::$_listeSoutenance");
     Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }

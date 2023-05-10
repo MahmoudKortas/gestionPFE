@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
 
 import '../../helpers/api_service.dart';
 import '../../models/enseignant.dart';
@@ -148,7 +149,7 @@ class _GererListeDesJuriesState extends State<GererListeDesJuries> {
     // await ApiService().addEtudiants();
     // await ApiService().addDocument();
     //await ApiService().addEnseignant();
-    _enseignant = await ApiService().getEnseignant();
+    _enseignant = await ApiEnseignant().getEnseignant();
     log("_enseignant::$_enseignant");
     Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }

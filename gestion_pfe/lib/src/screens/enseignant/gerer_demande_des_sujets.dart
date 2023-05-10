@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/helpers/document_api.dart';
 import 'package:gestion_pfe/src/screens/subjects/detail_sujet.dart';
 
 import '../../helpers/api_service.dart';
@@ -156,7 +157,7 @@ class _GererDemandeDesSujetsPFEState extends State<GererDemandeDesSujetsPFE> {
   }
 
   void getData() async {
-    _document = await ApiService().getDocument();
+    _document = await ApiDocument().getDocument();
     log("_document::$_document");
     Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }

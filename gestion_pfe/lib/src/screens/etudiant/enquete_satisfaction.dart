@@ -1,5 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
+import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
 import 'package:gestion_pfe/src/models/document.dart';
 import 'package:gestion_pfe/src/models/pfe.dart';
 import 'package:gestion_pfe/src/models/soutenance.dart';
@@ -264,7 +266,7 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
     String? specialite = "",
   }) async {
     log("addStudent");
-    await ApiService().addEtudiants(
+    await ApiEtudiant().addEtudiants(
         nom: nom,
         prenom: prenom,
         telephone: telephone,
@@ -287,7 +289,7 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
     String? domaine = "",
   }) async {
     log("addEnseignant");
-    var e = await ApiService().addEnseignant(
+    var e = await ApiEnseignant().addEnseignant(
         nom: nom,
         prenom: prenom,
         telephone: telephone,
