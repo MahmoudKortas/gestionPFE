@@ -168,8 +168,8 @@ class _AuthentificationState extends State<Authentification> {
 
   void getData() async {
     _responsable = await ApiResponsable().getResponsable();
-    _etudiant = await ApiEtudiant().getEtudiants();
-    _enseignant = await ApiEnseignant().getEnseignant();
+    _etudiant = await ApiEtudiant().getAllEtudiants();
+    _enseignant = await ApiEnseignant().getAllEnseignant();
     log("_responsable::$_responsable");
     log("_etudiant::$_etudiant");
     log("_enseignant::$_enseignant");

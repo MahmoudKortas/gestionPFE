@@ -5,6 +5,21 @@ import 'package:http/http.dart' as http;
 import '../constants/constants.dart';
 
 class ApiEnseignant {
+  Future<List<Enseignant>?> getAllEnseignant() async {
+    try {
+      var url =
+          Uri.parse(ApiConstants.baseUrl + ApiConstants.enseignants + ApiConstants.all);
+
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        List<Enseignant> model = enseignantFromJson(response.body);
+        return model;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
   Future<List<Enseignant>?> getEnseignant({String? id = ""}) async {
     try {
       var url =

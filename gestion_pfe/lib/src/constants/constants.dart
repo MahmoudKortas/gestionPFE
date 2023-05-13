@@ -6,5 +6,7 @@ class ApiConstants {
   static String enseignants = "/enseignants/";
   static String document = "/document/";
   static String responsable = "/responsable/";
+  static String all = "all";
+
 }
 

@@ -5,17 +5,33 @@ import '../constants/constants.dart';
 import '../models/etudiant.dart';
 
 class ApiEtudiant {
-  Future<List<Etudiant>?> getEtudiants({String? id = ""}) async {
+  Future<List<Etudiant>?> getAllEtudiants() async {
     try {
-      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.etudiants + id!);
+      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.etudiants + ApiConstants.all);
 
       var response = await http.get(url);
+    
       if (response.statusCode == 200) {
         List<Etudiant> model = etudiantFromJson(response.body);
         return model;
       }
     } catch (e) {
-      log(e.toString());
+      log("getAllEtudiants::${e.toString()}");
+    }
+    return null;
+  }
+  Future<List<Etudiant>?> getEtudiants({String? id = ""}) async {
+    try {
+      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.etudiants + id!);
+
+      var response = await http.get(url);
+    
+      if (response.statusCode == 200) {
+        List<Etudiant> model = etudiantFromJson(response.body);
+        return model;
+      }
+    } catch (e) {
+      log("getEtudiants::${e.toString()}");
     }
     return null;
   }

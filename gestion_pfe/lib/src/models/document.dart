@@ -18,7 +18,7 @@ class Document {
   String? description;
   String? proprietaire;
   String? datedepot;
-  String? photo;
+  String? photo;//file
 
   Document(
       {this.idDoc,

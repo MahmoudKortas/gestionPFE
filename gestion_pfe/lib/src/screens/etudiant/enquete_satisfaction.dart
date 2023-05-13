@@ -24,10 +24,9 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
   Description? _description;
   final nomController = TextEditingController();
   final prenomController = TextEditingController();
-  final telephoneController = TextEditingController();
-  final adresseController = TextEditingController();
+  final telephoneController = TextEditingController(); 
   final emailController = TextEditingController();
-  final commentaireController = TextEditingController();
+  final avisController = TextEditingController();
 
 
 
@@ -41,10 +40,9 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
     // Clean up the controller when the widget is disposed.
     nomController.dispose();
     prenomController.dispose();
-    telephoneController.dispose();
-    adresseController.dispose();
+    telephoneController.dispose(); 
     emailController.dispose();
-    commentaireController.dispose();
+    avisController.dispose();
 
     /*domaineController.dispose();
     diplomeController.dispose();
@@ -118,23 +116,7 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
                           return null;
                         },
                         controller: telephoneController,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.location_city),
-                          hintText: 'Saisir votre adresse',
-                        ),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Entrez votre adresse';
-                          }
-                          return null;
-                        },
-                        controller: adresseController,
-                      ),
+                      ), 
                       const SizedBox(
                         height: 10,
                       ),
@@ -159,15 +141,15 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
   maxLines: 6,
                         decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.edit),
-                          hintText: 'Saisir votre commentaire',
+                          hintText: 'Saisir votre avis',
                         ),
                         validator: (String? value) {
                           if (value == null || value.isEmpty) {
-                            return 'Entrez votre commentaire';
+                            return 'Entrez votre avis';
                           }
                           return null;
                         },
-                        controller: commentaireController,
+                        controller: avisController,
                       ),
                       /*Column(
                         children: <Widget>[
@@ -197,7 +179,7 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: ElevatedButton(
                           onPressed: () {
-                            log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${commentaireController.text} ${_description.toString()}");
+                            log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${emailController.text} ${avisController.text} ${_description.toString()}");
                             /*_description.toString().contains("enseignant")
                                 ? addEnseignant(
                                     nom: nomController.text,
