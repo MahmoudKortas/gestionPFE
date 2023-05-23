@@ -2,32 +2,25 @@
 
 import 'dart:developer';
 import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:gestion_pfe/src/helpers/document_api.dart';
+import 'package:flutter/material.dart'; 
 import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
-import 'package:image_picker/image_picker.dart';
-import '../../helpers/api_service.dart';
-import '../../models/document.dart';
+import 'package:image_picker/image_picker.dart';  
+import '../../helpers/salle.dart';
+import '../../models/salle.dart';
 import '../../resize_widget.dart';
 
-class GererDocument extends StatefulWidget {
-  const GererDocument({Key? key}) : super(key: key);
-  static const routeName = '/Document';
+class GererSalle extends StatefulWidget {
+  const GererSalle({Key? key}) : super(key: key);
+  static const routeName = '/Salle';
   @override
-  State<GererDocument> createState() => _GererDocumentState();
+  State<GererSalle> createState() => _GererSalleState();
 }
 
-class _GererDocumentState extends State<GererDocument> {
-  late List<Document>? _document = [];
-  var _enseignant;
-  var _listeEnseignant = [''];
-  String? value;
-  File? _image;
-  final picker = ImagePicker();
-  Document document = Document();
-  final dateController = TextEditingController();
-  final descriptionController = TextEditingController();
-  final titreController = TextEditingController();
+class _GererSalleState extends State<GererSalle> {
+  late List<Salle>? _salle = [];  
+  String? value; 
+  Salle? salle = Salle(); 
+  final descriptionController = TextEditingController();  
   @override
   void initState() {
     super.initState();
@@ -38,7 +31,7 @@ class _GererDocumentState extends State<GererDocument> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gérer documents'),
+        title: const Text('Gérer Salles'),
       ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),
@@ -47,33 +40,7 @@ class _GererDocumentState extends State<GererDocument> {
           child: resiseWidget(
             context: context,
             child: Column(
-              children: [
-                /*TextFormField(
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.calendar_month),
-                    hintText: 'Saisir date de depot',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'entrez votre login';
-                    }
-                    return null;
-                  },
-                  controller: dateController,
-                ),*/
-                TextFormField(
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.description),
-                    hintText: 'Saisir titre',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'entrez le titre du sujet';
-                    }
-                    return null;
-                  },
-                  controller: titreController,
-                ),
+              children: [ 
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.description),
@@ -86,48 +53,37 @@ class _GererDocumentState extends State<GererDocument> {
                     return null;
                   },
                   controller: descriptionController,
-                ),
-                DropdownButton<String>(
-                  hint: const Text("choisir l'encadrant"),
-                  value: value,
-                  iconSize: 36,
-                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                  items: _listeEnseignant
-                      .map(buildMenuItem)
-                      .toList(), //_items.map(buildMenuItem).toList(),
-                  onChanged: (value) => setState(() => this.value = value),
-                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                ),
-                TextButton(onPressed: getImage, child: _buildImage()),
+                ), 
                 ElevatedButton(
                   // ignore: avoid_print
-                  onPressed: () => addDocument(),
+                  onPressed: () => addSalle(),
                   child: const Text("Ajouter"),
                 ),
-                /*_document == null
+                /*_Salle == null
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )
-                    :*/
-                _document!.isEmpty
-                    ? const Text("aucun document existe")
+                    :*/_salle!=null?
+                _salle!.isEmpty
+                    ? const Text("aucun Salle existe")
                     : ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: _document!.length,
+                        itemCount: _salle!.length,
                         itemBuilder: (context, index) {
                           return Card(
                             child: ListTile(
-                                title: Text(_document![index].titre.toString()),
+                                title: Text(
+                                    _salle![index].nom.toString()),
                                 subtitle: Text(
-                                    _document![index].description.toString()),
+                                    _salle![index].nom.toString()),
                                 trailing: const Icon(Icons.more_vert),
                                 // isThreeLine: true,
-                                onTap: () => dialog(context,
-                                    _document![index])),
+                                onTap: () => dialog(context, _salle![index])),
                           );
                         },
-                      ) /*Card(
+                      ):const Text("aucun Salle existe null")
+                       /*Card(
                   child: ListTile(
                       /*leading: const CircleAvatar(
                       foregroundImage:
@@ -191,18 +147,14 @@ class _GererDocumentState extends State<GererDocument> {
     );
   }
 
-  Future<String?> dialog(BuildContext context, Document document) {
+  Future<String?> dialog(BuildContext context, Salle salle) {
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Modifier / Supprimer document'),
+        title: const Text('Modifier / Supprimer Salle'),
         content: SingleChildScrollView(
           child: Column(
-            children: [
-              Image.network("http://10.0.2.2:8080/api/document/image/${document.idDoc}"),
-
-              // Image.asset("assets/images/logo-epi.png"),
-            ],
+            children: const [],
           ),
         ),
         actions: <Widget>[
@@ -216,12 +168,12 @@ class _GererDocumentState extends State<GererDocument> {
           ),
           TextButton(
             onPressed: () async {
-              log(document.idDoc.toString());
-              var _documentt;
-              _documentt =
-                  await ApiDocument().deleteDocument(id: document.idDoc.toString());
-              log("_documentt::$_documentt");
-              getData();
+              log(salle.idSalle.toString());
+              var _Sallet;
+              _Sallet = await ApiSalle()
+                  .deleteSalle(id: salle.idSalle.toString());
+              log("_Sallet::$_Sallet");
+               getData();
               Navigator.pop(context, 'Supprimer');
             },
             child: const Text('Supprimer'),
@@ -235,33 +187,19 @@ class _GererDocumentState extends State<GererDocument> {
     );
   }
 
-  void getData() async {
-    _enseignant = await ApiEnseignant().getAllEnseignant();
-    _listeEnseignant.clear();
-    _enseignant
-        .map((l) => {_listeEnseignant.add(l.nom + ' ' + l.prenom)})
-        .toList();
-    //await ApiService().updateEtudiants("3");
-    //await ApiService().deleteEtudiants("17");
-    // await ApiService().addEtudiants();
-    // await ApiService().addDocument();
-    //await ApiService().addEnseignant();
+  void getData() async { 
+    _salle=await ApiSalle().getAllSalles();
+    // _listeSalle.clear(); 
 
-    _document = await ApiDocument().getDocument();
-
-    //log("_document::$_document");
+    //log("_Salle::$_Salle");
     Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }
 
-  addDocument() async {
-    document.description=descriptionController.text;
-    document.titre=titreController.text;
-    document.proprietaire="value";
-    document.datedepot= DateTime.now().toIso8601String();
-    document.photo="e";
-    await ApiDocument().addDocument(document: document, filepath: _image!.path);
+  addSalle() async {
+    salle?.nom = descriptionController.text;
+    await ApiSalle().addSalle(salle: salle);
 
-    getData();
+     getData();
   }
 
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
@@ -271,28 +209,4 @@ class _GererDocumentState extends State<GererDocument> {
           // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ), // Text
       );
-  Future getImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      } else {
-        log('No image selected.');
-      }
-    });
-  }
-
-  Widget _buildImage() {
-    if (_image == null) {
-      return const Padding(
-        padding: EdgeInsets.all(5),
-        child: Icon(
-          Icons.add,
-          color: Colors.grey,
-        ),
-      );
-    } else {
-      return Text(_image!.path);
-    }
-  }
 }

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_departement.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_document.dart';
-import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_liste_des_juries_list.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_role.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_seance.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_specialite.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_sujets_pfe.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_etudiant.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_enseignants.dart';
 
 import '../../resize_widget.dart';
 import '../calendar/events_example.dart';
+import 'gerer_salle.dart';
 
 /// Displays detailed information about a SampleItem.
 class Dashboard extends StatelessWidget {
@@ -112,7 +116,9 @@ class Dashboard extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (_) =>  TableEventsExample(fonction: 'admin',)),
+                            builder: (_) => TableEventsExample(
+                                  fonction: 'admin',
+                                )),
                       );
                     },
                   ),
@@ -145,7 +151,7 @@ class Dashboard extends StatelessWidget {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                    title: const Text('Gèrer liste de jury'),
+                    title: const Text('Gèrer seance'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
@@ -156,7 +162,95 @@ class Dashboard extends StatelessWidget {
                       // background, the navigation stack is restored.
                       Navigator.restorablePushNamed(
                         context,
-                        GererListeDesJuries.routeName,
+                        GererSeance.routeName,
+                      );
+                    },
+                  ),
+                ),
+                Card(
+                  child: ListTile(
+                    /*leading: const CircleAvatar(
+                      foregroundImage:
+                          AssetImage('assets/images/flutter_logo.png'),
+                    ),*/
+                    title: const Text('Gèrer salle'),
+                    subtitle: const Text(
+                        'A sufficiently long subtitle warrants three lines.'),
+                    trailing: const Icon(Icons.more_vert),
+                    isThreeLine: true,
+                    onTap: () {
+                      // Navigate to the details page. If the user leaves and returns to
+                      // the app after it has been killed while running in the
+                      // background, the navigation stack is restored.
+                      Navigator.restorablePushNamed(
+                        context,
+                        GererSalle.routeName,
+                      );
+                    },
+                  ),
+                ),
+                Card(
+                  child: ListTile(
+                    /*leading: const CircleAvatar(
+                      foregroundImage:
+                          AssetImage('assets/images/flutter_logo.png'),
+                    ),*/
+                    title: const Text('Gèrer departement'),
+                    subtitle: const Text(
+                        'A sufficiently long subtitle warrants three lines.'),
+                    trailing: const Icon(Icons.more_vert),
+                    isThreeLine: true,
+                    onTap: () {
+                      // Navigate to the details page. If the user leaves and returns to
+                      // the app after it has been killed while running in the
+                      // background, the navigation stack is restored.
+                      Navigator.restorablePushNamed(
+                        context,
+                        GererDepartement.routeName,
+                      );
+                    },
+                  ),
+                ),
+                Card(
+                  child: ListTile(
+                    /*leading: const CircleAvatar(
+                      foregroundImage:
+                          AssetImage('assets/images/flutter_logo.png'),
+                    ),*/
+                    title: const Text('Gèrer role'),
+                    subtitle: const Text(
+                        'A sufficiently long subtitle warrants three lines.'),
+                    trailing: const Icon(Icons.more_vert),
+                    isThreeLine: true,
+                    onTap: () {
+                      // Navigate to the details page. If the user leaves and returns to
+                      // the app after it has been killed while running in the
+                      // background, the navigation stack is restored.
+                      Navigator.restorablePushNamed(
+                        context,
+                        GererRole.routeName,
+                      );
+                    },
+                  ),
+                ),
+                Card(
+                  child: ListTile(
+                    /*leading: const CircleAvatar(
+                      foregroundImage:
+                          AssetImage('assets/images/flutter_logo.png'),
+                    ),*/
+                    title: const Text('Gèrer specialite'),
+                    subtitle: const Text(
+                        'A sufficiently long subtitle warrants three lines.'),
+                    trailing: const Icon(Icons.more_vert),
+                    isThreeLine: true,
+                    onTap: () {
+                      // Navigate to the details page. If the user leaves and returns to
+                      // the app after it has been killed while running in the
+                      // background, the navigation stack is restored.
+                      Navigator.restorablePushNamed(
+                        context,
+                        GererSpecialite.routeName,
                       );
                     },
                   ),

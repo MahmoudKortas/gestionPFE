@@ -5,6 +5,24 @@ import 'package:http/http.dart' as http;
 import '../constants/constants.dart';
 
 class ApiPfe {
+  Future<List<PFE>?> getAllPFE() async {
+    try {
+      var url =
+          Uri.parse(ApiConstants.baseUrl + ApiConstants.pfe + ApiConstants.all);
+
+      var response = await http.get(url);
+        // inspect(response);
+      if (response.statusCode == 200) {
+        // log("response.body::${response.body}");
+        List<PFE> model = pfeFromJson(response.body);
+        return model;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
+
   Future<List<PFE>?> getPFE({String? id = ""}) async {
     try {
       var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.pfe + id!);
@@ -87,6 +105,20 @@ class ApiPfe {
       }
     } catch (e) {
       log("addPFE-exception::${e.toString()}");
+    }
+    return null;
+  }
+  Future<List<PFE>?> deletePFE({String? id = ""}) async {
+    try {
+      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.pfe + id!);
+      var response = await http.delete(url);
+      if (response.statusCode == 200) {
+        log("response.body::${response.body}");
+        List<PFE> model = pfeFromJson(response.body);
+        return model;
+      }
+    } catch (e) {
+      log("PFEException::${e.toString()}");
     }
     return null;
   }

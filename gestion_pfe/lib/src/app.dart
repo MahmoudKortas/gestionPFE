@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gestion_pfe/src/screens/etudiant/enquete_satisfaction.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_departement.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_role.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_seance.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_specialite.dart';
 import 'custom_theme.dart';
 import 'screens/accueil/accueil_enseignant.dart';
 import 'screens/accueil/accueil_etudiant.dart';
 import 'screens/responsable_de_stage/calander.dart';
 import 'screens/responsable_de_stage/dashboard.dart';
 import 'screens/responsable_de_stage/gerer_document.dart';
-import 'screens/responsable_de_stage/gerer_liste_des_juries_list.dart';
+import 'screens/responsable_de_stage/gerer_salle.dart';
 import 'screens/responsable_de_stage/gerer_sujets_pfe.dart';
 import 'screens/responsable_de_stage/gerer_etudiant.dart';
 import 'screens/responsable_de_stage/gerer_enseignants.dart';
@@ -109,14 +113,22 @@ class MyApp extends StatelessWidget {
                     return const GererSujetsPFE();
                   case GererDocument.routeName:
                     return const GererDocument();
+                  case GererSeance.routeName:
+                    return const GererSeance();
+                  case GererSalle.routeName:
+                    return const GererSalle();
+                  case GererDepartement.routeName:
+                    return const GererDepartement();
+                  case GererRole.routeName:
+                    return const GererRole();
+                  case GererSpecialite.routeName:
+                    return const GererSpecialite();
                   case GererEnseignant.routeName:
                     return const GererEnseignant();
                   case Calander.routeName:
                     return const Calander();
                   case GererEtudiant.routeName:
                     return const GererEtudiant();
-                  case GererListeDesJuries.routeName:
-                    return const GererListeDesJuries();
                   case ProposerSujet.routeName:
                     final args = routeSettings.arguments as ProposerSujet;
                     return ProposerSujet(

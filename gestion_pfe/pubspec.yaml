@@ -14,11 +14,12 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  flutter_native_splash: ^2.2.0+1
+  flutter_native_splash: ^2.2.0
   intl: ^0.17.0
   table_calendar: ^3.0.5  
   http: ^0.13.4
   image_picker: ^0.8.5+3
+  icons_launcher: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -35,3 +36,12 @@ flutter:
   assets:
     # Add assets from the images directory to the application.
     - assets/images/
+icons_launcher:
+  image_path: 'assets/images/logo-epi.png'
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true
+    web:
+      enable: true

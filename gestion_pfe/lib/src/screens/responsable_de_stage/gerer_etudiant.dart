@@ -467,7 +467,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
     // await ApiService().addDocument();
     //await ApiService().addEnseignant();
     log("get");
-    _etudiant = await ApiEtudiant().getEtudiants();
+    _etudiant = await ApiEtudiant().getAllEtudiants();
     log("_etudiant::$_etudiant");
     Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }

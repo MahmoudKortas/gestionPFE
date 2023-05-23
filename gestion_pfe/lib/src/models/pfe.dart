@@ -1,9 +1,13 @@
+import 'package:gestion_pfe/src/models/salle.dart';
+
 import 'enseignant.dart';
 
 import 'document.dart';
 import 'etudiant.dart';
 
 import 'dart:convert';
+
+import 'seance_model.dart';
 
 List<PFE> pfeFromJson(String str) =>
     List<PFE>.from(json.decode(str).map((x) => PFE.fromJson(x)));
@@ -22,8 +26,8 @@ class PFE {
   Enseignant? encadreur;
   Enseignant? president;
   Enseignant? rapporteur;
-  String? salle;
-  String? seance;
+  Salle? salle;
+  Seance? seance;
   Document? document;
 
   PFE(
@@ -59,8 +63,8 @@ class PFE {
     encadreur = json['rapporteur'] != null
         ? Enseignant.fromJson(json['rapporteur'])
         : null;
-    title = json['salle'];
-    title = json['seance'];
+    salle = json['salle'] != null ? Salle.fromJson(json['salle']) : null;
+    seance = json['seance'] != null ? Seance.fromJson(json['seance']) : null;
     document =
         json['document'] != null ? Document.fromJson(json['document']) : null;
   }
@@ -85,8 +89,12 @@ class PFE {
     if (encadreur != null) {
       data['rapporteur'] = encadreur!.toJson();
     }
-    data['salle'] = title;
-    data['seance'] = title;
+    if (salle != null) {
+      data['salle'] = salle!.toJson();
+    }
+    if (seance != null) {
+      data['seance'] = seance!.toJson();
+    }
     if (document != null) {
       data['document'] = document!.toJson();
     }

@@ -1,14 +1,9 @@
-// ignore_for_file: unnecessary_brace_in_string_interps
-
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
-import '../../helpers/api_service.dart';
 import '../../models/enseignant.dart';
 import '../../resize_widget.dart';
 
-/// Displays detailed information about a SampleItem.
 class GererEnseignant extends StatefulWidget {
   const GererEnseignant({Key? key}) : super(key: key);
   static const routeName = '/GererEnseignant';
@@ -70,11 +65,11 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.person),
-                    hintText: 'Saisir votre nom',
+                    hintText: "Nom de l'enseignant",
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return 'Entrez votre nom';
+                      return "Entrez le nom de l'enseignant";
                     }
                     return null;
                   },
@@ -86,11 +81,11 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.person),
-                    hintText: 'Saisir votre prenom',
+                    hintText: "Prénom de l'enseignant",
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return 'Entrez votre prenom';
+                      return "Entrez le prenom de l'enseignant";
                     }
                     return null;
                   },
@@ -102,11 +97,11 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.phone),
-                    hintText: 'Saisir votre telephone',
+                    hintText: "Numero du telephone de l'enseignant",
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return 'Entrez votre telephone';
+                      return "Entrez le numero du telephone de l'enseignant";
                     }
                     return null;
                   },
@@ -118,11 +113,11 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.location_city),
-                    hintText: 'Saisir votre adresse',
+                    hintText: "Adresse de l'enseignant",
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return 'Entrez votre adresse';
+                      return "Entrez l'adresse de l'enseignant";
                     }
                     return null;
                   },
@@ -134,11 +129,11 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.email),
-                    hintText: 'Saisir votre email',
+                    hintText: "Email de l'enseignant",
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return 'Entrez votre email';
+                      return "Entrez l'email de l'enseignant";
                     }
                     return null;
                   },
@@ -153,18 +148,18 @@ class _GererEnseignantState extends State<GererEnseignant> {
                   autocorrect: false,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.lock),
-                    hintText: 'Saisir votre password',
+                    hintText: "Mot de passe de l'enseignant",
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return 'Entrez votre password';
+                      return "Entrez le mot de passe de l'enseignant";
                     }
                     return null;
                   },
                   controller: motDePasseController,
                 ),
                 DropdownButton<String>(
-                  hint: const Text("choisir votre domaine"),
+                  hint: const Text("Domaine de l'enseignant"),
                   value: domaineValue,
                   iconSize: 36,
                   icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
@@ -214,65 +209,11 @@ class _GererEnseignantState extends State<GererEnseignant> {
                               isThreeLine: true,
                               onTap: () {
                                 dialog(context, _enseignant![index]);
-                                // Navigate to the details page. If the user leaves and returns to
-                                // the app after it has been killed while running in the
-                                // background, the navigation stack is restored.
-                                /*Navigator.restorablePushNamed(
-                                    context,
-                                    LogIn.routeName,
-                                  );*/
                               },
                             ),
                           );
                         },
                       ),
-
-                /*Card(
-                  child: ListTile(
-                    /*leading: const CircleAvatar(
-                      foregroundImage:
-                          AssetImage('assets/images/flutter_logo.png'),
-                    ),*/
-                    title: const Text('Enseignant 2'),
-                    subtitle: const Text(
-                        'A sufficiently long subtitle warrants three lines.'),
-                    trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
-                    onTap: () {
-                      // Navigate to the details page. If the user leaves and returns to
-                      // the app after it has been killed while running in the
-                      // background, the navigation stack is restored.
-                      /*Navigator.restorablePushNamed(
-                    context,
-                    LogIn.routeName,
-                  );*/
-                    },
-                  ),
-                ),
-                Card(
-                  child: ListTile(
-                    /*leading: const CircleAvatar(
-                      foregroundImage:
-                          AssetImage('assets/images/flutter_logo.png'),
-                    ),*/
-                    title: const Text('Enseignant 3'),
-                    subtitle: const Text(
-                        'A sufficiently long subtitle warrants three lines.'),
-                    trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
-                    onTap: () {
-                      // Navigate to the details page. If the user leaves and returns to
-                      // the app after it has been killed while running in the
-                      // background, the navigation stack is restored.
-                      /*Navigator.restorablePushNamed(
-                    context,
-                    LogIn.routeName,
-                  );*/
-                    },
-                  ),
-                ),
-             */
-                //)
               ],
             ),
           ),
@@ -282,13 +223,13 @@ class _GererEnseignantState extends State<GererEnseignant> {
   }
 
   Future<String?> dialog(BuildContext context, Enseignant enseignant) {
-     domaineValue = enseignant.domaine.toString();
-    log("${_enseignant}");
+    domaineValue = enseignant.domaine.toString();
+    log("_enseignant::$_enseignant");
     //log("$nomvalue $prenomvalue $telephonevalue $adressevalue $emailvalue $passwordvalue $domaineValue");
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Modifier / Supprimer etudiant'),
+        title: const Text('Modifier / Supprimer Enseignant'),
         content: SingleChildScrollView(
           child: Column(
             children: [
@@ -296,8 +237,8 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 height: 10,
               ),
               TextFormField(
-                decoration:  InputDecoration(
-                  prefixIcon:const Icon(Icons.person),
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.person),
                   hintText: enseignant.nom,
                 ),
                 validator: (nomvalue) {
@@ -315,8 +256,8 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 height: 10,
               ),
               TextFormField(
-                decoration:  InputDecoration(
-                  prefixIcon:const Icon(Icons.person),
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.person),
                   hintText: enseignant.prenom,
                 ),
                 validator: (prenomvalue) {
@@ -334,8 +275,8 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 height: 10,
               ),
               TextFormField(
-                decoration:  InputDecoration(
-                  prefixIcon:const Icon(Icons.phone),
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.phone),
                   hintText: enseignant.tel.toString(),
                 ),
                 validator: (telephonevalue) {
@@ -353,8 +294,8 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 height: 10,
               ),
               TextFormField(
-                decoration:  InputDecoration(
-                  prefixIcon:const Icon(Icons.location_city),
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.location_city),
                   hintText: enseignant.adresse,
                 ),
                 validator: (adressevalue) {
@@ -363,7 +304,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
                   }
                   return null;
                 },
-                controller: adresseController ,
+                controller: adresseController,
               ),
               const SizedBox(
                 height: 10,
@@ -372,8 +313,8 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 height: 10,
               ),
               TextFormField(
-                decoration:  InputDecoration(
-                  prefixIcon:const Icon(Icons.email),
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.email),
                   hintText: enseignant.email,
                 ),
                 validator: (emailvalue) {
@@ -382,7 +323,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
                   }
                   return null;
                 },
-                controller: emailController ,
+                controller: emailController,
               ),
               const SizedBox(
                 height: 10,
@@ -394,8 +335,8 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 obscureText: true,
                 enableSuggestions: false,
                 autocorrect: false,
-                decoration:  InputDecoration(
-                  prefixIcon:const Icon(Icons.lock),
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.lock),
                   hintText: enseignant.motdepasse,
                 ),
                 validator: (passwordvalue) {
@@ -424,15 +365,26 @@ class _GererEnseignantState extends State<GererEnseignant> {
             child: const Text('Annuler'),
           ),
           TextButton(
-            onPressed: () => log(
-                "${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text} $domaineValue "), //Navigator.pop(context, 'Modifer'),
+            onPressed: () {
+              log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text} $domaineValue");
+
+              editEnseignant(
+                  id: enseignant.idEns.toString(),
+                  nom: nomController.text,
+                  prenom: prenomController.text,
+                  telephone: telephoneController.text,
+                  adresse: adresseController.text,
+                  email: emailController.text,
+                  motDePasse: motDePasseController.text,
+                  domaine: domaineValue);
+            },
             child: const Text('Modifer'),
           ),
           TextButton(
             onPressed: () {
               deleteEnseignant(id: enseignant.idEns);
               Navigator.pop(context, 'Supprimer');
-            } ,
+            },
             child: const Text('Supprimer'),
           ),
           /*TextButton(
@@ -450,7 +402,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
     // await ApiService().addEtudiants();
     // await ApiService().addDocument();
     //await ApiService().addEnseignant();
-    _enseignant = await ApiEnseignant().getEnseignant();
+    _enseignant = await ApiEnseignant().getAllEnseignant();
     log("_enseignant::$_enseignant");
     Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }
@@ -479,11 +431,40 @@ class _GererEnseignantState extends State<GererEnseignant> {
         domaine: domaine);
     getData();
   }
-void deleteEnseignant({int? id}) async {
+
+  void editEnseignant({
+    String? id = "",
+    String? nom = "",
+    String? prenom = "",
+    String? telephone = "",
+    String? adresse = "",
+    String? email = "",
+    String? motDePasse = "",
+    String? domaine = "",
+  }) async {
+    //await ApiService().updateEtudiants("3");
+    //await ApiService().deleteEtudiants("17");
+    // await ApiService().addEtudiants();
+    // await ApiService().addDocument();
+    log("editEnseignant");
+    await ApiEnseignant().editEnseignant(
+        id: id,
+        nom: nom,
+        prenom: prenom,
+        telephone: telephone,
+        adresse: adresse,
+        email: email,
+        motDePasse: motDePasse,
+        domaine: domaine);
+    getData();
+  }
+
+  void deleteEnseignant({int? id}) async {
     log("deleteEnseignant");
     await ApiEnseignant().deleteEnseignant(id.toString());
     getData();
   }
+
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
         value: item,
         child: Text(
