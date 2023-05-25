@@ -1,10 +1,7 @@
-import 'dart:developer';
-
+import 'dart:developer'; 
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/helpers/document_api.dart';
-import 'package:gestion_pfe/src/screens/subjects/detail_sujet.dart';
-
-import '../../helpers/api_service.dart';
+import 'package:gestion_pfe/src/screens/subjects/detail_sujet.dart'; 
 import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.

@@ -8,8 +8,7 @@ import 'package:gestion_pfe/src/helpers/document_api.dart';
 import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
 import 'package:gestion_pfe/src/models/document.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../../helpers/api_service.dart';
+ 
 import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.

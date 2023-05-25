@@ -2,9 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/helpers/document_api.dart';
-import 'package:gestion_pfe/src/models/document.dart';
-
-import '../../helpers/api_service.dart';
+import 'package:gestion_pfe/src/models/document.dart'; 
 import '../../resize_widget.dart';
 import '../subjects/detail_sujet.dart';
 

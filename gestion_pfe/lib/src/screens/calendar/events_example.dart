@@ -7,8 +7,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/helpers/soutenance_api.dart';
-import 'package:table_calendar/table_calendar.dart';
-import '../../helpers/api_service.dart';
+import 'package:table_calendar/table_calendar.dart'; 
 import '../../utils.dart';
 
 class TableEventsExample extends StatefulWidget {

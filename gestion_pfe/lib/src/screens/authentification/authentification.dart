@@ -11,8 +11,7 @@ import 'package:gestion_pfe/src/screens/accueil/accueil_etudiant.dart';
 import 'package:gestion_pfe/src/screens/authentification/inscription.dart';
 import 'package:gestion_pfe/src/screens/etudiant/enquete_satisfaction.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/dashboard.dart';
-import '../../color_hex.dart';
-import '../../helpers/api_service.dart';
+import '../../color_hex.dart'; 
 import '../../resize_widget.dart';
 import '../../size_config.dart';
 

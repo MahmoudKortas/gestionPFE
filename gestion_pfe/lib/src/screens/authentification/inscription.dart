@@ -7,10 +7,8 @@ import 'package:gestion_pfe/src/helpers/pfe_api.dart';
 import 'package:gestion_pfe/src/helpers/soutenance_api.dart';
 import 'package:gestion_pfe/src/models/document.dart';
 import 'package:gestion_pfe/src/models/pfe.dart';
-import 'package:gestion_pfe/src/models/soutenance.dart';
-
-import '../../description.dart';
-import '../../helpers/api_service.dart';
+import 'package:gestion_pfe/src/models/soutenance.dart'; 
+import '../../description.dart'; 
 import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.
