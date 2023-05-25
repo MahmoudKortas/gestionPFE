@@ -10,7 +10,7 @@ class ApiDepartement {
     try {
       var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.departement + ApiConstants.all);
       var response = await http.get(url);
-      log("responseresponse:${response.body}");
+      // log("responseresponse:${response.body}");
     
       if (response.statusCode == 200) {
         List<Departement> model = departementFromJson(response.body);

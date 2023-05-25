@@ -11,7 +11,7 @@ class ApiPfe {
           Uri.parse(ApiConstants.baseUrl + ApiConstants.pfe + ApiConstants.all);
 
       var response = await http.get(url);
-        // inspect(response);
+      // inspect(response);
       if (response.statusCode == 200) {
         // log("response.body::${response.body}");
         List<PFE> model = pfeFromJson(response.body);
@@ -39,64 +39,21 @@ class ApiPfe {
     return null;
   }
 
-  Future<List<PFE>?> addPFE({
-    String? nom = "",
-    String? prenom = "",
-    String? telephone = "",
-    String? adresse = "",
-    String? email = "",
-    String? motDePasse = "",
-    String? note = "",
-    String? titre = "",
-    String? domaine = "",
-    String? encadreur = "",
-    String? president = "",
-    String? rapporteur = "",
-    String? etudiant = "",
-    String? dateDebut = "",
-    String? dateFin = "",
-    String? dateSoutenance = "",
-    String? salle = "",
-    String? seance = "",
-    String? document = "",
-  }) async {
+  Future<List<PFE>?> addPFE({PFE? pfe}) async {
     try {
       var url = Uri.parse("${ApiConstants.baseUrl}${ApiConstants.pfe}add");
-      if (telephone != null) {
-        telephone.isEmpty ? telephone = "-1" : telephone = telephone;
-      }
-      if (note != null) {
-        note.isEmpty ? note = "-2" : note = note;
-      }
 
+      /*if (pfe?.note != null) {
+        pfe?.note.isEmpty ? pfe?.note = "-2" as double? : pfe?.note = pfe.note;
+      }*/
+
+      log("pfe?.toJson()::${pfe?.toJson()}");
       var response = await http.post(
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(
-          {
-            "nom": nom,
-            "prenom": prenom,
-            "telephone": int.parse(telephone!),
-            "adresse": adresse,
-            "email": email,
-            "motDePasse": motDePasse,
-            "note": int.parse(note!),
-            "titre": titre,
-            "domaine": domaine,
-            "encadreur": encadreur,
-            "president": president,
-            "rapporteur": rapporteur,
-            "etudiant": etudiant,
-            "dateDebut": dateDebut,
-            "dateFin": dateFin,
-            "dateSoutenance": dateSoutenance,
-            "salle": salle,
-            "seance": seance,
-            "document": document,
-          },
-        ),
+        body: pfe?.toJson(),
       );
       log("addPFE::${response.body}");
       if (response.statusCode == 200) {
@@ -108,6 +65,7 @@ class ApiPfe {
     }
     return null;
   }
+
   Future<List<PFE>?> deletePFE({String? id = ""}) async {
     try {
       var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.pfe + id!);

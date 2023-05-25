@@ -10,7 +10,7 @@ class ApiRole {
     try {
       var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.role + ApiConstants.all);
       var response = await http.get(url);
-      log("responseresponse:${response.body}");
+      // log("responseresponse:${response.body}");
     
       if (response.statusCode == 200) {
         List<Role> model = roleFromJson(response.body);

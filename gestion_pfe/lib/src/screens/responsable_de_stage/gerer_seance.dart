@@ -168,10 +168,10 @@ class _GererSeanceState extends State<GererSeance> {
           ),
           TextButton(
             onPressed: () async {
-              log(seance.idseance.toString());
+              log(seance.idSeance.toString());
               var _Seancet;
               _Seancet = await ApiSeance()
-                  .deleteSeance(id: seance.idseance.toString());
+                  .deleteSeance(id: seance.idSeance.toString());
               log("_Seancet::$_Seancet");
                getData();
               Navigator.pop(context, 'Supprimer');

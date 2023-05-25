@@ -10,7 +10,7 @@ class ApiSalle {
     try {
       var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.salle + ApiConstants.all);
       var response = await http.get(url);
-      log("responseresponse:${response.body}");
+      // log("responseresponse:${response.body}");
     
       if (response.statusCode == 200) {
         List<Salle> model = salleFromJson(response.body);

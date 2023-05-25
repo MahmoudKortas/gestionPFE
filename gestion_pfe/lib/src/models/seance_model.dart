@@ -7,24 +7,24 @@ String seanceToJson(List<Seance> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson()))); 
 
 class Seance {
-  int? idseance;
+  int? idSeance;
   String? description;
 
-  Seance({this.idseance, this.description});
+  Seance({this.idSeance, this.description});
   Seance.fromJson(Map<String, dynamic> json) {
-    idseance = json['idseance'];
+    idSeance = json['idSeance'];
     description = json['description'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idseance'] = idseance;
+    data['idSeance'] = idSeance;
     data['description'] = description;
     return data;
   }
 
   @override
   String toString() {
-    return 'Seance(idseance: $idseance, description: $description)';
+    return 'Seance(idSeance: $idSeance, description: $description)';
   }
 }

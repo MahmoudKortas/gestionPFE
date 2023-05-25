@@ -1,17 +1,17 @@
 import 'dart:convert';
-import 'dart:developer'; 
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import '../constants/constants.dart';
-import '../models/specialite.dart'; 
+import '../models/specialite.dart';
 
 class ApiSpecialite {
-  
   Future<List<Specialite>?> getAllSpecialites() async {
     try {
-      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.specialite + ApiConstants.all);
+      var url = Uri.parse(
+          ApiConstants.baseUrl + ApiConstants.specialite + ApiConstants.all);
       var response = await http.get(url);
-      log("responseresponse:${response.body}");
-    
+      // log("responseresponse:${response.body}");
+
       if (response.statusCode == 200) {
         List<Specialite> model = specialiteFromJson(response.body);
         return model;
@@ -21,6 +21,7 @@ class ApiSpecialite {
     }
     return null;
   }
+
   Future<List<Specialite>?> getSpecialite({String? id = ""}) async {
     try {
       var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.specialite + id!);
@@ -36,7 +37,7 @@ class ApiSpecialite {
   }
 
   Future<List<Specialite>?> addSpecialite({Specialite? specialite}) async {
-    try { 
+    try {
       var url =
           Uri.parse("${ApiConstants.baseUrl}${ApiConstants.specialite}add");
       var response = await http.post(
@@ -45,8 +46,8 @@ class ApiSpecialite {
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(
-          { 
-            "description": specialite?.description, 
+          {
+            "description": specialite?.description,
           },
         ),
       );
@@ -60,7 +61,6 @@ class ApiSpecialite {
     }
     return null;
   }
-
 
   Future<List<Specialite>?> deleteSpecialite({required String id}) async {
     try {

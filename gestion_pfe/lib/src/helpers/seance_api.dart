@@ -10,7 +10,7 @@ class ApiSeance {
     try {
       var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.seance + ApiConstants.all);
       var response = await http.get(url);
-      log("responseresponse:${response.body}");
+      // log("responseresponse:${response.body}");
     
       if (response.statusCode == 200) {
         List<Seance> model = seanceFromJson(response.body);

@@ -28,22 +28,23 @@ class PFE {
   Enseignant? rapporteur;
   Salle? salle;
   Seance? seance;
-  Document? document;
+  // Document? document;
 
-  PFE(
-      {this.idPFE,
-      this.title,
-      this.dateDebut,
-      this.dateFin,
-      this.domaine,
-      this.note,
-      this.etudiant,
-      this.encadreur,
-      this.president,
-      this.rapporteur,
-      this.salle,
-      this.seance,
-      this.document});
+  PFE({
+    this.idPFE,
+    this.title,
+    this.dateDebut,
+    this.dateFin,
+    this.domaine,
+    this.note,
+    this.etudiant,
+    this.encadreur,
+    this.president,
+    this.rapporteur,
+    this.salle,
+    this.seance,
+    // this.document
+  });
 
   PFE.fromJson(Map<String, dynamic> json) {
     idPFE = json['idPFE'];
@@ -65,8 +66,7 @@ class PFE {
         : null;
     salle = json['salle'] != null ? Salle.fromJson(json['salle']) : null;
     seance = json['seance'] != null ? Seance.fromJson(json['seance']) : null;
-    document =
-        json['document'] != null ? Document.fromJson(json['document']) : null;
+    // document = json['document'] != null ? Document.fromJson(json['document']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -78,31 +78,37 @@ class PFE {
     data['domaine'] = domaine;
     data['note'] = note;
     if (etudiant != null) {
+      data['etudiant'] = etudiant!.idEtud;
+    }
+    /*if (etudiant != null) {
       data['etudiant'] = etudiant!.toJson();
-    }
+    }*/
     if (encadreur != null) {
+      data['encadreur'] = encadreur!.idEns;
+    }
+    /*if (encadreur != null) {
       data['encadreur'] = encadreur!.toJson();
+    }*/
+    if (rapporteur != null) {
+      data['rapporteur'] = rapporteur!.idEns;
     }
-    if (encadreur != null) {
-      data['president'] = encadreur!.toJson();
-    }
-    if (encadreur != null) {
-      data['rapporteur'] = encadreur!.toJson();
+    if (president != null) {
+      data['president'] = president!.idEns;
     }
     if (salle != null) {
-      data['salle'] = salle!.toJson();
+      data['salle'] = salle!.idSalle;
     }
     if (seance != null) {
-      data['seance'] = seance!.toJson();
+      data['seance'] = seance!.idSeance;
     }
-    if (document != null) {
-      data['document'] = document!.toJson();
-    }
+    // if (document != null) {
+    //   data['document'] = document!.toJson();
+    // }
     return data;
   }
 
   @override
   String toString() {
-    return 'PFE(idPFE: $idPFE, title: $title, dateDebut: $dateDebut, dateFin: $dateFin, domaine: $domaine, note: $note, etudiant: $etudiant, encadreur: $encadreur, president: $president, rapporteur: $rapporteur, salle: $salle, seance: $seance, document: $document)';
+    return 'PFE(idPFE: $idPFE, title: $title, dateDebut: $dateDebut, dateFin: $dateFin, domaine: $domaine, note: $note, etudiant: $etudiant, encadreur: $encadreur, president: $president, rapporteur: $rapporteur, salle: $salle, seance: $seance)'; //, document: $document
   }
 }
