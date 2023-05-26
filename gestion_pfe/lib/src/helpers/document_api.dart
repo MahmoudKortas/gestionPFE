@@ -4,6 +4,19 @@ import 'package:gestion_pfe/src/models/document.dart';
 import 'package:http/http.dart' as http;
 import '../constants/constants.dart';
 class ApiDocument {
+    Future<List<Document>?> getAllDocument() async {
+    try {
+      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.document + ApiConstants.all);
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        List<Document> model = documentFromJson(response.body);
+        return model;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
     Future<List<Document>?> getDocument({String? id = ""}) async {
     try {
       var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.document + id!);

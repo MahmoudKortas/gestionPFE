@@ -46,14 +46,27 @@ class ApiPfe {
       /*if (pfe?.note != null) {
         pfe?.note.isEmpty ? pfe?.note = "-2" as double? : pfe?.note = pfe.note;
       }*/
-
-      log("pfe?.toJson()::${pfe?.toJson()}");
+ 
       var response = await http.post(
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: pfe?.toJson(),
+        body: jsonEncode({
+          
+            "title": pfe?.title,
+            "dateDebut": pfe?.dateDebut,
+            "dateFin": pfe?.dateFin,
+            "domaine": pfe?.domaine,
+            "note": pfe?.note,
+            "etudiant": pfe?.etudiant,
+            "encadreur": pfe?.encadreur,
+            "president": pfe?.president,
+            "rapporteur": pfe?.rapporteur,
+            "salle": pfe?.salle,
+            "seance": pfe?.seance,
+            "document": pfe?.document, 
+        }),
       );
       log("addPFE::${response.body}");
       if (response.statusCode == 200) {

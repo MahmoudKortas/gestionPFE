@@ -29,18 +29,13 @@ class GererSujetsPFE extends StatefulWidget {
 class _GererSujetsPFEState extends State<GererSujetsPFE> {
   late List<PFE>? _pfe = [];
   PFE? pfe = PFE();
-  var _enseignant;
+  List<Enseignant?>? _enseignant;
   List<Etudiant?>? _etudiant;
-  List<Enseignant?>? _listeEnseignant;
-  List<Salle?>? _listeSalle;
-  List<Seance?>? _listeSeance;
-  List<Document?>? _listeDocument  ;
-  List<Specialite?>? _listeSpecialite  ;
-  var _document;
-  var _seance;
-  var _salle;
+  List<Document?>? _document;
+  List<Seance?>? _seance;
+  List<Salle?>? _salle;
+  List<Specialite?>? _listeSpecialite;
   List<Specialite?>? _specialite;
-  var _listeEtudiant = [''];
 
   final noteController = TextEditingController();
   final titreController = TextEditingController();
@@ -63,12 +58,12 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
   Salle? salleValue;
   Seance? seanceValue;
   Document? documentValue;
+  Specialite? specialiteValue;
   Enseignant? encadreur2Value;
   Enseignant? president2Value;
   Enseignant? rapporteur2Value;
   Salle? salle2Value;
   Seance? seance2Value;
-  Specialite? specialiteValue;
   @override
   void initState() {
     super.initState();
@@ -128,6 +123,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                         height: 10,
                       ),
                       TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: noteController,
                         decoration: const InputDecoration(
                           hintText: 'Saisir le note du PFE',
@@ -158,8 +154,8 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                         height: 10,
                       ),
                       _listeSpecialite != null
-                          ? 
-                          DropdownButton(
+                          ? DropdownButton(
+                              value: specialiteValue,
                               iconSize: 36,
                               hint: const Text("choisir la specialite"),
                               items: _listeSpecialite?.map((item) {
@@ -174,17 +170,18 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                                   specialiteValue = newVal as Specialite?;
                                 });
                               },
-                              value: specialiteValue,
                             )
                           : Container(),
                       const SizedBox(
                         height: 10,
                       ),
-                      _listeEnseignant != null
+                      //TODO: : to uncomment
+                      /*_enseignant != null
                           ? DropdownButton(
+                              value: encadrantValue,
                               iconSize: 36,
                               hint: const Text("choisir l'encadrant"),
-                              items: _listeEnseignant?.map((item) {
+                              items: _enseignant?.map((item) {
                                 return DropdownMenuItem<Enseignant>(
                                   value: item,
                                   child: Text("${item!.nom!} ${item.prenom!}"),
@@ -196,37 +193,40 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                                   encadrantValue = newVal as Enseignant?;
                                 });
                               },
-                              value: encadrantValue,
+                            )
+                          : Container(),*/
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      //TODO: make contraint to enseignant
+                      _enseignant != null
+                          ? DropdownButton(
+                              value: presidentValue,
+                              iconSize: 36,
+                              hint: const Text("choisir l'président"),
+                              items: _enseignant?.map((item) {
+                                return DropdownMenuItem<Enseignant>(
+                                  value: item,
+                                  child: Text("${item!.nom!} ${item.prenom!}"),
+                                );
+                              }).toList(),
+                              onChanged: (newVal) {
+                                log("newVal::$newVal");
+                                setState(() {
+                                  presidentValue = newVal as Enseignant?;
+                                });
+                              },
                             )
                           : Container(),
                       const SizedBox(
                         height: 10,
                       ),
-                      DropdownButton(
-                        iconSize: 36,
-                        hint: const Text("choisir l'président"),
-                        items: _listeEnseignant?.map((item) {
-                          return DropdownMenuItem<Enseignant>(
-                            value: item,
-                            child: Text("${item!.nom!} ${item.prenom!}"),
-                          );
-                        }).toList(),
-                        onChanged: (newVal) {
-                          log("newVal::$newVal");
-                          setState(() {
-                            presidentValue = newVal as Enseignant?;
-                          });
-                        },
-                        value: presidentValue,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      _listeEnseignant != null
+                      _enseignant != null
                           ? DropdownButton(
+                              value: rapporteurValue,
                               iconSize: 36,
                               hint: const Text("choisir l'président"),
-                              items: _listeEnseignant?.map((item) {
+                              items: _enseignant?.map((item) {
                                 return DropdownMenuItem<Enseignant>(
                                   value: item,
                                   child: Text("${item!.nom!} ${item.prenom!}"),
@@ -238,7 +238,6 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                                   rapporteurValue = newVal as Enseignant?;
                                 });
                               },
-                              value: rapporteurValue,
                             )
                           : Container(),
                       const SizedBox(
@@ -246,6 +245,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                       ),
                       _etudiant != null
                           ? DropdownButton(
+                              value: etudiantValue,
                               iconSize: 36,
                               hint: const Text("choisir l'etudiant"),
                               items: _etudiant?.map((item) {
@@ -260,13 +260,13 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                                   etudiantValue = newVal as Etudiant?;
                                 });
                               },
-                              value: etudiantValue,
                             )
                           : Container(),
                       const SizedBox(
                         height: 10,
                       ),
                       TextFormField(
+                        keyboardType: TextInputType.datetime,
                         controller: dateDebutController,
                         decoration: const InputDecoration(
                           hintText: 'Saisir date debut du PFE',
@@ -282,6 +282,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                         height: 10,
                       ),
                       TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: dateFinController,
                         decoration: const InputDecoration(
                           hintText: 'Saisir date fin du PFE',
@@ -300,6 +301,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                         height: 10,
                       ),
                       TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: dateSoutenanceController,
                         decoration: const InputDecoration(
                           hintText: 'Saisir date soutenance du PFE',
@@ -314,11 +316,12 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                       const SizedBox(
                         height: 10,
                       ),
-                      _listeSalle != null
+                      _salle != null
                           ? DropdownButton(
+                              value: salleValue,
                               iconSize: 36,
                               hint: const Text("choisir la salle"),
-                              items: _listeSalle?.map((item) {
+                              items: _salle?.map((item) {
                                 return DropdownMenuItem<Salle>(
                                   value: item,
                                   child: Text("${item!.nom!} ${item.nom!}"),
@@ -330,17 +333,17 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                                   salleValue = newVal as Salle?;
                                 });
                               },
-                              value: salleValue,
                             )
                           : Container(),
                       const SizedBox(
                         height: 10,
                       ),
-                      _listeSeance != null
+                      _seance != null
                           ? DropdownButton(
+                              value: seanceValue,
                               iconSize: 36,
                               hint: const Text("choisir la seance"),
-                              items: _listeSeance?.map((item) {
+                              items: _seance?.map((item) {
                                 return DropdownMenuItem<Seance>(
                                   value: item,
                                   child: Text(item!.description!),
@@ -352,18 +355,17 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                                   seanceValue = newVal as Seance?;
                                 });
                               },
-                              value: seanceValue,
                             )
                           : Container(),
                       const SizedBox(
                         height: 10,
                       ),
-                      _listeDocument != null
-                          ? 
-                          DropdownButton(
+                      _document != null
+                          ? DropdownButton(
+                              value: documentValue,
                               iconSize: 36,
                               hint: const Text("choisir document"),
-                              items: _listeDocument?.map((item) {
+                              items: _document?.map((item) {
                                 return DropdownMenuItem<Document>(
                                   value: item,
                                   child: Text(item!.description!),
@@ -375,8 +377,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                                   documentValue = newVal as Document;
                                 });
                               },
-                              value: seanceValue,
-                            ) 
+                            )
                           : Container(),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -612,129 +613,69 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
         content: SingleChildScrollView(
           child: Column(
             children: [
-              /*DropdownButton<String>(
-                hint: const Text("choisir l'encadrant"),
-                value: encadreur2Value,
-                iconSize: 36,
-                icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                items: _listeEnseignant
-                    .map(buildMenuItem)
-                    .toList(), //_items.map(buildMenuItem).toList(),
-                onChanged: (value) => setState(() => encadreur2Value = value),
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              ),*/
-              DropdownButton(
-                iconSize: 36,
-                hint: const Text("choisir l'encadrant"),
-                items: _listeEnseignant?.map((item) {
-                  return DropdownMenuItem<Enseignant>(
-                    value: item,
-                    child: Text("${item!.nom!} ${item.prenom!}"),
-                  );
-                }).toList(),
-                onChanged: (newVal) {
-                  log("newVal::$newVal");
-                  setState(() {
-                    encadreur2Value = newVal as Enseignant?;
-                  });
-                },
-                value: encadreur2Value,
-              ),
-              /* TextFormField(
-                decoration: const InputDecoration(
-                  hintText: "Saisir l'encadreur du PFE",
-                ),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),*/
+              _enseignant != null
+                  ? DropdownButton(
+                      value: etudiantValue,
+                      iconSize: 36,
+                      hint: const Text("choisir l'encadrant"),
+                      items: _enseignant?.map((item) {
+                        return DropdownMenuItem<Enseignant>(
+                          value: item,
+                          child: Text("${item!.nom!} ${item.prenom!}"),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        log("newVal::$newVal");
+                        setState(() {
+                          encadreur2Value = newVal as Enseignant?;
+                        });
+                      },
+                    )
+                  : Container(),
               const SizedBox(
                 height: 10,
               ),
-              /*DropdownButton<String>(
-                hint: const Text("choisir le president"),
-                value: president2Value,
-                iconSize: 36,
-                icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                items: _listeEnseignant
-                    .map(buildMenuItem)
-                    .toList(), //_items.map(buildMenuItem).toList(),
-                onChanged: (value) => setState(() => president2Value = value),
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              ), */
-              DropdownButton(
-                iconSize: 36,
-                hint: const Text("choisir l'president"),
-                items: _listeEnseignant?.map((item) {
-                  return DropdownMenuItem<Enseignant>(
-                    value: item,
-                    child: Text("${item!.nom!} ${item.prenom!}"),
-                  );
-                }).toList(),
-                onChanged: (newVal) {
-                  log("newVal::$newVal");
-                  setState(() {
-                    president2Value = newVal as Enseignant?;
-                  });
-                },
-                value: president2Value,
-              ),
-              /*TextFormField(
-                decoration: const InputDecoration(
-                  hintText: "Saisir l'president du PFE",
-                ),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),*/
+              _enseignant != null
+                  ? DropdownButton(
+                      value: president2Value,
+                      iconSize: 36,
+                      hint: const Text("choisir le president"),
+                      items: _enseignant?.map((item) {
+                        return DropdownMenuItem<Enseignant>(
+                          value: item,
+                          child: Text("${item!.nom!} ${item.prenom!}"),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        log("newVal::$newVal");
+                        setState(() {
+                          president2Value = newVal as Enseignant?;
+                        });
+                      },
+                    )
+                  : Container(),
               const SizedBox(
                 height: 10,
               ),
-              /*DropdownButton<String>(
-                hint: const Text("choisir le rapporteur"),
-                value: rapporteur2Value,
-                iconSize: 36,
-                icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                items: _listeEnseignant
-                    .map(buildMenuItem)
-                    .toList(), //_items.map(buildMenuItem).toList(),
-                onChanged: (value) => setState(() => rapporteur2Value = value),
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              ),*/
-              DropdownButton(
-                iconSize: 36,
-                hint: const Text("choisir l'president"),
-                items: _listeEnseignant?.map((item) {
-                  return DropdownMenuItem<Enseignant>(
-                    value: item,
-                    child: Text("${item!.nom!} ${item.prenom!}"),
-                  );
-                }).toList(),
-                onChanged: (newVal) {
-                  log("newVal::$newVal");
-                  setState(() {
-                    rapporteur2Value = newVal as Enseignant?;
-                  });
-                },
-                value: rapporteur2Value,
-              ),
-              /*TextFormField(
-                decoration: const InputDecoration(
-                  hintText: "Saisir l'rapporteur du PFE",
-                ),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),*/
+              _enseignant != null
+                  ? DropdownButton(
+                      value: rapporteur2Value,
+                      iconSize: 36,
+                      hint: const Text("choisir le rapporteur"),
+                      items: _enseignant?.map((item) {
+                        return DropdownMenuItem<Enseignant>(
+                          value: item,
+                          child: Text("${item!.nom!} ${item.prenom!}"),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        log("newVal::$newVal");
+                        setState(() {
+                          rapporteur2Value = newVal as Enseignant?;
+                        });
+                      },
+                    )
+                  : Container(),
               const SizedBox(
                 height: 10,
               ),
@@ -776,45 +717,25 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
         content: SingleChildScrollView(
           child: Column(
             children: [
-              /*DropdownButton<String>(
-                hint: const Text("choisir la Salle"),
-                value: salle2Value,
-                iconSize: 36,
-                icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                items: _listeEnseignant
-                    .map(buildMenuItem)
-                    .toList(), //_items.map(buildMenuItem).toList(),
-                onChanged: (value) => setState(() => salle2Value = value),
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              ),*/
-              DropdownButton(
-                iconSize: 36,
-                hint: const Text("choisir la Salle"),
-                items: _listeSalle?.map((item) {
-                  return DropdownMenuItem<Salle>(
-                    value: item,
-                    child: Text(item!.nom!),
-                  );
-                }).toList(),
-                onChanged: (newVal) {
-                  log("newVal::$newVal");
-                  setState(() {
-                    salle2Value = newVal as Salle?;
-                  });
-                },
-                value: salle2Value,
-              ),
-              /*TextFormField(
-                decoration: const InputDecoration(
-                  hintText: "Saisir Salle du PFE",
-                ),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),*/
+              _salle != null
+                  ? DropdownButton(
+                      value: salle2Value,
+                      iconSize: 36,
+                      hint: const Text("choisir la Salle"),
+                      items: _salle?.map((item) {
+                        return DropdownMenuItem<Salle>(
+                          value: item,
+                          child: Text(item!.nom!),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        log("newVal::$newVal");
+                        setState(() {
+                          salle2Value = newVal as Salle?;
+                        });
+                      },
+                    )
+                  : Container(),
               const SizedBox(
                 height: 10,
               ),
@@ -835,11 +756,6 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
             },
             child: const Text('suivant'),
           ),
-
-          /*TextButton(
-                            onPressed: () => Navigator.pop(context, 'OK'),
-                            child: const Text('OK'),
-                          ),*/
         ],
       ),
     );
@@ -849,50 +765,29 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: Text('Ajouter seance '),
-        // title: Text('Ajouter seance ${pfe} '),
+        title: const Text('Ajouter seance '),
         content: SingleChildScrollView(
           child: Column(
             children: [
-              /*DropdownButton<String>(
-                hint: const Text("choisir la seance"),
-                value: seance2Value,
-                iconSize: 36,
-                icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                items: _listeEnseignant
-                    .map(buildMenuItem)
-                    .toList(), //_items.map(buildMenuItem).toList(),
-                onChanged: (value) => setState(() => seance2Value = value),
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              ),*/
-              DropdownButton(
-                iconSize: 36,
-                hint: const Text("choisir la seance"),
-                items: _listeSalle?.map((item) {
-                  return DropdownMenuItem<Salle>(
-                    value: item,
-                    child: Text(item!.nom!),
-                  );
-                }).toList(),
-                onChanged: (newVal) {
-                  log("newVal::$newVal");
-                  setState(() {
-                    seance2Value = newVal as Seance?;
-                  });
-                },
-                value: seance2Value,
-              ),
-              /*TextFormField(
-                decoration: const InputDecoration(
-                  hintText: "Saisir seance du PFE",
-                ),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),*/
+              _seance != null
+                  ? DropdownButton(
+                      value: seance2Value,
+                      iconSize: 36,
+                      hint: const Text("choisir la seance"),
+                      items: _seance?.map((item) {
+                        return DropdownMenuItem<Seance>(
+                          value: item,
+                          child: Text(item!.description!),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        log("newVal::$newVal");
+                        setState(() {
+                          seance2Value = newVal as Seance?;
+                        });
+                      },
+                    )
+                  : Container(),
               const SizedBox(
                 height: 10,
               ),
@@ -913,29 +808,17 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
             },
             child: const Text('valider'),
           ),
-
-          /*TextButton(
-                            onPressed: () => Navigator.pop(context, 'OK'),
-                            child: const Text('OK'),
-                          ),*/
         ],
       ),
     );
   }
 
-  /*DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
-        value: item,
-        child: Text(
-          item,
-          // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ), // Text
-      );*/
   void getData() async {
     await Future.wait([
       ApiPfe().getAllPFE(),
       ApiEnseignant().getAllEnseignant(),
       ApiEtudiant().getAllEtudiants(),
-      ApiDocument().getDocument(),
+      ApiDocument().getAllDocument(),
       ApiSeance().getAllSeances(),
       ApiSalle().getAllSalles(),
       ApiSpecialite().getAllSpecialites(),
@@ -946,11 +829,11 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
       _document = value[3]?.cast<Document?>();
       _seance = value[4]?.cast<Seance?>();
       _salle = value[5]?.cast<Salle?>();
-      _specialite = value[5]?.cast<Specialite?>();
+      _specialite = value[6]?.cast<Specialite?>();
       log("_pfe::$_pfe");
       log("_enseignant::$_enseignant");
       log("_etudiant::$_etudiant");
-      log("Document::$Document");
+      log("Document::$_document");
       log("_seance::$_seance");
       log("_salle::$_salle");
       log("_specialite::$_specialite");
@@ -962,7 +845,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
   void addData({
     PFE? pfe,
   }) async {
-    log("gerersujetPfe-addPFE");
+    debugPrint("gerersujetPfe-addPFE::$pfe");
     await ApiPfe().addPFE(pfe: pfe);
     getData();
   }
