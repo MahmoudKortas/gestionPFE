@@ -3,6 +3,9 @@ import 'package:gestion_pfe/src/models/pfe.dart';
 
 import 'dart:convert';
 
+import 'package:gestion_pfe/src/models/salle.dart';
+import 'package:gestion_pfe/src/models/seance_model.dart';
+
 List<Soutenance> soutenanceFromJson(String str) =>
     List<Soutenance>.from(json.decode(str).map((x) => PFE.fromJson(x)));
 
@@ -12,34 +15,37 @@ String soutenanceToJson(List<Soutenance> data) =>
 class Soutenance {
   int? idSout;
   String? date;
-  String? heuredebut;
-  String? heurefin;
-  String? salle;
+  String? description;
+  String? etat;
   Enseignant? rapporteur;
   Enseignant? president;
+  Salle? salle;
+  Seance? seance;
   PFE? pfe;
   Soutenance(
       {this.idSout,
       this.date,
-      this.heuredebut,
-      this.heurefin,
-      this.salle,
+      this.description,
+      this.etat,
       this.rapporteur,
       this.president,
+      this.salle,
+      this.seance,
       this.pfe});
 
   Soutenance.fromJson(Map<String, dynamic> json) {
     idSout = json['idSout'];
     date = json['date'];
-    heuredebut = json['heuredebut'];
-    heurefin = json['heurefin'];
-    salle = json['salle'];
+    description = json['description'];
+    etat = json['etat'];
     rapporteur = json['rapporteur'] != null
         ? Enseignant.fromJson(json['rapporteur'])
         : null;
     president = json['president'] != null
         ? Enseignant.fromJson(json['president'])
         : null;
+    salle = Salle.fromJson(json['salle']);
+    seance = Seance.fromJson(json['seance']);
     pfe = json['pfe'] != null ? PFE.fromJson(json['pfe']) : null;
   }
 
@@ -47,15 +53,16 @@ class Soutenance {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idSout'] = idSout;
     data['date'] = date;
-    data['heuredebut'] = heuredebut;
-    data['heurefin'] = heurefin;
-    data['salle'] = salle;
+    data['description'] = description;
+    data['etat'] = etat;
     if (rapporteur != null) {
       data['rapporteur'] = rapporteur!.toJson();
     }
     if (president != null) {
       data['president'] = president!.toJson();
     }
+    data['salle'] = salle;
+    data['seance'] = seance;
     if (pfe != null) {
       data['pfe'] = pfe!.toJson();
     }
@@ -64,6 +71,6 @@ class Soutenance {
 
   @override
   String toString() {
-    return 'Soutenance(idSout: $idSout, date: $date, heuredebut: $heuredebut, heurefin: $heurefin,salle: $salle, rapporteur: $rapporteur, president: $president, pfe: $pfe)';
+    return 'Soutenance(idSout: $idSout, date: $date, salle: $salle, rapporteur: $rapporteur, president: $president, pfe: $pfe)';
   }
 }

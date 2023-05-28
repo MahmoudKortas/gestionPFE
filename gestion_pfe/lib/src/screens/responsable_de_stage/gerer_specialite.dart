@@ -74,9 +74,9 @@ class _GererSpecialiteState extends State<GererSpecialite> {
                           return Card(
                             child: ListTile(
                                 title: Text(
-                                    _specialite![index].description.toString()),
+                                    _specialite![index].Nom.toString()),
                                 subtitle: Text(
-                                    _specialite![index].description.toString()),
+                                    _specialite![index].Nom.toString()),
                                 trailing: const Icon(Icons.more_vert),
                                 // isThreeLine: true,
                                 onTap: () => dialog(context, _specialite![index])),
@@ -196,7 +196,7 @@ class _GererSpecialiteState extends State<GererSpecialite> {
   }
 
   addSpecialite() async {
-    specialite?.description = descriptionController.text;
+    specialite?.Nom = descriptionController.text;
     await ApiSpecialite().addSpecialite(specialite: specialite);
 
      getData();

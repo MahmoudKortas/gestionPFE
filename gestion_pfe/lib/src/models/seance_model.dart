@@ -8,23 +8,23 @@ String seanceToJson(List<Seance> data) =>
 
 class Seance {
   int? idSeance;
-  String? description;
+  String? Nom;
 
-  Seance({this.idSeance, this.description});
+  Seance({this.idSeance, this.Nom});
   Seance.fromJson(Map<String, dynamic> json) {
     idSeance = json['idSeance'];
-    description = json['description'];
+    Nom = json['Nom'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idSeance'] = idSeance;
-    data['description'] = description;
+    data['Nom'] = Nom;
     return data;
   }
 
   @override
   String toString() {
-    return 'Seance(idSeance: $idSeance, description: $description)';
+    return 'Seance(idSeance: $idSeance, Nom: $Nom)';
   }
 }

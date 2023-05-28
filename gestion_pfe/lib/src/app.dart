@@ -12,6 +12,7 @@ import 'screens/accueil/accueil_etudiant.dart';
 import 'screens/responsable_de_stage/calander.dart';
 import 'screens/responsable_de_stage/dashboard.dart';
 import 'screens/responsable_de_stage/gerer_document.dart';
+import 'screens/responsable_de_stage/gerer_responsable.dart';
 import 'screens/responsable_de_stage/gerer_salle.dart';
 import 'screens/responsable_de_stage/gerer_sujets_pfe.dart';
 import 'screens/responsable_de_stage/gerer_etudiant.dart';
@@ -123,6 +124,8 @@ class MyApp extends StatelessWidget {
                     return const GererRole();
                   case GererSpecialite.routeName:
                     return const GererSpecialite();
+                  case GererResponsable.routeName:
+                    return const GererResponsable();
                   case GererEnseignant.routeName:
                     return const GererEnseignant();
                   case Calander.routeName:

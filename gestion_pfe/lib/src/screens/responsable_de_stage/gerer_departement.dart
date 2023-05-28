@@ -2,9 +2,9 @@
 
 import 'dart:developer';
 import 'dart:io';
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
-import 'package:image_picker/image_picker.dart';  
+import 'package:image_picker/image_picker.dart';
 import '../../helpers/departement.dart';
 import '../../models/departement.dart';
 import '../../resize_widget.dart';
@@ -17,10 +17,10 @@ class GererDepartement extends StatefulWidget {
 }
 
 class _GererDepartementState extends State<GererDepartement> {
-  late List<Departement>? _departement = [];  
-  String? value; 
-  Departement? departement = Departement(); 
-  final descriptionController = TextEditingController();  
+  late List<Departement>? _departement = [];
+  String? value;
+  Departement? departement = Departement();
+  final descriptionController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -40,7 +40,7 @@ class _GererDepartementState extends State<GererDepartement> {
           child: resiseWidget(
             context: context,
             child: Column(
-              children: [ 
+              children: [
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.description),
@@ -53,7 +53,7 @@ class _GererDepartementState extends State<GererDepartement> {
                     return null;
                   },
                   controller: descriptionController,
-                ), 
+                ),
                 ElevatedButton(
                   // ignore: avoid_print
                   onPressed: () => addDepartement(),
@@ -63,27 +63,30 @@ class _GererDepartementState extends State<GererDepartement> {
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )
-                    :*/_departement!=null?
-                _departement!.isEmpty
-                    ? const Text("aucun Departement existe")
-                    : ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: _departement!.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            child: ListTile(
-                                title: Text(
-                                    _departement![index].description.toString()),
-                                subtitle: Text(
-                                    _departement![index].description.toString()),
-                                trailing: const Icon(Icons.more_vert),
-                                // isThreeLine: true,
-                                onTap: () => dialog(context, _departement![index])),
-                          );
-                        },
-                      ):const Text("aucun Departement existe null")
-                       /*Card(
+                    :*/
+                _departement != null
+                    ? _departement!.isEmpty
+                        ? const Text("aucun Departement existe")
+                        : ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: _departement!.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                child: ListTile(
+                                    title: Text(
+                                        _departement![index].nom.toString()),
+                                    subtitle: Text(
+                                        _departement![index].nom.toString()),
+                                    trailing: const Icon(Icons.more_vert),
+                                    // isThreeLine: true,
+                                    onTap: () =>
+                                        dialog(context, _departement![index])),
+                              );
+                            },
+                          )
+                    : const Text("aucun Departement existe null")
+                /*Card(
                   child: ListTile(
                       /*leading: const CircleAvatar(
                       foregroundImage:
@@ -168,12 +171,12 @@ class _GererDepartementState extends State<GererDepartement> {
           ),
           TextButton(
             onPressed: () async {
-              log(departement.description.toString());
+              log(departement.nom.toString());
               var _Departementt;
               _Departementt = await ApiDepartement()
-                  .deleteDepartement(id: departement.description.toString());
+                  .deleteDepartement(id: departement.nom.toString());
               log("_Departementt::$_Departementt");
-               getData();
+              getData();
               Navigator.pop(context, 'Supprimer');
             },
             child: const Text('Supprimer'),
@@ -187,19 +190,19 @@ class _GererDepartementState extends State<GererDepartement> {
     );
   }
 
-  void getData() async { 
-    _departement=await ApiDepartement().getAllDepartements();
-    // _listeDepartement.clear(); 
+  void getData() async {
+    _departement = await ApiDepartement().getAllDepartements();
+    // _listeDepartement.clear();
 
     //log("_Departement::$_Departement");
     Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }
 
   addDepartement() async {
-    departement?.description = descriptionController.text;
+    departement?.nom = descriptionController.text;
     await ApiDepartement().addDepartement(departement: departement);
 
-     getData();
+    getData();
   }
 
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(

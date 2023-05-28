@@ -74,9 +74,9 @@ class _GererSeanceState extends State<GererSeance> {
                           return Card(
                             child: ListTile(
                                 title: Text(
-                                    _seance![index].description.toString()),
+                                    _seance![index].Nom.toString()),
                                 subtitle: Text(
-                                    _seance![index].description.toString()),
+                                    _seance![index].Nom.toString()),
                                 trailing: const Icon(Icons.more_vert),
                                 // isThreeLine: true,
                                 onTap: () => dialog(context, _seance![index])),
@@ -196,7 +196,7 @@ class _GererSeanceState extends State<GererSeance> {
   }
 
   addSeance() async {
-    seance?.description = descriptionController.text;
+    seance?.Nom = descriptionController.text;
     await ApiSeance().addSeance(seance: seance);
 
      getData();

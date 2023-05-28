@@ -46,20 +46,7 @@ class _GererDocumentState extends State<GererDocument> {
           child: resiseWidget(
             context: context,
             child: Column(
-              children: [
-                /*TextFormField(
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.calendar_month),
-                    hintText: 'Saisir date de depot',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'entrez votre login';
-                    }
-                    return null;
-                  },
-                  controller: dateController,
-                ),*/
+              children: [ 
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.description),

@@ -54,7 +54,7 @@ class ApiPfe {
         },
         body: jsonEncode({
           
-            "title": pfe?.title,
+            /*"title": pfe?.title,
             "dateDebut": pfe?.dateDebut,
             "dateFin": pfe?.dateFin,
             "domaine": pfe?.domaine,
@@ -65,7 +65,7 @@ class ApiPfe {
             "rapporteur": pfe?.rapporteur,
             "salle": pfe?.salle,
             "seance": pfe?.seance,
-            "document": pfe?.document, 
+            "document": pfe?.document, */
         }),
       );
       log("addPFE::${response.body}");

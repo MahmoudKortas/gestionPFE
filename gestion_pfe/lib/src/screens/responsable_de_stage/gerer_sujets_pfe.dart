@@ -5,7 +5,7 @@ import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
 import 'package:gestion_pfe/src/helpers/pfe_api.dart';
 import 'package:gestion_pfe/src/helpers/salle.dart';
 import 'package:gestion_pfe/src/helpers/seance_api.dart';
-import 'package:gestion_pfe/src/helpers/soutenance_api.dart';
+import 'package:gestion_pfe/src/helpers/soutenance.dart';
 import 'package:gestion_pfe/src/helpers/specialite.dart';
 import 'package:gestion_pfe/src/models/document.dart';
 import 'package:gestion_pfe/src/models/enseignant.dart';
@@ -122,7 +122,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                       const SizedBox(
                         height: 10,
                       ),
-                      TextFormField(
+                      /*TextFormField(
                         keyboardType: TextInputType.number,
                         controller: noteController,
                         decoration: const InputDecoration(
@@ -134,7 +134,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                           }
                           return null;
                         },
-                      ),
+                      ),*/
                       const SizedBox(
                         height: 10,
                       ),
@@ -153,7 +153,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                       const SizedBox(
                         height: 10,
                       ),
-                      _listeSpecialite != null
+                     /* _listeSpecialite != null
                           ? DropdownButton(
                               value: specialiteValue,
                               iconSize: 36,
@@ -174,32 +174,9 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                           : Container(),
                       const SizedBox(
                         height: 10,
-                      ),
-                      //TODO: : to uncomment
-                      /*_enseignant != null
-                          ? DropdownButton(
-                              value: encadrantValue,
-                              iconSize: 36,
-                              hint: const Text("choisir l'encadrant"),
-                              items: _enseignant?.map((item) {
-                                return DropdownMenuItem<Enseignant>(
-                                  value: item,
-                                  child: Text("${item!.nom!} ${item.prenom!}"),
-                                );
-                              }).toList(),
-                              onChanged: (newVal) {
-                                log("newVal::$newVal");
-                                setState(() {
-                                  encadrantValue = newVal as Enseignant?;
-                                });
-                              },
-                            )
-                          : Container(),*/
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      ),  */
                       //TODO: make contraint to enseignant
-                      _enseignant != null
+                      /*_enseignant != null
                           ? DropdownButton(
                               value: presidentValue,
                               iconSize: 36,
@@ -242,7 +219,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                           : Container(),
                       const SizedBox(
                         height: 10,
-                      ),
+                      ),*/
                       _etudiant != null
                           ? DropdownButton(
                               value: etudiantValue,
@@ -316,7 +293,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                       const SizedBox(
                         height: 10,
                       ),
-                      _salle != null
+                     /* _salle != null
                           ? DropdownButton(
                               value: salleValue,
                               iconSize: 36,
@@ -359,7 +336,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                           : Container(),
                       const SizedBox(
                         height: 10,
-                      ),
+                      ),*/
                       _document != null
                           ? DropdownButton(
                               value: documentValue,
@@ -777,7 +754,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                       items: _seance?.map((item) {
                         return DropdownMenuItem<Seance>(
                           value: item,
-                          child: Text(item!.description!),
+                          child: Text(item!.Nom!),
                         );
                       }).toList(),
                       onChanged: (newVal) {

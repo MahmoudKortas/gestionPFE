@@ -46,7 +46,7 @@ class ApiDepartement {
         },
         body: jsonEncode(
           { 
-            "description": departement?.description, 
+            "description": departement?.nom, 
           },
         ),
       );

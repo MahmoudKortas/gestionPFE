@@ -46,7 +46,7 @@ class ApiSeance {
         },
         body: jsonEncode(
           { 
-            "description": seance?.description, 
+            "description": seance?.Nom, 
           },
         ),
       );

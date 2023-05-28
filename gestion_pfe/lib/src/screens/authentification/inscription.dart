@@ -4,7 +4,7 @@ import 'package:gestion_pfe/src/helpers/document_api.dart';
 import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
 import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
 import 'package:gestion_pfe/src/helpers/pfe_api.dart';
-import 'package:gestion_pfe/src/helpers/soutenance_api.dart';
+import 'package:gestion_pfe/src/helpers/soutenance.dart';
 import 'package:gestion_pfe/src/models/document.dart';
 import 'package:gestion_pfe/src/models/pfe.dart';
 import 'package:gestion_pfe/src/models/soutenance.dart'; 
