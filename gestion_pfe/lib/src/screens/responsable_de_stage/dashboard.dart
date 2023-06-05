@@ -40,7 +40,7 @@ class Dashboard extends StatelessWidget {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                    title: const Text('Gèrer sujet PFE'),
+                    title: const Text(' sujet PFE'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
@@ -62,7 +62,7 @@ class Dashboard extends StatelessWidget {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                    title: const Text('Gèrer document'),
+                    title: const Text(' document'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
@@ -84,7 +84,7 @@ class Dashboard extends StatelessWidget {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                    title: const Text('Gèrer enseignant'),
+                    title: const Text(' enseignant'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
@@ -106,7 +106,7 @@ class Dashboard extends StatelessWidget {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                    title: const Text('Gèrer soutenances'),
+                    title: const Text(' soutenances'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
@@ -118,9 +118,10 @@ class Dashboard extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (_) => TableEventsExample(
-                                  fonction: 'admin',
-                                )),
+                          builder: (_) => TableEventsExample(
+                            fonction: 'admin',
+                          ),
+                        ),
                       );
                     },
                   ),
@@ -131,7 +132,7 @@ class Dashboard extends StatelessWidget {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                    title: const Text('Gèrer étudiants'),
+                    title: const Text(' étudiants'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
@@ -153,7 +154,7 @@ class Dashboard extends StatelessWidget {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                    title: const Text('Gèrer seance'),
+                    title: const Text(' seance'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
@@ -175,7 +176,7 @@ class Dashboard extends StatelessWidget {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                    title: const Text('Gèrer salle'),
+                    title: const Text(' salle'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
@@ -197,7 +198,7 @@ class Dashboard extends StatelessWidget {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                    title: const Text('Gèrer departement'),
+                    title: const Text(' departement'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
@@ -219,7 +220,7 @@ class Dashboard extends StatelessWidget {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                    title: const Text('Gèrer role'),
+                    title: const Text(' role'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
@@ -241,7 +242,7 @@ class Dashboard extends StatelessWidget {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                    title: const Text('Gèrer specialite'),
+                    title: const Text(' specialite'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
@@ -263,7 +264,7 @@ class Dashboard extends StatelessWidget {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                    title: const Text('Gèrer responsable'),
+                    title: const Text(' responsable'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
@@ -279,14 +280,13 @@ class Dashboard extends StatelessWidget {
                     },
                   ),
                 ),
-                
                 Card(
                   child: ListTile(
                     /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                    title: const Text('Gèrer soutenances'),
+                    title: const Text(' soutenances'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
@@ -295,7 +295,7 @@ class Dashboard extends StatelessWidget {
                       // Navigate to the details page. If the user leaves and returns to
                       // the app after it has been killed while running in the
                       // background, the navigation stack is restored.
-                        Navigator.restorablePushNamed(
+                      Navigator.restorablePushNamed(
                         context,
                         GererSoutenance.routeName,
                       );

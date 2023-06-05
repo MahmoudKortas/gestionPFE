@@ -39,31 +39,19 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
 
   final noteController = TextEditingController();
   final titreController = TextEditingController();
+  final descriptionController = TextEditingController();
   final domaineController = TextEditingController();
-  final encadreurController = TextEditingController();
-  final presidentController = TextEditingController();
-  final rapporteurController = TextEditingController();
+  final encadreurController = TextEditingController(); 
   final etudiantController = TextEditingController();
   final dateDebutController = TextEditingController();
-  final dateFinController = TextEditingController();
-  final dateSoutenanceController = TextEditingController();
-  final salleController = TextEditingController();
-  final seanceController = TextEditingController();
+  final dateDepotController = TextEditingController();  
   final documentController = TextEditingController();
   String? domaineValue;
-  Enseignant? encadrantValue;
-  Enseignant? presidentValue;
-  Enseignant? rapporteurValue;
-  Etudiant? etudiantValue;
-  Salle? salleValue;
-  Seance? seanceValue;
+  Enseignant? encadrantValue; 
+  Etudiant? etudiantValue; 
   Document? documentValue;
   Specialite? specialiteValue;
-  Enseignant? encadreur2Value;
-  Enseignant? president2Value;
-  Enseignant? rapporteur2Value;
-  Salle? salle2Value;
-  Seance? seance2Value;
+  Enseignant? encadreur2Value; 
   @override
   void initState() {
     super.initState();
@@ -75,15 +63,10 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
     noteController.dispose();
     titreController.dispose();
     domaineController.dispose();
-    encadreurController.dispose();
-    presidentController.dispose();
-    rapporteurController.dispose();
+    encadreurController.dispose(); 
     etudiantController.dispose();
     dateDebutController.dispose();
-    dateFinController.dispose();
-    dateSoutenanceController.dispose();
-    salleController.dispose();
-    seanceController.dispose();
+    dateDepotController.dispose(); 
     documentController.dispose();
     super.dispose();
   }
@@ -107,7 +90,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
               ),
             ],
           ),
-          title: const Text('Gérer sujets PFE'),
+          title: const Text(' sujets PFE'),
         ),
         body: TabBarView(
           children: [
@@ -152,6 +135,19 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                       ),
                       const SizedBox(
                         height: 10,
+                      ),
+                      
+                      TextFormField(
+                        controller: descriptionController,
+                        decoration: const InputDecoration(
+                          hintText: 'description PFE',
+                        ),
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'entrez le description du pfe';
+                          }
+                          return null;
+                        },
                       ),
                      /* _listeSpecialite != null
                           ? DropdownButton(
@@ -260,7 +256,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                       ),
                       TextFormField(
                         keyboardType: TextInputType.number,
-                        controller: dateFinController,
+                        controller: dateDepotController,
                         decoration: const InputDecoration(
                           hintText: 'Saisir date fin du PFE',
                         ),
@@ -276,20 +272,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                       ),
                       const SizedBox(
                         height: 10,
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.number,
-                        controller: dateSoutenanceController,
-                        decoration: const InputDecoration(
-                          hintText: 'Saisir date soutenance du PFE',
-                        ),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                      ),
+                      ), 
                       const SizedBox(
                         height: 10,
                       ),
@@ -345,7 +328,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                               items: _document?.map((item) {
                                 return DropdownMenuItem<Document>(
                                   value: item,
-                                  child: Text(item!.description!),
+                                  child: Text(item!.titre!),
                                 );
                               }).toList(),
                               onChanged: (newVal) {
@@ -361,17 +344,14 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                         child: ElevatedButton(
                           onPressed: () {
                             pfe?.title = titreController.text;
+                            pfe?.description = descriptionController.text;
                             pfe?.dateDebut = dateDebutController.text;
-                            pfe?.dateFin = dateFinController.text;
+                            pfe?.dateDepot = dateDepotController.text;
                             pfe?.domaine = domaineController.text;
                             pfe?.note = double.tryParse(noteController.text);
                             pfe?.etudiant = etudiantValue;
                             pfe?.document = documentValue;
-                            pfe?.encadreur = encadrantValue;
-                            pfe?.president = presidentValue;
-                            pfe?.rapporteur = rapporteurValue;
-                            pfe?.salle = salleValue;
-                            pfe?.seance = seanceValue;
+                            pfe?.encadreur = encadrantValue; 
                             log("pfe::$pfe ");
                             addData(
                               pfe: pfe,
@@ -611,48 +591,10 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                   : Container(),
               const SizedBox(
                 height: 10,
-              ),
-              _enseignant != null
-                  ? DropdownButton(
-                      value: president2Value,
-                      iconSize: 36,
-                      hint: const Text("choisir le president"),
-                      items: _enseignant?.map((item) {
-                        return DropdownMenuItem<Enseignant>(
-                          value: item,
-                          child: Text("${item!.nom!} ${item.prenom!}"),
-                        );
-                      }).toList(),
-                      onChanged: (newVal) {
-                        log("newVal::$newVal");
-                        setState(() {
-                          president2Value = newVal as Enseignant?;
-                        });
-                      },
-                    )
-                  : Container(),
+              ), 
               const SizedBox(
                 height: 10,
-              ),
-              _enseignant != null
-                  ? DropdownButton(
-                      value: rapporteur2Value,
-                      iconSize: 36,
-                      hint: const Text("choisir le rapporteur"),
-                      items: _enseignant?.map((item) {
-                        return DropdownMenuItem<Enseignant>(
-                          value: item,
-                          child: Text("${item!.nom!} ${item.prenom!}"),
-                        );
-                      }).toList(),
-                      onChanged: (newVal) {
-                        log("newVal::$newVal");
-                        setState(() {
-                          rapporteur2Value = newVal as Enseignant?;
-                        });
-                      },
-                    )
-                  : Container(),
+              ), 
               const SizedBox(
                 height: 10,
               ),
@@ -693,30 +635,30 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
         // title: Text('Ajouter salle ${pfe} '),
         content: SingleChildScrollView(
           child: Column(
-            children: [
-              _salle != null
-                  ? DropdownButton(
-                      value: salle2Value,
-                      iconSize: 36,
-                      hint: const Text("choisir la Salle"),
-                      items: _salle?.map((item) {
-                        return DropdownMenuItem<Salle>(
-                          value: item,
-                          child: Text(item!.nom!),
-                        );
-                      }).toList(),
-                      onChanged: (newVal) {
-                        log("newVal::$newVal");
-                        setState(() {
-                          salle2Value = newVal as Salle?;
-                        });
-                      },
-                    )
-                  : Container(),
-              const SizedBox(
-                height: 10,
-              ),
-            ],
+            // children: [
+            //   _salle != null
+            //       ? DropdownButton(
+            //           value: salle2Value,
+            //           iconSize: 36,
+            //           hint: const Text("choisir la Salle"),
+            //           items: _salle?.map((item) {
+            //             return DropdownMenuItem<Salle>(
+            //               value: item,
+            //               child: Text(item!.nom!),
+            //             );
+            //           }).toList(),
+            //           onChanged: (newVal) {
+            //             log("newVal::$newVal");
+            //             setState(() {
+            //               salle2Value = newVal as Salle?;
+            //             });
+            //           },
+            //         )
+            //       : Container(),
+              // const SizedBox(
+              //   height: 10,
+              // ),
+            // ],
           ),
         ),
         actions: <Widget>[
@@ -746,25 +688,25 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
         content: SingleChildScrollView(
           child: Column(
             children: [
-              _seance != null
-                  ? DropdownButton(
-                      value: seance2Value,
-                      iconSize: 36,
-                      hint: const Text("choisir la seance"),
-                      items: _seance?.map((item) {
-                        return DropdownMenuItem<Seance>(
-                          value: item,
-                          child: Text(item!.Nom!),
-                        );
-                      }).toList(),
-                      onChanged: (newVal) {
-                        log("newVal::$newVal");
-                        setState(() {
-                          seance2Value = newVal as Seance?;
-                        });
-                      },
-                    )
-                  : Container(),
+              // _seance != null
+              //     ? DropdownButton(
+              //         value: seance2Value,
+              //         iconSize: 36,
+              //         hint: const Text("choisir la seance"),
+              //         items: _seance?.map((item) {
+              //           return DropdownMenuItem<Seance>(
+              //             value: item,
+              //             child: Text(item!.Nom!),
+              //           );
+              //         }).toList(),
+              //         onChanged: (newVal) {
+              //           log("newVal::$newVal");
+              //           setState(() {
+              //             seance2Value = newVal as Seance?;
+              //           });
+              //         },
+              //       )
+              //     : Container(),
               const SizedBox(
                 height: 10,
               ),

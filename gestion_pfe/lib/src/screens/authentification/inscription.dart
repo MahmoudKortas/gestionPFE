@@ -1,5 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/color_hex.dart';
+import 'package:gestion_pfe/src/consts.dart';
 import 'package:gestion_pfe/src/helpers/document_api.dart';
 import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
 import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
@@ -7,8 +9,9 @@ import 'package:gestion_pfe/src/helpers/pfe_api.dart';
 import 'package:gestion_pfe/src/helpers/soutenance.dart';
 import 'package:gestion_pfe/src/models/document.dart';
 import 'package:gestion_pfe/src/models/pfe.dart';
-import 'package:gestion_pfe/src/models/soutenance.dart'; 
-import '../../description.dart'; 
+import 'package:gestion_pfe/src/models/soutenance.dart';
+import 'package:gestion_pfe/src/screens/authentification/authentification.dart';
+import '../../description.dart';
 import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.
@@ -87,245 +90,307 @@ class _InscriptionState extends State<Inscription> {
             context: context,
             child: Column(
               children: [
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: <Widget>[
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.person),
-                          hintText: 'Saisir votre nom',
-                        ),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Entrez votre nom';
-                          }
-                          return null;
-                        },
-                        controller: nomController,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.person),
-                          hintText: 'Saisir votre prenom',
-                        ),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Entrez votre prenom';
-                          }
-                          return null;
-                        },
-                        controller: prenomController,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.phone),
-                          hintText: 'Saisir votre telephone',
-                        ),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Entrez votre telephone';
-                          }
-                          return null;
-                        },
-                        controller: telephoneController,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.location_city),
-                          hintText: 'Saisir votre adresse',
-                        ),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Entrez votre adresse';
-                          }
-                          return null;
-                        },
-                        controller: adresseController,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.email),
-                          hintText: 'Saisir votre email',
-                        ),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Entrez votre email';
-                          }
-                          return null;
-                        },
-                        controller: emailController,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        obscureText: true,
-                        enableSuggestions: false,
-                        autocorrect: false,
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.lock),
-                          hintText: 'Saisir votre mot de passe',
-                        ),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Entrez votre mot de passe';
-                          }
-                          return null;
-                        },
-                        controller: motDePasseController,
-                      ),
-                      Column(
-                        children: <Widget>[
-                          ListTile(
-                            title: const Text('Enseignant'),
-                            leading: Radio(
-                              value: Description.enseignant,
-                              groupValue: _description,
-                              onChanged: (Description? value) {
-                                radiochange(value);
-                              },
-                            ),
-                          ),
-                          ListTile(
-                            title: const Text('Etudiant'),
-                            leading: Radio(
-                              value: Description.etudiant,
-                              groupValue: _description,
-                              onChanged: (Description? value) {
-                                radiochange(value);
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      _description.toString().contains("enseignant")
-                          ? DropdownButton<String>(
-                              hint: const Text("choisir votre domaine"),
-                              value: domaineValue,
-                              iconSize: 36,
-                              icon: const Icon(Icons.arrow_drop_down,
-                                  color: Colors.black),
-                              items: _items.map(buildMenuItem).toList(),
-                              onChanged: (value) =>
-                                  setState(() => domaineValue = value),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10.0)),
-                            )
-                          : _description.toString().contains("etudiant")
-                              ? Column(
-                                  children: [
-                                    DropdownButton<String>(
-                                      hint: const Text("choisir votre diplome"),
-                                      value: diplomeValue,
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width / 12,
+                      vertical: MediaQuery.of(context).size.width / 12),
+                  child: Container(
+                    decoration: roundBoxDecoration(),
+                    child: Center(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: MediaQuery.of(context).size.width / 12,
+                            vertical: MediaQuery.of(context).size.width / 60),
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            children: <Widget>[
+                              Image.asset(
+                                "assets/images/logo-epi.png",
+                                scale: 3,
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              TextFormField(
+                                decoration: const InputDecoration(
+                                  prefixIcon: Icon(Icons.person),
+                                  hintText: 'Saisir votre nom',
+                                ),
+                                validator: (String? value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Entrez votre nom';
+                                  }
+                                  return null;
+                                },
+                                controller: nomController,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextFormField(
+                                decoration: const InputDecoration(
+                                  prefixIcon: Icon(Icons.person),
+                                  hintText: 'Saisir votre prenom',
+                                ),
+                                validator: (String? value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Entrez votre prenom';
+                                  }
+                                  return null;
+                                },
+                                controller: prenomController,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextFormField(
+                                decoration: const InputDecoration(
+                                  prefixIcon: Icon(Icons.phone),
+                                  hintText: 'Saisir votre telephone',
+                                ),
+                                validator: (String? value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Entrez votre telephone';
+                                  }
+                                  return null;
+                                },
+                                controller: telephoneController,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextFormField(
+                                decoration: const InputDecoration(
+                                  prefixIcon: Icon(Icons.location_city),
+                                  hintText: 'Saisir votre adresse',
+                                ),
+                                validator: (String? value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Entrez votre adresse';
+                                  }
+                                  return null;
+                                },
+                                controller: adresseController,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextFormField(
+                                decoration: const InputDecoration(
+                                  prefixIcon: Icon(Icons.email),
+                                  hintText: 'Saisir votre email',
+                                ),
+                                validator: (String? value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Entrez votre email';
+                                  }
+                                  return null;
+                                },
+                                controller: emailController,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextFormField(
+                                obscureText: true,
+                                enableSuggestions: false,
+                                autocorrect: false,
+                                decoration: const InputDecoration(
+                                  prefixIcon: Icon(Icons.lock),
+                                  hintText: 'Saisir votre mot de passe',
+                                ),
+                                validator: (String? value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Entrez votre mot de passe';
+                                  }
+                                  return null;
+                                },
+                                controller: motDePasseController,
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  ListTile(
+                                    title: const Text('Enseignant'),
+                                    leading: Radio(
+                                      value: Description.enseignant,
+                                      groupValue: _description,
+                                      onChanged: (Description? value) {
+                                        radiochange(value);
+                                      },
+                                    ),
+                                  ),
+                                  ListTile(
+                                    title: const Text('Etudiant'),
+                                    leading: Radio(
+                                      value: Description.etudiant,
+                                      groupValue: _description,
+                                      onChanged: (Description? value) {
+                                        radiochange(value);
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              _description.toString().contains("enseignant")
+                                  ? DropdownButton<String>(
+                                      hint: const Text("choisir votre domaine"),
+                                      value: domaineValue,
                                       iconSize: 36,
                                       icon: const Icon(Icons.arrow_drop_down,
                                           color: Colors.black),
                                       items: _items.map(buildMenuItem).toList(),
                                       onChanged: (value) =>
-                                          setState(() => diplomeValue = value),
+                                          setState(() => domaineValue = value),
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(10.0)),
-                                    ),
-                                    DropdownButton<String>(
-                                      hint: const Text(
-                                          "choisir votre departement"),
-                                      value: departementValue,
-                                      iconSize: 36,
-                                      icon: const Icon(Icons.arrow_drop_down,
-                                          color: Colors.black),
-                                      items: _items.map(buildMenuItem).toList(),
-                                      onChanged: (value) => setState(
-                                          () => departementValue = value),
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(10.0)),
-                                    ),
-                                    DropdownButton<String>(
-                                      hint: const Text("choisir votre niveau"),
-                                      value: niveauValue,
-                                      iconSize: 36,
-                                      icon: const Icon(Icons.arrow_drop_down,
-                                          color: Colors.black),
-                                      items: _niveauItems
-                                          .map(buildMenuItem)
-                                          .toList(),
-                                      onChanged: (value) =>
-                                          setState(() => niveauValue = value),
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(10.0)),
-                                    ),
-                                    DropdownButton<String>(
-                                      hint: const Text(
-                                          "choisir votre specialité"),
-                                      value: specialiteValue,
-                                      iconSize: 36,
-                                      icon: const Icon(Icons.arrow_drop_down,
-                                          color: Colors.black),
-                                      items: _items.map(buildMenuItem).toList(),
-                                      onChanged: (value) => setState(
-                                          () => specialiteValue = value),
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(10.0)),
-                                    ),
-                                  ],
-                                )
-                              : Container(),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text} ${_description.toString()} $domaineValue $diplomeValue $departementValue $niveauValue $specialiteValue");
-                            _description.toString().contains("enseignant")
-                                ? addEnseignant(
-                                    nom: nomController.text,
-                                    prenom: prenomController.text,
-                                    telephone: telephoneController.text,
-                                    adresse: adresseController.text,
-                                    email: emailController.text,
-                                    motDePasse: motDePasseController.text,
-                                    domaine: domaineValue)
-                                : _description.toString().contains("etudiant")
-                                    ? addStudent(
-                                        nom: nomController.text,
-                                        prenom: prenomController.text,
-                                        telephone: telephoneController.text,
-                                        adresse: adresseController.text,
-                                        email: emailController.text,
-                                        motDePasse: motDePasseController.text,
-                                        diplome: diplomeValue,
-                                        departement: departementValue,
-                                        niveau: niveauValue,
-                                        specialite: specialiteValue)
-                                    : log("select function");
-                            // Validate will return true if the form is valid, or false if
-                            // the form is invalid.
-                            /*if (_formKey.currentState!.validate()) {
+                                    )
+                                  : _description.toString().contains("etudiant")
+                                      ? Column(
+                                          children: [
+                                            DropdownButton<String>(
+                                              hint: const Text(
+                                                  "choisir votre diplome"),
+                                              value: diplomeValue,
+                                              iconSize: 36,
+                                              icon: const Icon(
+                                                  Icons.arrow_drop_down,
+                                                  color: Colors.black),
+                                              items: _items
+                                                  .map(buildMenuItem)
+                                                  .toList(),
+                                              onChanged: (value) => setState(
+                                                  () => diplomeValue = value),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(10.0)),
+                                            ),
+                                            DropdownButton<String>(
+                                              hint: const Text(
+                                                  "choisir votre departement"),
+                                              value: departementValue,
+                                              iconSize: 36,
+                                              icon: const Icon(
+                                                  Icons.arrow_drop_down,
+                                                  color: Colors.black),
+                                              items: _items
+                                                  .map(buildMenuItem)
+                                                  .toList(),
+                                              onChanged: (value) => setState(
+                                                  () =>
+                                                      departementValue = value),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(10.0)),
+                                            ),
+                                            DropdownButton<String>(
+                                              hint: const Text(
+                                                  "choisir votre niveau"),
+                                              value: niveauValue,
+                                              iconSize: 36,
+                                              icon: const Icon(
+                                                  Icons.arrow_drop_down,
+                                                  color: Colors.black),
+                                              items: _niveauItems
+                                                  .map(buildMenuItem)
+                                                  .toList(),
+                                              onChanged: (value) => setState(
+                                                  () => niveauValue = value),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(10.0)),
+                                            ),
+                                            DropdownButton<String>(
+                                              hint: const Text(
+                                                  "choisir votre specialité"),
+                                              value: specialiteValue,
+                                              iconSize: 36,
+                                              icon: const Icon(
+                                                  Icons.arrow_drop_down,
+                                                  color: Colors.black),
+                                              items: _items
+                                                  .map(buildMenuItem)
+                                                  .toList(),
+                                              onChanged: (value) => setState(
+                                                  () =>
+                                                      specialiteValue = value),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(10.0)),
+                                            ),
+                                          ],
+                                        )
+                                      : Container(),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16.0),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text} ${_description.toString()} $domaineValue $diplomeValue $departementValue $niveauValue $specialiteValue");
+                                    _description
+                                            .toString()
+                                            .contains("enseignant")
+                                        ? addEnseignant(
+                                            nom: nomController.text,
+                                            prenom: prenomController.text,
+                                            telephone: telephoneController.text,
+                                            adresse: adresseController.text,
+                                            email: emailController.text,
+                                            motDePasse:
+                                                motDePasseController.text,
+                                            domaine: domaineValue)
+                                        : _description
+                                                .toString()
+                                                .contains("etudiant")
+                                            ? addStudent(
+                                                nom: nomController.text,
+                                                prenom: prenomController.text,
+                                                telephone:
+                                                    telephoneController.text,
+                                                adresse: adresseController.text,
+                                                email: emailController.text,
+                                                motDePasse:
+                                                    motDePasseController.text,
+                                                diplome: diplomeValue,
+                                                departement: departementValue,
+                                                niveau: niveauValue,
+                                                specialite: specialiteValue)
+                                            : log("select function");
+                                    // Validate will return true if the form is valid, or false if
+                                    // the form is invalid.
+                                    /*if (_formKey.currentState!.validate()) {
                           // Process data.
                         }*/
-                            /*Navigator.restorablePushNamed(
+                                    /*Navigator.restorablePushNamed(
                                 context, Authentification.routeName);*/
 
-                            //
-                          },
-                          child: const Text("S'inscrire"),
+                                    //
+                                  },
+                                  child: const Text("S'inscrire"),
+                                ),
+                              ),
+                              GestureDetector(
+                                child: Text(
+                                  "Login",
+                                  style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    decorationThickness: 1.5,
+                                    color: HexColor("c9242e"),
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                onTap: () {
+                                  Navigator.restorablePushNamed(
+                                    context,
+                                    Authentification.routeName,
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ],

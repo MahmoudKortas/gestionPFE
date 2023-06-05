@@ -2,25 +2,25 @@
 
 import 'dart:developer';
 import 'dart:io';
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
-import 'package:image_picker/image_picker.dart';  
-import '../../helpers/role.dart';
-import '../../models/role.dart';
+import 'package:image_picker/image_picker.dart';
+import '../../helpers/salle.dart';
+import '../../models/salle.dart';
 import '../../resize_widget.dart';
 
-class GererRole extends StatefulWidget {
-  const GererRole({Key? key}) : super(key: key);
-  static const routeName = '/Role';
+class gererSalle extends StatefulWidget {
+  const gererSalle({Key? key}) : super(key: key);
+  static const routeName = '/gererSalle';
   @override
-  State<GererRole> createState() => _GererRoleState();
+  State<gererSalle> createState() => _gererSalleState();
 }
 
-class _GererRoleState extends State<GererRole> {
-  late List<Role>? _role = [];  
-  String? value; 
-  Role? role = Role(); 
-  final nomController = TextEditingController();  
+class _gererSalleState extends State<gererSalle> {
+  late List<Salle>? _salle = [];
+  String? value;
+  Salle? salle = Salle();
+  final descriptionController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -31,7 +31,7 @@ class _GererRoleState extends State<GererRole> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(' Roles'),
+        title: const Text(' Salles'),
       ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),
@@ -40,50 +40,57 @@ class _GererRoleState extends State<GererRole> {
           child: resiseWidget(
             context: context,
             child: Column(
-              children: [ 
-                TextFormField(
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.description),
-                    hintText: 'Saisir nom',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'entrez la nom du sujet';
-                    }
-                    return null;
-                  },
-                  controller: nomController,
-                ), 
-                ElevatedButton(
-                  // ignore: avoid_print
-                  onPressed: () => addRole(),
-                  child: const Text("Ajouter"),
+              children: [
+                Row(
+                  children: [
+                    Text("s1"),
+                    Column(
+                      children: [
+                        ListTile(
+                          title: Text("SFE 0001 . . ."),
+                        ),
+                        ListTile(
+                          title: Text("SFE 0001 . . ."),
+                        ),
+                        ListTile(
+                          title: Text("SFE 0001 . . ."),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                /*_Role == null
+                /*ElevatedButton(
+                  // ignore: avoid_print
+                  onPressed: () => addSalle(),
+                  child: const Text("Ajouter"),
+                ),*/
+                /*_Salle == null
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )
-                    :*/_role!=null?
-                _role!.isEmpty
-                    ? const Text("aucun Role existe")
-                    : ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: _role!.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            child: ListTile(
-                                title: Text(
-                                    _role![index].nom.toString()),
-                                subtitle: Text(
-                                    _role![index].nom.toString()),
-                                trailing: const Icon(Icons.more_vert),
-                                // isThreeLine: true,
-                                onTap: () => dialog(context, _role![index])),
-                          );
-                        },
-                      ):const Text("aucun Role existe null")
-                       /*Card(
+                    :*/
+                _salle != null
+                    ? _salle!.isEmpty
+                        ? const Text("aucun Salle existe")
+                        : ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: _salle!.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                child: ListTile(
+                                    title: Text(_salle![index].nom.toString()),
+                                    subtitle:
+                                        Text(_salle![index].nom.toString()),
+                                    trailing: const Icon(Icons.more_vert),
+                                    // isThreeLine: true,
+                                    onTap: () =>
+                                        dialog(context, _salle![index])),
+                              );
+                            },
+                          )
+                    : const Text("aucun Salle existe null")
+                /*Card(
                   child: ListTile(
                       /*leading: const CircleAvatar(
                       foregroundImage:
@@ -147,11 +154,11 @@ class _GererRoleState extends State<GererRole> {
     );
   }
 
-  Future<String?> dialog(BuildContext context, Role role) {
+  Future<String?> dialog(BuildContext context, Salle salle) {
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Modifier / Supprimer Role'),
+        title: const Text('Modifier / Supprimer Salle'),
         content: SingleChildScrollView(
           child: Column(
             children: const [],
@@ -168,12 +175,12 @@ class _GererRoleState extends State<GererRole> {
           ),
           TextButton(
             onPressed: () async {
-              log(role.idRole.toString());
-              var _Rolet;
-              _Rolet = await ApiRole()
-                  .deleteRole(id: role.idRole.toString());
-              log("_Rolet::$_Rolet");
-               getData();
+              log(salle.idSalle.toString());
+              var _Sallet;
+              _Sallet =
+                  await ApiSalle().deleteSalle(id: salle.idSalle.toString());
+              log("_Sallet::$_Sallet");
+              getData();
               Navigator.pop(context, 'Supprimer');
             },
             child: const Text('Supprimer'),
@@ -187,19 +194,19 @@ class _GererRoleState extends State<GererRole> {
     );
   }
 
-  void getData() async { 
-    _role=await ApiRole().getAllRoles();
-    // _listeRole.clear(); 
+  void getData() async {
+    _salle = await ApiSalle().getAllSalles();
+    // _listeSalle.clear();
 
-    //log("_Role::$_Role");
+    //log("_Salle::$_Salle");
     Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }
 
-  addRole() async {
-    role?.nom = nomController.text;
-    await ApiRole().addRole(role: role);
+  addSalle() async {
+    salle?.nom = descriptionController.text;
+    await ApiSalle().addSalle(salle: salle);
 
-     getData();
+    getData();
   }
 
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(

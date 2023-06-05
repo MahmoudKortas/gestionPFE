@@ -20,7 +20,7 @@ class _GererSpecialiteState extends State<GererSpecialite> {
   late List<Specialite>? _specialite = [];  
   String? value; 
   Specialite? specialite = Specialite(); 
-  final descriptionController = TextEditingController();  
+  final nomController = TextEditingController();  
   @override
   void initState() {
     super.initState();
@@ -31,7 +31,7 @@ class _GererSpecialiteState extends State<GererSpecialite> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gérer Specialites'),
+        title: const Text(' Specialites'),
       ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),
@@ -44,15 +44,15 @@ class _GererSpecialiteState extends State<GererSpecialite> {
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.description),
-                    hintText: 'Saisir description',
+                    hintText: 'Saisir nom',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return 'entrez la description du sujet';
+                      return 'entrez la nom du sujet';
                     }
                     return null;
                   },
-                  controller: descriptionController,
+                  controller: nomController,
                 ), 
                 ElevatedButton(
                   // ignore: avoid_print
@@ -74,9 +74,9 @@ class _GererSpecialiteState extends State<GererSpecialite> {
                           return Card(
                             child: ListTile(
                                 title: Text(
-                                    _specialite![index].Nom.toString()),
+                                    _specialite![index].nom.toString()),
                                 subtitle: Text(
-                                    _specialite![index].Nom.toString()),
+                                    _specialite![index].nom.toString()),
                                 trailing: const Icon(Icons.more_vert),
                                 // isThreeLine: true,
                                 onTap: () => dialog(context, _specialite![index])),
@@ -196,7 +196,7 @@ class _GererSpecialiteState extends State<GererSpecialite> {
   }
 
   addSpecialite() async {
-    specialite?.Nom = descriptionController.text;
+    specialite?.nom = nomController.text;
     await ApiSpecialite().addSpecialite(specialite: specialite);
 
      getData();

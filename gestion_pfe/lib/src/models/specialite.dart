@@ -12,26 +12,26 @@ String specialiteToJson(List<Specialite> data) =>
 
 class Specialite {
   int? idSpecialite;
-  String? Nom;
+  String? nom;
 
   Specialite(
       {this.idSpecialite,
-      this.Nom});
+      this.nom});
 
   Specialite.fromJson(Map<String, dynamic> json) {
     idSpecialite = json['idSpecialite'];
-    Nom = json['Nom'];
+    nom = json['nom'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idSpecialite'] = idSpecialite;
-    data['Nom'] = Nom;
+    data['nom'] = nom;
     return data;
   }
 
   @override
   String toString() {
-    return 'Specialite(idSpecialite: $idSpecialite, Nom: $Nom)';
+    return 'Specialite(idSpecialite: $idSpecialite, nom: $nom)';
   }
 }

@@ -1,12 +1,15 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/cupertino.dart';
 import 'package:gestion_pfe/src/models/document.dart';
 import 'package:http/http.dart' as http;
 import '../constants/constants.dart';
+
 class ApiDocument {
-    Future<List<Document>?> getAllDocument() async {
+  Future<List<Document>?> getAllDocument() async {
     try {
-      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.document + ApiConstants.all);
+      var url = Uri.parse(
+          ApiConstants.baseUrl + ApiConstants.document + ApiConstants.all);
       var response = await http.get(url);
       if (response.statusCode == 200) {
         List<Document> model = documentFromJson(response.body);
@@ -17,7 +20,8 @@ class ApiDocument {
     }
     return null;
   }
-    Future<List<Document>?> getDocument({String? id = ""}) async {
+
+  Future<List<Document>?> getDocument({String? id = ""}) async {
     try {
       var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.document + id!);
       var response = await http.get(url);
@@ -35,9 +39,10 @@ class ApiDocument {
       {String? id = "",
       String? filepath = "",
       required Document document}) async {
+    String url = "${ApiConstants.baseUrl}${ApiConstants.document}add";
     try {
       // var urll = Uri.parse("${ApiConstants.baseUrl}${ApiConstants.document}add");
-      String url = "${ApiConstants.baseUrl}${ApiConstants.document}add";
+
       Map<String, String> headers = {
         'Content-Type': 'multipart/form-data',
       };
@@ -49,7 +54,22 @@ class ApiDocument {
       var response = await request.send();
       log(request.fields.toString());
     } catch (e) {
-      log(e.toString());
+      debugPrint("addDocument-exception1::${e.toString()}");
+      try {
+        http.MultipartRequest request =
+            http.MultipartRequest("POST", Uri.parse(url));
+
+        http.MultipartFile multipartFile =
+            await http.MultipartFile.fromPath('file', filepath!);
+
+        request.files.add(multipartFile);
+
+        http.StreamedResponse response = await request.send();
+
+        debugPrint(response.toString());
+      } catch (e) {
+        debugPrint("addDocument-exception2::${e.toString()}");
+      }
     }
     return null;
   }

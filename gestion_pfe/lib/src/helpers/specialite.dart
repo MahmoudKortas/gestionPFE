@@ -47,7 +47,7 @@ class ApiSpecialite {
         },
         body: jsonEncode(
           {
-            "description": specialite?.Nom,
+            "nom": specialite?.nom,
           },
         ),
       );

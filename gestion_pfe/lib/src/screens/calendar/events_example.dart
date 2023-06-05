@@ -7,7 +7,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/helpers/soutenance.dart';
-import 'package:table_calendar/table_calendar.dart'; 
+import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_salle_calender.dart';
+import 'package:table_calendar/table_calendar.dart';
 import '../../utils.dart';
 
 class TableEventsExample extends StatefulWidget {
@@ -24,7 +25,7 @@ class TableEventsExample extends StatefulWidget {
 
 class _TableEventsExampleState extends State<TableEventsExample> {
   Map<DateTime, List<Event>>? selectedEvents;
-  CalendarFormat format = CalendarFormat.month;
+  CalendarFormat format = CalendarFormat.week;
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
 
@@ -70,11 +71,18 @@ class _TableEventsExampleState extends State<TableEventsExample> {
               firstDay: DateTime(1990),
               lastDay: DateTime(2050),
               calendarFormat: format,
-              onFormatChanged: (CalendarFormat format) {
-                setState(() {
-                  format = format;
-                });
+              onFormatChanged: (format) {
+                if (format != format) {
+                  setState(() {
+                    format = format;
+                  });
+                }
               },
+              // onFormatChanged: (CalendarFormat format) {
+              //   setState(() {
+              //     format = format;
+              //   });
+              // },
               startingDayOfWeek: StartingDayOfWeek.sunday,
               daysOfWeekVisible: true,
 
@@ -84,7 +92,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                   selectedDay = selectDay;
                   focusedDay = focusDay;
                 });
-                log(focusedDay.toString());
+                log("focusedDay::${focusedDay.toString()}");
               },
               selectedDayPredicate: (DateTime date) {
                 return isSameDay(selectedDay, date);
@@ -130,14 +138,39 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             ),
             ..._getEventsfromDay(selectedDay).map(
               (Event event) => ListTile(
-                  title: Column(
-                children: [
-                  Text(
-                    "idPFE:${event.idPfe}  Salle soutenance:${event.salle}  herure début:${event.heureDeb}",
-                  ),
-                ],
-              )),
+                title: Column(
+                  children: [
+                    Text(
+                      "idPFE:${event.idPfe}  Salle soutenance:${event.salle}  herure début:${event.heureDeb}",
+                    ),
+                  ],
+                ),
+              ),
             ),
+            Column(
+              children: [
+                ListTile(
+                  title: Text("s1"),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => gererSalle(),
+                      ),
+                    );
+                  },
+                ),
+                ListTile(
+                  title: Text("s2"),
+                ),
+                ListTile(
+                  title: Text("s3"),
+                ),
+                ListTile(
+                  title: Text("s4"),
+                ),
+              ],
+            )
           ],
         ),
         floatingActionButton: widget.fonction.contains("admin")

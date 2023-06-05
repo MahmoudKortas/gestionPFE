@@ -42,7 +42,7 @@ class _GererResponsableState extends State<GererResponsable> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gérer Responsables'),
+        title: const Text(' Responsables'),
       ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),

@@ -4,6 +4,9 @@
 
 import 'dart:convert';
 
+import 'package:gestion_pfe/src/models/enseignant.dart';
+import 'package:gestion_pfe/src/models/etudiant.dart';
+
 List<Document> documentFromJson(String str) =>
     List<Document>.from(json.decode(str).map((x) => Document.fromJson(x)));
 
@@ -18,7 +21,9 @@ class Document {
   String? description;
   String? proprietaire;
   String? datedepot;
-  String? photo;//file
+  String? photo; //file
+  Etudiant? etudiant;
+  Enseignant? enseignant;
 
   Document(
       {this.idDoc,
@@ -26,7 +31,9 @@ class Document {
       this.description,
       this.proprietaire,
       this.datedepot,
-      this.photo});
+      this.photo,
+      this.etudiant,
+      this.enseignant});
 
   Document.fromJson(Map<String, dynamic> json) {
     idDoc = json['idDoc'];
@@ -35,6 +42,11 @@ class Document {
     proprietaire = json['proprietaire'];
     datedepot = json['datedepot'];
     photo = json['photo'];
+    etudiant =
+        json['etudiant'] != null ? Etudiant.fromJson(json['etudiant']) : null;
+    enseignant = json['enseignant'] != null
+        ? Enseignant.fromJson(json['enseignant'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -45,11 +57,13 @@ class Document {
     data['proprietaire'] = proprietaire;
     data['datedepot'] = datedepot;
     data['photo'] = photo;
+    data['etudiant'] = etudiant?.idEtud;
+    data['enseignant'] = enseignant?.idEns;
     return data;
   }
 
   @override
   String toString() {
-    return 'Document(idDoc: $idDoc, titre: $titre, description: $description, proprietaire: $proprietaire, dateDepot: $datedepot, photo: $photo)';
+    return 'Document(idDoc: $idDoc, titre: $titre, description: $description, proprietaire: $proprietaire, dateDepot: $datedepot, photo: $photo, etudiant: $etudiant, enseignant: $enseignant)';
   }
 }

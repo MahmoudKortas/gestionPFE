@@ -54,18 +54,14 @@ class ApiPfe {
         },
         body: jsonEncode({
           
-            /*"title": pfe?.title,
+            "title": pfe?.title,
             "dateDebut": pfe?.dateDebut,
-            "dateFin": pfe?.dateFin,
+            "dateDepot": pfe?.dateDepot,
             "domaine": pfe?.domaine,
             "note": pfe?.note,
             "etudiant": pfe?.etudiant,
             "encadreur": pfe?.encadreur,
-            "president": pfe?.president,
-            "rapporteur": pfe?.rapporteur,
-            "salle": pfe?.salle,
-            "seance": pfe?.seance,
-            "document": pfe?.document, */
+            "document": pfe?.document, 
         }),
       );
       log("addPFE::${response.body}");

@@ -31,7 +31,7 @@ class _GererSeanceState extends State<GererSeance> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gérer Seances'),
+        title: const Text(' Seances'),
       ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),

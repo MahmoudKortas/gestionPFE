@@ -31,7 +31,7 @@ class _GererSalleState extends State<GererSalle> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gérer Salles'),
+        title: const Text(' Salles'),
       ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),

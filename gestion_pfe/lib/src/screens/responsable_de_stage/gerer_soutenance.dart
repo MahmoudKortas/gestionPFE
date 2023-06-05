@@ -57,7 +57,7 @@ class _GererSoutenanceState extends State<GererSoutenance> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gérer Soutenances'),
+        title: const Text(' Soutenances'),
       ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),

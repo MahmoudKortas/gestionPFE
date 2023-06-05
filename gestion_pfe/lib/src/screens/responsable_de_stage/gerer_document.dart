@@ -5,7 +5,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/helpers/document_api.dart';
 import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
-import 'package:image_picker/image_picker.dart'; 
+import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../models/document.dart';
 import '../../resize_widget.dart';
 
@@ -18,15 +19,20 @@ class GererDocument extends StatefulWidget {
 
 class _GererDocumentState extends State<GererDocument> {
   late List<Document>? _document = [];
+  var _proprietaire;
   var _enseignant;
   var _listeEnseignant = [''];
-  String? value;
+  var _etudiant;
+  var _listeEtudiant = [''];
+  String? valueEnseignant;
+  String? valueEtudiant;
   File? _image;
   final picker = ImagePicker();
   Document document = Document();
   final dateController = TextEditingController();
   final descriptionController = TextEditingController();
   final titreController = TextEditingController();
+  final proprietaireController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -37,7 +43,7 @@ class _GererDocumentState extends State<GererDocument> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gérer documents'),
+        title: const Text(' documents'),
       ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),
@@ -46,7 +52,10 @@ class _GererDocumentState extends State<GererDocument> {
           child: resiseWidget(
             context: context,
             child: Column(
-              children: [ 
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.description),
@@ -60,10 +69,13 @@ class _GererDocumentState extends State<GererDocument> {
                   },
                   controller: titreController,
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.description),
-                    hintText: 'Saisir description',
+                    hintText: 'Description',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
@@ -73,15 +85,48 @@ class _GererDocumentState extends State<GererDocument> {
                   },
                   controller: descriptionController,
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.description),
+                    hintText: 'Proprietaire',
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'entrez le proprietaire du sujet';
+                    }
+                    return null;
+                  },
+                  controller: proprietaireController,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
                 DropdownButton<String>(
                   hint: const Text("choisir l'encadrant"),
-                  value: value,
+                  value: valueEnseignant,
                   iconSize: 36,
                   icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                   items: _listeEnseignant
                       .map(buildMenuItem)
                       .toList(), //_items.map(buildMenuItem).toList(),
-                  onChanged: (value) => setState(() => this.value = value),
+                  onChanged: (value) => setState(() => valueEnseignant = value),
+                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                DropdownButton<String>(
+                  hint: const Text("choisir l'etudiant"),
+                  value: valueEtudiant,
+                  iconSize: 36,
+                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+                  items: _listeEnseignant
+                      .map(buildMenuItem)
+                      .toList(), //_items.map(buildMenuItem).toList(),
+                  onChanged: (value) => setState(() => valueEtudiant = value),
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                 ),
                 TextButton(onPressed: getImage, child: _buildImage()),
@@ -109,8 +154,8 @@ class _GererDocumentState extends State<GererDocument> {
                                     _document![index].description.toString()),
                                 trailing: const Icon(Icons.more_vert),
                                 // isThreeLine: true,
-                                onTap: () => dialog(context,
-                                    _document![index])),
+                                onTap: () =>
+                                    dialog(context, _document![index])),
                           );
                         },
                       ) /*Card(
@@ -185,7 +230,8 @@ class _GererDocumentState extends State<GererDocument> {
         content: SingleChildScrollView(
           child: Column(
             children: [
-              Image.network("http://10.0.2.2:8080/api/document/image/${document.idDoc}"),
+              Image.network(
+                  "http://10.0.2.2:8080/api/document/image/${document.idDoc}"),
 
               // Image.asset("assets/images/logo-epi.png"),
             ],
@@ -204,8 +250,8 @@ class _GererDocumentState extends State<GererDocument> {
             onPressed: () async {
               log(document.idDoc.toString());
               var _documentt;
-              _documentt =
-                  await ApiDocument().deleteDocument(id: document.idDoc.toString());
+              _documentt = await ApiDocument()
+                  .deleteDocument(id: document.idDoc.toString());
               log("_documentt::$_documentt");
               getData();
               Navigator.pop(context, 'Supprimer');
@@ -222,6 +268,9 @@ class _GererDocumentState extends State<GererDocument> {
   }
 
   void getData() async {
+    _etudiant = await ApiEtudiant().getAllEtudiants();
+    _listeEtudiant.clear();
+    _etudiant.map((l) => {_listeEtudiant.add(l.nom + ' ' + l.prenom)}).toList();
     _enseignant = await ApiEnseignant().getAllEnseignant();
     _listeEnseignant.clear();
     _enseignant
@@ -233,18 +282,21 @@ class _GererDocumentState extends State<GererDocument> {
     // await ApiService().addDocument();
     //await ApiService().addEnseignant();
 
-    _document = await ApiDocument().getDocument();
+    _document = await ApiDocument().getAllDocument();
 
     //log("_document::$_document");
     Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }
 
   addDocument() async {
-    document.description=descriptionController.text;
-    document.titre=titreController.text;
-    document.proprietaire="value";
-    document.datedepot= DateTime.now().toIso8601String();
-    document.photo="e";
+    document.description = descriptionController.text;
+    document.titre = titreController.text;
+    document.proprietaire = "value";
+    document.datedepot = DateTime.now().toString();
+    document.photo = "e";
+    document.proprietaire = proprietaireController.text;
+    document.enseignant = _enseignant;
+    document.etudiant = _etudiant;
     await ApiDocument().addDocument(document: document, filepath: _image!.path);
 
     getData();

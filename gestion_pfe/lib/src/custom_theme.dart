@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/color_hex.dart';
+import 'package:gestion_pfe/src/consts.dart';
 
 ThemeData lightTheme = ThemeData(
   textSelectionTheme: const TextSelectionThemeData(
@@ -16,13 +17,18 @@ ThemeData lightTheme = ThemeData(
     ),
   ),
   inputDecorationTheme: InputDecorationTheme(
-    border: const OutlineInputBorder(),
-    focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(
-        color: HexColor("5b5b5c"),
-      ),
-    ),
-  ),
+      // border: const OutlineInputBorder(),
+      /*focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: HexColor("5b5b5c"),
+        ),
+      ),*/
+      enabledBorder: enabledRoundedTextInputBorder(),
+      border: circularBorder(),
+      focusedBorder: roundedTextInputBorder(),
+      filled: true,
+      hintStyle: TextStyle(color: Colors.grey[800]),
+      fillColor: Colors.white70),
 
   /*textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(

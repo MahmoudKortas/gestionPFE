@@ -55,7 +55,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gérer Etudiants'),
+        title: const Text(' Etudiants'),
       ),
       body: SingleChildScrollView(
         // controller: controller,

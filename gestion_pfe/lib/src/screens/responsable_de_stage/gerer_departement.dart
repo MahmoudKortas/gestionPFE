@@ -20,7 +20,7 @@ class _GererDepartementState extends State<GererDepartement> {
   late List<Departement>? _departement = [];
   String? value;
   Departement? departement = Departement();
-  final descriptionController = TextEditingController();
+  final nomController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -31,7 +31,7 @@ class _GererDepartementState extends State<GererDepartement> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gérer Departements'),
+        title: const Text(' Departements'),
       ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),
@@ -44,15 +44,15 @@ class _GererDepartementState extends State<GererDepartement> {
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.description),
-                    hintText: 'Saisir description',
+                    hintText: 'Saisir nom',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return 'entrez la description du sujet';
+                      return 'entrez la nom du sujet';
                     }
                     return null;
                   },
-                  controller: descriptionController,
+                  controller: nomController,
                 ),
                 ElevatedButton(
                   // ignore: avoid_print
@@ -171,11 +171,11 @@ class _GererDepartementState extends State<GererDepartement> {
           ),
           TextButton(
             onPressed: () async {
-              log(departement.nom.toString());
-              var _Departementt;
-              _Departementt = await ApiDepartement()
-                  .deleteDepartement(id: departement.nom.toString());
-              log("_Departementt::$_Departementt");
+              log(departement.idDep.toString());
+              var _departementt;
+              _departementt = await ApiDepartement()
+                  .deleteDepartement(id: departement.idDep.toString());
+              log("_Departementt::$_departementt");
               getData();
               Navigator.pop(context, 'Supprimer');
             },
@@ -199,7 +199,7 @@ class _GererDepartementState extends State<GererDepartement> {
   }
 
   addDepartement() async {
-    departement?.nom = descriptionController.text;
+    departement?.nom = nomController.text;
     await ApiDepartement().addDepartement(departement: departement);
 
     getData();

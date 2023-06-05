@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gestion_pfe/src/screens/etudiant/enquete_satisfaction.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_departement.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_role.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_salle_calender.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_seance.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_specialite.dart';
 import 'custom_theme.dart';
@@ -118,6 +119,8 @@ class MyApp extends StatelessWidget {
                     return const GererSeance();
                   case GererSalle.routeName:
                     return const GererSalle();
+                  case gererSalle.routeName:
+                    return const gererSalle();
                   case GererDepartement.routeName:
                     return const GererDepartement();
                   case GererRole.routeName:

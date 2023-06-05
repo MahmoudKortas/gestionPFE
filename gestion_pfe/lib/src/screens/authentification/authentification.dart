@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/consts.dart';
 import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
 import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
 import 'package:gestion_pfe/src/helpers/responsable.dart';
@@ -59,102 +60,118 @@ class _AuthentificationState extends State<Authentification> {
             context: context,
             child: Column(
               children: [
-                Image.asset(
-                  "assets/images/logo-epi.png",
-                  scale: 3,
-                ),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: <Widget>[
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.person),
-                          hintText: 'Saisir votre e-mail',
-                        ),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'entrez votre email';
-                          }
-                          return null;
-                        },
-                        controller: emailController,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        obscureText: true,
-                        enableSuggestions: false,
-                        autocorrect: false,
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.lock),
-                          hintText: 'Saisir votre mot de passe',
-                        ),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'entrez votre mot de passe';
-                          }
-                          return null;
-                        },
-                        controller: motDePasseController,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // Validate will return true if the form is valid, or false if
-                            // the form is invalid.
-                            /*if (_formKey.currentState!.validate()) {
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width / 12,
+                      vertical: MediaQuery.of(context).size.width / 12),
+                  child: Container(
+                    decoration: roundBoxDecoration(),
+                    child: Center(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: MediaQuery.of(context).size.width / 12,
+                            vertical: MediaQuery.of(context).size.width / 60),
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            children: <Widget>[
+                              Image.asset(
+                                "assets/images/logo-epi.png",
+                                scale: 3,
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              TextFormField(
+                                decoration: const InputDecoration(
+                                  prefixIcon: Icon(Icons.alternate_email),
+                                  hintText: 'Saisir votre e-mail',
+                                ),
+                                validator: (String? value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'entrez votre email';
+                                  }
+                                  return null;
+                                },
+                                controller: emailController,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextFormField(
+                                obscureText: true,
+                                enableSuggestions: false,
+                                autocorrect: false,
+                                decoration: const InputDecoration(
+                                  prefixIcon: Icon(Icons.lock),
+                                  hintText: 'Saisir votre mot de passe',
+                                ),
+                                validator: (String? value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'entrez votre mot de passe';
+                                  }
+                                  return null;
+                                },
+                                controller: motDePasseController,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16.0),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    // Validate will return true if the form is valid, or false if
+                                    // the form is invalid.
+                                    /*if (_formKey.currentState!.validate()) {
                           // Process data.
                         }*/
-                            log("signin");
+                                    log("signin");
 
-                            verificationInscription(
-                                email: emailController.text,
-                                motDepasse: motDePasseController.text);
-                          },
-                          child: const Text('Connexion'),
-                        ),
-                      ),
-                      GestureDetector(
-                        child: Text(
-                          "Inscription",
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            decorationThickness: 1.5,
-                            color: HexColor("c9242e"),
-                            fontSize: 20,
+                                    verificationInscription(
+                                        email: emailController.text,
+                                        motDepasse: motDePasseController.text);
+                                  },
+                                  child: const Text('Connexion'),
+                                ),
+                              ),
+                              GestureDetector(
+                                child: Text(
+                                  "Inscription",
+                                  style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    decorationThickness: 1.5,
+                                    color: HexColor("c9242e"),
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                onTap: () {
+                                  Navigator.restorablePushNamed(
+                                    context,
+                                    Inscription.routeName,
+                                  );
+                                },
+                              ),
+                              GestureDetector(
+                                child: Text(
+                                  "satisfaction",
+                                  style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    decorationThickness: 1.5,
+                                    color: HexColor("c9242e"),
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                onTap: () {
+                                  Navigator.restorablePushNamed(
+                                      context, EnqueteSatisfaction.routeName
+                                      // Inscription.routeName,
+                                      );
+                                },
+                              ),
+                            ],
                           ),
                         ),
-                        onTap: () {
-                          Navigator.restorablePushNamed(
-                            context,
-                            Inscription.routeName,
-                          );
-                        },
                       ),
-                      GestureDetector(
-                        child: Text(
-                          "satisfaction",
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            decorationThickness: 1.5,
-                            color: HexColor("c9242e"),
-                            fontSize: 20,
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.restorablePushNamed(
-                              context, EnqueteSatisfaction.routeName
-                              // Inscription.routeName,
-                              );
-                        },
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ],
@@ -185,11 +202,6 @@ class _AuthentificationState extends State<Authentification> {
           context,
           Dashboard.routeName,
         );
-      } else if (email!.contains("admin0") && motDepasse!.contains("admin0")) {
-        Navigator.restorablePushNamed(
-          context,
-          Dashboard.routeName,
-        );
       }
     }
     for (var etudiant in _etudiant) {
@@ -210,6 +222,12 @@ class _AuthentificationState extends State<Authentification> {
         Navigator.pushNamed(context, AccueilEnseignant.routeName,
             arguments: AccueilEnseignant(enseignant: enseignant));
       }
+    }
+    if (email!.contains("admin0") && motDepasse!.contains("admin0")) {
+      Navigator.restorablePushNamed(
+        context,
+        Dashboard.routeName,
+      );
     }
   }
 }

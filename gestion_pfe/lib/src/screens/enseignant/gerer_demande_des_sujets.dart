@@ -29,7 +29,7 @@ class _GererDemandeDesSujetsPFEState extends State<GererDemandeDesSujetsPFE> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gérer demandes des sujets des PFE'),
+        title: const Text(' demandes des sujets des PFE'),
       ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),
