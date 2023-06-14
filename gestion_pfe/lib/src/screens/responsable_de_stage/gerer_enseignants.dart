@@ -1,6 +1,8 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/helpers/departement.dart';
 import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
+import 'package:gestion_pfe/src/models/departement.dart';
 import '../../models/enseignant.dart';
 import '../../resize_widget.dart';
 
@@ -28,6 +30,8 @@ class _GererEnseignantState extends State<GererEnseignant> {
   final adresseController = TextEditingController();
   final emailController = TextEditingController();
   final motDePasseController = TextEditingController();
+  List<Departement?>? _departement;
+  Departement? departementValue;
   @override
   void initState() {
     super.initState();
@@ -167,6 +171,25 @@ class _GererEnseignantState extends State<GererEnseignant> {
                   onChanged: (value) => setState(() => domaineValue = value),
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                 ),
+                _departement != null
+                    ? DropdownButton(
+                        value: departementValue,
+                        iconSize: 36,
+                        hint: const Text("choisir ta departement"),
+                        items: _departement?.map((item) {
+                          return DropdownMenuItem<Departement>(
+                            value: item,
+                            child: Text(item!.nom!),
+                          );
+                        }).toList(),
+                        onChanged: (newVal) {
+                          log("newVal::$newVal");
+                          setState(() {
+                            departementValue = newVal as Departement?;
+                          });
+                        },
+                      )
+                    : Container(),
                 ElevatedButton(
                   // ignore: avoid_print
                   onPressed: () {
@@ -356,6 +379,25 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 onChanged: (value) => setState(() => domaineValue = value),
                 borderRadius: const BorderRadius.all(Radius.circular(10.0)),
               ),
+              _departement != null
+                  ? DropdownButton(
+                      value: departementValue,
+                      iconSize: 36,
+                      hint: const Text("choisir ta departement"),
+                      items: _departement?.map((item) {
+                        return DropdownMenuItem<Departement>(
+                          value: item,
+                          child: Text(item!.nom!),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        log("newVal::$newVal");
+                        setState(() {
+                          departementValue = newVal as Departement?;
+                        });
+                      },
+                    )
+                  : Container(),
             ],
           ),
         ),
@@ -397,14 +439,17 @@ class _GererEnseignantState extends State<GererEnseignant> {
   }
 
   void getData() async {
-    //await ApiService().updateEtudiants("3");
-    //await ApiService().deleteEtudiants("17");
-    // await ApiService().addEtudiants();
-    // await ApiService().addDocument();
-    //await ApiService().addEnseignant();
-    _enseignant = await ApiEnseignant().getAllEnseignant();
-    log("_enseignant::$_enseignant");
-    Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
+    await Future.wait([
+      ApiEnseignant().getAllEnseignant(),
+      ApiDepartement().getAllDepartements(),
+    ]).then((value) async {
+      log("get enseignant");
+      _enseignant = value[0]?.cast<Enseignant>();
+      log("_enseignant::$_enseignant");
+      Future.delayed(const Duration(seconds: 0))
+          .then((value) => setState(() {}));
+    });
+    // Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }
 
   void addData({
@@ -412,9 +457,10 @@ class _GererEnseignantState extends State<GererEnseignant> {
     String? prenom = "",
     String? telephone = "",
     String? adresse = "",
+    String? domaine = "",
     String? email = "",
     String? motDePasse = "",
-    String? domaine = "",
+    String? departement = "",
   }) async {
     //await ApiService().updateEtudiants("3");
     //await ApiService().deleteEtudiants("17");
@@ -426,26 +472,23 @@ class _GererEnseignantState extends State<GererEnseignant> {
         prenom: prenom,
         telephone: telephone,
         adresse: adresse,
+        domaine: domaine,
         email: email,
         motDePasse: motDePasse,
-        domaine: domaine);
+        departement: departement);
     getData();
   }
 
-  void editEnseignant({
-    String? id = "",
-    String? nom = "",
-    String? prenom = "",
-    String? telephone = "",
-    String? adresse = "",
-    String? email = "",
-    String? motDePasse = "",
-    String? domaine = "",
-  }) async {
-    //await ApiService().updateEtudiants("3");
-    //await ApiService().deleteEtudiants("17");
-    // await ApiService().addEtudiants();
-    // await ApiService().addDocument();
+  void editEnseignant(
+      {String? id = "",
+      String? nom = "",
+      String? prenom = "",
+      String? telephone = "",
+      String? adresse = "",
+      String? domaine = "",
+      String? email = "",
+      String? motDePasse = "",
+      String? departement = ""}) async {
     log("editEnseignant");
     await ApiEnseignant().editEnseignant(
         id: id,
@@ -453,9 +496,10 @@ class _GererEnseignantState extends State<GererEnseignant> {
         prenom: prenom,
         telephone: telephone,
         adresse: adresse,
+        domaine: domaine,
         email: email,
         motDePasse: motDePasse,
-        domaine: domaine);
+        departement: departement);
     getData();
   }
 

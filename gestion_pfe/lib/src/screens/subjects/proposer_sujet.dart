@@ -8,7 +8,7 @@ import 'package:gestion_pfe/src/helpers/document_api.dart';
 import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
 import 'package:gestion_pfe/src/models/document.dart';
 import 'package:image_picker/image_picker.dart';
- 
+
 import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.
@@ -59,7 +59,7 @@ class _ProposerSujetState extends State<ProposerSujet> {
           child: resiseWidget(
             context: context,
             child: Column(
-              children: [ 
+              children: [
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.description),
@@ -115,7 +115,8 @@ class _ProposerSujetState extends State<ProposerSujet> {
                       document.datedepot =
                           "2022-06-30T12:57:27.000+00:00"; //DateFormat('yyyy-MM-dd hh:mm:ss.SSSS').format(DateTime.now()).toString();
                       document.description = descriptionController.text;
-                      document.proprietaire = widget.fonction == "Enseignant"
+                      // document.proprietaire = widget.fonction == "Enseignant"
+                      widget.fonction == "Enseignant"
                           ? widget.enseignant.nom +
                               " " +
                               widget.enseignant.prenom

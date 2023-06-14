@@ -1,8 +1,12 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/helpers/departement.dart';
 import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
-import 'package:gestion_pfe/src/helpers/etudiant_api.dart'; 
-import '../../description.dart'; 
+import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
+import 'package:gestion_pfe/src/helpers/specialite.dart';
+import 'package:gestion_pfe/src/models/departement.dart';
+import 'package:gestion_pfe/src/models/specialite.dart';
+import '../../description.dart';
 import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.
@@ -19,15 +23,27 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
   Description? _description;
   final nomController = TextEditingController();
   final prenomController = TextEditingController();
-  final telephoneController = TextEditingController(); 
+  final telephoneController = TextEditingController();
   final emailController = TextEditingController();
   final avisController = TextEditingController();
 
+  String? niveauValue;
+  final _items = ['Informatique', 'Mecanique', 'Electrique', 'Genie civile'];
+  final _niveauItems = [
+    'Licence',
+    'Ingenieurie',
+    'Mastère',
+  ];
+  List<Specialite?>? _specialite;
+  Specialite? specialiteValue;
 
+  List<Departement?>? _departement;
+  Departement? departementValue;
 
   @override
   void initState() {
     super.initState();
+    getData();
   }
 
   @override
@@ -35,7 +51,7 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
     // Clean up the controller when the widget is disposed.
     nomController.dispose();
     prenomController.dispose();
-    telephoneController.dispose(); 
+    telephoneController.dispose();
     emailController.dispose();
     avisController.dispose();
 
@@ -111,7 +127,7 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
                           return null;
                         },
                         controller: telephoneController,
-                      ), 
+                      ),
                       const SizedBox(
                         height: 10,
                       ),
@@ -131,9 +147,59 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
                       const SizedBox(
                         height: 10,
                       ),
+                      _departement != null
+                          ? DropdownButton(
+                              value: departementValue,
+                              iconSize: 36,
+                              hint: const Text("choisir ta departement"),
+                              items: _departement?.map((item) {
+                                return DropdownMenuItem<Departement>(
+                                  value: item,
+                                  child: Text(item!.nom!),
+                                );
+                              }).toList(),
+                              onChanged: (newVal) {
+                                log("newVal::$newVal");
+                                setState(() {
+                                  departementValue = newVal as Departement?;
+                                });
+                              },
+                            )
+                          : Container(),
+                      DropdownButton<String>(
+                        hint: const Text("choisir votre niveau"),
+                        value: niveauValue,
+                        iconSize: 36,
+                        icon: const Icon(Icons.arrow_drop_down,
+                            color: Colors.black),
+                        items: _niveauItems.map(buildMenuItem).toList(),
+                        onChanged: (value) =>
+                            setState(() => niveauValue = value),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                      _specialite != null
+                          ? DropdownButton(
+                              value: specialiteValue,
+                              iconSize: 36,
+                              hint: const Text("choisir ta specialite"),
+                              items: _specialite?.map((item) {
+                                return DropdownMenuItem<Specialite>(
+                                  value: item,
+                                  child: Text(item!.nom!),
+                                );
+                              }).toList(),
+                              onChanged: (newVal) {
+                                log("newVal::$newVal");
+                                setState(() {
+                                  specialiteValue = newVal as Specialite?;
+                                });
+                              },
+                            )
+                          : Container(),
                       TextFormField(
                         minLines: 1, // Set this
-  maxLines: 6,
+                        maxLines: 6,
                         decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.edit),
                           hintText: 'Saisir votre avis',
@@ -237,7 +303,6 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
     String? adresse = "",
     String? email = "",
     String? motDePasse = "",
-    String? diplome = "",
     String? departement = "",
     String? niveau = "",
     String? specialite = "",
@@ -250,7 +315,6 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
         adresse: adresse,
         email: email,
         motDePasse: motDePasse,
-        diplome: diplome,
         departement: departement,
         niveau: niveau,
         specialite: specialite);
@@ -289,6 +353,22 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
     }*/
   }
 
+  // DropdownMenuItem
+  void getData() async {
+    await Future.wait([
+      ApiDepartement().getAllDepartements(),
+      ApiSpecialite().getAllSpecialites(),
+    ]).then((value) async {
+      log("get");
+      _departement = value[0]?.cast<Departement>();
+      _specialite = value[1]?.cast<Specialite>();
+      log("_departement::$_departement");
+      log("_specialite::$_specialite");
+      Future.delayed(const Duration(seconds: 0))
+          .then((value) => setState(() {}));
+    });
+  }
+
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
         value: item,
         child: Text(
@@ -296,4 +376,5 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
           // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ), // Text
       ); // DropdownMenuItem
+
 }

@@ -6,6 +6,7 @@ import 'dart:convert';
 
 import 'package:gestion_pfe/src/models/enseignant.dart';
 import 'package:gestion_pfe/src/models/etudiant.dart';
+import 'package:gestion_pfe/src/models/responsable.dart';
 
 List<Document> documentFromJson(String str) =>
     List<Document>.from(json.decode(str).map((x) => Document.fromJson(x)));
@@ -19,31 +20,33 @@ class Document {
   int? idDoc;
   String? titre;
   String? description;
-  String? proprietaire;
   String? datedepot;
   String? photo; //file
   Etudiant? etudiant;
+  Responsable? responsable;
   Enseignant? enseignant;
 
   Document(
       {this.idDoc,
       this.titre,
       this.description,
-      this.proprietaire,
       this.datedepot,
       this.photo,
       this.etudiant,
+      this.responsable,
       this.enseignant});
 
   Document.fromJson(Map<String, dynamic> json) {
     idDoc = json['idDoc'];
     titre = json['titre'];
     description = json['description'];
-    proprietaire = json['proprietaire'];
     datedepot = json['datedepot'];
     photo = json['photo'];
     etudiant =
         json['etudiant'] != null ? Etudiant.fromJson(json['etudiant']) : null;
+    responsable = json['responsable'] != null
+        ? Responsable.fromJson(json['responsable'])
+        : null;
     enseignant = json['enseignant'] != null
         ? Enseignant.fromJson(json['enseignant'])
         : null;
@@ -54,16 +57,16 @@ class Document {
     data['idDoc'] = idDoc;
     data['titre'] = titre;
     data['description'] = description;
-    data['proprietaire'] = proprietaire;
     data['datedepot'] = datedepot;
     data['photo'] = photo;
     data['etudiant'] = etudiant?.idEtud;
+    data['responsable'] = responsable?.idUser;
     data['enseignant'] = enseignant?.idEns;
     return data;
   }
 
   @override
   String toString() {
-    return 'Document(idDoc: $idDoc, titre: $titre, description: $description, proprietaire: $proprietaire, dateDepot: $datedepot, photo: $photo, etudiant: $etudiant, enseignant: $enseignant)';
+    return 'Document(idDoc: $idDoc, titre: $titre, description: $description, dateDepot: $datedepot, photo: $photo, etudiant: $etudiant, responsable: $responsable, enseignant: $enseignant)';
   }
 }

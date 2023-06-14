@@ -2,14 +2,18 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/color_hex.dart';
 import 'package:gestion_pfe/src/consts.dart';
+import 'package:gestion_pfe/src/helpers/departement.dart';
 import 'package:gestion_pfe/src/helpers/document_api.dart';
 import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
 import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
 import 'package:gestion_pfe/src/helpers/pfe_api.dart';
 import 'package:gestion_pfe/src/helpers/soutenance.dart';
+import 'package:gestion_pfe/src/helpers/specialite.dart';
+import 'package:gestion_pfe/src/models/departement.dart';
 import 'package:gestion_pfe/src/models/document.dart';
 import 'package:gestion_pfe/src/models/pfe.dart';
 import 'package:gestion_pfe/src/models/soutenance.dart';
+import 'package:gestion_pfe/src/models/specialite.dart';
 import 'package:gestion_pfe/src/screens/authentification/authentification.dart';
 import '../../description.dart';
 import '../../resize_widget.dart';
@@ -32,9 +36,13 @@ class _InscriptionState extends State<Inscription> {
   ];
   String? domaineValue;
   String? diplomeValue;
-  String? departementValue;
   String? niveauValue;
-  String? specialiteValue;
+
+  List<Specialite?>? _specialite;
+  Specialite? specialiteValue;
+
+  List<Departement?>? _departement;
+  Departement? departementValue;
 
   Description? _description;
   final nomController = TextEditingController();
@@ -233,17 +241,48 @@ class _InscriptionState extends State<Inscription> {
                                 ],
                               ),
                               _description.toString().contains("enseignant")
-                                  ? DropdownButton<String>(
-                                      hint: const Text("choisir votre domaine"),
-                                      value: domaineValue,
-                                      iconSize: 36,
-                                      icon: const Icon(Icons.arrow_drop_down,
-                                          color: Colors.black),
-                                      items: _items.map(buildMenuItem).toList(),
-                                      onChanged: (value) =>
-                                          setState(() => domaineValue = value),
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(10.0)),
+                                  ? Column(
+                                      children: [
+                                        DropdownButton<String>(
+                                          hint: const Text(
+                                              "choisir votre domaine"),
+                                          value: domaineValue,
+                                          iconSize: 36,
+                                          icon: const Icon(
+                                              Icons.arrow_drop_down,
+                                              color: Colors.black),
+                                          items: _items
+                                              .map(buildMenuItem)
+                                              .toList(),
+                                          onChanged: (value) => setState(
+                                              () => domaineValue = value),
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                        ),
+                                        _departement != null
+                                            ? DropdownButton(
+                                                value: departementValue,
+                                                iconSize: 36,
+                                                hint: const Text(
+                                                    "choisir ta departement"),
+                                                items:
+                                                    _departement?.map((item) {
+                                                  return DropdownMenuItem<
+                                                      Departement>(
+                                                    value: item,
+                                                    child: Text(item!.nom!),
+                                                  );
+                                                }).toList(),
+                                                onChanged: (newVal) {
+                                                  log("newVal::$newVal");
+                                                  setState(() {
+                                                    departementValue =
+                                                        newVal as Departement?;
+                                                  });
+                                                },
+                                              )
+                                            : Container(),
+                                      ],
                                     )
                                   : _description.toString().contains("etudiant")
                                       ? Column(
@@ -265,24 +304,30 @@ class _InscriptionState extends State<Inscription> {
                                                   const BorderRadius.all(
                                                       Radius.circular(10.0)),
                                             ),
-                                            DropdownButton<String>(
-                                              hint: const Text(
-                                                  "choisir votre departement"),
-                                              value: departementValue,
-                                              iconSize: 36,
-                                              icon: const Icon(
-                                                  Icons.arrow_drop_down,
-                                                  color: Colors.black),
-                                              items: _items
-                                                  .map(buildMenuItem)
-                                                  .toList(),
-                                              onChanged: (value) => setState(
-                                                  () =>
-                                                      departementValue = value),
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(10.0)),
-                                            ),
+                                            _departement != null
+                                                ? DropdownButton(
+                                                    value: departementValue,
+                                                    iconSize: 36,
+                                                    hint: const Text(
+                                                        "choisir ta departement"),
+                                                    items: _departement
+                                                        ?.map((item) {
+                                                      return DropdownMenuItem<
+                                                          Departement>(
+                                                        value: item,
+                                                        child: Text(item!.nom!),
+                                                      );
+                                                    }).toList(),
+                                                    onChanged: (newVal) {
+                                                      log("newVal::$newVal");
+                                                      setState(() {
+                                                        departementValue =
+                                                            newVal
+                                                                as Departement?;
+                                                      });
+                                                    },
+                                                  )
+                                                : Container(),
                                             DropdownButton<String>(
                                               hint: const Text(
                                                   "choisir votre niveau"),
@@ -300,24 +345,29 @@ class _InscriptionState extends State<Inscription> {
                                                   const BorderRadius.all(
                                                       Radius.circular(10.0)),
                                             ),
-                                            DropdownButton<String>(
-                                              hint: const Text(
-                                                  "choisir votre specialité"),
-                                              value: specialiteValue,
-                                              iconSize: 36,
-                                              icon: const Icon(
-                                                  Icons.arrow_drop_down,
-                                                  color: Colors.black),
-                                              items: _items
-                                                  .map(buildMenuItem)
-                                                  .toList(),
-                                              onChanged: (value) => setState(
-                                                  () =>
-                                                      specialiteValue = value),
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(10.0)),
-                                            ),
+                                            _specialite != null
+                                                ? DropdownButton(
+                                                    value: specialiteValue,
+                                                    iconSize: 36,
+                                                    hint: const Text(
+                                                        "choisir ta specialite"),
+                                                    items: _specialite
+                                                        ?.map((item) {
+                                                      return DropdownMenuItem<
+                                                          Specialite>(
+                                                        value: item,
+                                                        child: Text(item!.nom!),
+                                                      );
+                                                    }).toList(),
+                                                    onChanged: (newVal) {
+                                                      log("newVal::$newVal");
+                                                      setState(() {
+                                                        specialiteValue = newVal
+                                                            as Specialite?;
+                                                      });
+                                                    },
+                                                  )
+                                                : Container(),
                                           ],
                                         )
                                       : Container(),
@@ -352,9 +402,13 @@ class _InscriptionState extends State<Inscription> {
                                                 motDePasse:
                                                     motDePasseController.text,
                                                 diplome: diplomeValue,
-                                                departement: departementValue,
+                                                departement: departementValue
+                                                    ?.idDep
+                                                    .toString(),
                                                 niveau: niveauValue,
-                                                specialite: specialiteValue)
+                                                specialite: specialiteValue
+                                                    ?.idSpecialite
+                                                    .toString())
                                             : log("select function");
                                     // Validate will return true if the form is valid, or false if
                                     // the form is invalid.
@@ -402,12 +456,18 @@ class _InscriptionState extends State<Inscription> {
   }
 
   void getData() async {
-    _pfe = await ApiPfe().getPFE();
-    _document = await ApiDocument().getDocument();
-    _soutenance = await ApiSoutenance().getSoutenance();
-    log("_soutenance::$_soutenance");
-    log("pfe::$_pfe");
-    log("_document::$_document");
+    await Future.wait([
+      ApiDepartement().getAllDepartements(),
+      ApiSpecialite().getAllSpecialites(),
+    ]).then((value) async {
+      log("get");
+      _departement = value[0]?.cast<Departement>();
+      _specialite = value[1]?.cast<Specialite>();
+      log("_departement::$_departement");
+      log("_specialite::$_specialite");
+      Future.delayed(const Duration(seconds: 0))
+          .then((value) => setState(() {}));
+    });
   }
   /*void getData() async {
     //await ApiService().updateEtudiants("3");
@@ -438,30 +498,30 @@ class _InscriptionState extends State<Inscription> {
         adresse: adresse,
         email: email,
         motDePasse: motDePasse,
-        diplome: diplome,
         departement: departement,
         niveau: niveau,
         specialite: specialite);
   }
 
-  void addEnseignant({
-    String? nom = "",
-    String? prenom = "",
-    String? telephone = "",
-    String? adresse = "",
-    String? email = "",
-    String? motDePasse = "",
-    String? domaine = "",
-  }) async {
+  void addEnseignant(
+      {String? nom = "",
+      String? prenom = "",
+      String? telephone = "",
+      String? adresse = "",
+      String? domaine = "",
+      String? email = "",
+      String? motDePasse = "",
+      String? departement = ""}) async {
     log("addEnseignant");
     var e = await ApiEnseignant().addEnseignant(
         nom: nom,
         prenom: prenom,
         telephone: telephone,
         adresse: adresse,
+        domaine: domaine,
         email: email,
         motDePasse: motDePasse,
-        domaine: domaine);
+        departement: departement);
     e!.isNotEmpty
         ? log("addEnseignantENotEmpty::$e")
         : log("addEnseignantEempty::$e");

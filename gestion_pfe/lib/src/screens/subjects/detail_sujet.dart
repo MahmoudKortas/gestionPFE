@@ -41,7 +41,7 @@ class _DetailSujetState extends State<DetailSujet> {
                     "http://10.0.2.2:8080/api/document/image/${widget.doc.idDoc}"),
                 Column(
                   children: [
-                    Text("Proprietaire: ${widget.doc.proprietaire!}"),
+                    // Text("Proprietaire: ${widget.doc.proprietaire!}"),
                     Text("Déscription: ${widget.doc.description!}"),
                     Text("Date dépot: ${widget.doc.datedepot!}"),
                     widget.fonction.contains("etudiant")

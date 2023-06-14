@@ -44,6 +44,7 @@ class ApiEnseignant {
     String? email = "",
     String? motDePasse = "",
     String? domaine = "",
+    String? departement = "",
   }) async {
     try {
       var url =
@@ -62,6 +63,7 @@ class ApiEnseignant {
             "nom": nom,
             "prenom": prenom,
             "tel": int.parse(telephone!),
+            "departement": departement,
           },
         ),
       );
@@ -85,6 +87,7 @@ class ApiEnseignant {
     String? email = "",
     String? motDePasse = "",
     String? domaine = "",
+    String? departement = "",
   }) async {
     try {
       var url =
@@ -104,6 +107,7 @@ class ApiEnseignant {
             "nom": nom,
             "prenom": prenom,
             "tel": int.parse(telephone!),
+            "departement": departement,
           },
         ),
       );

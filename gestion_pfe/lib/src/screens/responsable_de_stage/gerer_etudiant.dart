@@ -1,8 +1,12 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/helpers/departement.dart';
 import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
- 
+import 'package:gestion_pfe/src/helpers/specialite.dart';
+import 'package:gestion_pfe/src/models/departement.dart';
+import 'package:gestion_pfe/src/models/specialite.dart';
+
 import '../../models/etudiant.dart';
 import '../../resize_widget.dart';
 
@@ -24,10 +28,14 @@ class _GererEtudiantState extends State<GererEtudiant> {
   ];
   late List<Etudiant>? _etudiant = [];
 
-  String? diplomeValue;
-  String? departementValue;
   String? niveauValue;
-  String? specialiteValue;
+ 
+  List<Specialite?>? _specialite;
+  Specialite? specialiteValue;
+ 
+  List<Departement?>? _departement;
+  Departement? departementValue;
+
   final nomController = TextEditingController();
   final prenomController = TextEditingController();
   final telephoneController = TextEditingController();
@@ -183,25 +191,6 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   controller: motDePasseController,
                 ),
                 DropdownButton<String>(
-                  hint: const Text("choisir votre diplome"),
-                  value: diplomeValue,
-                  iconSize: 36,
-                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                  items: _items.map(buildMenuItem).toList(),
-                  onChanged: (value) => setState(() => diplomeValue = value),
-                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                ),
-                DropdownButton<String>(
-                  hint: const Text("choisir votre departement"),
-                  value: departementValue,
-                  iconSize: 36,
-                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                  items: _items.map(buildMenuItem).toList(),
-                  onChanged: (value) =>
-                      setState(() => departementValue = value),
-                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                ),
-                DropdownButton<String>(
                   hint: const Text("choisir votre niveau"),
                   value: niveauValue,
                   iconSize: 36,
@@ -210,19 +199,47 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   onChanged: (value) => setState(() => niveauValue = value),
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                 ),
-                DropdownButton<String>(
-                  hint: const Text("choisir votre specialité"),
-                  value: specialiteValue,
-                  iconSize: 36,
-                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                  items: _items.map(buildMenuItem).toList(),
-                  onChanged: (value) => setState(() => specialiteValue = value),
-                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                ),
+                _departement != null
+                    ? DropdownButton(
+                        value: departementValue,
+                        iconSize: 36,
+                        hint: const Text("choisir ta departement"),
+                        items: _departement?.map((item) {
+                          return DropdownMenuItem<Departement>(
+                            value: item,
+                            child: Text(item!.nom!),
+                          );
+                        }).toList(),
+                        onChanged: (newVal) {
+                          log("newVal::$newVal");
+                          setState(() {
+                            departementValue = newVal as Departement?;
+                          });
+                        },
+                      )
+                    : Container(),
+                _specialite != null
+                    ? DropdownButton(
+                        value: specialiteValue,
+                        iconSize: 36,
+                        hint: const Text("choisir ta specialite"),
+                        items: _specialite?.map((item) {
+                          return DropdownMenuItem<Specialite>(
+                            value: item,
+                            child: Text(item!.nom!),
+                          );
+                        }).toList(),
+                        onChanged: (newVal) {
+                          log("newVal::$newVal");
+                          setState(() {
+                            specialiteValue = newVal as Specialite?;
+                          });
+                        },
+                      )
+                    : Container(),
                 ElevatedButton(
                   onPressed: () {
-                    log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text}  $diplomeValue $departementValue $niveauValue $specialiteValue");
-
+                    log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text} $niveauValue ${departementValue?.nom} ${specialiteValue?.nom}");
                     addData(
                         nom: nomController.text,
                         prenom: prenomController.text,
@@ -230,10 +247,9 @@ class _GererEtudiantState extends State<GererEtudiant> {
                         adresse: adresseController.text,
                         email: emailController.text,
                         motDePasse: motDePasseController.text,
-                        diplome: diplomeValue,
-                        departement: departementValue,
+                        departement: departementValue?.idDep.toString(),
                         niveau: niveauValue,
-                        specialite: specialiteValue);
+                        specialite: specialiteValue?.idSpecialite.toString());
                   },
                   child: const Text("Ajouter"),
                 ),
@@ -267,7 +283,6 @@ class _GererEtudiantState extends State<GererEtudiant> {
   }
 
   Future<String?> dialog(BuildContext context, Etudiant etudiant) {
-    diplomeValue = etudiant.diplome;
     departementValue = etudiant.departement;
     niveauValue = etudiant.niveau;
     specialiteValue = etudiant.specialite;
@@ -392,24 +407,25 @@ class _GererEtudiantState extends State<GererEtudiant> {
                 },
                 controller: motDePasseController,
               ),
-              DropdownButton<String>(
-                hint: const Text("choisir votre diplome"),
-                value: diplomeValue,
-                iconSize: 36,
-                icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                items: _items.map(buildMenuItem).toList(),
-                onChanged: (value) => setState(() => diplomeValue = value),
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              ),
-              DropdownButton<String>(
-                hint: const Text("choisir votre departement"),
-                value: departementValue,
-                iconSize: 36,
-                icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                items: _items.map(buildMenuItem).toList(),
-                onChanged: (value) => setState(() => departementValue = value),
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              ),
+                _departement != null
+                    ? DropdownButton(
+                        value: departementValue,
+                        iconSize: 36,
+                        hint: const Text("choisir ta departement"),
+                        items: _departement?.map((item) {
+                          return DropdownMenuItem<Departement>(
+                            value: item,
+                            child: Text(item!.nom!),
+                          );
+                        }).toList(),
+                        onChanged: (newVal) {
+                          log("newVal::$newVal");
+                          setState(() {
+                            departementValue = newVal as Departement?;
+                          });
+                        },
+                      )
+                    : Container(),
               DropdownButton<String>(
                 hint: const Text("choisir votre niveau"),
                 value: niveauValue,
@@ -419,15 +435,27 @@ class _GererEtudiantState extends State<GererEtudiant> {
                 onChanged: (value) => setState(() => niveauValue = value),
                 borderRadius: const BorderRadius.all(Radius.circular(10.0)),
               ),
-              DropdownButton<String>(
-                hint: const Text("choisir votre specialité"),
-                value: specialiteValue,
-                iconSize: 36,
-                icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                items: _items.map(buildMenuItem).toList(),
-                onChanged: (value) => setState(() => specialiteValue = value),
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              ),
+           
+                _specialite != null
+                    ? DropdownButton(
+                        value: specialiteValue,
+                        iconSize: 36,
+                        hint: const Text("choisir ta specialite"),
+                        items: _specialite?.map((item) {
+                          return DropdownMenuItem<Specialite>(
+                            value: item,
+                            child: Text(item!.nom!),
+                          );
+                        }).toList(),
+                        onChanged: (newVal) {
+                          log("newVal::$newVal");
+                          setState(() {
+                            specialiteValue = newVal as Specialite?;
+                          });
+                        },
+                      )
+                    : Container(),
+           
             ],
           ),
         ),
@@ -460,15 +488,19 @@ class _GererEtudiantState extends State<GererEtudiant> {
   }
 
   void getData() async {
-    //await ApiService().updateEtudiants("3");
-    //await ApiService().deleteEtudiants("17");
-    // await ApiService().addEtudiants();
-    // await ApiService().addDocument();
-    //await ApiService().addEnseignant();
-    log("get");
-    _etudiant = await ApiEtudiant().getAllEtudiants();
-    log("_etudiant::$_etudiant");
-    Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
+    await Future.wait([
+      ApiEtudiant().getAllEtudiants(),
+      ApiDepartement().getAllDepartements(),
+      ApiSpecialite().getAllSpecialites(),
+    ]).then((value) async {
+      log("get");
+      _etudiant = value[0]?.cast<Etudiant>();
+      _departement = value[1]?.cast<Departement>();
+      _specialite = value[2]?.cast<Specialite>();
+      log("_etudiant::$_etudiant");
+      Future.delayed(const Duration(seconds: 0))
+          .then((value) => setState(() {}));
+    });
   }
 
   void addData({
@@ -478,7 +510,6 @@ class _GererEtudiantState extends State<GererEtudiant> {
     String? adresse = "",
     String? email = "",
     String? motDePasse = "",
-    String? diplome = "",
     String? departement = "",
     String? niveau = "",
     String? specialite = "",
@@ -491,7 +522,6 @@ class _GererEtudiantState extends State<GererEtudiant> {
         adresse: adresse,
         email: email,
         motDePasse: motDePasse,
-        diplome: diplome,
         departement: departement,
         niveau: niveau,
         specialite: specialite);

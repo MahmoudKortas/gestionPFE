@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:gestion_pfe/src/models/departement.dart';
+
 List<Enseignant> enseignantFromJson(String str) =>
     List<Enseignant>.from(json.decode(str).map((x) => Enseignant.fromJson(x)));
 
@@ -20,6 +22,7 @@ class Enseignant {
     this.domaine,
     this.email,
     this.motdepasse,
+    this.departement,
   });
 
   int? idEns;
@@ -30,6 +33,7 @@ class Enseignant {
   String? domaine;
   String? email;
   String? motdepasse;
+  Departement? departement;
 
   factory Enseignant.fromJson(Map<String, dynamic> json) => Enseignant(
         idEns: json["idEns"],
@@ -40,6 +44,9 @@ class Enseignant {
         domaine: json["domaine"],
         email: json["email"],
         motdepasse: json["motdepasse"],
+        departement: json['departement'] != null
+            ? Departement.fromJson(json['departement'])
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -51,9 +58,10 @@ class Enseignant {
         "domaine": domaine,
         "email": email,
         "motdepasse": motdepasse,
+        "departement": departement,
       };
   @override
   String toString() {
-    return 'Enseignant(idEns: $idEns, nom: $nom, prenom: $prenom, tel: $tel, adresse: $adresse, domaine: $domaine, email: $email, motdepasse: $motdepasse)';
+    return 'Enseignant(idEns: $idEns, nom: $nom, prenom: $prenom, tel: $tel, adresse: $adresse, domaine: $domaine, email: $email, motdepasse: $motdepasse, departement: $departement)';
   }
 }

@@ -7,10 +7,11 @@ import '../models/etudiant.dart';
 class ApiEtudiant {
   Future<List<Etudiant>?> getAllEtudiants() async {
     try {
-      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.etudiants + ApiConstants.all);
+      var url = Uri.parse(
+          ApiConstants.baseUrl + ApiConstants.etudiants + ApiConstants.all);
 
       var response = await http.get(url);
-    
+
       if (response.statusCode == 200) {
         List<Etudiant> model = etudiantFromJson(response.body);
         return model;
@@ -20,12 +21,13 @@ class ApiEtudiant {
     }
     return null;
   }
+
   Future<List<Etudiant>?> getEtudiants({String? id = ""}) async {
     try {
       var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.etudiants + id!);
 
       var response = await http.get(url);
-    
+
       if (response.statusCode == 200) {
         List<Etudiant> model = etudiantFromJson(response.body);
         return model;
@@ -41,11 +43,10 @@ class ApiEtudiant {
     String? prenom = "",
     String? telephone = "",
     String? adresse = "",
-    String? email = "",
-    String? motDePasse = "",
-    String? diplome = "",
-    String? departement = "",
     String? niveau = "",
+    String? email = "",
+    String? motDePasse = "", 
+    String? departement = "",
     String? specialite = "",
   }) async {
     try {
@@ -58,14 +59,13 @@ class ApiEtudiant {
         },
         body: jsonEncode(
           {
-            "adresse": adresse,
-            "diplome": diplome,
-            "email": email,
-            "motdepasse": motDePasse,
-            "niveau": niveau,
             "nom": nom,
             "prenom": prenom,
             "tel": int.parse(telephone!),
+            "adresse": adresse, 
+            "niveau": niveau,
+            "email": email,
+            "motdepasse": motDePasse,
             "departement": departement,
             "specialite": specialite
           },
@@ -94,16 +94,15 @@ class ApiEtudiant {
         body: jsonEncode(
           {
             "id_etud": etudiant.idEtud,
-            "adresse": etudiant.adresse,
-            "diplome": etudiant.diplome,
-            "email": "etudiant.email",
-            "motdepasse": etudiant.motdepasse,
-            "niveau": etudiant.niveau,
-            "nom": "etudiant.nom",
-            "prenom": "etudiant.prenom",
+            "nom": etudiant.nom,
+            "prenom": etudiant.prenom,
             "tel": etudiant.tel,
-            "departement": etudiant.departement,
-            "specialite": etudiant.specialite
+            "adresse": etudiant.adresse,
+            "niveau": etudiant.niveau,
+            "email": etudiant.email,
+            "motdepasse": etudiant.motdepasse,
+            "departement": etudiant.departement?.idDep,
+            "specialite": etudiant.specialite?.idSpecialite
           },
         ),
       );

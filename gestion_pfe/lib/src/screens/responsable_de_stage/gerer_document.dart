@@ -6,8 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/helpers/document_api.dart';
 import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
 import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
+import 'package:gestion_pfe/src/helpers/responsable.dart';
+import 'package:gestion_pfe/src/models/responsable.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../models/document.dart';
+import '../../models/enseignant.dart';
+import '../../models/etudiant.dart';
 import '../../resize_widget.dart';
 
 class GererDocument extends StatefulWidget {
@@ -18,13 +22,15 @@ class GererDocument extends StatefulWidget {
 }
 
 class _GererDocumentState extends State<GererDocument> {
-  late List<Document>? _document = [];
-  var _proprietaire;
+  var _document;
   var _enseignant;
   var _listeEnseignant = [''];
+  var _responsable;
+  var _listeResponsable = [''];
   var _etudiant;
   var _listeEtudiant = [''];
   String? valueEnseignant;
+  String? valueResponsable;
   String? valueEtudiant;
   File? _image;
   final picker = ImagePicker();
@@ -32,7 +38,6 @@ class _GererDocumentState extends State<GererDocument> {
   final dateController = TextEditingController();
   final descriptionController = TextEditingController();
   final titreController = TextEditingController();
-  final proprietaireController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -88,19 +93,6 @@ class _GererDocumentState extends State<GererDocument> {
                 const SizedBox(
                   height: 10,
                 ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.description),
-                    hintText: 'Proprietaire',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'entrez le proprietaire du sujet';
-                    }
-                    return null;
-                  },
-                  controller: proprietaireController,
-                ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -119,11 +111,26 @@ class _GererDocumentState extends State<GererDocument> {
                   height: 10,
                 ),
                 DropdownButton<String>(
+                  hint: const Text("choisir le responsable"),
+                  value: valueResponsable,
+                  iconSize: 36,
+                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+                  items: _listeResponsable
+                      .map(buildMenuItem)
+                      .toList(), //_items.map(buildMenuItem).toList(),
+                  onChanged: (value) =>
+                      setState(() => valueResponsable = value),
+                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                DropdownButton<String>(
                   hint: const Text("choisir l'etudiant"),
                   value: valueEtudiant,
                   iconSize: 36,
                   icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                  items: _listeEnseignant
+                  items: _listeEtudiant
                       .map(buildMenuItem)
                       .toList(), //_items.map(buildMenuItem).toList(),
                   onChanged: (value) => setState(() => valueEtudiant = value),
@@ -268,34 +275,47 @@ class _GererDocumentState extends State<GererDocument> {
   }
 
   void getData() async {
-    _etudiant = await ApiEtudiant().getAllEtudiants();
-    _listeEtudiant.clear();
-    _etudiant.map((l) => {_listeEtudiant.add(l.nom + ' ' + l.prenom)}).toList();
-    _enseignant = await ApiEnseignant().getAllEnseignant();
-    _listeEnseignant.clear();
-    _enseignant
-        .map((l) => {_listeEnseignant.add(l.nom + ' ' + l.prenom)})
-        .toList();
-    //await ApiService().updateEtudiants("3");
-    //await ApiService().deleteEtudiants("17");
-    // await ApiService().addEtudiants();
-    // await ApiService().addDocument();
-    //await ApiService().addEnseignant();
+    await Future.wait([
+      ApiEtudiant().getAllEtudiants(),
+      ApiEnseignant().getAllEnseignant(),
+      ApiResponsable().getAllResponsable(),
+      ApiDocument().getAllDocument(),
+    ]).then((value) async {
+      _etudiant = value[0]?.cast<Etudiant?>();
+      _enseignant = value[1]?.cast<Enseignant?>();
+      _responsable = value[2]?.cast<Responsable?>();
+      _document = value[3]?.cast<Document?>();
 
-    _document = await ApiDocument().getAllDocument();
+      _listeEtudiant.clear();
+      _etudiant
+          .map((l) => {_listeEtudiant.add(l.nom + ' ' + l.prenom)})
+          .toList();
 
-    //log("_document::$_document");
-    Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
+      _listeEnseignant.clear();
+      _enseignant
+          .map((l) => {_listeEnseignant.add(l.nom + ' ' + l.prenom)})
+          .toList();
+
+      _listeResponsable.clear();
+      _responsable
+          .map((l) => {_listeResponsable.add(l.nom + ' ' + l.prenom)})
+          .toList();
+
+      log("_enseignant::$_enseignant");
+      log("_etudiant::$_etudiant");
+      log("Document::$_document");
+      Future.delayed(const Duration(seconds: 0))
+          .then((value) => setState(() {}));
+    });
   }
 
   addDocument() async {
     document.description = descriptionController.text;
     document.titre = titreController.text;
-    document.proprietaire = "value";
     document.datedepot = DateTime.now().toString();
     document.photo = "e";
-    document.proprietaire = proprietaireController.text;
     document.enseignant = _enseignant;
+    document.responsable = _responsable;
     document.etudiant = _etudiant;
     await ApiDocument().addDocument(document: document, filepath: _image!.path);
 
