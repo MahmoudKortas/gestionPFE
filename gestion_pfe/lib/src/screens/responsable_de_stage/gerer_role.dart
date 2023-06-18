@@ -2,9 +2,9 @@
 
 import 'dart:developer';
 import 'dart:io';
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
-import 'package:image_picker/image_picker.dart';  
+import 'package:image_picker/image_picker.dart';
 import '../../helpers/role.dart';
 import '../../models/role.dart';
 import '../../resize_widget.dart';
@@ -17,10 +17,11 @@ class GererRole extends StatefulWidget {
 }
 
 class _GererRoleState extends State<GererRole> {
-  late List<Role>? _role = [];  
-  String? value; 
-  Role? role = Role(); 
-  final nomController = TextEditingController();  
+  late List<Role>? _role = [];
+  String? value;
+  Role? role = Role();
+  final nomController = TextEditingController();
+  final editNomController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -40,7 +41,7 @@ class _GererRoleState extends State<GererRole> {
           child: resiseWidget(
             context: context,
             child: Column(
-              children: [ 
+              children: [
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.description),
@@ -48,12 +49,12 @@ class _GererRoleState extends State<GererRole> {
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return 'entrez la nom du sujet';
+                      return 'entrez la nom du role';
                     }
                     return null;
                   },
                   controller: nomController,
-                ), 
+                ),
                 ElevatedButton(
                   // ignore: avoid_print
                   onPressed: () => addRole(),
@@ -63,27 +64,29 @@ class _GererRoleState extends State<GererRole> {
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )
-                    :*/_role!=null?
-                _role!.isEmpty
-                    ? const Text("aucun Role existe")
-                    : ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: _role!.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            child: ListTile(
-                                title: Text(
-                                    _role![index].nom.toString()),
-                                subtitle: Text(
-                                    _role![index].nom.toString()),
-                                trailing: const Icon(Icons.more_vert),
-                                // isThreeLine: true,
-                                onTap: () => dialog(context, _role![index])),
-                          );
-                        },
-                      ):const Text("aucun Role existe null")
-                       /*Card(
+                    :*/
+                _role != null
+                    ? _role!.isEmpty
+                        ? const Text("aucun Role existe")
+                        : ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: _role!.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                child: ListTile(
+                                    title: Text(_role![index].nom.toString()),
+                                    subtitle:
+                                        Text(_role![index].nom.toString()),
+                                    trailing: const Icon(Icons.more_vert),
+                                    // isThreeLine: true,
+                                    onTap: () =>
+                                        dialog(context, _role![index])),
+                              );
+                            },
+                          )
+                    : const Text("aucun Role existe null")
+                /*Card(
                   child: ListTile(
                       /*leading: const CircleAvatar(
                       foregroundImage:
@@ -148,13 +151,29 @@ class _GererRoleState extends State<GererRole> {
   }
 
   Future<String?> dialog(BuildContext context, Role role) {
+    editNomController.text = role.nom ?? "";
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
         title: const Text('Modifier / Supprimer Role'),
         content: SingleChildScrollView(
           child: Column(
-            children: const [],
+            children: [
+              TextFormField(
+                // initialValue: role.nom,
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.description),
+                  hintText: 'Saisir nom du role',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'entrez la nom du role';
+                  }
+                  return null;
+                },
+                controller: editNomController,
+              ),
+            ],
           ),
         ),
         actions: <Widget>[
@@ -163,17 +182,20 @@ class _GererRoleState extends State<GererRole> {
             child: const Text('Annuler'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, 'Modifer'),
+            onPressed: () {
+              role.nom = editNomController.text;
+              editRole(role: role);
+              Navigator.pop(context, 'Modifer');
+            },
             child: const Text('Modifer'),
           ),
           TextButton(
             onPressed: () async {
               log(role.idRole.toString());
-              var _Rolet;
-              _Rolet = await ApiRole()
-                  .deleteRole(id: role.idRole.toString());
-              log("_Rolet::$_Rolet");
-               getData();
+              var _rolet;
+              _rolet = await ApiRole().deleteRole(id: role.idRole.toString());
+              log("_rolet::$_rolet");
+              getData();
               Navigator.pop(context, 'Supprimer');
             },
             child: const Text('Supprimer'),
@@ -187,9 +209,9 @@ class _GererRoleState extends State<GererRole> {
     );
   }
 
-  void getData() async { 
-    _role=await ApiRole().getAllRoles();
-    // _listeRole.clear(); 
+  void getData() async {
+    _role = await ApiRole().getAllRoles();
+    // _listeRole.clear();
 
     //log("_Role::$_Role");
     Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
@@ -199,7 +221,13 @@ class _GererRoleState extends State<GererRole> {
     role?.nom = nomController.text;
     await ApiRole().addRole(role: role);
 
-     getData();
+    getData();
+  }
+
+  editRole({Role? role}) async {
+    await ApiRole().updateRole(role: role);
+
+    getData();
   }
 
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
