@@ -5,7 +5,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/helpers/document_api.dart';
-import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
+import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
 import 'package:gestion_pfe/src/models/document.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -15,12 +15,12 @@ import '../../resize_widget.dart';
 class ProposerSujet extends StatefulWidget {
   String fonction;
   var etudiant;
-  var enseignant;
+  var encadrant;
 
   ProposerSujet({
     Key? key,
     required this.fonction,
-    this.enseignant,
+    this.encadrant,
     this.etudiant,
   }) : super(key: key);
   static const routeName = '/ProposerSujet';
@@ -29,8 +29,8 @@ class ProposerSujet extends StatefulWidget {
 }
 
 class _ProposerSujetState extends State<ProposerSujet> {
-  var _enseignant;
-  var _listeEnseignant = [''];
+  var _encadrant;
+  var _listeEncadrant = [''];
   String? value;
   File? _image;
   final picker = ImagePicker();
@@ -93,7 +93,7 @@ class _ProposerSujetState extends State<ProposerSujet> {
                         iconSize: 36,
                         icon: const Icon(Icons.arrow_drop_down,
                             color: Colors.black),
-                        items: _listeEnseignant
+                        items: _listeEncadrant
                             .map(buildMenuItem)
                             .toList(), //_items.map(buildMenuItem).toList(),
                         onChanged: (value) =>
@@ -115,11 +115,11 @@ class _ProposerSujetState extends State<ProposerSujet> {
                       document.datedepot =
                           "2022-06-30T12:57:27.000+00:00"; //DateFormat('yyyy-MM-dd hh:mm:ss.SSSS').format(DateTime.now()).toString();
                       document.description = descriptionController.text;
-                      // document.proprietaire = widget.fonction == "Enseignant"
-                      widget.fonction == "Enseignant"
-                          ? widget.enseignant.nom +
+                      // document.proprietaire = widget.fonction == "Encadrant"
+                      widget.fonction == "Encadrant"
+                          ? widget.encadrant.nom +
                               " " +
-                              widget.enseignant.prenom
+                              widget.encadrant.prenom
                           : widget.etudiant.nom +
                               " " +
                               widget.etudiant.prenom; // value ?? "";
@@ -141,14 +141,14 @@ class _ProposerSujetState extends State<ProposerSujet> {
   }
 
   void getData() async {
-    _enseignant = await ApiEnseignant().getEnseignant();
-    log("_enseignant::$_enseignant");
-    _listeEnseignant.clear();
-    _enseignant
-        .map((l) => {_listeEnseignant.add(l.nom + ' ' + l.prenom)})
+    _encadrant = await ApiEncadrant().getEncadrant();
+    log("_encadrant::$_encadrant");
+    _listeEncadrant.clear();
+    _encadrant
+        .map((l) => {_listeEncadrant.add(l.nom + ' ' + l.prenom)})
         .toList();
 
-    log("_listeEnseignant::$_listeEnseignant");
+    log("_listeEncadrant::$_listeEncadrant");
 
     Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }

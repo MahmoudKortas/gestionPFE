@@ -150,23 +150,23 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             Column(
               children: [
                 ListTile(
-                  title: Text("s1"),
+                  title:const Text("s1"),
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => gererSalle(),
+                        builder: (_) => const GererSalle(),
                       ),
                     );
                   },
                 ),
-                ListTile(
+                const ListTile(
                   title: Text("s2"),
                 ),
-                ListTile(
+                const ListTile(
                   title: Text("s3"),
                 ),
-                ListTile(
+                const ListTile(
                   title: Text("s4"),
                 ),
               ],

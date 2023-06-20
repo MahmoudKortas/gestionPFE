@@ -4,10 +4,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/consts.dart';
-import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
+import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
 import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
 import 'package:gestion_pfe/src/helpers/responsable.dart';
-import 'package:gestion_pfe/src/screens/accueil/accueil_enseignant.dart';
+import 'package:gestion_pfe/src/screens/accueil/accueil_encadrant.dart';
 import 'package:gestion_pfe/src/screens/accueil/accueil_etudiant.dart';
 import 'package:gestion_pfe/src/screens/authentification/inscription.dart';
 import 'package:gestion_pfe/src/screens/etudiant/enquete_satisfaction.dart';
@@ -29,7 +29,7 @@ class _AuthentificationState extends State<Authentification> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final motDePasseController = TextEditingController();
-  var _enseignant;
+  var _encadrant;
   var _etudiant;
   var _responsable;
   @override
@@ -185,10 +185,10 @@ class _AuthentificationState extends State<Authentification> {
   void getData() async {
     _responsable = await ApiResponsable().getAllResponsable();
     _etudiant = await ApiEtudiant().getAllEtudiants();
-    _enseignant = await ApiEnseignant().getAllEnseignant();
+    _encadrant = await ApiEncadrant().getAllEncadrant();
     debugPrint("_responsable::$_responsable");
     debugPrint("_etudiant::$_etudiant");
-    debugPrint("_enseignant::$_enseignant");
+    debugPrint("_encadrant::$_encadrant");
   }
 
   void verificationInscription({String? email = "", String? motDepasse = ""}) {
@@ -216,11 +216,11 @@ class _AuthentificationState extends State<Authentification> {
         );
       }
     }
-    for (var enseignant in _enseignant) {
+    for (var encadrant in _encadrant) {
       log("_");
-      if (enseignant.email == email && enseignant.motdepasse == motDepasse) {
-        Navigator.pushNamed(context, AccueilEnseignant.routeName,
-            arguments: AccueilEnseignant(enseignant: enseignant));
+      if (encadrant.email == email && encadrant.motdepasse == motDepasse) {
+        Navigator.pushNamed(context, AccueilEncadrant.routeName,
+            arguments: AccueilEncadrant(encadrant: encadrant));
       }
     }
     if (email!.contains("admin0") && motDepasse!.contains("admin0")) {

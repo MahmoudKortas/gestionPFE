@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, prefer_final_fields, no_leading_underscores_for_local_identifiers
 
 import 'dart:developer';
-import 'dart:io';
+// import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/helpers/Seance_api.dart';
-import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
-import 'package:image_picker/image_picker.dart'; 
+// import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
+// import 'package:image_picker/image_picker.dart';
 import '../../models/seance_model.dart';
 import '../../resize_widget.dart';
 
@@ -17,10 +17,11 @@ class GererSeance extends StatefulWidget {
 }
 
 class _GererSeanceState extends State<GererSeance> {
-  late List<Seance>? _seance = [];  
-  String? value; 
-  Seance? seance = Seance(); 
-  final descriptionController = TextEditingController();  
+  late List<Seance>? _seance = [];
+  String? value;
+  Seance? seance = Seance();
+  final descriptionController = TextEditingController();
+  final editNomController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -40,7 +41,7 @@ class _GererSeanceState extends State<GererSeance> {
           child: resiseWidget(
             context: context,
             child: Column(
-              children: [ 
+              children: [
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.description),
@@ -53,7 +54,7 @@ class _GererSeanceState extends State<GererSeance> {
                     return null;
                   },
                   controller: descriptionController,
-                ), 
+                ),
                 ElevatedButton(
                   // ignore: avoid_print
                   onPressed: () => addSeance(),
@@ -63,27 +64,29 @@ class _GererSeanceState extends State<GererSeance> {
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )
-                    :*/_seance!=null?
-                _seance!.isEmpty
-                    ? const Text("aucun Seance existe")
-                    : ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: _seance!.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            child: ListTile(
-                                title: Text(
-                                    _seance![index].Nom.toString()),
-                                subtitle: Text(
-                                    _seance![index].Nom.toString()),
-                                trailing: const Icon(Icons.more_vert),
-                                // isThreeLine: true,
-                                onTap: () => dialog(context, _seance![index])),
-                          );
-                        },
-                      ):const Text("aucun Seance existe null")
-                       /*Card(
+                    :*/
+                _seance != null
+                    ? _seance!.isEmpty
+                        ? const Text("aucun Seance existe")
+                        : ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: _seance!.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                child: ListTile(
+                                    title: Text(_seance![index].nom.toString()),
+                                    subtitle:
+                                        Text(_seance![index].nom.toString()),
+                                    trailing: const Icon(Icons.more_vert),
+                                    // isThreeLine: true,
+                                    onTap: () =>
+                                        dialog(context, _seance![index])),
+                              );
+                            },
+                          )
+                    : const Text("aucun Seance existe null")
+                /*Card(
                   child: ListTile(
                       /*leading: const CircleAvatar(
                       foregroundImage:
@@ -148,13 +151,28 @@ class _GererSeanceState extends State<GererSeance> {
   }
 
   Future<String?> dialog(BuildContext context, Seance seance) {
+    editNomController.text = seance.nom ?? "";
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
         title: const Text('Modifier / Supprimer Seance'),
         content: SingleChildScrollView(
           child: Column(
-            children: const [],
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.description),
+                  hintText: 'Saisir nom du seance',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'entrez la nom du seance';
+                  }
+                  return null;
+                },
+                controller: editNomController,
+              ),
+            ],
           ),
         ),
         actions: <Widget>[
@@ -163,17 +181,21 @@ class _GererSeanceState extends State<GererSeance> {
             child: const Text('Annuler'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, 'Modifer'),
+            onPressed: () {
+              seance.nom = editNomController.text;
+              editSeance(seance: seance);
+              Navigator.pop(context, 'Modifer');
+            },
             child: const Text('Modifer'),
           ),
           TextButton(
             onPressed: () async {
               log(seance.idSeance.toString());
-              var _Seancet;
-              _Seancet = await ApiSeance()
+              var seancet;
+              seancet = await ApiSeance()
                   .deleteSeance(id: seance.idSeance.toString());
-              log("_Seancet::$_Seancet");
-               getData();
+              log("_Seancet::$seancet");
+              getData();
               Navigator.pop(context, 'Supprimer');
             },
             child: const Text('Supprimer'),
@@ -187,19 +209,26 @@ class _GererSeanceState extends State<GererSeance> {
     );
   }
 
-  void getData() async { 
-    _seance=await ApiSeance().getAllSeances();
-    // _listeSeance.clear(); 
+  void getData() async {
+    _seance = await ApiSeance().getAllSeances();
+    // _listeSeance.clear();
 
     //log("_Seance::$_Seance");
     Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }
 
   addSeance() async {
-    seance?.Nom = descriptionController.text;
+    seance?.nom = descriptionController.text;
     await ApiSeance().addSeance(seance: seance);
 
-     getData();
+    getData();
+  }
+
+  editSeance({Seance? seance}) async {
+    //todo: fix update seance
+    // await ApiSeance().updateSeance(seance: seance);
+
+    getData();
   }
 
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(

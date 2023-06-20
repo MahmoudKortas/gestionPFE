@@ -54,7 +54,7 @@ class ApiResponsable {
         "departement": responsable?.departement?.idDep,
         "tel": responsable?.tel,
         "prenom": responsable?.prenom,
-        "date_responsabilite": responsable?.Date_responsabilite,
+        "date_responsabilite": responsable?.dateResponsabilite,
         "nom": responsable?.nom
     },
         ),
@@ -69,12 +69,43 @@ class ApiResponsable {
     }
     return null;
   }
-
+Future<List<Responsable>?> updateResponsable({Responsable? responsable}) async {
+    try {
+      var url = Uri.parse("${ApiConstants.baseUrl}${ApiConstants.responsable}update");
+      var response = await http.put(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(
+          {
+            "idDep": responsable?.idUser,
+            "Date_responsabilite": responsable?.dateResponsabilite,
+            // "departement": responsable?.departement,
+            "email": responsable?.email,
+            "motdepasse": responsable?.motdepasse,
+            "nom": responsable?.nom,
+            "prenom": responsable?.prenom,
+            "tel": responsable?.tel,
+          },
+        ),
+      );
+      log("updateResponsablestatusCode::${response.body}");
+      if (response.statusCode == 200) {
+        // List<Responsable> _model = ResponsableFromJson(response.body);
+        // return _model;
+      }
+    } catch (e) {
+      log("updateResponsableException:${e.toString()}");
+    }
+    return null;
+  }
   Future<List<Responsable>?> deleteResponsable({required String id}) async {
     try {
       var url =
           Uri.parse("${ApiConstants.baseUrl}${ApiConstants.responsable}$id");
-      var response = await http.delete(
+      // var response =
+       await http.delete(
         url,
       );
       // log("deleteResponsables::${response.body}");

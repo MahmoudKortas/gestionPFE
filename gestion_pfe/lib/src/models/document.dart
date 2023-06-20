@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'package:gestion_pfe/src/models/enseignant.dart';
+import 'package:gestion_pfe/src/models/encadrant.dart';
 import 'package:gestion_pfe/src/models/etudiant.dart';
 import 'package:gestion_pfe/src/models/responsable.dart';
 
@@ -24,7 +24,7 @@ class Document {
   String? photo; //file
   Etudiant? etudiant;
   Responsable? responsable;
-  Enseignant? enseignant;
+  Encadrant? encadrant;
 
   Document(
       {this.idDoc,
@@ -34,7 +34,7 @@ class Document {
       this.photo,
       this.etudiant,
       this.responsable,
-      this.enseignant});
+      this.encadrant});
 
   Document.fromJson(Map<String, dynamic> json) {
     idDoc = json['idDoc'];
@@ -47,8 +47,8 @@ class Document {
     responsable = json['responsable'] != null
         ? Responsable.fromJson(json['responsable'])
         : null;
-    enseignant = json['enseignant'] != null
-        ? Enseignant.fromJson(json['enseignant'])
+    encadrant = json['encadrant'] != null
+        ? Encadrant.fromJson(json['encadrant'])
         : null;
   }
 
@@ -61,12 +61,12 @@ class Document {
     data['photo'] = photo;
     data['etudiant'] = etudiant?.idEtud;
     data['responsable'] = responsable?.idUser;
-    data['enseignant'] = enseignant?.idEns;
+    data['encadrant'] = encadrant?.idEns;
     return data;
   }
 
   @override
   String toString() {
-    return 'Document(idDoc: $idDoc, titre: $titre, description: $description, dateDepot: $datedepot, photo: $photo, etudiant: $etudiant, responsable: $responsable, enseignant: $enseignant)';
+    return 'Document(idDoc: $idDoc, titre: $titre, description: $description, dateDepot: $datedepot, photo: $photo, etudiant: $etudiant, responsable: $responsable, encadrant: $encadrant)';
   }
 }

@@ -1,9 +1,9 @@
-import 'package:gestion_pfe/src/models/salle.dart';
-import 'enseignant.dart';
+// import 'package:gestion_pfe/src/models/salle.dart';
+import 'encadrant.dart';
 import 'document.dart';
 import 'etudiant.dart';
 import 'dart:convert';
-import 'seance_model.dart';
+// import 'seance_model.dart';
 
 List<PFE> pfeFromJson(String str) =>
     List<PFE>.from(json.decode(str).map((x) => PFE.fromJson(x)));
@@ -20,7 +20,7 @@ class PFE {
   String? domaine;
   double? note;
   Etudiant? etudiant;
-  Enseignant? encadreur;
+  Encadrant? encadreur;
   Document? document;
 
   PFE(
@@ -45,7 +45,7 @@ class PFE {
     etudiant =
         json['etudiant'] != null ? Etudiant.fromJson(json['etudiant']) : null;
     encadreur = json['encadreur'] != null
-        ? Enseignant.fromJson(json['encadreur'])
+        ? Encadrant.fromJson(json['encadreur'])
         : null;
  document =
         json['document'] != null ? Document.fromJson(json['document']) : null;

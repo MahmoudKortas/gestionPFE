@@ -7,7 +7,7 @@ import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_soutenance.da
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_specialite.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_sujets_pfe.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_etudiant.dart';
-import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_enseignants.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_encadrant.dart';
 
 import '../../resize_widget.dart';
 import '../calendar/events_example.dart';
@@ -84,7 +84,7 @@ class Dashboard extends StatelessWidget {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                    title: const Text(' enseignant'),
+                    title: const Text(' encadrant'),
                     subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),
                     trailing: const Icon(Icons.more_vert),
@@ -95,7 +95,7 @@ class Dashboard extends StatelessWidget {
                       // background, the navigation stack is restored.
                       Navigator.restorablePushNamed(
                         context,
-                        GererEnseignant.routeName,
+                        GererEncadrant.routeName,
                       );
                     },
                   ),

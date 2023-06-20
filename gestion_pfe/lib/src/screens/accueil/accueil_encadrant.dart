@@ -2,34 +2,34 @@
 
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/icon_widget.dart';
-import 'package:gestion_pfe/src/models/enseignant.dart';
+import 'package:gestion_pfe/src/models/encadrant.dart';
 
 import '../../resize_widget.dart';
 import '../calendar/events_example.dart';
-import '../enseignant/gerer_demande_des_sujets.dart';
+import '../encadrant/gerer_demande_des_sujets.dart';
 import '../subjects/proposer_sujet.dart';
 
 /// Displays detailed information about a SampleItem.
-class AccueilEnseignant extends StatefulWidget {
-  Enseignant enseignant;
-  AccueilEnseignant({
+class AccueilEncadrant extends StatefulWidget {
+  Encadrant encadrant;
+  AccueilEncadrant({
     Key? key,
-    required this.enseignant,
+    required this.encadrant,
   }) : super(key: key);
 
-  static const routeName = '/AccueilEnseignant';
+  static const routeName = '/AccueilEncadrant';
    @override
-  State<AccueilEnseignant> createState() => _AccueilEnseignantState();
+  State<AccueilEncadrant> createState() => _AccueilEncadrantState();
 }
 
-class _AccueilEnseignantState extends State<AccueilEnseignant> {
+class _AccueilEncadrantState extends State<AccueilEncadrant> {
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bonjour Enseignant'),
+        title: const Text('Bonjour Encadrant'),
       ),
       body: SingleChildScrollView(
         // controller: controller,
@@ -43,16 +43,16 @@ class _AccueilEnseignantState extends State<AccueilEnseignant> {
                     leading: iconWidget(Icons.add_chart),
                     title: const Text('Proposer votre sujet'),
                     // subtitle: const Text(
-                    // 'A sufficiently long subtitle warrants three lines.'),
+                    // 'A sufficiently long subtitle warrants thre lines.'),
                     trailing: const Icon(Icons.more_vert),
-                    //isThreeLine: true,
+                    //isThreLine: true,
                     onTap: () {
                       Navigator.pushNamed(
                         context,
                         ProposerSujet.routeName,
                         arguments: ProposerSujet(
-                          fonction: 'Enseignant',
-                          enseignant: widget.enseignant,
+                          fonction: 'Encadrant',
+                          encadrant: widget.encadrant,
                         ),
                       );
                     },
@@ -63,14 +63,14 @@ class _AccueilEnseignantState extends State<AccueilEnseignant> {
                     leading: iconWidget(Icons.calendar_month),
                     title: const Text('Consulter le planning du PFE'),
                     // subtitle: const Text(
-                    // 'A sufficiently long subtitle warrants three lines.'),
+                    // 'A sufficiently long subtitle warrants thre lines.'),
                     trailing: const Icon(Icons.more_vert),
-                    //isThreeLine: true,
+                    //isThreLine: true,
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => TableEventsExample(fonction: 'enseignant',),
+                          builder: (_) => TableEventsExample(fonction: 'encadrant',),
                         ),
                       );
                       /*Navigator.restorablePushNamed(
@@ -85,12 +85,12 @@ class _AccueilEnseignantState extends State<AccueilEnseignant> {
                     leading: iconWidget(Icons.offline_pin),
                     title: const Text('Gerer demande des sujets PFE'),
                     // subtitle: const Text(
-                    // 'A sufficiently long subtitle warrants three lines.'),
+                    // 'A sufficiently long subtitle warrants thre lines.'),
                     trailing: const Icon(Icons.more_vert),
-                    //isThreeLine: true,
+                    //isThreLine: true,
                     onTap: () {
                       // Navigate to the details page. If the user leaves and returns to
-                      // the app after it has been killed while running in the
+                      // the app after it has ben killed while running in the
                       // background, the navigation stack is restored.
                       Navigator.restorablePushNamed(
                         context,

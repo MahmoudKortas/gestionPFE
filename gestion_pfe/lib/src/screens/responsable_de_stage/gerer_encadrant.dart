@@ -1,20 +1,20 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/helpers/departement.dart';
-import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
+import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
 import 'package:gestion_pfe/src/models/departement.dart';
-import '../../models/enseignant.dart';
+import '../../models/encadrant.dart';
 import '../../resize_widget.dart';
 
-class GererEnseignant extends StatefulWidget {
-  const GererEnseignant({Key? key}) : super(key: key);
-  static const routeName = '/GererEnseignant';
+class GererEncadrant extends StatefulWidget {
+  const GererEncadrant({Key? key}) : super(key: key);
+  static const routeName = '/GererEncadrant';
   @override
-  State<GererEnseignant> createState() => _GererEnseignantState();
+  State<GererEncadrant> createState() => _GererEncadrantState();
 }
 
-class _GererEnseignantState extends State<GererEnseignant> {
-  late List<Enseignant>? _enseignant = [];
+class _GererEncadrantState extends State<GererEncadrant> {
+  late List<Encadrant>? _encadrant = [];
   final _items = [
     'informatique',
     'Mecanique',
@@ -53,7 +53,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(' enseignants'),
+        title: const Text(' encadrants'),
       ),
       body: SingleChildScrollView(
         //  controller: controller,
@@ -69,11 +69,11 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.person),
-                    hintText: "Nom de l'enseignant",
+                    hintText: "Nom de l'encadrant",
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "Entrez le nom de l'enseignant";
+                      return "Entrez le nom de l'encadrant";
                     }
                     return null;
                   },
@@ -85,11 +85,11 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.person),
-                    hintText: "Prénom de l'enseignant",
+                    hintText: "Prénom de l'encadrant",
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "Entrez le prenom de l'enseignant";
+                      return "Entrez le prenom de l'encadrant";
                     }
                     return null;
                   },
@@ -101,11 +101,11 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.phone),
-                    hintText: "Numero du telephone de l'enseignant",
+                    hintText: "Numero du telephone de l'encadrant",
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "Entrez le numero du telephone de l'enseignant";
+                      return "Entrez le numero du telephone de l'encadrant";
                     }
                     return null;
                   },
@@ -117,11 +117,11 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.location_city),
-                    hintText: "Adresse de l'enseignant",
+                    hintText: "Adresse de l'encadrant",
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "Entrez l'adresse de l'enseignant";
+                      return "Entrez l'adresse de l'encadrant";
                     }
                     return null;
                   },
@@ -133,11 +133,11 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.email),
-                    hintText: "Email de l'enseignant",
+                    hintText: "Email de l'encadrant",
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "Entrez l'email de l'enseignant";
+                      return "Entrez l'email de l'encadrant";
                     }
                     return null;
                   },
@@ -152,18 +152,18 @@ class _GererEnseignantState extends State<GererEnseignant> {
                   autocorrect: false,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.lock),
-                    hintText: "Mot de passe de l'enseignant",
+                    hintText: "Mot de passe de l'encadrant",
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "Entrez le mot de passe de l'enseignant";
+                      return "Entrez le mot de passe de l'encadrant";
                     }
                     return null;
                   },
                   controller: motDePasseController,
                 ),
                 DropdownButton<String>(
-                  hint: const Text("Domaine de l'enseignant"),
+                  hint: const Text("Domaine de l'encadrant"),
                   value: domaineValue,
                   iconSize: 36,
                   icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
@@ -211,12 +211,12 @@ class _GererEnseignantState extends State<GererEnseignant> {
                         child: CircularProgressIndicator(),
                       )
                     :*/
-                _enseignant!.isEmpty
-                    ? const Text("aucun enseignant existe")
+                _encadrant!.isEmpty
+                    ? const Text("aucun encadrant existe")
                     : ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: _enseignant!.length,
+                        itemCount: _encadrant!.length,
                         itemBuilder: (context, index) {
                           return Card(
                             child: ListTile(
@@ -225,13 +225,13 @@ class _GererEnseignantState extends State<GererEnseignant> {
                                   AssetImage('assets/images/flutter_logo.png'),
                                   ),*/
                               title: Text(
-                                  "${_enseignant![index].prenom} ${_enseignant![index].nom}"),
+                                  "${_encadrant![index].prenom} ${_encadrant![index].nom}"),
                               subtitle:
-                                  Text(_enseignant![index].adresse.toString()),
+                                  Text(_encadrant![index].adresse.toString()),
                               trailing: const Icon(Icons.more_vert),
                               isThreeLine: true,
                               onTap: () {
-                                dialog(context, _enseignant![index]);
+                                dialog(context, _encadrant![index]);
                               },
                             ),
                           );
@@ -245,14 +245,14 @@ class _GererEnseignantState extends State<GererEnseignant> {
     );
   }
 
-  Future<String?> dialog(BuildContext context, Enseignant enseignant) {
-    domaineValue = enseignant.domaine.toString();
-    log("_enseignant::$_enseignant");
+  Future<String?> dialog(BuildContext context, Encadrant encadrant) {
+    domaineValue = encadrant.domaine.toString();
+    log("_encadrant::$_encadrant");
     //log("$nomvalue $prenomvalue $telephonevalue $adressevalue $emailvalue $passwordvalue $domaineValue");
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Modifier / Supprimer Enseignant'),
+        title: const Text('Modifier / Supprimer Encadrant'),
         content: SingleChildScrollView(
           child: Column(
             children: [
@@ -262,7 +262,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
               TextFormField(
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.person),
-                  hintText: enseignant.nom,
+                  hintText: encadrant.nom,
                 ),
                 validator: (nomvalue) {
                   if (nomvalue == null || nomvalue.isEmpty) {
@@ -281,7 +281,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
               TextFormField(
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.person),
-                  hintText: enseignant.prenom,
+                  hintText: encadrant.prenom,
                 ),
                 validator: (prenomvalue) {
                   if (prenomvalue == null || prenomvalue.isEmpty) {
@@ -300,7 +300,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
               TextFormField(
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.phone),
-                  hintText: enseignant.tel.toString(),
+                  hintText: encadrant.tel.toString(),
                 ),
                 validator: (telephonevalue) {
                   if (telephonevalue == null || telephonevalue.isEmpty) {
@@ -319,7 +319,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
               TextFormField(
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.location_city),
-                  hintText: enseignant.adresse,
+                  hintText: encadrant.adresse,
                 ),
                 validator: (adressevalue) {
                   if (adressevalue == null || adressevalue.isEmpty) {
@@ -338,7 +338,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
               TextFormField(
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.email),
-                  hintText: enseignant.email,
+                  hintText: encadrant.email,
                 ),
                 validator: (emailvalue) {
                   if (emailvalue == null || emailvalue.isEmpty) {
@@ -360,7 +360,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
                 autocorrect: false,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock),
-                  hintText: enseignant.motdepasse,
+                  hintText: encadrant.motdepasse,
                 ),
                 validator: (passwordvalue) {
                   if (passwordvalue == null || passwordvalue.isEmpty) {
@@ -410,8 +410,8 @@ class _GererEnseignantState extends State<GererEnseignant> {
             onPressed: () {
               log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text} $domaineValue");
 
-              editEnseignant(
-                  id: enseignant.idEns.toString(),
+              editEncadrant(
+                  id: encadrant.idEns.toString(),
                   nom: nomController.text,
                   prenom: prenomController.text,
                   telephone: telephoneController.text,
@@ -424,7 +424,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
           ),
           TextButton(
             onPressed: () {
-              deleteEnseignant(id: enseignant.idEns);
+              deleteEncadrant(id: encadrant.idEns);
               Navigator.pop(context, 'Supprimer');
             },
             child: const Text('Supprimer'),
@@ -440,12 +440,12 @@ class _GererEnseignantState extends State<GererEnseignant> {
 
   void getData() async {
     await Future.wait([
-      ApiEnseignant().getAllEnseignant(),
+      ApiEncadrant().getAllEncadrant(),
       ApiDepartement().getAllDepartements(),
     ]).then((value) async {
-      log("get enseignant");
-      _enseignant = value[0]?.cast<Enseignant>();
-      log("_enseignant::$_enseignant");
+      log("get encadrant");
+      _encadrant = value[0]?.cast<Encadrant>();
+      log("_encadrant::$_encadrant");
       Future.delayed(const Duration(seconds: 0))
           .then((value) => setState(() {}));
     });
@@ -466,8 +466,8 @@ class _GererEnseignantState extends State<GererEnseignant> {
     //await ApiService().deleteEtudiants("17");
     // await ApiService().addEtudiants();
     // await ApiService().addDocument();
-    log("addEnseignant");
-    await ApiEnseignant().addEnseignant(
+    log("addEncadrant");
+    await ApiEncadrant().addEncadrant(
         nom: nom,
         prenom: prenom,
         telephone: telephone,
@@ -479,7 +479,7 @@ class _GererEnseignantState extends State<GererEnseignant> {
     getData();
   }
 
-  void editEnseignant(
+  void editEncadrant(
       {String? id = "",
       String? nom = "",
       String? prenom = "",
@@ -489,8 +489,8 @@ class _GererEnseignantState extends State<GererEnseignant> {
       String? email = "",
       String? motDePasse = "",
       String? departement = ""}) async {
-    log("editEnseignant");
-    await ApiEnseignant().editEnseignant(
+    log("editEncadrant");
+    await ApiEncadrant().editEncadrant(
         id: id,
         nom: nom,
         prenom: prenom,
@@ -503,9 +503,9 @@ class _GererEnseignantState extends State<GererEnseignant> {
     getData();
   }
 
-  void deleteEnseignant({int? id}) async {
-    log("deleteEnseignant");
-    await ApiEnseignant().deleteEnseignant(id.toString());
+  void deleteEncadrant({int? id}) async {
+    log("deleteEncadrant");
+    await ApiEncadrant().deleteEncadrant(id.toString());
     getData();
   }
 

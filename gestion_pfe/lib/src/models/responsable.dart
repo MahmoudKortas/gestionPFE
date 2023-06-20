@@ -16,7 +16,7 @@ class Responsable {
   String? tel;//
   String? prenom;//
   String? nom;//
-  String? Date_responsabilite;//
+  String? dateResponsabilite;//
 
   Responsable(
       {this.idUser,
@@ -26,7 +26,7 @@ class Responsable {
       this.tel,
       this.prenom,
       this.nom,
-      this.Date_responsabilite});
+      this.dateResponsabilite});
 
   Responsable.fromJson(Map<String, dynamic> json) {
     idUser = json['idUser'];
@@ -36,7 +36,7 @@ class Responsable {
     tel = json['tel'];
     prenom = json['prenom'];
     nom = json['nom'];
-    Date_responsabilite = json['Date_responsabilite'];
+    dateResponsabilite = json['Date_responsabilite'];
   }
 
   Map<String, dynamic> toJson() {
@@ -48,12 +48,12 @@ class Responsable {
     data['tel'] = tel;
     data['prenom'] = prenom;
     data['nom'] = nom;
-    data['Date_responsabilite'] = Date_responsabilite;
+    data['Date_responsabilite'] = dateResponsabilite;
     return data;
   }
 
   @override
   String toString() {
-    return 'Responsable(idUser: $idUser, email: $email, motdepasse: $motdepasse, departement: $departement, tel: $tel, prenom: $prenom, nom: $nom, Date_responsabilite: $Date_responsabilite)';
+    return 'Responsable(idUser: $idUser, email: $email, motdepasse: $motdepasse, departement: $departement, tel: $tel, prenom: $prenom, nom: $nom, Date_responsabilite: $dateResponsabilite)';
   }
 }

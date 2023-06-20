@@ -1,18 +1,18 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:gestion_pfe/src/models/enseignant.dart';
+import 'package:gestion_pfe/src/models/encadrant.dart';
 import 'package:http/http.dart' as http;
 import '../constants/constants.dart';
 
-class ApiEnseignant {
-  Future<List<Enseignant>?> getAllEnseignant() async {
+class ApiEncadrant {
+  Future<List<Encadrant>?> getAllEncadrant() async {
     try {
       var url =
-          Uri.parse(ApiConstants.baseUrl + ApiConstants.enseignants + ApiConstants.all);
+          Uri.parse(ApiConstants.baseUrl + ApiConstants.encadrants + ApiConstants.all);
 
       var response = await http.get(url);
       if (response.statusCode == 200) {
-        List<Enseignant> model = enseignantFromJson(response.body);
+        List<Encadrant> model = encadrantFromJson(response.body);
         return model;
       }
     } catch (e) {
@@ -20,14 +20,14 @@ class ApiEnseignant {
     }
     return null;
   }
-  Future<List<Enseignant>?> getEnseignant({String? id = ""}) async {
+  Future<List<Encadrant>?> getEncadrant({String? id = ""}) async {
     try {
       var url =
-          Uri.parse(ApiConstants.baseUrl + ApiConstants.enseignants + id!);
+          Uri.parse(ApiConstants.baseUrl + ApiConstants.encadrants + id!);
 
       var response = await http.get(url);
       if (response.statusCode == 200) {
-        List<Enseignant> model = enseignantFromJson(response.body);
+        List<Encadrant> model = encadrantFromJson(response.body);
         return model;
       }
     } catch (e) {
@@ -36,7 +36,7 @@ class ApiEnseignant {
     return null;
   }
 
-  Future<List<Enseignant>?> addEnseignant({
+  Future<List<Encadrant>?> addEncadrant({
     String? nom = "",
     String? prenom = "",
     String? telephone = "",
@@ -48,7 +48,7 @@ class ApiEnseignant {
   }) async {
     try {
       var url =
-          Uri.parse("${ApiConstants.baseUrl}${ApiConstants.enseignants}add");
+          Uri.parse("${ApiConstants.baseUrl}${ApiConstants.encadrants}add");
       var response = await http.post(
         url,
         headers: <String, String>{
@@ -67,10 +67,10 @@ class ApiEnseignant {
           },
         ),
       );
-      // log("addEnseignant::${response.body}");
+      // log("addEncadrant::${response.body}");
       if (response.statusCode == 200) {
-        List<Enseignant> _model = enseignantFromJson(response.body);
-        return _model;
+        List<Encadrant> model = encadrantFromJson(response.body);
+        return model;
       }
     } catch (e) {
       log(e.toString());
@@ -78,7 +78,7 @@ class ApiEnseignant {
     return null;
   }
 
-  Future<List<Enseignant>?> editEnseignant({    
+  Future<List<Encadrant>?> editEncadrant({    
     String? id = "",
     String? nom = "",
     String? prenom = "",
@@ -91,7 +91,7 @@ class ApiEnseignant {
   }) async {
     try {
       var url =
-          Uri.parse("${ApiConstants.baseUrl}${ApiConstants.enseignants}add");
+          Uri.parse("${ApiConstants.baseUrl}${ApiConstants.encadrants}add");
       var response = await http.post(
         url,
         headers: <String, String>{
@@ -111,25 +111,26 @@ class ApiEnseignant {
           },
         ),
       );
-      // log("addEnseignant::${response.body}");
+      // log("addEncadrant::${response.body}");
       if (response.statusCode == 200) {
-        List<Enseignant> _model = enseignantFromJson(response.body);
-        return _model;
+        List<Encadrant> model = encadrantFromJson(response.body);
+        return model;
       }
     } catch (e) {
-      log("editEnseignant::${e.toString()}");
+      log("editEncadrant::${e.toString()}");
     }
     return null;
   }
 
-  Future<List<Enseignant>?> deleteEnseignant(String? id) async {
+  Future<List<Encadrant>?> deleteEncadrant(String? id) async {
     try {
       var url =
-          Uri.parse("${ApiConstants.baseUrl}${ApiConstants.enseignants}$id");
-      var response = await http.delete(
+          Uri.parse("${ApiConstants.baseUrl}${ApiConstants.encadrants}$id");
+      // var response = 
+      await http.delete(
         url,
       );
-      // log("deleteEnseignant::${response.body}");
+      // log("deleteEncadrant::${response.body}");
     } catch (e) {
       log(e.toString());
     }

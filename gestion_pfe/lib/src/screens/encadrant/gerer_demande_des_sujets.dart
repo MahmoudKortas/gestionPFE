@@ -59,7 +59,7 @@ class _GererDemandeDesSujetsPFEState extends State<GererDemandeDesSujetsPFE> {
                                   DetailSujet.routeName,
                                   arguments: DetailSujet(
                                     doc: _document[index],
-                                    fonction: "enseignant",
+                                    fonction: "encadrant",
                                   ),
                                 );
                               },
@@ -82,7 +82,7 @@ class _GererDemandeDesSujetsPFEState extends State<GererDemandeDesSujetsPFE> {
                     onTap: () {
                       Navigator.pushNamed(context, DetailSujet.routeName,
                           arguments: DetailSujet(
-                            fonction: "enseignant",
+                            fonction: "encadrant",
                           ));
                     },
                   ),
@@ -101,7 +101,7 @@ class _GererDemandeDesSujetsPFEState extends State<GererDemandeDesSujetsPFE> {
                     onTap: () {
                       Navigator.pushNamed(context, DetailSujet.routeName,
                           arguments: DetailSujet(
-                            fonction: "enseignant",
+                            fonction: "encadrant",
                           ));
                     },
                   ),
@@ -120,7 +120,7 @@ class _GererDemandeDesSujetsPFEState extends State<GererDemandeDesSujetsPFE> {
                     onTap: () {
                       Navigator.pushNamed(context, DetailSujet.routeName,
                           arguments: DetailSujet(
-                            fonction: "enseignant",
+                            fonction: "encadrant",
                           ));
                     },
                   ),
@@ -139,7 +139,7 @@ class _GererDemandeDesSujetsPFEState extends State<GererDemandeDesSujetsPFE> {
                     onTap: () {
                       Navigator.pushNamed(context, DetailSujet.routeName,
                           arguments: DetailSujet(
-                            fonction: "enseignant",
+                            fonction: "encadrant",
                           ));
                     },
                   ),

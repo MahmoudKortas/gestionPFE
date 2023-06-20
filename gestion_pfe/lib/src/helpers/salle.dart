@@ -61,12 +61,37 @@ class ApiSalle {
     return null;
   }
 
-
+Future<List<Salle>?> updateSalle({Salle? salle}) async {
+    try {
+      var url = Uri.parse("${ApiConstants.baseUrl}${ApiConstants.salle}update");
+      var response = await http.put(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(
+          {
+            "idSalle": salle?.idSalle,
+            "nom": salle?.nom,
+          },
+        ),
+      );
+      log("updateSallestatusCode::${response.body}");
+      if (response.statusCode == 200) {
+        // List<Salle> _model = SalleFromJson(response.body);
+        // return _model;
+      }
+    } catch (e) {
+      log("updateSalleException:${e.toString()}");
+    }
+    return null;
+  }
   Future<List<Salle>?> deleteSalle({required String id}) async {
     try {
       var url =
           Uri.parse("${ApiConstants.baseUrl}${ApiConstants.salle}$id");
-      var response = await http.delete(
+      // var response = 
+      await http.delete(
         url,
       );
       // log("deleteSalles::${response.body}");

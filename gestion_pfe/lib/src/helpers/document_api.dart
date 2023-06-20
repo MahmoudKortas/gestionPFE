@@ -51,7 +51,8 @@ class ApiDocument {
         ..fields['Document'] = json.encode(document.toJson())
         ..headers.addAll(headers)
         ..files.add(await http.MultipartFile.fromPath('file', filepath!));
-      var response = await request.send();
+      // var response =
+      await request.send();
       log(request.fields.toString());
     } catch (e) {
       debugPrint("addDocument-exception1::${e.toString()}");
@@ -70,6 +71,40 @@ class ApiDocument {
       } catch (e) {
         debugPrint("addDocument-exception2::${e.toString()}");
       }
+    }
+    return null;
+  }
+
+  Future<List<Document>?> updateDocument({Document? document}) async {
+    try {
+      var url =
+          Uri.parse("${ApiConstants.baseUrl}${ApiConstants.document}update");
+      var response = await http.put(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(
+          {
+            "idDoc": document?.idDoc,
+            "titre": document?.titre,
+            "datedepot": document?.datedepot,
+            "description": document?.description,
+            //TODO:comlete this attributes
+            // "encadrant": document?.encadrant,
+            // "etudiant": document?.etudiant,
+            // "photo": document?.photo,
+            // "responsable": document?.responsable,
+          },
+        ),
+      );
+      log("updateDocumentstatusCode::${response.body}");
+      if (response.statusCode == 200) {
+        // List<Document> _model = DocumentFromJson(response.body);
+        // return _model;
+      }
+    } catch (e) {
+      log("updateDocumentException:${e.toString()}");
     }
     return null;
   }

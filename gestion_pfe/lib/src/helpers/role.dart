@@ -90,7 +90,8 @@ class ApiRole {
   Future<List<Role>?> deleteRole({required String id}) async {
     try {
       var url = Uri.parse("${ApiConstants.baseUrl}${ApiConstants.role}$id");
-      var response = await http.delete(
+      // var response = 
+      await http.delete(
         url,
       );
       // log("deleteRoles::${response.body}");

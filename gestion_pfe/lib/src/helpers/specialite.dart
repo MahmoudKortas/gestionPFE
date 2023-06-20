@@ -61,12 +61,38 @@ class ApiSpecialite {
     }
     return null;
   }
+  Future<List<Specialite>?> updateSpecialite({Specialite? specialite}) async {
+    try {
+      var url = Uri.parse("${ApiConstants.baseUrl}${ApiConstants.specialite}update");
+      var response = await http.put(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(
+          {
+            "idSpecialite": specialite?.idSpecialite,
+            "nom": specialite?.nom,
+          },
+        ),
+      );
+      log("updateSpecialitestatusCode::${response.body}");
+      if (response.statusCode == 200) {
+        // List<Specialite> _model = SpecialiteFromJson(response.body);
+        // return _model;
+      }
+    } catch (e) {
+      log("updateSpecialiteException:${e.toString()}");
+    }
+    return null;
+  }
 
   Future<List<Specialite>?> deleteSpecialite({required String id}) async {
     try {
       var url =
           Uri.parse("${ApiConstants.baseUrl}${ApiConstants.specialite}$id");
-      var response = await http.delete(
+      // var response =
+       await http.delete(
         url,
       );
       // log("deleteSpecialites::${response.body}");

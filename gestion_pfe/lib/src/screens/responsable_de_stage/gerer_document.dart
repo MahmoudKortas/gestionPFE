@@ -4,13 +4,13 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/helpers/document_api.dart';
-import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
+import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
 import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
 import 'package:gestion_pfe/src/helpers/responsable.dart';
 import 'package:gestion_pfe/src/models/responsable.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../models/document.dart';
-import '../../models/enseignant.dart';
+import '../../models/encadrant.dart';
 import '../../models/etudiant.dart';
 import '../../resize_widget.dart';
 
@@ -23,13 +23,13 @@ class GererDocument extends StatefulWidget {
 
 class _GererDocumentState extends State<GererDocument> {
   var _document;
-  var _enseignant;
-  var _listeEnseignant = [''];
+  var _encadrant;
+  var _listeEncadrant = [''];
   var _responsable;
   var _listeResponsable = [''];
   var _etudiant;
   var _listeEtudiant = [''];
-  String? valueEnseignant;
+  String? valueEncadrant;
   String? valueResponsable;
   String? valueEtudiant;
   File? _image;
@@ -38,6 +38,8 @@ class _GererDocumentState extends State<GererDocument> {
   final dateController = TextEditingController();
   final descriptionController = TextEditingController();
   final titreController = TextEditingController();
+   final editTitreController = TextEditingController();
+   final editDescriptionController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -98,13 +100,13 @@ class _GererDocumentState extends State<GererDocument> {
                 ),
                 DropdownButton<String>(
                   hint: const Text("choisir l'encadrant"),
-                  value: valueEnseignant,
+                  value: valueEncadrant,
                   iconSize: 36,
                   icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                  items: _listeEnseignant
+                  items: _listeEncadrant
                       .map(buildMenuItem)
                       .toList(), //_items.map(buildMenuItem).toList(),
-                  onChanged: (value) => setState(() => valueEnseignant = value),
+                  onChanged: (value) => setState(() => valueEncadrant = value),
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                 ),
                 const SizedBox(
@@ -228,8 +230,10 @@ class _GererDocumentState extends State<GererDocument> {
       ),
     );
   }
-
+//TODO: fix edit document
   Future<String?> dialog(BuildContext context, Document document) {
+    editTitreController.text = document.titre ?? "";
+    editDescriptionController.text = document.description ?? "";
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -241,6 +245,32 @@ class _GererDocumentState extends State<GererDocument> {
                   "http://10.0.2.2:8080/api/document/image/${document.idDoc}"),
 
               // Image.asset("assets/images/logo-epi.png"),
+              TextFormField(
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.description),
+                  hintText: 'Saisir titre du document',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'entrez le titre du document';
+                  }
+                  return null;
+                },
+                controller: editTitreController,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.description),
+                  hintText: 'Saisir description du document',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'entrez la description du document';
+                  }
+                  return null;
+                },
+                controller: editDescriptionController,
+              ),
             ],
           ),
         ),
@@ -250,7 +280,12 @@ class _GererDocumentState extends State<GererDocument> {
             child: const Text('Annuler'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, 'Modifer'),
+            onPressed: () {
+              document.titre = editTitreController.text;
+              document.description = editDescriptionController.text;
+              editDocument(document: document);
+              Navigator.pop(context, 'Modifer');
+            },
             child: const Text('Modifer'),
           ),
           TextButton(
@@ -277,12 +312,12 @@ class _GererDocumentState extends State<GererDocument> {
   void getData() async {
     await Future.wait([
       ApiEtudiant().getAllEtudiants(),
-      ApiEnseignant().getAllEnseignant(),
+      ApiEncadrant().getAllEncadrant(),
       ApiResponsable().getAllResponsable(),
       ApiDocument().getAllDocument(),
     ]).then((value) async {
       _etudiant = value[0]?.cast<Etudiant?>();
-      _enseignant = value[1]?.cast<Enseignant?>();
+      _encadrant = value[1]?.cast<Encadrant?>();
       _responsable = value[2]?.cast<Responsable?>();
       _document = value[3]?.cast<Document?>();
 
@@ -291,9 +326,9 @@ class _GererDocumentState extends State<GererDocument> {
           .map((l) => {_listeEtudiant.add(l.nom + ' ' + l.prenom)})
           .toList();
 
-      _listeEnseignant.clear();
-      _enseignant
-          .map((l) => {_listeEnseignant.add(l.nom + ' ' + l.prenom)})
+      _listeEncadrant.clear();
+      _encadrant
+          .map((l) => {_listeEncadrant.add(l.nom + ' ' + l.prenom)})
           .toList();
 
       _listeResponsable.clear();
@@ -301,7 +336,7 @@ class _GererDocumentState extends State<GererDocument> {
           .map((l) => {_listeResponsable.add(l.nom + ' ' + l.prenom)})
           .toList();
 
-      log("_enseignant::$_enseignant");
+      log("_encadrant::$_encadrant");
       log("_etudiant::$_etudiant");
       log("Document::$_document");
       Future.delayed(const Duration(seconds: 0))
@@ -314,14 +349,18 @@ class _GererDocumentState extends State<GererDocument> {
     document.titre = titreController.text;
     document.datedepot = DateTime.now().toString();
     document.photo = "e";
-    document.enseignant = _enseignant;
+    document.encadrant = _encadrant;
     document.responsable = _responsable;
     document.etudiant = _etudiant;
     await ApiDocument().addDocument(document: document, filepath: _image!.path);
 
     getData();
   }
+editDocument({Document? document}) async {
+    await ApiDocument().updateDocument(document: document);
 
+    getData();
+  }
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
         value: item,
         child: Text(

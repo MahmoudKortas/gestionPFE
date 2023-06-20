@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, prefer_final_fields, no_leading_underscores_for_local_identifiers
 
 import 'dart:developer';
-import 'dart:io';
+// import 'dart:io';
 import 'package:flutter/material.dart'; 
-import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
-import 'package:image_picker/image_picker.dart';  
+// import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
+// import 'package:image_picker/image_picker.dart';  
 import '../../helpers/salle.dart';
 import '../../models/salle.dart';
 import '../../resize_widget.dart';
@@ -21,6 +21,7 @@ class _GererSalleState extends State<GererSalle> {
   String? value; 
   Salle? salle = Salle(); 
   final descriptionController = TextEditingController();  
+  final editNomController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -148,13 +149,26 @@ class _GererSalleState extends State<GererSalle> {
   }
 
   Future<String?> dialog(BuildContext context, Salle salle) {
-    return showDialog<String>(
+     editNomController.text = salle.nom ?? "";
+   return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
         title: const Text('Modifier / Supprimer Salle'),
         content: SingleChildScrollView(
           child: Column(
-            children: const [],
+            children:   [TextFormField(
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.description),
+                  hintText: 'Saisir nom du salle',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'entrez la nom du salle';
+                  }
+                  return null;
+                },
+                controller: editNomController,
+              ),],
           ),
         ),
         actions: <Widget>[
@@ -163,16 +177,20 @@ class _GererSalleState extends State<GererSalle> {
             child: const Text('Annuler'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, 'Modifer'),
+            onPressed: () {
+              salle.nom = editNomController.text;
+              editSalle(salle: salle);
+              Navigator.pop(context, 'Modifer');
+            },
             child: const Text('Modifer'),
           ),
           TextButton(
             onPressed: () async {
               log(salle.idSalle.toString());
-              var _Sallet;
-              _Sallet = await ApiSalle()
-                  .deleteSalle(id: salle.idSalle.toString());
-              log("_Sallet::$_Sallet");
+              var sallee;
+              sallee = await ApiSalle()
+                  .deleteSalle(id: sallee.idSalle.toString());
+              log("_Sallet::$salle");
                getData();
               Navigator.pop(context, 'Supprimer');
             },
@@ -201,7 +219,11 @@ class _GererSalleState extends State<GererSalle> {
 
      getData();
   }
+  editSalle({Salle? salle}) async {
+    await ApiSalle().updateSalle(salle: salle);
 
+    getData();
+  }
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
         value: item,
         child: Text(

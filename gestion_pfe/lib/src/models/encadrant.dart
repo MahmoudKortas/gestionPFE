@@ -1,19 +1,19 @@
 // To parse this JSON data, do
 //
-//     final enseignant = enseignantFromJson(jsonString);
+//     final encadrant = encadrantFromJson(jsonString);
 
 import 'dart:convert';
 
 import 'package:gestion_pfe/src/models/departement.dart';
 
-List<Enseignant> enseignantFromJson(String str) =>
-    List<Enseignant>.from(json.decode(str).map((x) => Enseignant.fromJson(x)));
+List<Encadrant> encadrantFromJson(String str) =>
+    List<Encadrant>.from(json.decode(str).map((x) => Encadrant.fromJson(x)));
 
-String enseignantToJson(List<Enseignant> data) =>
+String encadrantToJson(List<Encadrant> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class Enseignant {
-  Enseignant({
+class Encadrant {
+  Encadrant({
     this.idEns,
     this.nom,
     this.prenom,
@@ -35,7 +35,7 @@ class Enseignant {
   String? motdepasse;
   Departement? departement;
 
-  factory Enseignant.fromJson(Map<String, dynamic> json) => Enseignant(
+  factory Encadrant.fromJson(Map<String, dynamic> json) => Encadrant(
         idEns: json["idEns"],
         nom: json["nom"],
         prenom: json["prenom"],
@@ -62,6 +62,6 @@ class Enseignant {
       };
   @override
   String toString() {
-    return 'Enseignant(idEns: $idEns, nom: $nom, prenom: $prenom, tel: $tel, adresse: $adresse, domaine: $domaine, email: $email, motdepasse: $motdepasse, departement: $departement)';
+    return 'Encadrant(idEns: $idEns, nom: $nom, prenom: $prenom, tel: $tel, adresse: $adresse, domaine: $domaine, email: $email, motdepasse: $motdepasse, departement: $departement)';
   }
 }

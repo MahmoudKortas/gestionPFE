@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, prefer_final_fields, no_leading_underscores_for_local_identifiers
 
 import 'dart:developer';
-import 'dart:io';
+// import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
-import 'package:image_picker/image_picker.dart';
+// import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
+// import 'package:image_picker/image_picker.dart';
 import '../../helpers/departement.dart';
 import '../../models/departement.dart';
 import '../../resize_widget.dart';
@@ -21,6 +21,7 @@ class _GererDepartementState extends State<GererDepartement> {
   String? value;
   Departement? departement = Departement();
   final nomController = TextEditingController();
+  final editNomController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -151,13 +152,28 @@ class _GererDepartementState extends State<GererDepartement> {
   }
 
   Future<String?> dialog(BuildContext context, Departement departement) {
+    editNomController.text = departement.nom ?? "";
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
         title: const Text('Modifier / Supprimer Departement'),
         content: SingleChildScrollView(
           child: Column(
-            children: const [],
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.description),
+                  hintText: 'Saisir nom du Departement',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'entrez la nom du Departement';
+                  }
+                  return null;
+                },
+                controller: editNomController,
+              ),
+            ],
           ),
         ),
         actions: <Widget>[
@@ -166,7 +182,11 @@ class _GererDepartementState extends State<GererDepartement> {
             child: const Text('Annuler'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, 'Modifer'),
+            onPressed: () {
+              departement.nom = editNomController.text;
+              editDepartement(departement: departement);
+              Navigator.pop(context, 'Modifer');
+            },
             child: const Text('Modifer'),
           ),
           TextButton(
@@ -202,6 +222,11 @@ class _GererDepartementState extends State<GererDepartement> {
     departement?.nom = nomController.text;
     await ApiDepartement().addDepartement(departement: departement);
 
+    getData();
+  }
+
+  editDepartement({Departement? departement}) async {
+    await ApiDepartement().updateDepartement(departement: departement);
     getData();
   }
 

@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/helpers/departement.dart';
-import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
+import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
 import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
 import 'package:gestion_pfe/src/helpers/specialite.dart';
 import 'package:gestion_pfe/src/models/departement.dart';
@@ -28,7 +28,7 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
   final avisController = TextEditingController();
 
   String? niveauValue;
-  final _items = ['Informatique', 'Mecanique', 'Electrique', 'Genie civile'];
+  // final _items = ['Informatique', 'Mecanique', 'Electrique', 'Genie civile'];
   final _niveauItems = [
     'Licence',
     'Ingenieurie',
@@ -215,9 +215,9 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
                       /*Column(
                         children: <Widget>[
                           ListTile(
-                            title: const Text('Enseignant'),
+                            title: const Text('Encadrant'),
                             leading: Radio(
-                              value: Description.enseignant,
+                              value: Description.encadrant,
                               groupValue: _description,
                               onChanged: (Description? value) {
                                 radiochange(value);
@@ -241,8 +241,8 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
                         child: ElevatedButton(
                           onPressed: () {
                             log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${emailController.text} ${avisController.text} ${_description.toString()}");
-                            /*_description.toString().contains("enseignant")
-                                ? addEnseignant(
+                            /*_description.toString().contains("encadrant")
+                                ? addEncadrant(
                                     nom: nomController.text,
                                     prenom: prenomController.text,
                                     telephone: telephoneController.text,
@@ -291,9 +291,9 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
     //await ApiService().updateEtudiants("3");
     //await ApiService().deleteEtudiants("17");
     _etudiant = await ApiService().getEtudiants();
-    _enseignant = await ApiService().getEnseignant();
+    _encadrant = await ApiService().getEncadrant();
     log("_etudiant::$_etudiant");
-    log("_enseignant::$_enseignant");
+    log("_encadrant::$_encadrant");
   }*/
 
   void addStudent({
@@ -320,7 +320,7 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
         specialite: specialite);
   }
 
-  void addEnseignant({
+  void addEncadrant({
     String? nom = "",
     String? prenom = "",
     String? telephone = "",
@@ -329,8 +329,8 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
     String? motDePasse = "",
     String? domaine = "",
   }) async {
-    log("addEnseignant");
-    var e = await ApiEnseignant().addEnseignant(
+    log("addEncadrant");
+    var e = await ApiEncadrant().addEncadrant(
         nom: nom,
         prenom: prenom,
         telephone: telephone,
@@ -339,8 +339,8 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
         motDePasse: motDePasse,
         domaine: domaine);
     e!.isNotEmpty
-        ? log("addEnseignantENotEmpty::$e")
-        : log("addEnseignantEempty::$e");
+        ? log("addEncadrantENotEmpty::$e")
+        : log("addEncadrantEempty::$e");
   }
 
   void radiochange(Description? value) {

@@ -20,7 +20,7 @@ class GererEtudiant extends StatefulWidget {
 }
 
 class _GererEtudiantState extends State<GererEtudiant> {
-  final _items = ['Informatique', 'Mecanique', 'Electrique', 'Genie civile'];
+  // final _items = ['Informatique', 'Mecanique', 'Electrique', 'Genie civile'];
   final _niveauItems = [
     'Licence',
     'Ingenieurie',

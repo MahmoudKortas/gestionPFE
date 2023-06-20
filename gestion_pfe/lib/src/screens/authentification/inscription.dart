@@ -2,17 +2,14 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/color_hex.dart';
 import 'package:gestion_pfe/src/consts.dart';
-import 'package:gestion_pfe/src/helpers/departement.dart';
-import 'package:gestion_pfe/src/helpers/document_api.dart';
-import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
-import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
-import 'package:gestion_pfe/src/helpers/pfe_api.dart';
-import 'package:gestion_pfe/src/helpers/soutenance.dart';
+import 'package:gestion_pfe/src/helpers/departement.dart'; 
+import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
+import 'package:gestion_pfe/src/helpers/etudiant_api.dart'; 
 import 'package:gestion_pfe/src/helpers/specialite.dart';
 import 'package:gestion_pfe/src/models/departement.dart';
-import 'package:gestion_pfe/src/models/document.dart';
-import 'package:gestion_pfe/src/models/pfe.dart';
-import 'package:gestion_pfe/src/models/soutenance.dart';
+// import 'package:gestion_pfe/src/models/document.dart';
+// import 'package:gestion_pfe/src/models/pfe.dart';
+// import 'package:gestion_pfe/src/models/soutenance.dart';
 import 'package:gestion_pfe/src/models/specialite.dart';
 import 'package:gestion_pfe/src/screens/authentification/authentification.dart';
 import '../../description.dart';
@@ -56,10 +53,10 @@ class _InscriptionState extends State<Inscription> {
   final diplomeController = TextEditingController();
   final departementController = TextEditingController();
   final niveauController = TextEditingController();
-  final specialiteController = TextEditingController();*/
-  List<PFE>? _pfe = [];
-  List<Document>? _document = [];
-  List<Soutenance>? _soutenance = [];
+   final specialiteController = TextEditingController();*/
+  // List<PFE>? _pfe = [];
+  // List<Document>? _document = [];
+  // List<Soutenance>? _soutenance = [];
 
   @override
   void initState() {
@@ -219,9 +216,9 @@ class _InscriptionState extends State<Inscription> {
                               Column(
                                 children: <Widget>[
                                   ListTile(
-                                    title: const Text('Enseignant'),
+                                    title: const Text('Encadrant'),
                                     leading: Radio(
-                                      value: Description.enseignant,
+                                      value: Description.encadrant,
                                       groupValue: _description,
                                       onChanged: (Description? value) {
                                         radiochange(value);
@@ -240,7 +237,7 @@ class _InscriptionState extends State<Inscription> {
                                   ),
                                 ],
                               ),
-                              _description.toString().contains("enseignant")
+                              _description.toString().contains("encadrant")
                                   ? Column(
                                       children: [
                                         DropdownButton<String>(
@@ -379,8 +376,8 @@ class _InscriptionState extends State<Inscription> {
                                     log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text} ${_description.toString()} $domaineValue $diplomeValue $departementValue $niveauValue $specialiteValue");
                                     _description
                                             .toString()
-                                            .contains("enseignant")
-                                        ? addEnseignant(
+                                            .contains("encadrant")
+                                        ? addEncadrant(
                                             nom: nomController.text,
                                             prenom: prenomController.text,
                                             telephone: telephoneController.text,
@@ -473,9 +470,9 @@ class _InscriptionState extends State<Inscription> {
     //await ApiService().updateEtudiants("3");
     //await ApiService().deleteEtudiants("17");
     _etudiant = await ApiService().getEtudiants();
-    _enseignant = await ApiService().getEnseignant();
+    _encadrant = await ApiService().getEncadrant();
     log("_etudiant::$_etudiant");
-    log("_enseignant::$_enseignant");
+    log("_encadrant::$_encadrant");
   }*/
 
   void addStudent({
@@ -503,7 +500,7 @@ class _InscriptionState extends State<Inscription> {
         specialite: specialite);
   }
 
-  void addEnseignant(
+  void addEncadrant(
       {String? nom = "",
       String? prenom = "",
       String? telephone = "",
@@ -512,8 +509,8 @@ class _InscriptionState extends State<Inscription> {
       String? email = "",
       String? motDePasse = "",
       String? departement = ""}) async {
-    log("addEnseignant");
-    var e = await ApiEnseignant().addEnseignant(
+    log("addEncadrant");
+    var e = await ApiEncadrant().addEncadrant(
         nom: nom,
         prenom: prenom,
         telephone: telephone,
@@ -523,8 +520,8 @@ class _InscriptionState extends State<Inscription> {
         motDePasse: motDePasse,
         departement: departement);
     e!.isNotEmpty
-        ? log("addEnseignantENotEmpty::$e")
-        : log("addEnseignantEempty::$e");
+        ? log("addEncadrantENotEmpty::$e")
+        : log("addEncadrantEempty::$e");
   }
 
   void radiochange(Description? value) {

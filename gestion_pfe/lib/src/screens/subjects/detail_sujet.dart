@@ -64,7 +64,7 @@ class _DetailSujetState extends State<DetailSujet> {
                           )
                   ],
                 )
-                /* : widget.fonction.contains("enseignant")
+                /* : widget.fonction.contains("encadrant")
                         ? Column(
                             children: [
                           Text("Proprietaire: ${widget.doc.proprietaire!}"),

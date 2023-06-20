@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, prefer_final_fields, no_leading_underscores_for_local_identifiers
 
 import 'dart:developer';
-import 'dart:io';
+// import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/helpers/departement.dart';
-import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
+// import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
 import 'package:gestion_pfe/src/models/departement.dart';
-import 'package:image_picker/image_picker.dart';
+// import 'package:image_picker/image_picker.dart';
 import '../../helpers/responsable.dart';
 import '../../models/responsable.dart';
 import '../../resize_widget.dart';
@@ -32,6 +32,8 @@ class _GererResponsableState extends State<GererResponsable> {
   Departement? departementValue;
 
   List<Departement?>? _departement;
+  //tODO: complete b9ia
+  final editNomController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -171,8 +173,9 @@ class _GererResponsableState extends State<GererResponsable> {
                                 child: ListTile(
                                     title: Text(
                                         _responsable![index]!.nom.toString()),
-                                    subtitle: Text(
-                                        _responsable![index]!.prenom.toString()),
+                                    subtitle: Text(_responsable![index]!
+                                        .prenom
+                                        .toString()),
                                     trailing: const Icon(Icons.more_vert),
                                     // isThreeLine: true,
                                     onTap: () =>
@@ -246,13 +249,28 @@ class _GererResponsableState extends State<GererResponsable> {
   }
 
   Future<String?> dialog(BuildContext context, Responsable responsable) {
+    editNomController.text = responsable.nom ?? "";
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
         title: const Text('Modifier / Supprimer Responsable'),
         content: SingleChildScrollView(
           child: Column(
-            children: const [],
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.description),
+                  hintText: 'Saisir nom du responsable',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'entrez la nom du responsable';
+                  }
+                  return null;
+                },
+                controller: editNomController,
+              ),
+            ],
           ),
         ),
         actions: <Widget>[
@@ -261,16 +279,20 @@ class _GererResponsableState extends State<GererResponsable> {
             child: const Text('Annuler'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, 'Modifer'),
+            onPressed: () {
+              responsable.nom = editNomController.text;
+              editResponsable(responsable: responsable);
+              Navigator.pop(context, 'Modifer');
+            },
             child: const Text('Modifer'),
           ),
           TextButton(
             onPressed: () async {
               log(responsable.idUser.toString());
-              var _Responsablet;
-              _Responsablet = await ApiResponsable()
+              var responsablet;
+              responsablet = await ApiResponsable()
                   .deleteResponsable(id: responsable.idUser.toString());
-              log("_Responsablet::$_Responsablet");
+              log("_Responsablet::$responsablet");
               getData();
               Navigator.pop(context, 'Supprimer');
             },
@@ -290,10 +312,10 @@ class _GererResponsableState extends State<GererResponsable> {
       ApiResponsable().getAllResponsable(),
       ApiDepartement().getAllDepartements()
     ]).then((value) async {
-      _responsable = value[0]?.cast<Responsable?>(); 
-      _departement = value[1]?.cast<Departement?>(); 
+      _responsable = value[0]?.cast<Responsable?>();
+      _departement = value[1]?.cast<Departement?>();
     });
-    
+
     // _listeResponsable.clear();
 
     //log("_Responsable::$_Responsable");
@@ -306,10 +328,15 @@ class _GererResponsableState extends State<GererResponsable> {
     responsable?.tel = telController.text;
     responsable?.prenom = prenomController.text;
     responsable?.nom = nomController.text;
-    responsable?.Date_responsabilite = dateResponsabiliteController.text;
+    responsable?.dateResponsabilite = dateResponsabiliteController.text;
     responsable?.departement = departementValue;
     await ApiResponsable().addResponsable(responsable: responsable);
 
+    getData();
+  }
+
+  editResponsable({Responsable? responsable}) async {
+    await ApiResponsable().updateResponsable(responsable: responsable);
     getData();
   }
 

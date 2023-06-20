@@ -8,23 +8,23 @@ import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_salle_calende
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_seance.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_specialite.dart';
 import 'custom_theme.dart';
-import 'screens/accueil/accueil_enseignant.dart';
+import 'screens/accueil/accueil_encadrant.dart';
 import 'screens/accueil/accueil_etudiant.dart';
 import 'screens/responsable_de_stage/calander.dart';
 import 'screens/responsable_de_stage/dashboard.dart';
 import 'screens/responsable_de_stage/gerer_document.dart';
 import 'screens/responsable_de_stage/gerer_responsable.dart';
-import 'screens/responsable_de_stage/gerer_salle.dart';
+// import 'screens/responsable_de_stage/gerer_salle.dart';
 import 'screens/responsable_de_stage/gerer_sujets_pfe.dart';
 import 'screens/responsable_de_stage/gerer_etudiant.dart';
-import 'screens/responsable_de_stage/gerer_enseignants.dart';
+import 'screens/responsable_de_stage/gerer_encadrant.dart';
 import 'screens/authentification/authentification.dart';
 import 'screens/authentification/inscription.dart';
 import 'screens/subjects/detail_sujet.dart';
 import 'screens/subjects/proposer_sujet.dart';
 import 'screens/subjects/consulter_planning.dart';
 import 'screens/etudiant/liste_des_sujets.dart';
-import 'screens/enseignant/gerer_demande_des_sujets.dart';
+import 'screens/encadrant/gerer_demande_des_sujets.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
 
@@ -97,9 +97,9 @@ class MyApp extends StatelessWidget {
                     return const Authentification();
                   case Inscription.routeName:
                     return const Inscription();
-                  case AccueilEnseignant.routeName:
-                    final args = routeSettings.arguments as AccueilEnseignant;
-                    return AccueilEnseignant(enseignant: args.enseignant);
+                  case AccueilEncadrant.routeName:
+                    final args = routeSettings.arguments as AccueilEncadrant;
+                    return AccueilEncadrant(encadrant: args.encadrant);
                   case AccueilEtudiant.routeName:
                     final args = routeSettings.arguments as AccueilEtudiant;
                     return AccueilEtudiant(
@@ -119,8 +119,8 @@ class MyApp extends StatelessWidget {
                     return const GererSeance();
                   case GererSalle.routeName:
                     return const GererSalle();
-                  case gererSalle.routeName:
-                    return const gererSalle();
+                  // case GererSalle.routeName:
+                  //   return const GererSalle();
                   case GererDepartement.routeName:
                     return const GererDepartement();
                   case GererRole.routeName:
@@ -129,8 +129,8 @@ class MyApp extends StatelessWidget {
                     return const GererSpecialite();
                   case GererResponsable.routeName:
                     return const GererResponsable();
-                  case GererEnseignant.routeName:
-                    return const GererEnseignant();
+                  case GererEncadrant.routeName:
+                    return const GererEncadrant();
                   case Calander.routeName:
                     return const Calander();
                   case GererEtudiant.routeName:
@@ -139,7 +139,7 @@ class MyApp extends StatelessWidget {
                     final args = routeSettings.arguments as ProposerSujet;
                     return ProposerSujet(
                       fonction: args.fonction,
-                      enseignant: args.enseignant,
+                      encadrant: args.encadrant,
                       etudiant: args.etudiant,
                     );
                   case ListeDesSujets.routeName:

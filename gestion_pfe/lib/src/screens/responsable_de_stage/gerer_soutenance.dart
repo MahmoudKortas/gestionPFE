@@ -1,19 +1,19 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, prefer_final_fields, no_leading_underscores_for_local_identifiers
 
 import 'dart:developer';
-import 'dart:io';
+// import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:gestion_pfe/src/helpers/departement.dart';
-import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
+// import 'package:gestion_pfe/src/helpers/departement.dart';
+import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
 import 'package:gestion_pfe/src/helpers/pfe_api.dart';
 import 'package:gestion_pfe/src/helpers/salle.dart';
 import 'package:gestion_pfe/src/helpers/seance_api.dart';
-import 'package:gestion_pfe/src/models/departement.dart';
-import 'package:gestion_pfe/src/models/enseignant.dart';
+// import 'package:gestion_pfe/src/models/departement.dart';
+import 'package:gestion_pfe/src/models/encadrant.dart';
 import 'package:gestion_pfe/src/models/pfe.dart';
 import 'package:gestion_pfe/src/models/salle.dart';
 import 'package:gestion_pfe/src/models/seance_model.dart';
-import 'package:image_picker/image_picker.dart';
+// import 'package:image_picker/image_picker.dart';
 import '../../helpers/soutenance.dart';
 import '../../models/soutenance.dart';
 import '../../resize_widget.dart';
@@ -36,14 +36,14 @@ class _GererSoutenanceState extends State<GererSoutenance> {
   final telController = TextEditingController();
   final dateResponsabiliteController = TextEditingController();
 
-  Enseignant? rapporteurValue;
-  Enseignant? presidentValue;
+  Encadrant? rapporteurValue;
+  Encadrant? presidentValue;
   Salle? salleValue;
   Seance? seanceValue;
   PFE? pfeValue;
 
-  List<Enseignant?>? _rapporteur;
-  List<Enseignant?>? _president;
+  List<Encadrant?>? _rapporteur;
+  List<Encadrant?>? _president;
   List<Salle?>? _salle;
   List<Seance?>? _seance;
   List<PFE?>? _pfe;
@@ -112,7 +112,7 @@ class _GererSoutenanceState extends State<GererSoutenance> {
                         iconSize: 36,
                         hint: const Text("choisir l'rapporteur"),
                         items: _rapporteur?.map((item) {
-                          return DropdownMenuItem<Enseignant>(
+                          return DropdownMenuItem<Encadrant>(
                             value: item,
                             child: Text("${item!.nom!} ${item.prenom!}"),
                           );
@@ -120,7 +120,7 @@ class _GererSoutenanceState extends State<GererSoutenance> {
                         onChanged: (newVal) {
                           log("newVal::$newVal");
                           setState(() {
-                            rapporteurValue = newVal as Enseignant?;
+                            rapporteurValue = newVal as Encadrant?;
                           });
                         },
                       )
@@ -131,7 +131,7 @@ class _GererSoutenanceState extends State<GererSoutenance> {
                         iconSize: 36,
                         hint: const Text("choisir l'departement"),
                         items: _president?.map((item) {
-                          return DropdownMenuItem<Enseignant>(
+                          return DropdownMenuItem<Encadrant>(
                             value: item,
                             child: Text("${item!.nom!} ${item.prenom!}"),
                           );
@@ -139,7 +139,7 @@ class _GererSoutenanceState extends State<GererSoutenance> {
                         onChanged: (newVal) {
                           log("newVal::$newVal");
                           setState(() {
-                            presidentValue = newVal as Enseignant?;
+                            presidentValue = newVal as Encadrant?;
                           });
                         },
                       )
@@ -171,7 +171,7 @@ class _GererSoutenanceState extends State<GererSoutenance> {
                         items: _seance?.map((item) {
                           return DropdownMenuItem<Seance>(
                             value: item,
-                            child: Text(item!.Nom!),
+                            child: Text(item!.nom!),
                           );
                         }).toList(),
                         onChanged: (newVal) {
@@ -319,10 +319,10 @@ class _GererSoutenanceState extends State<GererSoutenance> {
           TextButton(
             onPressed: () async {
               log(soutenance.idSout.toString());
-              var _Soutenancet;
-              _Soutenancet = await ApiSoutenance()
+              var soutenancet;
+              soutenancet = await ApiSoutenance()
                   .deleteSoutenance(id: soutenance.idSout.toString());
-              log("_Soutenancet::$_Soutenancet");
+              log("_Soutenancet::$soutenancet");
               getData();
               Navigator.pop(context, 'Supprimer');
             },
@@ -340,14 +340,14 @@ class _GererSoutenanceState extends State<GererSoutenance> {
   void getData() async {
     await Future.wait([
       ApiSoutenance().getAllSoutenance(),
-      ApiEnseignant().getAllEnseignant(), 
+      ApiEncadrant().getAllEncadrant(), 
       ApiSalle().getAllSalles(),
       ApiSeance().getAllSeances(),
       ApiPfe().getAllPFE()
     ]).then((value) async {
       _soutenance = value[0]?.cast<Soutenance?>();  
-      _rapporteur = value[1]?.cast<Enseignant?>();  
-      _president = value[2]?.cast<Enseignant?>();  
+      _rapporteur = value[1]?.cast<Encadrant?>();  
+      _president = value[2]?.cast<Encadrant?>();  
       _salle = value[3]?.cast<Salle?>();  
       _seance = value[4]?.cast<Seance?>();  
       _pfe = value[5]?.cast<PFE?>();  

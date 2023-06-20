@@ -86,7 +86,8 @@ class ApiEtudiant {
     try {
       var url = Uri.parse(
           "${ApiConstants.baseUrl}${ApiConstants.etudiants}/${etudiant.idEtud}");
-      var response = await http.put(
+      // var response = 
+      await http.put(
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -121,7 +122,8 @@ class ApiEtudiant {
     try {
       var url =
           Uri.parse("${ApiConstants.baseUrl}${ApiConstants.etudiants}$id");
-      var response = await http.delete(
+      // var response =
+       await http.delete(
         url,
       );
       // log("deleteEtudiants::${response.body}");

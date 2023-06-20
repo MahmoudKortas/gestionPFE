@@ -1,22 +1,22 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, prefer_final_fields, no_leading_underscores_for_local_identifiers
 
 import 'dart:developer';
-import 'dart:io';
+// import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:gestion_pfe/src/helpers/enseignant_api.dart';
-import 'package:image_picker/image_picker.dart';
+// import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
+// import 'package:image_picker/image_picker.dart';
 import '../../helpers/salle.dart';
 import '../../models/salle.dart';
 import '../../resize_widget.dart';
 
-class gererSalle extends StatefulWidget {
-  const gererSalle({Key? key}) : super(key: key);
+class GererSalle extends StatefulWidget {
+  const GererSalle({Key? key}) : super(key: key);
   static const routeName = '/gererSalle';
   @override
-  State<gererSalle> createState() => _gererSalleState();
+  State<GererSalle> createState() => _GererSalleState();
 }
 
-class _gererSalleState extends State<gererSalle> {
+class _GererSalleState extends State<GererSalle> {
   late List<Salle>? _salle = [];
   String? value;
   Salle? salle = Salle();
@@ -43,9 +43,9 @@ class _gererSalleState extends State<gererSalle> {
               children: [
                 Row(
                   children: [
-                    Text("s1"),
+                    const Text("s1"),
                     Column(
-                      children: [
+                      children: const [
                         ListTile(
                           title: Text("SFE 0001 . . ."),
                         ),
@@ -176,10 +176,10 @@ class _gererSalleState extends State<gererSalle> {
           TextButton(
             onPressed: () async {
               log(salle.idSalle.toString());
-              var _Sallet;
-              _Sallet =
+              var sallet;
+              sallet =
                   await ApiSalle().deleteSalle(id: salle.idSalle.toString());
-              log("_Sallet::$_Sallet");
+              log("_Sallet::$sallet");
               getData();
               Navigator.pop(context, 'Supprimer');
             },

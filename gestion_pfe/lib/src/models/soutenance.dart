@@ -1,4 +1,4 @@
-import 'package:gestion_pfe/src/models/enseignant.dart';
+import 'package:gestion_pfe/src/models/encadrant.dart';
 import 'package:gestion_pfe/src/models/pfe.dart';
 
 import 'dart:convert';
@@ -17,8 +17,8 @@ class Soutenance {
   String? date;
   String? description;
   String? etat;
-  Enseignant? rapporteur;
-  Enseignant? president;
+  Encadrant? rapporteur;
+  Encadrant? president;
   Salle? salle;
   Seance? seance;
   PFE? pfe;
@@ -39,10 +39,10 @@ class Soutenance {
     description = json['description'];
     etat = json['etat'];
     rapporteur = json['rapporteur'] != null
-        ? Enseignant.fromJson(json['rapporteur'])
+        ? Encadrant.fromJson(json['rapporteur'])
         : null;
     president = json['president'] != null
-        ? Enseignant.fromJson(json['president'])
+        ? Encadrant.fromJson(json['president'])
         : null;
     salle = Salle.fromJson(json['salle']);
     seance = Seance.fromJson(json['seance']);

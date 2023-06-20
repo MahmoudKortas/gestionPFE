@@ -1,1 +1,1 @@
-enum Description { etudiant, enseignant }
+enum Description { etudiant, encadrant }

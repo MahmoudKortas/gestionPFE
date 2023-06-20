@@ -4,7 +4,7 @@ import 'color_hex.dart';
 class ApiConstants {  
   static String pfe = "/pfe/";
   static String etudiants = "/etudiants/";
-  static String enseignants = "/enseignants/";
+  static String encadrants = "/encadrants/";
   static String document = "/document/";
   static String responsable = "/responsable/";
 }
