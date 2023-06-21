@@ -69,6 +69,33 @@ class ApiSoutenance {
     return null;
   }
 
+  Future<List<Soutenance>?> updateSoutenance({Soutenance? soutenance}) async {
+    try {
+      var url =
+          Uri.parse("${ApiConstants.baseUrl}${ApiConstants.soutenance}update");
+      var response = await http.put(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(
+          {
+            "idDep": soutenance?.idSout,
+            "nom": soutenance?.description,
+          },
+        ),
+      );
+      log("updateSoutenancestatusCode::${response.body}");
+      if (response.statusCode == 200) {
+        // List<Soutenance> _model = SoutenanceFromJson(response.body);
+        // return _model;
+      }
+    } catch (e) {
+      log("updateSoutenanceException:${e.toString()}");
+    }
+    return null;
+  }
+
   Future<List<Soutenance>?> deleteSoutenance({String? id = ""}) async {
     try {
       var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.soutenance + id!);

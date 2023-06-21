@@ -46,22 +46,21 @@ class ApiPfe {
       /*if (pfe?.note != null) {
         pfe?.note.isEmpty ? pfe?.note = "-2" as double? : pfe?.note = pfe.note;
       }*/
- 
+
       var response = await http.post(
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode({
-          
-            "title": pfe?.title,
-            "dateDebut": pfe?.dateDebut,
-            "dateDepot": pfe?.dateDepot,
-            "domaine": pfe?.domaine,
-            "note": pfe?.note,
-            "etudiant": pfe?.etudiant,
-            "encadreur": pfe?.encadreur,
-            "document": pfe?.document, 
+          "title": pfe?.title,
+          "dateDebut": pfe?.dateDebut,
+          "dateDepot": pfe?.dateDepot,
+          "domaine": pfe?.domaine,
+          "note": pfe?.note,
+          "etudiant": pfe?.etudiant,
+          "encadreur": pfe?.encadreur,
+          "document": pfe?.document,
         }),
       );
       log("addPFE::${response.body}");
@@ -71,6 +70,33 @@ class ApiPfe {
       }
     } catch (e) {
       log("addPFE-exception::${e.toString()}");
+    }
+    return null;
+  }
+
+//TODO: to fix
+  Future<List<PFE>?> updatePFE({PFE? pfe}) async {
+    try {
+      var url = Uri.parse("${ApiConstants.baseUrl}${ApiConstants.pfe}update");
+      var response = await http.put(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(
+          {
+            "idDep": pfe?.idPFE,
+            "nom": pfe?.title,
+          },
+        ),
+      );
+      log("updatePFEstatusCode::${response.body}");
+      if (response.statusCode == 200) {
+        // List<PFE> _model = PFEFromJson(response.body);
+        // return _model;
+      }
+    } catch (e) {
+      log("updateDepartementException:${e.toString()}");
     }
     return null;
   }

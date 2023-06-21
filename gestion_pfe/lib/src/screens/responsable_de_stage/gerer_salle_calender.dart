@@ -21,6 +21,7 @@ class _GererSalleState extends State<GererSalle> {
   String? value;
   Salle? salle = Salle();
   final descriptionController = TextEditingController();
+  final editNomController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -155,13 +156,28 @@ class _GererSalleState extends State<GererSalle> {
   }
 
   Future<String?> dialog(BuildContext context, Salle salle) {
+    editNomController.text = salle.nom ?? "";
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
         title: const Text('Modifier / Supprimer Salle'),
         content: SingleChildScrollView(
           child: Column(
-            children: const [],
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.description),
+                  hintText: 'Saisir nom du salle',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'entrez la nom du salle';
+                  }
+                  return null;
+                },
+                controller: editNomController,
+              ),
+            ],
           ),
         ),
         actions: <Widget>[
@@ -170,7 +186,11 @@ class _GererSalleState extends State<GererSalle> {
             child: const Text('Annuler'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, 'Modifer'),
+            onPressed: () {
+              salle.nom = editNomController.text;
+              editSalle(salle: salle);
+              Navigator.pop(context, 'Modifer');
+            },
             child: const Text('Modifer'),
           ),
           TextButton(
@@ -206,6 +226,11 @@ class _GererSalleState extends State<GererSalle> {
     salle?.nom = descriptionController.text;
     await ApiSalle().addSalle(salle: salle);
 
+    getData();
+  }
+
+  editSalle({Salle? salle}) async {
+    await ApiSalle().updateSalle(salle: salle);
     getData();
   }
 

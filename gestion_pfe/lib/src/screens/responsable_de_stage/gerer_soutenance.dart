@@ -47,6 +47,7 @@ class _GererSoutenanceState extends State<GererSoutenance> {
   List<Salle?>? _salle;
   List<Seance?>? _seance;
   List<PFE?>? _pfe;
+  final editNomController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -105,7 +106,7 @@ class _GererSoutenanceState extends State<GererSoutenance> {
                     return null;
                   },
                   controller: etatController,
-                ),   
+                ),
                 _rapporteur != null
                     ? DropdownButton(
                         value: rapporteurValue,
@@ -221,10 +222,12 @@ class _GererSoutenanceState extends State<GererSoutenance> {
                             itemBuilder: (context, index) {
                               return Card(
                                 child: ListTile(
-                                    title: Text(
-                                        _soutenance![index]!.description.toString()),
-                                    subtitle: Text(
-                                        _soutenance![index]!.description.toString()),
+                                    title: Text(_soutenance![index]!
+                                        .description
+                                        .toString()),
+                                    subtitle: Text(_soutenance![index]!
+                                        .description
+                                        .toString()),
                                     trailing: const Icon(Icons.more_vert),
                                     // isThreeLine: true,
                                     onTap: () =>
@@ -298,18 +301,37 @@ class _GererSoutenanceState extends State<GererSoutenance> {
   }
 
   Future<String?> dialog(BuildContext context, Soutenance soutenance) {
+    editNomController.text = soutenance.description ?? "";
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
         title: const Text('Modifier / Supprimer Soutenance'),
         content: SingleChildScrollView(
           child: Column(
-            children: const [],
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.description),
+                  hintText: 'Saisir nom du responsable',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'entrez la nom du responsable';
+                  }
+                  return null;
+                },
+                controller: editNomController,
+              ),
+            ],
           ),
         ),
         actions: <Widget>[
           TextButton(
-            onPressed: () => Navigator.pop(context, 'Annuler'),
+            onPressed: () {
+              soutenance.description = editNomController.text;
+              editSoutenance(soutenance: soutenance);
+              Navigator.pop(context, 'Modifer');
+            },
             child: const Text('Annuler'),
           ),
           TextButton(
@@ -340,19 +362,19 @@ class _GererSoutenanceState extends State<GererSoutenance> {
   void getData() async {
     await Future.wait([
       ApiSoutenance().getAllSoutenance(),
-      ApiEncadrant().getAllEncadrant(), 
+      ApiEncadrant().getAllEncadrant(),
       ApiSalle().getAllSalles(),
       ApiSeance().getAllSeances(),
       ApiPfe().getAllPFE()
     ]).then((value) async {
-      _soutenance = value[0]?.cast<Soutenance?>();  
-      _rapporteur = value[1]?.cast<Encadrant?>();  
-      _president = value[2]?.cast<Encadrant?>();  
-      _salle = value[3]?.cast<Salle?>();  
-      _seance = value[4]?.cast<Seance?>();  
-      _pfe = value[5]?.cast<PFE?>();  
+      _soutenance = value[0]?.cast<Soutenance?>();
+      _rapporteur = value[1]?.cast<Encadrant?>();
+      _president = value[2]?.cast<Encadrant?>();
+      _salle = value[3]?.cast<Salle?>();
+      _seance = value[4]?.cast<Seance?>();
+      _pfe = value[5]?.cast<PFE?>();
     });
-    
+
     // _listeSoutenance.clear();
 
     //log("_Soutenance::$_Soutenance");
@@ -373,6 +395,10 @@ class _GererSoutenanceState extends State<GererSoutenance> {
     getData();
   }
 
+editSoutenance({Soutenance? soutenance}) async {
+    await ApiSoutenance().updateSoutenance(soutenance: soutenance);
+    getData();
+  }
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
         value: item,
         child: Text(

@@ -52,6 +52,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
   Document? documentValue;
   Specialite? specialiteValue;
   Encadrant? encadreur2Value;
+  final editNomController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -400,6 +401,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
   }
 
   Future<String?> dialog(BuildContext context, PFE pfe) {
+    editNomController.text = pfe.title ?? "";
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -407,6 +409,19 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
         content: SingleChildScrollView(
           child: Column(
             children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.description),
+                  hintText: 'Saisir nom du responsable',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'entrez la nom du responsable';
+                  }
+                  return null;
+                },
+                controller: editNomController,
+              ),
               TextFormField(
                 decoration: const InputDecoration(
                   hintText: 'Saisir le note du PFE',
@@ -542,7 +557,11 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
             child: const Text('Annuler'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, 'Modifer'),
+            onPressed: () {
+              pfe.title = editNomController.text;
+              editPFE(pfe: pfe);
+              Navigator.pop(context, 'Modifer');
+            },
             child: const Text('Modifer'),
           ),
           TextButton(
@@ -769,6 +788,10 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
     getData();
   }
 
+  editPFE({PFE? pfe}) async {
+    await ApiPfe().updatePFE(pfe: pfe);
+    getData();
+  }
   void deleteSujetPfe(int? id) async {
     log("deleteSujetPfe");
     await ApiPfe().deletePFE(id: id.toString());
