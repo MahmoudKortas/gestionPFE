@@ -207,6 +207,13 @@ class _GererDepartementState extends State<GererDepartement> {
               _departementt = await ApiDepartement()
                   .deleteDepartement(id: departement.idDep.toString());
               log("_Departementt::$_departementt");
+              if (!_departementt.toString().contains("Suppression réussite")) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content: Text("Suppression échoué"),
+                      backgroundColor: Colors.red),
+                );
+              }
               getData();
               Navigator.pop(context, 'Supprimer');
             },

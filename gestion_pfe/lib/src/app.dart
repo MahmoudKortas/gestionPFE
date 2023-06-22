@@ -14,7 +14,7 @@ import 'screens/responsable_de_stage/calander.dart';
 import 'screens/responsable_de_stage/dashboard.dart';
 import 'screens/responsable_de_stage/gerer_document.dart';
 import 'screens/responsable_de_stage/gerer_responsable.dart';
-// import 'screens/responsable_de_stage/gerer_salle.dart';
+import 'screens/responsable_de_stage/gerer_salle.dart';
 import 'screens/responsable_de_stage/gerer_sujets_pfe.dart';
 import 'screens/responsable_de_stage/gerer_etudiant.dart';
 import 'screens/responsable_de_stage/gerer_encadrant.dart';
@@ -119,8 +119,8 @@ class MyApp extends StatelessWidget {
                     return const GererSeance();
                   case GererSalle.routeName:
                     return const GererSalle();
-                  // case GererSalle.routeName:
-                  //   return const GererSalle();
+                  case GererSalleCalender.routeName:
+                    return const GererSalleCalender();
                   case GererDepartement.routeName:
                     return const GererDepartement();
                   case GererRole.routeName:

@@ -91,18 +91,19 @@ class ApiDepartement {
     return null;
   }
 
-  Future<List<Departement>?> deleteDepartement({required String id}) async {
+  Future<String> deleteDepartement({required String id}) async {
+    var response;
     try {
       var url =
           Uri.parse("${ApiConstants.baseUrl}${ApiConstants.departement}$id");
-      // var response =
-      await http.delete(
+
+      response = await http.delete(
         url,
       );
-      // log("deleteDepartements::${response.body}");
+      log("deleteDepartements::${response.body}");
     } catch (e) {
       log(e.toString());
     }
-    return null;
+    return response.body;
   }
 }

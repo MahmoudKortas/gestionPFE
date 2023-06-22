@@ -1,17 +1,17 @@
 import 'dart:convert';
-import 'dart:developer'; 
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import '../constants/constants.dart';
-import '../models/salle.dart'; 
+import '../models/salle.dart';
 
 class ApiSalle {
-  
   Future<List<Salle>?> getAllSalles() async {
     try {
-      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.salle + ApiConstants.all);
+      var url = Uri.parse(
+          ApiConstants.baseUrl + ApiConstants.salle + ApiConstants.all);
       var response = await http.get(url);
       // log("responseresponse:${response.body}");
-    
+
       if (response.statusCode == 200) {
         List<Salle> model = salleFromJson(response.body);
         return model;
@@ -21,6 +21,7 @@ class ApiSalle {
     }
     return null;
   }
+
   Future<List<Salle>?> getSalle({String? id = ""}) async {
     try {
       var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.salle + id!);
@@ -36,17 +37,16 @@ class ApiSalle {
   }
 
   Future<List<Salle>?> addSalle({Salle? salle}) async {
-    try { 
-      var url =
-          Uri.parse("${ApiConstants.baseUrl}${ApiConstants.salle}add");
+    try {
+      var url = Uri.parse("${ApiConstants.baseUrl}${ApiConstants.salle}add");
       var response = await http.post(
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(
-          { 
-            "nom": salle?.nom, 
+          {
+            "nom": salle?.nom,
           },
         ),
       );
@@ -61,7 +61,7 @@ class ApiSalle {
     return null;
   }
 
-Future<List<Salle>?> updateSalle({Salle? salle}) async {
+  Future<List<Salle>?> updateSalle({Salle? salle}) async {
     try {
       var url = Uri.parse("${ApiConstants.baseUrl}${ApiConstants.salle}update");
       var response = await http.put(
@@ -86,18 +86,19 @@ Future<List<Salle>?> updateSalle({Salle? salle}) async {
     }
     return null;
   }
-  Future<List<Salle>?> deleteSalle({required String id}) async {
+
+  Future<String> deleteSalle({required String id}) async {
+    var response;
     try {
-      var url =
-          Uri.parse("${ApiConstants.baseUrl}${ApiConstants.salle}$id");
-      // var response = 
-      await http.delete(
+      var url = Uri.parse("${ApiConstants.baseUrl}${ApiConstants.salle}$id");
+      log(url.toString());
+      response = await http.delete(
         url,
       );
-      // log("deleteSalles::${response.body}");
+      log("deleteSalles::${response.body}");
     } catch (e) {
       log(e.toString());
     }
-    return null;
+    return response.body;
   }
 }

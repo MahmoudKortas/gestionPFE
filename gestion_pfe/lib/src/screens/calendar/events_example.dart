@@ -155,7 +155,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => const GererSalle(),
+                        builder: (_) => const GererSalleCalender(),
                       ),
                     );
                   },

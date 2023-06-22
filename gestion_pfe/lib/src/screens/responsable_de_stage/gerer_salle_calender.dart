@@ -9,14 +9,14 @@ import '../../helpers/salle.dart';
 import '../../models/salle.dart';
 import '../../resize_widget.dart';
 
-class GererSalle extends StatefulWidget {
-  const GererSalle({Key? key}) : super(key: key);
+class GererSalleCalender extends StatefulWidget {
+  const GererSalleCalender({Key? key}) : super(key: key);
   static const routeName = '/gererSalle';
   @override
-  State<GererSalle> createState() => _GererSalleState();
+  State<GererSalleCalender> createState() => _GererSalleCalenderState();
 }
 
-class _GererSalleState extends State<GererSalle> {
+class _GererSalleCalenderState extends State<GererSalleCalender> {
   late List<Salle>? _salle = [];
   String? value;
   Salle? salle = Salle();

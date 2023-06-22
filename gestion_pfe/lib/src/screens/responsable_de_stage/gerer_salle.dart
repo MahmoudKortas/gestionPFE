@@ -200,8 +200,15 @@ class _GererSalleState extends State<GererSalle> {
               log(salle.idSalle.toString());
               var sallee;
               sallee = await ApiSalle()
-                  .deleteSalle(id: sallee.idSalle.toString());
-              log("_Sallet::$salle");
+                  .deleteSalle(id: salle.idSalle.toString());
+              log("_Sallet::$sallee");
+              if (!sallee.toString().contains("Suppression réussite")) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content: Text("Suppression échoué"),
+                      backgroundColor: Colors.red),
+                );
+              }
                getData();
               Navigator.pop(context, 'Supprimer');
             },

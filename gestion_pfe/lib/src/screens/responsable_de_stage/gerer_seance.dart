@@ -20,7 +20,7 @@ class _GererSeanceState extends State<GererSeance> {
   late List<Seance>? _seance = [];
   String? value;
   Seance? seance = Seance();
-  final descriptionController = TextEditingController();
+  final nomController = TextEditingController();
   final editNomController = TextEditingController();
   @override
   void initState() {
@@ -45,15 +45,15 @@ class _GererSeanceState extends State<GererSeance> {
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.description),
-                    hintText: 'Saisir description',
+                    hintText: 'Saisir la seance',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return 'entrez la description du sujet';
+                      return 'entrez la seance';
                     }
                     return null;
                   },
-                  controller: descriptionController,
+                  controller: nomController,
                 ),
                 ElevatedButton(
                   // ignore: avoid_print
@@ -229,7 +229,7 @@ class _GererSeanceState extends State<GererSeance> {
   }
 
   addSeance() async {
-    seance?.nom = descriptionController.text;
+    seance?.nom = nomController.text;
     await ApiSeance().addSeance(seance: seance);
 
     getData();
@@ -237,7 +237,7 @@ class _GererSeanceState extends State<GererSeance> {
 
   editSeance({Seance? seance}) async {
     //todo: fix update seance
-    // await ApiSeance().updateSeance(seance: seance);
+     await ApiSeance().updateSeance(seance: seance);
 
     getData();
   }
