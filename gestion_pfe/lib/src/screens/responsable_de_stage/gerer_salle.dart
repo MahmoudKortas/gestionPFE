@@ -57,7 +57,18 @@ class _GererSalleState extends State<GererSalle> {
                 ), 
                 ElevatedButton(
                   // ignore: avoid_print
-                  onPressed: () => addSalle(),
+                  onPressed: () {
+                    try {
+                      addSalle();
+                   } catch (e) {
+                      log("gerer-salle-exception::${e.toString()}");
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text("quelque chose ne va pas"),
+                            backgroundColor: Colors.red),
+                      );
+                    }
+                  } ,
                   child: const Text("Ajouter"),
                 ),
                 /*_Salle == null

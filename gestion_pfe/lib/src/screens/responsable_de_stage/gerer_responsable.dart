@@ -153,7 +153,18 @@ class _GererResponsableState extends State<GererResponsable> {
                     : Container(),
                 ElevatedButton(
                   // ignore: avoid_print
-                  onPressed: () => addResponsable(),
+                  onPressed: () {
+                    try {
+                      addResponsable();
+                    } catch (e) {
+                      log("gerer-responsable-exception::${e.toString()}");
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text("quelque chose ne va pas"),
+                            backgroundColor: Colors.red),
+                      );
+                    }
+                  } ,
                   child: const Text("Ajouter"),
                 ),
                 /*_Responsable == null

@@ -36,7 +36,7 @@ class Responsable {
     tel = json['tel'];
     prenom = json['prenom'];
     nom = json['nom'];
-    dateResponsabilite = json['Date_responsabilite'];
+    dateResponsabilite = json['Dateresponsabilite'];
   }
 
   Map<String, dynamic> toJson() {
@@ -48,12 +48,12 @@ class Responsable {
     data['tel'] = tel;
     data['prenom'] = prenom;
     data['nom'] = nom;
-    data['Date_responsabilite'] = dateResponsabilite;
+    data['Dateresponsabilite'] = dateResponsabilite;
     return data;
   }
 
   @override
   String toString() {
-    return 'Responsable(idUser: $idUser, email: $email, motdepasse: $motdepasse, departement: $departement, tel: $tel, prenom: $prenom, nom: $nom, Date_responsabilite: $dateResponsabilite)';
+    return 'Responsable(idUser: $idUser, email: $email, motdepasse: $motdepasse, departement: $departement, tel: $tel, prenom: $prenom, nom: $nom, Dateresponsabilite: $dateResponsabilite)';
   }
 }

@@ -125,10 +125,21 @@ class _AuthentificationState extends State<Authentification> {
                           // Process data.
                         }*/
                                     log("signin");
-
-                                    verificationInscription(
-                                        email: emailController.text,
-                                        motDepasse: motDePasseController.text);
+                                    try {
+                                      verificationInscription(
+                                          email: emailController.text,
+                                          motDepasse:
+                                              motDePasseController.text);
+                                    } catch (e) {
+                                      log("Authentification-exception::${e.toString()}");
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                            content:
+                                                Text("quelque chose ne va pas"),
+                                            backgroundColor: Colors.red),
+                                      );
+                                    }
                                   },
                                   child: const Text('Connexion'),
                                 ),

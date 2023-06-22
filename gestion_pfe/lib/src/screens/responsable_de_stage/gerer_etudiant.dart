@@ -29,10 +29,10 @@ class _GererEtudiantState extends State<GererEtudiant> {
   late List<Etudiant>? _etudiant = [];
 
   String? niveauValue;
- 
+
   List<Specialite?>? _specialite;
   Specialite? specialiteValue;
- 
+
   List<Departement?>? _departement;
   Departement? departementValue;
 
@@ -240,16 +240,25 @@ class _GererEtudiantState extends State<GererEtudiant> {
                 ElevatedButton(
                   onPressed: () {
                     log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text} $niveauValue ${departementValue?.nom} ${specialiteValue?.nom}");
-                    addData(
-                        nom: nomController.text,
-                        prenom: prenomController.text,
-                        telephone: telephoneController.text,
-                        adresse: adresseController.text,
-                        email: emailController.text,
-                        motDePasse: motDePasseController.text,
-                        departement: departementValue?.idDep.toString(),
-                        niveau: niveauValue,
-                        specialite: specialiteValue?.idSpecialite.toString());
+                    try {
+                      addData(
+                          nom: nomController.text,
+                          prenom: prenomController.text,
+                          telephone: telephoneController.text,
+                          adresse: adresseController.text,
+                          email: emailController.text,
+                          motDePasse: motDePasseController.text,
+                          departement: departementValue?.idDep.toString(),
+                          niveau: niveauValue,
+                          specialite: specialiteValue?.idSpecialite.toString());
+                    } catch (e) {
+                      log("gerer-etudiant-exception::${e.toString()}");
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text("quelque chose ne va pas"),
+                            backgroundColor: Colors.red),
+                      );
+                    }
                   },
                   child: const Text("Ajouter"),
                 ),
@@ -407,25 +416,25 @@ class _GererEtudiantState extends State<GererEtudiant> {
                 },
                 controller: motDePasseController,
               ),
-                _departement != null
-                    ? DropdownButton(
-                        value: departementValue,
-                        iconSize: 36,
-                        hint: const Text("choisir ta departement"),
-                        items: _departement?.map((item) {
-                          return DropdownMenuItem<Departement>(
-                            value: item,
-                            child: Text(item!.nom!),
-                          );
-                        }).toList(),
-                        onChanged: (newVal) {
-                          log("newVal::$newVal");
-                          setState(() {
-                            departementValue = newVal as Departement?;
-                          });
-                        },
-                      )
-                    : Container(),
+              _departement != null
+                  ? DropdownButton(
+                      value: departementValue,
+                      iconSize: 36,
+                      hint: const Text("choisir ta departement"),
+                      items: _departement?.map((item) {
+                        return DropdownMenuItem<Departement>(
+                          value: item,
+                          child: Text(item!.nom!),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        log("newVal::$newVal");
+                        setState(() {
+                          departementValue = newVal as Departement?;
+                        });
+                      },
+                    )
+                  : Container(),
               DropdownButton<String>(
                 hint: const Text("choisir votre niveau"),
                 value: niveauValue,
@@ -435,27 +444,25 @@ class _GererEtudiantState extends State<GererEtudiant> {
                 onChanged: (value) => setState(() => niveauValue = value),
                 borderRadius: const BorderRadius.all(Radius.circular(10.0)),
               ),
-           
-                _specialite != null
-                    ? DropdownButton(
-                        value: specialiteValue,
-                        iconSize: 36,
-                        hint: const Text("choisir ta specialite"),
-                        items: _specialite?.map((item) {
-                          return DropdownMenuItem<Specialite>(
-                            value: item,
-                            child: Text(item!.nom!),
-                          );
-                        }).toList(),
-                        onChanged: (newVal) {
-                          log("newVal::$newVal");
-                          setState(() {
-                            specialiteValue = newVal as Specialite?;
-                          });
-                        },
-                      )
-                    : Container(),
-           
+              _specialite != null
+                  ? DropdownButton(
+                      value: specialiteValue,
+                      iconSize: 36,
+                      hint: const Text("choisir ta specialite"),
+                      items: _specialite?.map((item) {
+                        return DropdownMenuItem<Specialite>(
+                          value: item,
+                          child: Text(item!.nom!),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        log("newVal::$newVal");
+                        setState(() {
+                          specialiteValue = newVal as Specialite?;
+                        });
+                      },
+                    )
+                  : Container(),
             ],
           ),
         ),

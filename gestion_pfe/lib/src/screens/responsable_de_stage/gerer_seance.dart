@@ -57,7 +57,18 @@ class _GererSeanceState extends State<GererSeance> {
                 ),
                 ElevatedButton(
                   // ignore: avoid_print
-                  onPressed: () => addSeance(),
+                  onPressed: () {
+                    try {
+                      addSeance();
+                    } catch (e) {
+                      log("gerer-seance-exception::${e.toString()}");
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text("quelque chose ne va pas"),
+                            backgroundColor: Colors.red),
+                      );
+                    }
+                  },
                   child: const Text("Ajouter"),
                 ),
                 /*_Seance == null

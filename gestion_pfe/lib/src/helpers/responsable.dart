@@ -54,7 +54,7 @@ class ApiResponsable {
         "departement": responsable?.departement?.idDep,
         "tel": responsable?.tel,
         "prenom": responsable?.prenom,
-        "date_responsabilite": responsable?.dateResponsabilite,
+        "dateresponsabilite": responsable?.dateResponsabilite,
         "nom": responsable?.nom
     },
         ),
@@ -80,7 +80,7 @@ Future<List<Responsable>?> updateResponsable({Responsable? responsable}) async {
         body: jsonEncode(
           {
             "idDep": responsable?.idUser,
-            "Date_responsabilite": responsable?.dateResponsabilite,
+            "Dateresponsabilite": responsable?.dateResponsabilite,
             // "departement": responsable?.departement,
             "email": responsable?.email,
             "motdepasse": responsable?.motdepasse,

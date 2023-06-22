@@ -194,15 +194,23 @@ class _GererEncadrantState extends State<GererEncadrant> {
                   // ignore: avoid_print
                   onPressed: () {
                     log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text} $domaineValue");
-
-                    addData(
-                        nom: nomController.text,
-                        prenom: prenomController.text,
-                        telephone: telephoneController.text,
-                        adresse: adresseController.text,
-                        email: emailController.text,
-                        motDePasse: motDePasseController.text,
-                        domaine: domaineValue);
+                    try {
+                      addData(
+                          nom: nomController.text,
+                          prenom: prenomController.text,
+                          telephone: telephoneController.text,
+                          adresse: adresseController.text,
+                          email: emailController.text,
+                          motDePasse: motDePasseController.text,
+                          domaine: domaineValue);
+                    } catch (e) {
+                      log("gerer-encadrant-exception::${e.toString()}");
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text("quelque chose ne va pas"),
+                            backgroundColor: Colors.red),
+                      );
+                    }
                   },
                   child: const Text("Ajouter"),
                 ),

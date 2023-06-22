@@ -57,7 +57,18 @@ class _GererDepartementState extends State<GererDepartement> {
                 ),
                 ElevatedButton(
                   // ignore: avoid_print
-                  onPressed: () => addDepartement(),
+                  onPressed: () {
+                    try {
+                      addDepartement();
+                    } catch (e) {
+                      log("gerer-departement-exception::${e.toString()}");
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text("quelque chose ne va pas"),
+                            backgroundColor: Colors.red),
+                      );
+                    }
+                  },
                   child: const Text("Ajouter"),
                 ),
                 /*_Departement == null

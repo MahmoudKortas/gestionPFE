@@ -1,4 +1,4 @@
-// import 'package:gestion_pfe/src/models/encadrant.dart';
+// import 'package:gestionpfe/src/models/encadrant.dart';
 import 'package:gestion_pfe/src/models/pfe.dart';
 
 import 'dart:convert';
@@ -27,20 +27,20 @@ class LigneSoutenance {
 
   LigneSoutenance.fromJson(Map<String, dynamic> json) {
     idLigne = json['idLigne'];
-    noteRapport = json['Note_rapport'];
-    noteQR = json['Note_QR'];
-    notePresentation = json['Note_presentation'];
-    noteApplication = json['Note_presentation']; 
+    noteRapport = json['Noterapport'];
+    noteQR = json['NoteQR'];
+    notePresentation = json['Notepresentation'];
+    noteApplication = json['Notepresentation']; 
     pfe = json['pfe'] != null ? PFE.fromJson(json['pfe']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idLigne'] = idLigne;
-    data['Note_rapport'] = noteRapport;
-    data['Note_QR'] = noteQR;
-    data['Note_presentation'] = notePresentation;
-    data['Note_application'] = noteApplication;
+    data['Noterapport'] = noteRapport;
+    data['NoteQR'] = noteQR;
+    data['Notepresentation'] = notePresentation;
+    data['Noteapplication'] = noteApplication;
  
     if (pfe != null) {
       data['pfe'] = pfe!.toJson();
@@ -50,6 +50,6 @@ class LigneSoutenance {
 
   @override
   String toString() {
-    return 'LigneSoutenance(idLigne: $idLigne, Note_rapport: $noteRapport, Note_application: $noteApplication, pfe: $pfe)';
+    return 'LigneSoutenance(idLigne: $idLigne, Noterapport: $noteRapport, Noteapplication: $noteApplication, pfe: $pfe)';
   }
 }

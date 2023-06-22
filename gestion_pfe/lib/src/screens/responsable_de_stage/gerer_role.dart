@@ -57,7 +57,18 @@ class _GererRoleState extends State<GererRole> {
                 ),
                 ElevatedButton(
                   // ignore: avoid_print
-                  onPressed: () => addRole(),
+                  onPressed: () {
+                    try {
+                      addRole();
+                    } catch (e) {
+                      log("gerer-role-exception::${e.toString()}");
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text("quelque chose ne va pas"),
+                            backgroundColor: Colors.red),
+                      );
+                    }
+                  },
                   child: const Text("Ajouter"),
                 ),
                 /*_Role == null

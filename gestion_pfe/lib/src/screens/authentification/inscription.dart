@@ -2,9 +2,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/color_hex.dart';
 import 'package:gestion_pfe/src/consts.dart';
-import 'package:gestion_pfe/src/helpers/departement.dart'; 
+import 'package:gestion_pfe/src/helpers/departement.dart';
 import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
-import 'package:gestion_pfe/src/helpers/etudiant_api.dart'; 
+import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
 import 'package:gestion_pfe/src/helpers/specialite.dart';
 import 'package:gestion_pfe/src/models/departement.dart';
 // import 'package:gestion_pfe/src/models/document.dart';
@@ -374,39 +374,52 @@ class _InscriptionState extends State<Inscription> {
                                 child: ElevatedButton(
                                   onPressed: () {
                                     log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text} ${_description.toString()} $domaineValue $diplomeValue $departementValue $niveauValue $specialiteValue");
-                                    _description
-                                            .toString()
-                                            .contains("encadrant")
-                                        ? addEncadrant(
-                                            nom: nomController.text,
-                                            prenom: prenomController.text,
-                                            telephone: telephoneController.text,
-                                            adresse: adresseController.text,
-                                            email: emailController.text,
-                                            motDePasse:
-                                                motDePasseController.text,
-                                            domaine: domaineValue)
-                                        : _description
-                                                .toString()
-                                                .contains("etudiant")
-                                            ? addStudent(
-                                                nom: nomController.text,
-                                                prenom: prenomController.text,
-                                                telephone:
-                                                    telephoneController.text,
-                                                adresse: adresseController.text,
-                                                email: emailController.text,
-                                                motDePasse:
-                                                    motDePasseController.text,
-                                                diplome: diplomeValue,
-                                                departement: departementValue
-                                                    ?.idDep
-                                                    .toString(),
-                                                niveau: niveauValue,
-                                                specialite: specialiteValue
-                                                    ?.idSpecialite
-                                                    .toString())
-                                            : log("select function");
+                                    try {
+                                      _description
+                                              .toString()
+                                              .contains("encadrant")
+                                          ? addEncadrant(
+                                              nom: nomController.text,
+                                              prenom: prenomController.text,
+                                              telephone:
+                                                  telephoneController.text,
+                                              adresse: adresseController.text,
+                                              email: emailController.text,
+                                              motDePasse:
+                                                  motDePasseController.text,
+                                              domaine: domaineValue)
+                                          : _description
+                                                  .toString()
+                                                  .contains("etudiant")
+                                              ? addStudent(
+                                                  nom: nomController.text,
+                                                  prenom: prenomController.text,
+                                                  telephone:
+                                                      telephoneController.text,
+                                                  adresse:
+                                                      adresseController.text,
+                                                  email: emailController.text,
+                                                  motDePasse:
+                                                      motDePasseController.text,
+                                                  diplome: diplomeValue,
+                                                  departement: departementValue
+                                                      ?.idDep
+                                                      .toString(),
+                                                  niveau: niveauValue,
+                                                  specialite: specialiteValue
+                                                      ?.idSpecialite
+                                                      .toString())
+                                              : log("select function");
+                                    } catch (e) {
+                                      log("inscription-exception::${e.toString()}");
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                            content:
+                                                Text("quelque chose ne va pas"),
+                                            backgroundColor: Colors.red),
+                                      );
+                                    }
                                     // Validate will return true if the form is valid, or false if
                                     // the form is invalid.
                                     /*if (_formKey.currentState!.validate()) {

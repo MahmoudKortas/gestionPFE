@@ -344,19 +344,28 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: ElevatedButton(
                           onPressed: () {
-                            pfe?.title = titreController.text;
-                            pfe?.description = descriptionController.text;
-                            pfe?.dateDebut = dateDebutController.text;
-                            pfe?.dateDepot = dateDepotController.text;
-                            pfe?.domaine = domaineController.text;
-                            pfe?.note = double.tryParse(noteController.text);
-                            pfe?.etudiant = etudiantValue;
-                            pfe?.document = documentValue;
-                            pfe?.encadreur = encadrantValue;
-                            log("pfe::$pfe ");
-                            addData(
-                              pfe: pfe,
-                            );
+                            try {
+                              pfe?.title = titreController.text;
+                              pfe?.description = descriptionController.text;
+                              pfe?.dateDebut = dateDebutController.text;
+                              pfe?.dateDepot = dateDepotController.text;
+                              pfe?.domaine = domaineController.text;
+                              pfe?.note = double.tryParse(noteController.text);
+                              pfe?.etudiant = etudiantValue;
+                              pfe?.document = documentValue;
+                              pfe?.encadreur = encadrantValue;
+                              log("pfe::$pfe ");
+                              addData(
+                                pfe: pfe,
+                              );
+                            } catch (e) {
+                              log("gerer-sujets-pfe-exception::${e.toString()}");
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text("quelque chose ne va pas"),
+                                    backgroundColor: Colors.red),
+                              );
+                            }
                           },
                           child: const Text('Ajouter'),
                         ),
@@ -792,6 +801,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
     await ApiPfe().updatePFE(pfe: pfe);
     getData();
   }
+
   void deleteSujetPfe(int? id) async {
     log("deleteSujetPfe");
     await ApiPfe().deletePFE(id: id.toString());

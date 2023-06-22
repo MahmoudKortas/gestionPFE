@@ -38,8 +38,8 @@ class _GererDocumentState extends State<GererDocument> {
   final dateController = TextEditingController();
   final descriptionController = TextEditingController();
   final titreController = TextEditingController();
-   final editTitreController = TextEditingController();
-   final editDescriptionController = TextEditingController();
+  final editTitreController = TextEditingController();
+  final editDescriptionController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -141,7 +141,18 @@ class _GererDocumentState extends State<GererDocument> {
                 TextButton(onPressed: getImage, child: _buildImage()),
                 ElevatedButton(
                   // ignore: avoid_print
-                  onPressed: () => addDocument(),
+                  onPressed: () {
+                    try {
+                      addDocument();
+                    } catch (e) {
+                      log("gerer-document-exception::${e.toString()}");
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text("quelque chose ne va pas"),
+                            backgroundColor: Colors.red),
+                      );
+                    }
+                  },
                   child: const Text("Ajouter"),
                 ),
                 /*_document == null
@@ -230,6 +241,7 @@ class _GererDocumentState extends State<GererDocument> {
       ),
     );
   }
+
 //TODO: fix edit document
   Future<String?> dialog(BuildContext context, Document document) {
     editTitreController.text = document.titre ?? "";
@@ -356,11 +368,13 @@ class _GererDocumentState extends State<GererDocument> {
 
     getData();
   }
-editDocument({Document? document}) async {
+
+  editDocument({Document? document}) async {
     await ApiDocument().updateDocument(document: document);
 
     getData();
   }
+
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
         value: item,
         child: Text(

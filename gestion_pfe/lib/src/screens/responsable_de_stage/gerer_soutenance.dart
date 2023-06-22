@@ -204,7 +204,18 @@ class _GererSoutenanceState extends State<GererSoutenance> {
                     : Container(),
                 ElevatedButton(
                   // ignore: avoid_print
-                  onPressed: () => addSoutenance(),
+                  onPressed: () {
+                    try {
+                      addSoutenance();
+                    } catch (e) {
+                      log("gerer-soutenance-exception::${e.toString()}");
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text("quelque chose ne va pas"),
+                            backgroundColor: Colors.red),
+                      );
+                    }
+                  },
                   child: const Text("Ajouter"),
                 ),
                 /*_Soutenance == null
@@ -395,10 +406,11 @@ class _GererSoutenanceState extends State<GererSoutenance> {
     getData();
   }
 
-editSoutenance({Soutenance? soutenance}) async {
+  editSoutenance({Soutenance? soutenance}) async {
     await ApiSoutenance().updateSoutenance(soutenance: soutenance);
     getData();
   }
+
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
         value: item,
         child: Text(

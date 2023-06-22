@@ -57,7 +57,18 @@ class _GererSpecialiteState extends State<GererSpecialite> {
                 ),
                 ElevatedButton(
                   // ignore: avoid_print
-                  onPressed: () => addSpecialite(),
+                  onPressed: () {
+                    try {
+                      addSpecialite();
+                    } catch (e) {
+                      log("gerer-specialite-exception::${e.toString()}");
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text("quelque chose ne va pas"),
+                            backgroundColor: Colors.red),
+                      );
+                    }
+                  },
                   child: const Text("Ajouter"),
                 ),
                 /*_Specialite == null
@@ -182,7 +193,7 @@ class _GererSpecialiteState extends State<GererSpecialite> {
             child: const Text('Annuler'),
           ),
           TextButton(
-            onPressed: (){
+            onPressed: () {
               specialite.nom = editNomController.text;
               editSpecialite(specialite: specialite);
               Navigator.pop(context, 'Modifer');
@@ -224,7 +235,8 @@ class _GererSpecialiteState extends State<GererSpecialite> {
 
     getData();
   }
-   editSpecialite({Specialite? specialite}) async {
+
+  editSpecialite({Specialite? specialite}) async {
     await ApiSpecialite().updateSpecialite(specialite: specialite);
 
     getData();
