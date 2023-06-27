@@ -52,14 +52,11 @@ class ApiPfe {
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode({
-          "title": pfe?.title,
+        body: jsonEncode({ 
           "dateDebut": pfe?.dateDebut,
-          "dateDepot": pfe?.dateDepot,
-          "domaine": pfe?.domaine,
-          "note": pfe?.note,
+          "dateDepot": pfe?.dateDepot, 
           "etudiant": pfe?.etudiant,
-          "encadreur": pfe?.encadreur,
+          "encadrant": pfe?.encadrant,
           "document": pfe?.document,
         }),
       );
@@ -85,8 +82,7 @@ class ApiPfe {
         },
         body: jsonEncode(
           {
-            "idDep": pfe?.idPFE,
-            "nom": pfe?.title,
+            "idDep": pfe?.idPFE, 
           },
         ),
       );

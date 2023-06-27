@@ -1,9 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:gestion_pfe/src/helpers/departement.dart';
+import 'package:flutter/services.dart';
+import 'package:gestion_pfe/src/helpers/departement_api.dart';
 import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
-import 'package:gestion_pfe/src/helpers/specialite.dart';
+import 'package:gestion_pfe/src/helpers/specialite_api.dart';
 import 'package:gestion_pfe/src/models/departement.dart';
 import 'package:gestion_pfe/src/models/specialite.dart';
 
@@ -20,28 +21,36 @@ class GererEtudiant extends StatefulWidget {
 }
 
 class _GererEtudiantState extends State<GererEtudiant> {
-  // final _items = ['Informatique', 'Mecanique', 'Electrique', 'Genie civile'];
+  List<Etudiant>? _etudiant = [];
   final _niveauItems = [
     'Licence',
     'Ingenieurie',
     'Mastère',
   ];
-  late List<Etudiant>? _etudiant = [];
-
   String? niveauValue;
-
-  List<Specialite?>? _specialite;
-  Specialite? specialiteValue;
-
-  List<Departement?>? _departement;
-  Departement? departementValue;
-
   final nomController = TextEditingController();
   final prenomController = TextEditingController();
   final telephoneController = TextEditingController();
   final adresseController = TextEditingController();
   final emailController = TextEditingController();
   final motDePasseController = TextEditingController();
+  Etudiant? etudiant = Etudiant();
+  List<Specialite?>? _specialite;
+  Specialite? specialiteValue;
+  List<Departement?>? _departement;
+  Departement? departementValue;
+
+  String? editNiveauValue;
+  final editNomController = TextEditingController();
+  final editPrenomController = TextEditingController();
+  final editTelephoneController = TextEditingController();
+  final editAdresseController = TextEditingController();
+  final editEmailController = TextEditingController();
+  final editMotDePasseController = TextEditingController();
+  Etudiant? editEtudiant = Etudiant();
+  Specialite? editSpecialiteValue;
+  Departement? editDepartementValue;
+
   @override
   void initState() {
     super.initState();
@@ -66,7 +75,6 @@ class _GererEtudiantState extends State<GererEtudiant> {
         title: const Text(' Etudiants'),
       ),
       body: SingleChildScrollView(
-        // controller: controller,
         physics: const ScrollPhysics(),
         child: Center(
           child: resiseWidget(
@@ -118,6 +126,10 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   height: 10,
                 ),
                 TextFormField(
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                  keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.phone),
                     hintText: 'Saisir votre telephone',
@@ -129,9 +141,6 @@ class _GererEtudiantState extends State<GererEtudiant> {
                     return null;
                   },
                   controller: telephoneController,
-                ),
-                const SizedBox(
-                  height: 10,
                 ),
                 const SizedBox(
                   height: 10,
@@ -152,9 +161,6 @@ class _GererEtudiantState extends State<GererEtudiant> {
                 const SizedBox(
                   height: 10,
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.email),
@@ -167,9 +173,6 @@ class _GererEtudiantState extends State<GererEtudiant> {
                     return null;
                   },
                   controller: emailController,
-                ),
-                const SizedBox(
-                  height: 10,
                 ),
                 const SizedBox(
                   height: 10,
@@ -241,16 +244,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   onPressed: () {
                     log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text} $niveauValue ${departementValue?.nom} ${specialiteValue?.nom}");
                     try {
-                      addData(
-                          nom: nomController.text,
-                          prenom: prenomController.text,
-                          telephone: telephoneController.text,
-                          adresse: adresseController.text,
-                          email: emailController.text,
-                          motDePasse: motDePasseController.text,
-                          departement: departementValue?.idDep.toString(),
-                          niveau: niveauValue,
-                          specialite: specialiteValue?.idSpecialite.toString());
+                      addData();
                     } catch (e) {
                       log("gerer-etudiant-exception::${e.toString()}");
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -292,9 +286,16 @@ class _GererEtudiantState extends State<GererEtudiant> {
   }
 
   Future<String?> dialog(BuildContext context, Etudiant etudiant) {
-    departementValue = etudiant.departement;
-    niveauValue = etudiant.niveau;
-    specialiteValue = etudiant.specialite;
+    editEtudiant = etudiant;
+    editNomController.text = etudiant.nom ?? "";
+    editPrenomController.text = etudiant.prenom ?? "";
+    editTelephoneController.text = etudiant.tel.toString();
+    editAdresseController.text = etudiant.adresse ?? "";
+    editEmailController.text = etudiant.email ?? "";
+    editMotDePasseController.text = etudiant.motdepasse ?? "";
+    // editSpecialiteValue = etudiant.specialite;
+    // editDepartementValue = etudiant.departement;
+    log("dialog_etudiant::$_etudiant");
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -316,7 +317,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   }
                   return null;
                 },
-                controller: nomController,
+                controller: editNomController,
               ),
               const SizedBox(
                 height: 10,
@@ -335,7 +336,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   }
                   return null;
                 },
-                controller: prenomController,
+                controller: editPrenomController,
               ),
               const SizedBox(
                 height: 10,
@@ -344,6 +345,10 @@ class _GererEtudiantState extends State<GererEtudiant> {
                 height: 10,
               ),
               TextFormField(
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.phone),
                   hintText: etudiant.tel.toString(),
@@ -354,7 +359,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   }
                   return null;
                 },
-                controller: telephoneController,
+                controller: editTelephoneController,
               ),
               const SizedBox(
                 height: 10,
@@ -373,7 +378,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   }
                   return null;
                 },
-                controller: adresseController,
+                controller: editAdresseController,
               ),
               const SizedBox(
                 height: 10,
@@ -392,7 +397,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   }
                   return null;
                 },
-                controller: emailController,
+                controller: editEmailController,
               ),
               const SizedBox(
                 height: 10,
@@ -414,13 +419,14 @@ class _GererEtudiantState extends State<GererEtudiant> {
                   }
                   return null;
                 },
-                controller: motDePasseController,
+                controller: editMotDePasseController,
               ),
               _departement != null
                   ? DropdownButton(
-                      value: departementValue,
+                      value: editDepartementValue,
                       iconSize: 36,
-                      hint: const Text("choisir ta departement"),
+                      hint: Text(etudiant.departement?.nom ??
+                          "choisir votre departement"),
                       items: _departement?.map((item) {
                         return DropdownMenuItem<Departement>(
                           value: item,
@@ -430,25 +436,26 @@ class _GererEtudiantState extends State<GererEtudiant> {
                       onChanged: (newVal) {
                         log("newVal::$newVal");
                         setState(() {
-                          departementValue = newVal as Departement?;
+                          editDepartementValue = newVal as Departement?;
                         });
                       },
                     )
                   : Container(),
               DropdownButton<String>(
-                hint: const Text("choisir votre niveau"),
-                value: niveauValue,
+                hint: Text(etudiant.niveau ?? "choisir votre niveau"),
+                value: editNiveauValue,
                 iconSize: 36,
                 icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                 items: _niveauItems.map(buildMenuItem).toList(),
-                onChanged: (value) => setState(() => niveauValue = value),
+                onChanged: (value) => setState(() => editNiveauValue = value),
                 borderRadius: const BorderRadius.all(Radius.circular(10.0)),
               ),
               _specialite != null
                   ? DropdownButton(
-                      value: specialiteValue,
+                      value: editSpecialiteValue,
                       iconSize: 36,
-                      hint: const Text("choisir ta specialite"),
+                      hint: Text(etudiant.specialite?.nom ??
+                          "choisir votre specialite"),
                       items: _specialite?.map((item) {
                         return DropdownMenuItem<Specialite>(
                           value: item,
@@ -458,7 +465,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                       onChanged: (newVal) {
                         log("newVal::$newVal");
                         setState(() {
-                          specialiteValue = newVal as Specialite?;
+                          editSpecialiteValue = newVal as Specialite?;
                         });
                       },
                     )
@@ -473,7 +480,16 @@ class _GererEtudiantState extends State<GererEtudiant> {
           ),
           TextButton(
             onPressed: () {
-              editStudent(etudiant);
+              try {
+                editStudent();
+              } catch (e) {
+                log("gerer-etudiant-editStudent-exception::${e.toString()}");
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content: Text("quelque chose ne va pas"),
+                      backgroundColor: Colors.red),
+                );
+              }
               Navigator.pop(context, 'Modifer');
             },
             child: const Text('Modifer'),
@@ -500,38 +516,36 @@ class _GererEtudiantState extends State<GererEtudiant> {
       ApiDepartement().getAllDepartements(),
       ApiSpecialite().getAllSpecialites(),
     ]).then((value) async {
-      log("get");
+      // log("get");
       _etudiant = value[0]?.cast<Etudiant>();
       _departement = value[1]?.cast<Departement>();
       _specialite = value[2]?.cast<Specialite>();
-      log("_etudiant::$_etudiant");
+      // log("_etudiant::$_etudiant");
       Future.delayed(const Duration(seconds: 0))
           .then((value) => setState(() {}));
     });
   }
 
-  void addData({
-    String? nom = "",
-    String? prenom = "",
-    String? telephone = "",
-    String? adresse = "",
-    String? email = "",
-    String? motDePasse = "",
-    String? departement = "",
-    String? niveau = "",
-    String? specialite = "",
-  }) async {
-    log("addStudent");
-    await ApiEtudiant().addEtudiants(
-        nom: nom,
-        prenom: prenom,
-        telephone: telephone,
-        adresse: adresse,
-        email: email,
-        motDePasse: motDePasse,
-        departement: departement,
-        niveau: niveau,
-        specialite: specialite);
+  void addData() async {
+    log("addEncadrant");
+    etudiant?.nom = nomController.text;
+    etudiant?.prenom = prenomController.text;
+    try {
+      etudiant?.tel = int.parse(telephoneController.text);
+    } catch (e) {
+      log("encadrant?.tel-exception::$e");
+    }
+
+    etudiant?.adresse = adresseController.text;
+    etudiant?.email = emailController.text;
+    etudiant?.motdepasse = motDePasseController.text;
+    etudiant?.niveau = niveauValue;
+    etudiant?.departement = departementValue;
+    etudiant?.specialite = specialiteValue;
+    // log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text} $departementValue"); //$domaineValue
+    departementValue = null;
+    specialiteValue = null;
+    await ApiEtudiant().addEtudiants(etudiant: etudiant);
     getData();
   }
 
@@ -541,10 +555,29 @@ class _GererEtudiantState extends State<GererEtudiant> {
     getData();
   }
 
-  void editStudent(Etudiant etudiant) async {
+  void editStudent() async {
     log("editStudent");
+    editEtudiant?.nom = editNomController.text;
+    editEtudiant?.prenom = editPrenomController.text;
+    try {
+      editEtudiant?.tel = int.parse(telephoneController.text);
+    } catch (e) {
+      log("editEtudiant?.tel-exception::$e");
+    }
+
+    editEtudiant?.adresse = editAdresseController.text;
+    editEtudiant?.email = editEmailController.text;
+    editEtudiant?.motdepasse = editMotDePasseController.text;
+    editEtudiant?.niveau = editNiveauValue ?? editEtudiant?.niveau;
+    editEtudiant?.specialite = editSpecialiteValue ?? editEtudiant?.specialite;
+    editEtudiant?.departement =
+        editDepartementValue ?? editEtudiant?.departement;
+    log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text}  $departementValue");
+    editDepartementValue = null;
+    editSpecialiteValue = null;
+    editNiveauValue = null;
     await ApiEtudiant()
-        .updateEtudiants(etudiant)
+        .updateEtudiants(editEtudiant: editEtudiant)
         .then((value) => log("updateEtudiants::$value"));
     getData();
   }

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/helpers/document_api.dart';
 import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
 import 'package:gestion_pfe/src/helpers/pfe_api.dart';
-import 'package:gestion_pfe/src/helpers/salle.dart';
+import 'package:gestion_pfe/src/helpers/salle_api.dart';
 import 'package:gestion_pfe/src/helpers/seance_api.dart';
 // import 'package:gestion_pfe/src/helpers/soutenance.dart';
-import 'package:gestion_pfe/src/helpers/specialite.dart';
+import 'package:gestion_pfe/src/helpers/specialite_api.dart';
 import 'package:gestion_pfe/src/models/document.dart';
 import 'package:gestion_pfe/src/models/encadrant.dart';
 import 'package:gestion_pfe/src/models/etudiant.dart';
@@ -35,12 +35,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
   List<Seance?>? _seance;
   List<Salle?>? _salle;
   // List<Specialite?>? _listeSpecialite;
-  List<Specialite?>? _specialite;
-
-  final noteController = TextEditingController();
-  final titreController = TextEditingController();
-  final descriptionController = TextEditingController();
-  final domaineController = TextEditingController();
+  List<Specialite?>? _specialite; 
   final encadreurController = TextEditingController();
   final etudiantController = TextEditingController();
   final dateDebutController = TextEditingController();
@@ -60,10 +55,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
   }
 
   @override
-  void dispose() {
-    noteController.dispose();
-    titreController.dispose();
-    domaineController.dispose();
+  void dispose() { 
     encadreurController.dispose();
     etudiantController.dispose();
     dateDebutController.dispose();
@@ -96,8 +88,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
         body: TabBarView(
           children: [
             SingleChildScrollView(
-              physics: const ScrollPhysics(),
-              // controller: controller,
+              physics: const ScrollPhysics(), 
               child: Center(
                 child: resiseWidget(
                   context: context,
@@ -105,118 +96,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                     children: [
                       const SizedBox(
                         height: 10,
-                      ),
-                      /*TextFormField(
-                        keyboardType: TextInputType.number,
-                        controller: noteController,
-                        decoration: const InputDecoration(
-                          hintText: 'Saisir le note du PFE',
-                        ),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                      ),*/
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        controller: titreController,
-                        decoration: const InputDecoration(
-                          hintText: 'Titre PFE',
-                        ),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'entrez le titre du pfe';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-
-                      TextFormField(
-                        controller: descriptionController,
-                        decoration: const InputDecoration(
-                          hintText: 'description PFE',
-                        ),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'entrez le description du pfe';
-                          }
-                          return null;
-                        },
-                      ),
-                      /* _listeSpecialite != null
-                          ? DropdownButton(
-                              value: specialiteValue,
-                              iconSize: 36,
-                              hint: const Text("choisir la specialite"),
-                              items: _listeSpecialite?.map((item) {
-                                return DropdownMenuItem<Specialite>(
-                                  value: item,
-                                  child: Text("${item!.description}"),
-                                );
-                              }).toList(),
-                              onChanged: (newVal) {
-                                log("newVal::$newVal");
-                                setState(() {
-                                  specialiteValue = newVal as Specialite?;
-                                });
-                              },
-                            )
-                          : Container(),
-                      const SizedBox(
-                        height: 10,
-                      ),  */
-                      //TODO: make contraint to encadrant
-                      /*_encadrant != null
-                          ? DropdownButton(
-                              value: presidentValue,
-                              iconSize: 36,
-                              hint: const Text("choisir l'président"),
-                              items: _encadrant?.map((item) {
-                                return DropdownMenuItem<Encadrant>(
-                                  value: item,
-                                  child: Text("${item!.nom!} ${item.prenom!}"),
-                                );
-                              }).toList(),
-                              onChanged: (newVal) {
-                                log("newVal::$newVal");
-                                setState(() {
-                                  presidentValue = newVal as Encadrant?;
-                                });
-                              },
-                            )
-                          : Container(),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      _encadrant != null
-                          ? DropdownButton(
-                              value: rapporteurValue,
-                              iconSize: 36,
-                              hint: const Text("choisir l'président"),
-                              items: _encadrant?.map((item) {
-                                return DropdownMenuItem<Encadrant>(
-                                  value: item,
-                                  child: Text("${item!.nom!} ${item.prenom!}"),
-                                );
-                              }).toList(),
-                              onChanged: (newVal) {
-                                log("newVal::$newVal");
-                                setState(() {
-                                  rapporteurValue = newVal as Encadrant?;
-                                });
-                              },
-                            )
-                          : Container(),
-                      const SizedBox(
-                        height: 10,
-                      ),*/
+                      ), 
                       _etudiant != null
                           ? DropdownButton(
                               value: etudiantValue,
@@ -344,16 +224,12 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: ElevatedButton(
                           onPressed: () {
-                            try {
-                              pfe?.title = titreController.text;
-                              pfe?.description = descriptionController.text;
+                            try {  
                               pfe?.dateDebut = dateDebutController.text;
-                              pfe?.dateDepot = dateDepotController.text;
-                              pfe?.domaine = domaineController.text;
-                              pfe?.note = double.tryParse(noteController.text);
+                              pfe?.dateDepot = dateDepotController.text;  
                               pfe?.etudiant = etudiantValue;
                               pfe?.document = documentValue;
-                              pfe?.encadreur = encadrantValue;
+                              pfe?.encadrant = encadrantValue;
                               log("pfe::$pfe ");
                               addData(
                                 pfe: pfe,
@@ -383,9 +259,9 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                                    title: Text('${_pfe?[index].title} $index'),
+                                    title: Text('${_pfe?[index].idPFE} $index'),
                                     subtitle: Text(
-                                        '${_pfe?[index].etudiant?.nom} ${_pfe?[index].etudiant?.prenom}-${_pfe?[index].encadreur?.nom} ${_pfe?[index].encadreur?.prenom}'),
+                                        '${_pfe?[index].etudiant?.nom} ${_pfe?[index].etudiant?.prenom}-${_pfe?[index].encadrant?.nom} ${_pfe?[index].encadrant?.prenom}'),
                                     trailing: const Icon(Icons.more_vert),
                                     isThreeLine: true,
                                     onTap: () =>
@@ -409,8 +285,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
     );
   }
 
-  Future<String?> dialog(BuildContext context, PFE pfe) {
-    editNomController.text = pfe.title ?? "";
+  Future<String?> dialog(BuildContext context, PFE pfe) { 
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -566,8 +441,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
             child: const Text('Annuler'),
           ),
           TextButton(
-            onPressed: () {
-              pfe.title = editNomController.text;
+            onPressed: () { 
               editPFE(pfe: pfe);
               Navigator.pop(context, 'Modifer');
             },

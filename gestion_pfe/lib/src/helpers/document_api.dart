@@ -37,7 +37,7 @@ class ApiDocument {
 
   Future<List<Document>?> addDocument(
       {String? id = "",
-      String? filepath = "",
+      String? filepath ,
       required Document document}) async {
     String url = "${ApiConstants.baseUrl}${ApiConstants.document}add";
     try {
@@ -46,22 +46,34 @@ class ApiDocument {
       Map<String, String> headers = {
         'Content-Type': 'multipart/form-data',
       };
+      var request;
+      try {
+        request = http.MultipartRequest('POST', Uri.parse(url))
+          ..fields['Document'] = json.encode(document.toJson())
+          ..headers.addAll(headers)
+          ..files.add(await http.MultipartFile.fromPath(
+              'file',
+              filepath ??
+                  "https://www.episup.com/sites/default/files/logo-epi.svg"));
+      } catch (e) {
+        request = http.MultipartRequest('POST', Uri.parse(url))
+          ..fields['Document'] = json.encode(document.toJson())
+          ..headers.addAll(headers);
+      }
 
-      var request = http.MultipartRequest('POST', Uri.parse(url))
-        ..fields['Document'] = json.encode(document.toJson())
-        ..headers.addAll(headers)
-        ..files.add(await http.MultipartFile.fromPath('file', filepath!));
       // var response =
       await request.send();
-      log(request.fields.toString());
+      log("addDocument-request::${request.fields.toString()}");
     } catch (e) {
       debugPrint("addDocument-exception1::${e.toString()}");
       try {
         http.MultipartRequest request =
             http.MultipartRequest("POST", Uri.parse(url));
 
-        http.MultipartFile multipartFile =
-            await http.MultipartFile.fromPath('file', filepath!);
+        http.MultipartFile multipartFile = await http.MultipartFile.fromPath(
+            'file',
+            filepath ??
+                "https://www.episup.com/sites/default/files/logo-epi.svg");
 
         request.files.add(multipartFile);
 
@@ -88,7 +100,7 @@ class ApiDocument {
           {
             "idDoc": document?.idDoc,
             "titre": document?.titre,
-            "datedepot": document?.datedepot,
+            "date": document?.date,
             "description": document?.description,
             //TODO:comlete this attributes
             // "encadrant": document?.encadrant,

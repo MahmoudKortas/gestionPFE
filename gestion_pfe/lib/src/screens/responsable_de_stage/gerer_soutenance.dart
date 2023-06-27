@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 // import 'package:gestion_pfe/src/helpers/departement.dart';
 import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
 import 'package:gestion_pfe/src/helpers/pfe_api.dart';
-import 'package:gestion_pfe/src/helpers/salle.dart';
+import 'package:gestion_pfe/src/helpers/salle_api.dart';
 import 'package:gestion_pfe/src/helpers/seance_api.dart';
 // import 'package:gestion_pfe/src/models/departement.dart';
 import 'package:gestion_pfe/src/models/encadrant.dart';
@@ -14,7 +14,7 @@ import 'package:gestion_pfe/src/models/pfe.dart';
 import 'package:gestion_pfe/src/models/salle.dart';
 import 'package:gestion_pfe/src/models/seance_model.dart';
 // import 'package:image_picker/image_picker.dart';
-import '../../helpers/soutenance.dart';
+import '../../helpers/soutenance_api.dart';
 import '../../models/soutenance.dart';
 import '../../resize_widget.dart';
 
@@ -191,7 +191,7 @@ class _GererSoutenanceState extends State<GererSoutenance> {
                         items: _pfe?.map((item) {
                           return DropdownMenuItem<PFE>(
                             value: item,
-                            child: Text(item!.title!),
+                            child: Text(item!.idPFE!.toString()),
                           );
                         }).toList(),
                         onChanged: (newVal) {

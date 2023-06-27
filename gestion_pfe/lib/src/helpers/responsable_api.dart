@@ -5,11 +5,10 @@ import '../constants/constants.dart';
 import '../models/responsable.dart';
 
 class ApiResponsable {
-  
   Future<List<Responsable>?> getAllResponsable() async {
     try {
-      var url =
-          Uri.parse(ApiConstants.baseUrl + ApiConstants.responsable + ApiConstants.all);
+      var url = Uri.parse(
+          ApiConstants.baseUrl + ApiConstants.responsable + ApiConstants.all);
 
       var response = await http.get(url);
       if (response.statusCode == 200) {
@@ -17,10 +16,11 @@ class ApiResponsable {
         return model;
       }
     } catch (e) {
-      log(e.toString());
+      log("getAllResponsable::${e.toString()}");
     }
     return null;
   }
+
   Future<List<Responsable>?> getResponsable({String? id = ""}) async {
     try {
       var url =
@@ -37,7 +37,7 @@ class ApiResponsable {
     }
     return null;
   }
-  
+
   Future<List<Responsable>?> addResponsable({Responsable? responsable}) async {
     try {
       var url =
@@ -48,15 +48,15 @@ class ApiResponsable {
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(
-          { 
-        "email": responsable?.email,
-        "motdepasse": responsable?.motdepasse,
-        "departement": responsable?.departement?.idDep,
-        "tel": responsable?.tel,
-        "prenom": responsable?.prenom,
-        "dateresponsabilite": responsable?.dateResponsabilite,
-        "nom": responsable?.nom
-    },
+          {
+            "nom": responsable?.nom,
+            "prenom": responsable?.prenom,
+            "email": responsable?.email,
+            "tel": responsable?.tel.toString(),
+            "motdepasse": responsable?.motdepasse,
+            "dateresponsabilite": responsable?.dateResponsabilite,
+            "departement": responsable?.departement,
+          },
         ),
       );
       log("addResponsablestatusCode::${response.body}");
@@ -69,9 +69,12 @@ class ApiResponsable {
     }
     return null;
   }
-Future<List<Responsable>?> updateResponsable({Responsable? responsable}) async {
+
+  Future<List<Responsable>?> updateResponsable(
+      {Responsable? editedResponsable}) async {
     try {
-      var url = Uri.parse("${ApiConstants.baseUrl}${ApiConstants.responsable}update");
+      var url =
+          Uri.parse("${ApiConstants.baseUrl}${ApiConstants.responsable}update");
       var response = await http.put(
         url,
         headers: <String, String>{
@@ -79,14 +82,17 @@ Future<List<Responsable>?> updateResponsable({Responsable? responsable}) async {
         },
         body: jsonEncode(
           {
-            "idDep": responsable?.idUser,
-            "Dateresponsabilite": responsable?.dateResponsabilite,
-            // "departement": responsable?.departement,
-            "email": responsable?.email,
-            "motdepasse": responsable?.motdepasse,
-            "nom": responsable?.nom,
-            "prenom": responsable?.prenom,
-            "tel": responsable?.tel,
+            "idDep": editedResponsable?.idUser,
+            "Dateresponsabilite": editedResponsable?.dateResponsabilite,
+            // "departement": editedResponsable?.departement,
+            "email": editedResponsable?.email,
+            "motdepasse": editedResponsable?.motdepasse,
+            "nom": editedResponsable?.nom,
+            "prenom": editedResponsable?.prenom,
+            "tel": editedResponsable?.tel,
+
+            "dateresponsabilite": editedResponsable?.dateResponsabilite,
+            "departement": editedResponsable?.departement,
           },
         ),
       );
@@ -100,12 +106,13 @@ Future<List<Responsable>?> updateResponsable({Responsable? responsable}) async {
     }
     return null;
   }
+
   Future<List<Responsable>?> deleteResponsable({required String id}) async {
     try {
       var url =
           Uri.parse("${ApiConstants.baseUrl}${ApiConstants.responsable}$id");
       // var response =
-       await http.delete(
+      await http.delete(
         url,
       );
       // log("deleteResponsables::${response.body}");
@@ -114,5 +121,4 @@ Future<List<Responsable>?> updateResponsable({Responsable? responsable}) async {
     }
     return null;
   }
-
 }

@@ -39,15 +39,7 @@ class ApiEtudiant {
   }
 
   Future<List<Etudiant>?> addEtudiants({
-    String? nom = "",
-    String? prenom = "",
-    String? telephone = "",
-    String? adresse = "",
-    String? niveau = "",
-    String? email = "",
-    String? motDePasse = "", 
-    String? departement = "",
-    String? specialite = "",
+    Etudiant? etudiant,
   }) async {
     try {
       var url =
@@ -59,15 +51,15 @@ class ApiEtudiant {
         },
         body: jsonEncode(
           {
-            "nom": nom,
-            "prenom": prenom,
-            "tel": int.parse(telephone!),
-            "adresse": adresse, 
-            "niveau": niveau,
-            "email": email,
-            "motdepasse": motDePasse,
-            "departement": departement,
-            "specialite": specialite
+            "nom": etudiant?.nom,
+            "prenom": etudiant?.prenom,
+            "tel": etudiant?.tel,
+            "adresse": etudiant?.adresse,
+            "niveau": etudiant?.niveau,
+            "email": etudiant?.email,
+            "motdepasse": etudiant?.motdepasse,
+            "departement": etudiant?.departement,
+            "specialite": etudiant?.specialite
           },
         ),
       );
@@ -82,11 +74,11 @@ class ApiEtudiant {
     return null;
   }
 
-  Future<List<Etudiant>?> updateEtudiants(Etudiant etudiant) async {
+  Future<List<Etudiant>?> updateEtudiants({Etudiant? editEtudiant}) async {
     try {
       var url = Uri.parse(
-          "${ApiConstants.baseUrl}${ApiConstants.etudiants}/${etudiant.idEtud}");
-      // var response = 
+          "${ApiConstants.baseUrl}${ApiConstants.etudiants}/${editEtudiant?.idEtud}");
+      // var response =
       await http.put(
         url,
         headers: <String, String>{
@@ -94,16 +86,16 @@ class ApiEtudiant {
         },
         body: jsonEncode(
           {
-            "id_etud": etudiant.idEtud,
-            "nom": etudiant.nom,
-            "prenom": etudiant.prenom,
-            "tel": etudiant.tel,
-            "adresse": etudiant.adresse,
-            "niveau": etudiant.niveau,
-            "email": etudiant.email,
-            "motdepasse": etudiant.motdepasse,
-            "departement": etudiant.departement?.idDep,
-            "specialite": etudiant.specialite?.idSpecialite
+            "id_etud": editEtudiant?.idEtud,
+            "nom": editEtudiant?.nom,
+            "prenom": editEtudiant?.prenom,
+            "tel": editEtudiant?.tel,
+            "adresse": editEtudiant?.adresse,
+            "niveau": editEtudiant?.niveau,
+            "email": editEtudiant?.email,
+            "motdepasse": editEtudiant?.motdepasse,
+            "departement": editEtudiant?.departement?.idDep,
+            "specialite": editEtudiant?.specialite?.idSpecialite
           },
         ),
       );
@@ -123,7 +115,7 @@ class ApiEtudiant {
       var url =
           Uri.parse("${ApiConstants.baseUrl}${ApiConstants.etudiants}$id");
       // var response =
-       await http.delete(
+      await http.delete(
         url,
       );
       // log("deleteEtudiants::${response.body}");

@@ -3,26 +3,26 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:gestion_pfe/src/helpers/document_api.dart';
+import 'package:gestion_pfe/src/helpers/sujet_api.dart';
 import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
 import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
 import 'package:gestion_pfe/src/helpers/responsable_api.dart';
 import 'package:gestion_pfe/src/models/responsable.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../models/document.dart';
+import '../../models/sujet.dart';
 import '../../models/encadrant.dart';
 import '../../models/etudiant.dart';
 import '../../resize_widget.dart';
 
-class GererDocument extends StatefulWidget {
-  const GererDocument({Key? key}) : super(key: key);
-  static const routeName = '/Document';
+class GererSujet extends StatefulWidget {
+  const GererSujet({Key? key}) : super(key: key);
+  static const routeName = '/Sujet';
   @override
-  State<GererDocument> createState() => _GererDocumentState();
+  State<GererSujet> createState() => _GererSujetState();
 }
 
-class _GererDocumentState extends State<GererDocument> {
-  var _document;
+class _GererSujetState extends State<GererSujet> {
+  var _sujet;
   var _encadrant;
   var _listeEncadrant = [''];
   var _responsable;
@@ -34,7 +34,7 @@ class _GererDocumentState extends State<GererDocument> {
   String? valueEtudiant;
   File? _image;
   final picker = ImagePicker();
-  Document document = Document();
+  Sujet sujet = Sujet();
   final titreController = TextEditingController();
   final descriptionController = TextEditingController();
   final dateController = TextEditingController();
@@ -50,7 +50,7 @@ class _GererDocumentState extends State<GererDocument> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(' documents'),
+        title: const Text(' sujets'),
       ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),
@@ -140,9 +140,9 @@ class _GererDocumentState extends State<GererDocument> {
                   // ignore: avoid_print
                   onPressed: () {
                     try {
-                      addDocument();
+                      addSujet();
                     } catch (e) {
-                      log("gerer-document-exception::${e.toString()}");
+                      log("gerer-sujet-exception::${e.toString()}");
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                             content: Text("quelque chose ne va pas"),
@@ -152,34 +152,34 @@ class _GererDocumentState extends State<GererDocument> {
                   },
                   child: const Text("Ajouter"),
                 ),
-                /*_document == null
+                /*_sujet == null
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )
                     :*/
-                _document != null
-                    ? _document!.isEmpty
-                        ? const Text("aucun document existe")
+                _sujet != null
+                    ? _sujet!.isEmpty
+                        ? const Text("aucun sujet existe")
                         : ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: _document!.length,
+                            itemCount: _sujet!.length,
                             itemBuilder: (context, index) {
                               return Card(
                                 child: ListTile(
                                     title: Text(
-                                        _document![index].titre.toString()),
-                                    subtitle: Text(_document![index]
+                                        _sujet![index].titre.toString()),
+                                    subtitle: Text(_sujet![index]
                                         .description
                                         .toString()),
                                     trailing: const Icon(Icons.more_vert),
                                     // isThreeLine: true,
                                     onTap: () =>
-                                        dialog(context, _document![index])),
+                                        dialog(context, _sujet![index])),
                               );
                             },
                           )
-                    : const Text("aucun document existe null")
+                    : const Text("aucun sujet existe null")
               ],
             ),
           ),
@@ -188,29 +188,28 @@ class _GererDocumentState extends State<GererDocument> {
     );
   }
 
-//TODO: fix edit document
-  Future<String?> dialog(BuildContext context, Document document) {
-    editTitreController.text = document.titre ?? "";
-    editDescriptionController.text = document.description ?? "";
+//TODO: fix edit sujet
+  Future<String?> dialog(BuildContext context, Sujet sujet) {
+    editTitreController.text = sujet.titre ?? "";
+    editDescriptionController.text = sujet.description ?? "";
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Modifier / Supprimer document'),
+        title: const Text('Modifier / Supprimer sujet'),
         content: SingleChildScrollView(
           child: Column(
             children: [
-              Image.network(
-                  "http://10.0.2.2:8080/api/document/image/${document.idDoc}"),
+              
 
               // Image.asset("assets/images/logo-epi.png"),
               TextFormField(
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.description),
-                  hintText: 'Saisir titre du document',
+                  hintText: 'Saisir titre du sujet',
                 ),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
-                    return 'entrez le titre du document';
+                    return 'entrez le titre du sujet';
                   }
                   return null;
                 },
@@ -219,11 +218,11 @@ class _GererDocumentState extends State<GererDocument> {
               TextFormField(
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.description),
-                  hintText: 'Saisir description du document',
+                  hintText: 'Saisir description du sujet',
                 ),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
-                    return 'entrez la description du document';
+                    return 'entrez la description du sujet';
                   }
                   return null;
                 },
@@ -279,25 +278,25 @@ class _GererDocumentState extends State<GererDocument> {
           ),
           TextButton(
             onPressed: () {
-              document.titre = editTitreController.text;
-              document.description = editDescriptionController.text;
-              document.date = DateTime.now().toString();
-              document.photo = "e";
-              document.encadrant = Encadrant(); // valueEncadrant;
-              document.responsable = Responsable(); // _responsable;
-              document.etudiant = Etudiant(); // _etudiant;
-              editDocument(document: document);
+              sujet.titre = editTitreController.text;
+              sujet.description = editDescriptionController.text;
+              sujet.date = DateTime.now().toString();
+             
+              sujet.encadrant = Encadrant(); // valueEncadrant;
+              sujet.responsable = Responsable(); // _responsable;
+              sujet.etudiant = Etudiant(); // _etudiant;
+              editSujet(sujet: sujet);
               Navigator.pop(context, 'Modifer');
             },
             child: const Text('Modifer'),
           ),
           TextButton(
             onPressed: () async {
-              log(document.idDoc.toString());
-              var _documentt;
-              _documentt = await ApiDocument()
-                  .deleteDocument(id: document.idDoc.toString());
-              log("_documentt::$_documentt");
+              log(sujet.idSujet.toString());
+              var _sujett;
+              _sujett = await ApiSujet()
+                  .deleteSujet(id: sujet.idSujet.toString());
+              log("_sujett::$_sujett");
               getData();
               Navigator.pop(context, 'Supprimer');
             },
@@ -317,12 +316,12 @@ class _GererDocumentState extends State<GererDocument> {
       ApiEtudiant().getAllEtudiants(),
       ApiEncadrant().getAllEncadrant(),
       ApiResponsable().getAllResponsable(),
-      ApiDocument().getAllDocument(),
+      ApiSujet().getAllSujets(),
     ]).then((value) async {
       _etudiant = value[0]?.cast<Etudiant?>();
       _encadrant = value[1]?.cast<Encadrant?>();
       _responsable = value[2]?.cast<Responsable?>();
-      _document = value[3]?.cast<Document?>();
+      _sujet = value[3]?.cast<Sujet?>();
 
       _listeEtudiant.clear();
       _etudiant
@@ -341,33 +340,30 @@ class _GererDocumentState extends State<GererDocument> {
 
       log("_encadrant::$_encadrant");
       log("_etudiant::$_etudiant");
-      log("Document::$_document");
+      log("Sujet::$_sujet");
       Future.delayed(const Duration(seconds: 0))
           .then((value) => setState(() {}));
     });
   }
 
-  addDocument() async {
-    document.titre = titreController.text;
-    document.description = descriptionController.text;
-    document.date = DateTime.now().toString();
-    document.encadrant = Encadrant(); // valueEncadrant;
-    document.responsable = Responsable(); // _responsable;
-    document.etudiant = Etudiant(); // _etudiant;
-    document.photo = _image?.path;
-    _image != null
-        ? document.photo = _image?.path
-        : document.photo =
-            "https://www.episup.com/sites/default/files/logo-epi.svg";
+  addSujet() async {
+    sujet.titre = titreController.text;
+    sujet.description = descriptionController.text;
+    sujet.date = DateTime.now().toString();
+    sujet.encadrant = Encadrant(); // valueEncadrant;
+    sujet.responsable = Responsable(); // _responsable;
+    sujet.etudiant = Etudiant(); // _etudiant;
+  
+ 
 
-    await ApiDocument()
-        .addDocument(document: document, filepath: document.photo);
+    await ApiSujet()
+        .addSujets(sujet: sujet );
 
     getData();
   }
 
-  editDocument({Document? document}) async {
-    await ApiDocument().updateDocument(document: document);
+  editSujet({Sujet? sujet}) async {
+    await ApiSujet().updateSujets(sujet: sujet);
 
     getData();
   }

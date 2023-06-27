@@ -3,10 +3,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gestion_pfe/src/screens/etudiant/enquete_satisfaction.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_departement.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_ligne_soutenance.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_role.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_salle_calender.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_seance.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_specialite.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_sujet.dart';
 import 'custom_theme.dart';
 import 'screens/accueil/accueil_encadrant.dart';
 import 'screens/accueil/accueil_etudiant.dart';
@@ -119,6 +121,10 @@ class MyApp extends StatelessWidget {
                     return const GererSeance();
                   case GererSalle.routeName:
                     return const GererSalle();
+                  case GererSujet.routeName:
+                    return const GererSujet();
+                  case GererLigneSoutenance.routeName:
+                    return const GererLigneSoutenance();
                   case GererSalleCalender.routeName:
                     return const GererSalleCalender();
                   case GererDepartement.routeName:

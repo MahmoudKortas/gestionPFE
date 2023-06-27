@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/consts.dart';
 import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
 import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
-import 'package:gestion_pfe/src/helpers/responsable.dart';
+import 'package:gestion_pfe/src/helpers/responsable_api.dart';
 import 'package:gestion_pfe/src/screens/accueil/accueil_encadrant.dart';
 import 'package:gestion_pfe/src/screens/accueil/accueil_etudiant.dart';
 import 'package:gestion_pfe/src/screens/authentification/inscription.dart';

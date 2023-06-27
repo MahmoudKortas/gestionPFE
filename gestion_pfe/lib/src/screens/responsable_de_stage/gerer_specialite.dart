@@ -5,7 +5,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 // import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
 // import 'package:image_picker/image_picker.dart';
-import '../../helpers/specialite.dart';
+import '../../helpers/specialite_api.dart';
 import '../../models/specialite.dart';
 import '../../resize_widget.dart';
 

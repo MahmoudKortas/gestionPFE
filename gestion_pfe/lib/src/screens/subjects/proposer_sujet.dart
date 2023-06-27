@@ -112,7 +112,7 @@ class _ProposerSujetState extends State<ProposerSujet> {
                       /*if (_formKey.currentState!.validate()) {
                           // Process data.
                         }*/
-                      document.datedepot =
+                      document.date =
                           "2022-06-30T12:57:27.000+00:00"; //DateFormat('yyyy-MM-dd hh:mm:ss.SSSS').format(DateTime.now()).toString();
                       document.description = descriptionController.text;
                       // document.proprietaire = widget.fonction == "Encadrant"

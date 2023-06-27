@@ -2,17 +2,19 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/color_hex.dart';
 import 'package:gestion_pfe/src/consts.dart';
-import 'package:gestion_pfe/src/helpers/departement.dart';
+import 'package:gestion_pfe/src/helpers/departement_api.dart';
 import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
 import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
-import 'package:gestion_pfe/src/helpers/specialite.dart';
+import 'package:gestion_pfe/src/helpers/specialite_api.dart';
 import 'package:gestion_pfe/src/models/departement.dart';
+import 'package:gestion_pfe/src/models/encadrant.dart';
 // import 'package:gestion_pfe/src/models/document.dart';
 // import 'package:gestion_pfe/src/models/pfe.dart';
 // import 'package:gestion_pfe/src/models/soutenance.dart';
 import 'package:gestion_pfe/src/models/specialite.dart';
 import 'package:gestion_pfe/src/screens/authentification/authentification.dart';
 import '../../description.dart';
+import '../../models/etudiant.dart';
 import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.
@@ -32,7 +34,6 @@ class _InscriptionState extends State<Inscription> {
     'Mastère',
   ];
   String? domaineValue;
-  String? diplomeValue;
   String? niveauValue;
 
   List<Specialite?>? _specialite;
@@ -284,7 +285,7 @@ class _InscriptionState extends State<Inscription> {
                                   : _description.toString().contains("etudiant")
                                       ? Column(
                                           children: [
-                                            DropdownButton<String>(
+                                            /*DropdownButton<String>(
                                               hint: const Text(
                                                   "choisir votre diplome"),
                                               value: diplomeValue,
@@ -300,7 +301,7 @@ class _InscriptionState extends State<Inscription> {
                                               borderRadius:
                                                   const BorderRadius.all(
                                                       Radius.circular(10.0)),
-                                            ),
+                                            ),*/
                                             _departement != null
                                                 ? DropdownButton(
                                                     value: departementValue,
@@ -373,8 +374,21 @@ class _InscriptionState extends State<Inscription> {
                                     const EdgeInsets.symmetric(vertical: 16.0),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text} ${_description.toString()} $domaineValue $diplomeValue $departementValue $niveauValue $specialiteValue");
+                                    log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text} ${_description.toString()} $domaineValue $departementValue $niveauValue $specialiteValue");
                                     try {
+                                      Etudiant? etudiant = Etudiant();
+                                      etudiant.nom = nomController.text;
+                                      etudiant.prenom = prenomController.text;
+                                      etudiant.tel =
+                                          int.parse(telephoneController.text);
+                                      etudiant.adresse = adresseController.text;
+                                      etudiant.email = emailController.text;
+                                      etudiant.motdepasse =
+                                          motDePasseController.text;
+                                      etudiant.departement = departementValue;
+                                      etudiant.niveau = niveauValue;
+                                      etudiant.specialite = specialiteValue;
+
                                       _description
                                               .toString()
                                               .contains("encadrant")
@@ -392,23 +406,8 @@ class _InscriptionState extends State<Inscription> {
                                                   .toString()
                                                   .contains("etudiant")
                                               ? addStudent(
-                                                  nom: nomController.text,
-                                                  prenom: prenomController.text,
-                                                  telephone:
-                                                      telephoneController.text,
-                                                  adresse:
-                                                      adresseController.text,
-                                                  email: emailController.text,
-                                                  motDePasse:
-                                                      motDePasseController.text,
-                                                  diplome: diplomeValue,
-                                                  departement: departementValue
-                                                      ?.idDep
-                                                      .toString(),
-                                                  niveau: niveauValue,
-                                                  specialite: specialiteValue
-                                                      ?.idSpecialite
-                                                      .toString())
+                                                  etudiant: etudiant,
+                                                )
                                               : log("select function");
                                     } catch (e) {
                                       log("inscription-exception::${e.toString()}");
@@ -489,28 +488,10 @@ class _InscriptionState extends State<Inscription> {
   }*/
 
   void addStudent({
-    String? nom = "",
-    String? prenom = "",
-    String? telephone = "",
-    String? adresse = "",
-    String? email = "",
-    String? motDePasse = "",
-    String? diplome = "",
-    String? departement = "",
-    String? niveau = "",
-    String? specialite = "",
+    Etudiant? etudiant,
   }) async {
     log("addStudent");
-    await ApiEtudiant().addEtudiants(
-        nom: nom,
-        prenom: prenom,
-        telephone: telephone,
-        adresse: adresse,
-        email: email,
-        motDePasse: motDePasse,
-        departement: departement,
-        niveau: niveau,
-        specialite: specialite);
+    await ApiEtudiant().addEtudiants(etudiant: etudiant);
   }
 
   void addEncadrant(
@@ -524,14 +505,8 @@ class _InscriptionState extends State<Inscription> {
       String? departement = ""}) async {
     log("addEncadrant");
     var e = await ApiEncadrant().addEncadrant(
-        nom: nom,
-        prenom: prenom,
-        telephone: telephone,
-        adresse: adresse,
-        domaine: domaine,
-        email: email,
-        motDePasse: motDePasse,
-        departement: departement);
+      encadrant: Encadrant(),
+    );
     e!.isNotEmpty
         ? log("addEncadrantENotEmpty::$e")
         : log("addEncadrantEempty::$e");

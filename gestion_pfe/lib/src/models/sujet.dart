@@ -1,6 +1,6 @@
 // To parse this JSON data, do
 //
-//     final document = documentFromJson(jsonString);
+//     final sujet = sujetFromJson(jsonString);
 
 import 'dart:convert';
 
@@ -8,40 +8,37 @@ import 'package:gestion_pfe/src/models/encadrant.dart';
 import 'package:gestion_pfe/src/models/etudiant.dart';
 import 'package:gestion_pfe/src/models/responsable.dart';
 
-List<Document> documentFromJson(String str) =>
-    List<Document>.from(json.decode(str).map((x) => Document.fromJson(x)));
+List<Sujet> sujetFromJson(String str) =>
+    List<Sujet>.from(json.decode(str).map((x) => Sujet.fromJson(x)));
 
-String documentToJson(List<Document> data) =>
+String sujetToJson(List<Sujet> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-String documentToJsonn(List<Document> data) =>
+String sujetToJsonn(List<Sujet> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class Document {
-  int? idDoc;
+class Sujet {
+  int? idSujet;
   String? titre;
   String? description;
-  String? date;
-  String? photo; //file
+  String? date; 
   Etudiant? etudiant;
   Responsable? responsable;
   Encadrant? encadrant;
 
-  Document(
-      {this.idDoc,
+  Sujet(
+      {this.idSujet,
       this.titre,
       this.description,
-      this.date,
-      this.photo,
+      this.date, 
       this.etudiant,
       this.responsable,
       this.encadrant});
 
-  Document.fromJson(Map<String, dynamic> json) {
-    idDoc = json['idDoc'];
+  Sujet.fromJson(Map<String, dynamic> json) {
+    idSujet = json['idSujet'];
     titre = json['titre'];
     description = json['description'];
-    date = json['date'];
-    photo = json['photo'];
+    date = json['date']; 
     etudiant =
         json['etudiant'] != null ? Etudiant.fromJson(json['etudiant']) : null;
     responsable = json['responsable'] != null
@@ -54,11 +51,10 @@ class Document {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idDoc'] = idDoc;
+    data['idSujet'] = idSujet;
     data['titre'] = titre;
     data['description'] = description;
-    data['date'] = date;
-    data['photo'] = photo;
+    data['date'] = date; 
     data['etudiant'] = etudiant?.idEtud;
     data['responsable'] = responsable?.idUser;
     data['encadrant'] = encadrant?.idEnc;
@@ -67,6 +63,6 @@ class Document {
 
   @override
   String toString() {
-    return 'Document(idDoc: $idDoc, titre: $titre, description: $description, date: $date, photo: $photo, etudiant: $etudiant, responsable: $responsable, encadrant: $encadrant)';
+    return 'Sujet(idSujet: $idSujet, titre: $titre, description: $description, date: $date, etudiant: $etudiant, responsable: $responsable, encadrant: $encadrant)';
   }
 }

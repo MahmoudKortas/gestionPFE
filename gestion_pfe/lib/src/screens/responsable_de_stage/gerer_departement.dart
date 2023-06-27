@@ -5,7 +5,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 // import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
 // import 'package:image_picker/image_picker.dart';
-import '../../helpers/departement.dart';
+import '../../helpers/departement_api.dart';
 import '../../models/departement.dart';
 import '../../resize_widget.dart';
 
@@ -98,62 +98,6 @@ class _GererDepartementState extends State<GererDepartement> {
                             },
                           )
                     : const Text("aucun Departement existe null")
-                /*Card(
-                  child: ListTile(
-                      /*leading: const CircleAvatar(
-                      foregroundImage:
-                          AssetImage('assets/images/flutter_logo.png'),
-                    ),*/
-                      title: const Text('SampleItem'),
-                      subtitle: const Text(
-                          'A sufficiently long subtitle warrants three lines.'),
-                      trailing: const Icon(Icons.more_vert),
-                      isThreeLine: true,
-                      onTap: () => dialog(context)),
-                ),
-                Card(
-                  child: ListTile(
-                    /*leading: const CircleAvatar(
-                      foregroundImage:
-                          AssetImage('assets/images/flutter_logo.png'),
-                    ),*/
-                    title: const Text('SampleItem'),
-                    subtitle: const Text(
-                        'A sufficiently long subtitle warrants three lines.'),
-                    trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
-                    onTap: () => dialog(context),
-                  ),
-                ),
-                Card(
-                  child: ListTile(
-                    /*leading: const CircleAvatar(
-                      foregroundImage:
-                          AssetImage('assets/images/flutter_logo.png'),
-                    ),*/
-                    title: const Text('SampleItem'),
-                    subtitle: const Text(
-                        'A sufficiently long subtitle warrants three lines.'),
-                    trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
-                    onTap: () => dialog(context),
-                  ),
-                ),
-                Card(
-                  child: ListTile(
-                    /*leading: const CircleAvatar(
-                      foregroundImage:
-                          AssetImage('assets/images/flutter_logo.png'),
-                    ),*/
-                    title: const Text('SampleItem'),
-                    subtitle: const Text(
-                        'A sufficiently long subtitle warrants three lines.'),
-                    trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
-                    onTap: () => dialog(context),
-                  ),
-                ),
-             */
               ],
             ),
           ),

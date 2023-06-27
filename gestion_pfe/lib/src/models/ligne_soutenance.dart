@@ -1,11 +1,12 @@
-// import 'package:gestionpfe/src/models/encadrant.dart';
-import 'package:gestion_pfe/src/models/pfe.dart';
+// import 'package:gestionsoutenance/src/models/encadrant.dart';
+import 'package:gestion_pfe/src/models/soutenance.dart'; 
 
 import 'dart:convert';
  
+ 
 
 List<LigneSoutenance> ligneSoutenanceFromJson(String str) =>
-    List<LigneSoutenance>.from(json.decode(str).map((x) => PFE.fromJson(x)));
+    List<LigneSoutenance>.from(json.decode(str).map((x) => LigneSoutenance.fromJson(x)));
 
 String ligneSoutenanceToJson(List<LigneSoutenance> data) =>
     json.encode(List<LigneSoutenance>.from(data.map((x) => x.toJson())));
@@ -16,14 +17,14 @@ class LigneSoutenance {
   String? noteQR;//TODO: convert it to double
   String? notePresentation;//TODO: convert it to double
   String? noteApplication; //TODO: convert it to double
-  PFE? pfe;
+  Soutenance? soutenance;
   LigneSoutenance(
       {this.idLigne,
       this.noteRapport,
       this.noteQR,
       this.notePresentation,
       this.noteApplication, 
-      this.pfe});
+      this.soutenance});
 
   LigneSoutenance.fromJson(Map<String, dynamic> json) {
     idLigne = json['idLigne'];
@@ -31,7 +32,7 @@ class LigneSoutenance {
     noteQR = json['NoteQR'];
     notePresentation = json['Notepresentation'];
     noteApplication = json['Notepresentation']; 
-    pfe = json['pfe'] != null ? PFE.fromJson(json['pfe']) : null;
+    soutenance = json['soutenance'] != null ? Soutenance.fromJson(json['soutenance']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -42,14 +43,14 @@ class LigneSoutenance {
     data['Notepresentation'] = notePresentation;
     data['Noteapplication'] = noteApplication;
  
-    if (pfe != null) {
-      data['pfe'] = pfe!.toJson();
+    if (soutenance != null) {
+      data['soutenance'] = soutenance!.toJson();
     }
     return data;
   }
 
   @override
   String toString() {
-    return 'LigneSoutenance(idLigne: $idLigne, Noterapport: $noteRapport, Noteapplication: $noteApplication, pfe: $pfe)';
+    return 'LigneSoutenance(idLigne: $idLigne, Noterapport: $noteRapport, Noteapplication: $noteApplication, soutenance: $soutenance)';
   }
 }

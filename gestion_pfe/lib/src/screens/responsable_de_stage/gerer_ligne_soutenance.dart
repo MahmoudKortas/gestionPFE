@@ -1,49 +1,48 @@
 import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/helpers/departement_api.dart';
-import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
+import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
+import 'package:gestion_pfe/src/helpers/specialite_api.dart';
 import 'package:gestion_pfe/src/models/departement.dart';
-import '../../models/encadrant.dart';
-import '../../resize_widget.dart';
-import 'package:flutter/services.dart';
+import 'package:gestion_pfe/src/models/ligne_soutenance.dart';
+import 'package:gestion_pfe/src/models/specialite.dart';
 
-class GererEncadrant extends StatefulWidget {
-  const GererEncadrant({Key? key}) : super(key: key);
-  static const routeName = '/GererEncadrant';
+import '../../models/etudiant.dart';
+import '../../resize_widget.dart';
+
+/// Displays detailed information about a SampleItem.
+class GererLigneSoutenance extends StatefulWidget {
+  const GererLigneSoutenance({Key? key}) : super(key: key);
+
+  static const routeName = '/GererLigneSoutenance';
   @override
-  State<GererEncadrant> createState() => _GererEncadrantState();
+  State<GererLigneSoutenance> createState() => _GererLigneSoutenanceState();
 }
 
-class _GererEncadrantState extends State<GererEncadrant> {
-  late List<Encadrant>? _encadrant = [];
-  final _domaineItems = [
-    'informatique',
-    'Mecanique',
-    'electrique',
-    'genie civile',
-    'langues',
-    'mathematique'
+class _GererLigneSoutenanceState extends State<GererLigneSoutenance> {
+  // final _items = ['Informatique', 'Mecanique', 'Electrique', 'Genie civile'];
+  final _niveauItems = [
+    'Licence',
+    'Ingenieurie',
+    'Mastère',
   ];
-  String? domaineValue;
+  late List<LigneSoutenance>? _ligneSoutenance = [];
+
+  String? niveauValue;
+
+  List<Specialite?>? _specialite;
+  Specialite? specialiteValue;
+
+  List<Departement?>? _departement;
+  Departement? departementValue;
+
   final nomController = TextEditingController();
   final prenomController = TextEditingController();
   final telephoneController = TextEditingController();
   final adresseController = TextEditingController();
   final emailController = TextEditingController();
   final motDePasseController = TextEditingController();
-  Encadrant? encadrant = Encadrant();
-  List<Departement?>? _departement;
-  Departement? departementValue;
-
-  String? editDomaineValue;
-  final editNomController = TextEditingController();
-  final editPrenomController = TextEditingController();
-  final editTelephoneController = TextEditingController();
-  final editAdresseController = TextEditingController();
-  final editEmailController = TextEditingController();
-  final editMotDePasseController = TextEditingController();
-  Departement? editDepartementValue;
-  Encadrant? editedEncadrant = Encadrant();
   @override
   void initState() {
     super.initState();
@@ -65,10 +64,10 @@ class _GererEncadrantState extends State<GererEncadrant> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(' encadrants'),
+        title: const Text(' LigneSoutenances'),
       ),
       body: SingleChildScrollView(
-        //  controller: controller,
+        // controller: controller,
         physics: const ScrollPhysics(),
         child: Center(
           child: resiseWidget(
@@ -78,14 +77,17 @@ class _GererEncadrantState extends State<GererEncadrant> {
                 const SizedBox(
                   height: 10,
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.person),
-                    hintText: "Saisir nom de l'encadrant",
+                    hintText: 'Saisir votre nom',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "Entrez le nom de l'encadrant";
+                      return 'Entrez votre nom';
                     }
                     return null;
                   },
@@ -94,14 +96,17 @@ class _GererEncadrantState extends State<GererEncadrant> {
                 const SizedBox(
                   height: 10,
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.person),
-                    hintText: "Prénom de l'encadrant",
+                    hintText: 'Saisir votre prenom',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "Entrez le prenom de l'encadrant";
+                      return 'Entrez votre prenom';
                     }
                     return null;
                   },
@@ -110,18 +115,17 @@ class _GererEncadrantState extends State<GererEncadrant> {
                 const SizedBox(
                   height: 10,
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
                 TextFormField(
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
-                  keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.phone),
-                    hintText: "Numero du telephone de l'encadrant",
+                    hintText: 'Saisir votre telephone',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "Entrez le numero du telephone de l'encadrant";
+                      return 'Entrez votre telephone';
                     }
                     return null;
                   },
@@ -130,14 +134,17 @@ class _GererEncadrantState extends State<GererEncadrant> {
                 const SizedBox(
                   height: 10,
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.location_city),
-                    hintText: "Adresse de l'encadrant",
+                    hintText: 'Saisir votre adresse',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "Entrez l'adresse de l'encadrant";
+                      return 'Entrez votre adresse';
                     }
                     return null;
                   },
@@ -146,18 +153,24 @@ class _GererEncadrantState extends State<GererEncadrant> {
                 const SizedBox(
                   height: 10,
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.email),
-                    hintText: "Email de l'encadrant",
+                    hintText: 'Saisir votre email',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "Entrez l'email de l'encadrant";
+                      return 'Entrez votre email';
                     }
                     return null;
                   },
                   controller: emailController,
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
                 const SizedBox(
                   height: 10,
@@ -168,30 +181,30 @@ class _GererEncadrantState extends State<GererEncadrant> {
                   autocorrect: false,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.lock),
-                    hintText: "Mot de passe de l'encadrant",
+                    hintText: 'Saisir votre password',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "Entrez le mot de passe de l'encadrant";
+                      return 'Entrez votre password';
                     }
                     return null;
                   },
                   controller: motDePasseController,
                 ),
                 DropdownButton<String>(
-                  hint: const Text("Domaine de l'encadrant"),
-                  value: domaineValue,
+                  hint: const Text("choisir votre niveau"),
+                  value: niveauValue,
                   iconSize: 36,
                   icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                  items: _domaineItems.map(buildMenuItem).toList(),
-                  onChanged: (value) => setState(() => domaineValue = value),
+                  items: _niveauItems.map(buildMenuItem).toList(),
+                  onChanged: (value) => setState(() => niveauValue = value),
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                 ),
                 _departement != null
                     ? DropdownButton(
                         value: departementValue,
                         iconSize: 36,
-                        hint: const Text("choisir votre departement"),
+                        hint: const Text("choisir ta departement"),
                         items: _departement?.map((item) {
                           return DropdownMenuItem<Departement>(
                             value: item,
@@ -206,13 +219,41 @@ class _GererEncadrantState extends State<GererEncadrant> {
                         },
                       )
                     : Container(),
+                _specialite != null
+                    ? DropdownButton(
+                        value: specialiteValue,
+                        iconSize: 36,
+                        hint: const Text("choisir ta specialite"),
+                        items: _specialite?.map((item) {
+                          return DropdownMenuItem<Specialite>(
+                            value: item,
+                            child: Text(item!.nom!),
+                          );
+                        }).toList(),
+                        onChanged: (newVal) {
+                          log("newVal::$newVal");
+                          setState(() {
+                            specialiteValue = newVal as Specialite?;
+                          });
+                        },
+                      )
+                    : Container(),
                 ElevatedButton(
-                  // ignore: avoid_print
                   onPressed: () {
+                    log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text} $niveauValue ${departementValue?.nom} ${specialiteValue?.nom}");
                     try {
-                      addData();
+                      addData(
+                          nom: nomController.text,
+                          prenom: prenomController.text,
+                          telephone: telephoneController.text,
+                          adresse: adresseController.text,
+                          email: emailController.text,
+                          motDePasse: motDePasseController.text,
+                          departement: departementValue?.idDep.toString(),
+                          niveau: niveauValue,
+                          specialite: specialiteValue?.idSpecialite.toString());
                     } catch (e) {
-                      log("gerer-encadrant-exception::${e.toString()}");
+                      log("gerer-etudiant-exception::${e.toString()}");
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                             content: Text("quelque chose ne va pas"),
@@ -222,28 +263,23 @@ class _GererEncadrantState extends State<GererEncadrant> {
                   },
                   child: const Text("Ajouter"),
                 ),
-                _encadrant!.isEmpty
-                    ? const Text("aucun encadrant existe")
+                _ligneSoutenance!.isEmpty
+                    ? const Text("aucun étudiant existe")
                     : ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: _encadrant!.length,
+                        itemCount: _ligneSoutenance!.length,
                         itemBuilder: (context, index) {
                           return Card(
                             child: ListTile(
-                              /*leading: const CircleAvatar(
-                                  foregroundImage:
-                                  AssetImage('assets/images/flutter_logo.png'),
-                                  ),*/
                               title: Text(
-                                  "${_encadrant![index].prenom} ${_encadrant![index].nom}"),
-                              subtitle:
-                                  Text(_encadrant![index].adresse.toString()),
+                                  "${_ligneSoutenance![index].idLigne}  }"),
+                              subtitle: Text(
+                                _ligneSoutenance![index].idLigne.toString(),
+                              ),
                               trailing: const Icon(Icons.more_vert),
                               isThreeLine: true,
-                              onTap: () {
-                                dialog(context, _encadrant![index]);
-                              },
+                              onTap: () => dialog(context, _ligneSoutenance![index]),
                             ),
                           );
                         },
@@ -256,21 +292,14 @@ class _GererEncadrantState extends State<GererEncadrant> {
     );
   }
 
-  Future<String?> dialog(BuildContext context, Encadrant encadrant) {
-    editedEncadrant = encadrant;
-    editNomController.text = encadrant.nom ?? "";
-    editPrenomController.text = encadrant.prenom ?? "";
-    editTelephoneController.text = encadrant.tel.toString();
-    editAdresseController.text = encadrant.adresse ?? "";
-    editEmailController.text = encadrant.email ?? "";
-    editMotDePasseController.text = encadrant.motdepasse ?? "";
-    editDomaineValue = encadrant.domaine;
-    log("dialog_encadrant::$_encadrant");
-    //log("$nomvalue $prenomvalue $telephonevalue $adressevalue $emailvalue $passwordvalue $domaineValue");
+  Future<String?> dialog(BuildContext context, LigneSoutenance etudiant) {
+    // departementValue = etudiant.departement;
+    // niveauValue = etudiant.niveau;
+    // specialiteValue = etudiant.specialite;
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Modifier / Supprimer Encadrant'),
+        title: const Text('Modifier / Supprimer etudiant'),
         content: SingleChildScrollView(
           child: Column(
             children: [
@@ -280,15 +309,15 @@ class _GererEncadrantState extends State<GererEncadrant> {
               TextFormField(
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.person),
-                  hintText: encadrant.nom,
+                  // hintText: etudiant.nom,
                 ),
-                validator: (nomvalue) {
-                  if (nomvalue == null || nomvalue.isEmpty) {
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
                     return 'Entrez votre nom';
                   }
                   return null;
                 },
-                controller: editNomController,
+                controller: nomController,
               ),
               const SizedBox(
                 height: 10,
@@ -299,15 +328,15 @@ class _GererEncadrantState extends State<GererEncadrant> {
               TextFormField(
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.person),
-                  hintText: encadrant.prenom,
+                  // hintText: etudiant.prenom,
                 ),
-                validator: (prenomvalue) {
-                  if (prenomvalue == null || prenomvalue.isEmpty) {
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
                     return 'Entrez votre prenom';
                   }
                   return null;
                 },
-                controller: editPrenomController,
+                controller: prenomController,
               ),
               const SizedBox(
                 height: 10,
@@ -316,21 +345,17 @@ class _GererEncadrantState extends State<GererEncadrant> {
                 height: 10,
               ),
               TextFormField(
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
-                ],
-                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.phone),
-                  hintText: encadrant.tel.toString(),
+                  // hintText: etudiant.tel.toString(),
                 ),
-                validator: (telephonevalue) {
-                  if (telephonevalue == null || telephonevalue.isEmpty) {
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
                     return 'Entrez votre telephone';
                   }
                   return null;
                 },
-                controller: editTelephoneController,
+                controller: telephoneController,
               ),
               const SizedBox(
                 height: 10,
@@ -341,15 +366,15 @@ class _GererEncadrantState extends State<GererEncadrant> {
               TextFormField(
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.location_city),
-                  hintText: encadrant.adresse,
+                  // hintText: etudiant.adresse,
                 ),
-                validator: (adressevalue) {
-                  if (adressevalue == null || adressevalue.isEmpty) {
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
                     return 'Entrez votre adresse';
                   }
                   return null;
                 },
-                controller: editAdresseController,
+                controller: adresseController,
               ),
               const SizedBox(
                 height: 10,
@@ -360,15 +385,15 @@ class _GererEncadrantState extends State<GererEncadrant> {
               TextFormField(
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.email),
-                  hintText: encadrant.email,
+                  // hintText: etudiant.email,
                 ),
-                validator: (emailvalue) {
-                  if (emailvalue == null || emailvalue.isEmpty) {
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
                     return 'Entrez votre email';
                   }
                   return null;
                 },
-                controller: editEmailController,
+                controller: emailController,
               ),
               const SizedBox(
                 height: 10,
@@ -382,31 +407,21 @@ class _GererEncadrantState extends State<GererEncadrant> {
                 autocorrect: false,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock),
-                  hintText: encadrant.motdepasse,
+                  // hintText: etudiant.motdepasse,
                 ),
-                validator: (passwordvalue) {
-                  if (passwordvalue == null || passwordvalue.isEmpty) {
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
                     return 'Entrez votre password';
                   }
                   return null;
                 },
-                controller: editMotDePasseController,
-              ),
-              DropdownButton<String>(
-                hint: const Text("choisir votre domaine"),
-                value: editDomaineValue,
-                iconSize: 36,
-                icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                items: _domaineItems.map(buildMenuItem).toList(),
-                onChanged: (value) => setState(() => editDomaineValue = value),
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                controller: motDePasseController,
               ),
               _departement != null
                   ? DropdownButton(
-                      value: editDepartementValue,
+                      value: departementValue,
                       iconSize: 36,
-                      hint: Text(encadrant.departement?.nom ??
-                          "choisir votre departement"),
+                      hint: const Text("choisir ta departement"),
                       items: _departement?.map((item) {
                         return DropdownMenuItem<Departement>(
                           value: item,
@@ -416,7 +431,35 @@ class _GererEncadrantState extends State<GererEncadrant> {
                       onChanged: (newVal) {
                         log("newVal::$newVal");
                         setState(() {
-                          editDepartementValue = newVal as Departement?;
+                          departementValue = newVal as Departement?;
+                        });
+                      },
+                    )
+                  : Container(),
+              DropdownButton<String>(
+                hint: const Text("choisir votre niveau"),
+                value: niveauValue,
+                iconSize: 36,
+                icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+                items: _niveauItems.map(buildMenuItem).toList(),
+                onChanged: (value) => setState(() => niveauValue = value),
+                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+              ),
+              _specialite != null
+                  ? DropdownButton(
+                      value: specialiteValue,
+                      iconSize: 36,
+                      hint: const Text("choisir ta specialite"),
+                      items: _specialite?.map((item) {
+                        return DropdownMenuItem<Specialite>(
+                          value: item,
+                          child: Text(item!.nom!),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        log("newVal::$newVal");
+                        setState(() {
+                          specialiteValue = newVal as Specialite?;
                         });
                       },
                     )
@@ -431,23 +474,14 @@ class _GererEncadrantState extends State<GererEncadrant> {
           ),
           TextButton(
             onPressed: () {
-              log("${editNomController.text} ${editPrenomController.text} ${editTelephoneController.text} ${editAdresseController.text} ${editEmailController.text} ${editMotDePasseController.text} $editDomaineValue");
-              try {
-                editEncadrant();
-              } catch (e) {
-                log("gerer-encadrant-editEncadrant-exception::${e.toString()}");
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                      content: Text("quelque chose ne va pas"),
-                      backgroundColor: Colors.red),
-                );
-              }
+              editStudent(etudiant);
+              Navigator.pop(context, 'Modifer');
             },
             child: const Text('Modifer'),
           ),
           TextButton(
             onPressed: () {
-              deleteEncadrant(id: encadrant.idEnc);
+              // deleteStudent(id: etudiant.idEtud);
               Navigator.pop(context, 'Supprimer');
             },
             child: const Text('Supprimer'),
@@ -463,68 +497,56 @@ class _GererEncadrantState extends State<GererEncadrant> {
 
   void getData() async {
     await Future.wait([
-      ApiEncadrant().getAllEncadrant(),
-      ApiDepartement().getAllDepartements(),
+      // ApiLigneSoutenance().getAllLigneSoutenances(),
+      // ApiDepartement().getAllDepartements(),
+      // ApiSpecialite().getAllSpecialites(),
     ]).then((value) async {
-      // log("get encadrant");
-      _encadrant = value[0]?.cast<Encadrant>();
-      _departement = value[1]?.cast<Departement>();
-      // log("_encadrant::$_encadrant");
-      // log("_departement::$_departement");
+      log("get");
+      // _ligneSoutenance = value[0]?.cast<LigneSoutenance>();
+      // _departement = value[1]?.cast<Departement>();
+      // _specialite = value[2]?.cast<Specialite>();
+      log("_ligneSoutenance::$_ligneSoutenance");
       Future.delayed(const Duration(seconds: 0))
           .then((value) => setState(() {}));
     });
   }
 
-  void addData() async {
-    log("addEncadrant");
-    encadrant?.nom = nomController.text;
-    encadrant?.prenom = prenomController.text;
-    try {
-      encadrant?.tel = int.parse(telephoneController.text);
-    } catch (e) {
-      log("encadrant?.tel-exception::$e");
-    }
-
-    encadrant?.adresse = adresseController.text;
-    encadrant?.email = emailController.text;
-    encadrant?.motdepasse = motDePasseController.text;
-    encadrant?.domaine = domaineValue;
-    encadrant?.departement = departementValue;
-
-    log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text} $domaineValue $departementValue");
-    departementValue = null;
-    await ApiEncadrant().addEncadrant(
-      encadrant: encadrant,
-    );
+  void addData({
+    String? nom = "",
+    String? prenom = "",
+    String? telephone = "",
+    String? adresse = "",
+    String? email = "",
+    String? motDePasse = "",
+    String? departement = "",
+    String? niveau = "",
+    String? specialite = "",
+  }) async {
+    log("addStudent");
+    // await ApiLigneSoutenance().addLigneSoutenances(
+    //     nom: nom,
+    //     prenom: prenom,
+    //     telephone: telephone,
+    //     adresse: adresse,
+    //     email: email,
+    //     motDePasse: motDePasse,
+    //     departement: departement,
+    //     niveau: niveau,
+    //     specialite: specialite);
     getData();
   }
 
-  void editEncadrant() async {
-    log("editEncadrant");
-    editedEncadrant?.nom = editNomController.text;
-    editedEncadrant?.prenom = editPrenomController.text;
-    try {
-      editedEncadrant?.tel = int.parse(telephoneController.text);
-    } catch (e) {
-      log("editedEncadrant?.tel-exception::$e");
-    }
-
-    editedEncadrant?.adresse = editAdresseController.text;
-    editedEncadrant?.email = editEmailController.text;
-    editedEncadrant?.motdepasse = editMotDePasseController.text;
-    editedEncadrant?.domaine = editDomaineValue;
-    editedEncadrant?.departement =
-        editDepartementValue ?? editedEncadrant?.departement;
-    log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text} $domaineValue $departementValue");
-    departementValue = null;
-    await ApiEncadrant().editEncadrant(editedEncadrant: editedEncadrant);
+  void deleteStudent({int? id}) async {
+    log("deleteStudent");
+    // await ApiLigneSoutenance().deleteLigneSoutenance(id: id.toString());
     getData();
   }
 
-  void deleteEncadrant({int? id}) async {
-    log("deleteEncadrant");
-    await ApiEncadrant().deleteEncadrant(id.toString());
+  void editStudent(LigneSoutenance etudiant) async {
+    log("editStudent");
+    // await ApiLigneSoutenance()
+    //     .updateLigneSoutenances(etudiant)
+    //     .then((value) => log("updateLigneSoutenances::$value"));
     getData();
   }
 

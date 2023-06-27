@@ -1,5 +1,5 @@
 class ApiConstants {
-  static String baseUrl = 'http://192.168.1.110:8080/api';
+  static String baseUrl = 'http://192.168.1.111:8080/api';
   static String soutenance = "/soutenance/";
   static String pfe = "/pfe/";
   static String etudiants = "/etudiants/";
@@ -11,6 +11,9 @@ class ApiConstants {
   static String role = "/role/";
   static String specialite = "/specialite/";
   static String responsable = "/responsable/";
+  static String sujets = "/sujets/"; 
+  static String ligneSoutenance = "/LigneSoutenance/"; 
+  
   static String all = "all";
 
 }

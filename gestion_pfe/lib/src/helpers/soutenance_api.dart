@@ -35,8 +35,8 @@ class ApiSoutenance {
             "date": soutenance?.date,
             "description": soutenance?.description,
             "etat": soutenance?.etat,
-            "rapporteur": soutenance?.rapporteur?.idEns,
-            "president": soutenance?.president?.idEns,
+            "rapporteur": soutenance?.rapporteur?.idEnc,
+            "president": soutenance?.president?.idEnc,
             "salle": soutenance?.salle?.idSalle,
             "seance": soutenance?.seance?.idSeance,
             "pfe": soutenance?.pfe?.idPFE

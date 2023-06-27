@@ -1,4 +1,6 @@
 // import 'package:gestion_pfe/src/models/salle.dart';
+import 'package:gestion_pfe/src/models/sujet.dart';
+
 import 'encadrant.dart';
 import 'document.dart';
 import 'etudiant.dart';
@@ -13,58 +15,49 @@ String pfeToJson(List<PFE> data) =>
 
 class PFE {
   int? idPFE;
-  String? title;
-  String? description;
   String? dateDebut;
   String? dateDepot;
-  String? domaine;
-  double? note;
   Etudiant? etudiant;
-  Encadrant? encadreur;
+  Encadrant? encadrant;
+  Sujet? sujet;
   Document? document;
 
   PFE(
       {this.idPFE,
-      this.title,
-      this.description,
       this.dateDebut,
       this.dateDepot,
-      this.domaine,
-      this.note,
       this.etudiant,
-      this.encadreur,
+      this.encadrant,
+      this.sujet,
       this.document});
 
   PFE.fromJson(Map<String, dynamic> json) {
     idPFE = json['idPFE'];
-    title = json['title'];
     dateDebut = json['dateDebut'];
     dateDepot = json['dateDepot'];
-    domaine = json['domaine'];
-    note = json['note'];
     etudiant =
         json['etudiant'] != null ? Etudiant.fromJson(json['etudiant']) : null;
-    encadreur = json['encadreur'] != null
-        ? Encadrant.fromJson(json['encadreur'])
+    encadrant = json['encadrant'] != null
+        ? Encadrant.fromJson(json['encadrant'])
         : null;
- document =
+    document =
         json['document'] != null ? Document.fromJson(json['document']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idPFE'] = idPFE;
-    data['title'] = title;
     data['dateDebut'] = dateDebut;
     data['dateDepot'] = dateDepot;
-    data['domaine'] = domaine;
-    data['note'] = note;
     if (etudiant != null) {
       data['etudiant'] = etudiant!.idEtud;
     }
-    if (encadreur != null) {
-      data['encadreur'] = encadreur!.idEns;
-    } 
+    if (encadrant != null) {
+      data['encadrant'] = encadrant!.idEnc;
+    }
+    if (sujet != null) {
+      data['sujet'] = sujet!.idSujet;
+    }
     if (document != null) {
       data['document'] = document!.idDoc;
     }
@@ -74,6 +67,6 @@ class PFE {
 
   @override
   String toString() {
-    return 'PFE(idPFE: $idPFE, title: $title, dateDebut: $dateDebut, dateDepot: $dateDepot, domaine: $domaine, note: $note, etudiant: $etudiant, encadreur: $encadreur, document: $document)';
+    return 'PFE(idPFE: $idPFE, dateDebut: $dateDebut, dateDepot: $dateDepot, etudiant: $etudiant, encadrant: $encadrant, document: $document)';
   }
 }

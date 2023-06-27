@@ -1,9 +1,9 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:gestion_pfe/src/helpers/departement.dart';
+import 'package:gestion_pfe/src/helpers/departement_api.dart';
 import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
 import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
-import 'package:gestion_pfe/src/helpers/specialite.dart';
+import 'package:gestion_pfe/src/helpers/specialite_api.dart';
 import 'package:gestion_pfe/src/models/departement.dart';
 import 'package:gestion_pfe/src/models/specialite.dart';
 import '../../description.dart';
@@ -309,39 +309,19 @@ class _EnqueteSatisfactionState extends State<EnqueteSatisfaction> {
   }) async {
     log("addStudent");
     await ApiEtudiant().addEtudiants(
-        nom: nom,
-        prenom: prenom,
-        telephone: telephone,
-        adresse: adresse,
-        email: email,
-        motDePasse: motDePasse,
-        departement: departement,
-        niveau: niveau,
-        specialite: specialite);
+        // nom: nom,
+        // prenom: prenom,
+        // telephone: telephone,
+        // adresse: adresse,
+        // email: email,
+        // motDePasse: motDePasse,
+        // departement: departement,
+        // niveau: niveau,
+        // specialite: specialite
+        );
   }
 
-  void addEncadrant({
-    String? nom = "",
-    String? prenom = "",
-    String? telephone = "",
-    String? adresse = "",
-    String? email = "",
-    String? motDePasse = "",
-    String? domaine = "",
-  }) async {
-    log("addEncadrant");
-    var e = await ApiEncadrant().addEncadrant(
-        nom: nom,
-        prenom: prenom,
-        telephone: telephone,
-        adresse: adresse,
-        email: email,
-        motDePasse: motDePasse,
-        domaine: domaine);
-    e!.isNotEmpty
-        ? log("addEncadrantENotEmpty::$e")
-        : log("addEncadrantEempty::$e");
-  }
+ 
 
   void radiochange(Description? value) {
     setState(() {

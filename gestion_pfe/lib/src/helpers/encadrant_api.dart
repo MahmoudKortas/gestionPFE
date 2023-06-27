@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/cupertino.dart';
 import 'package:gestion_pfe/src/models/encadrant.dart';
 import 'package:http/http.dart' as http;
 import '../constants/constants.dart';
@@ -7,8 +8,8 @@ import '../constants/constants.dart';
 class ApiEncadrant {
   Future<List<Encadrant>?> getAllEncadrant() async {
     try {
-      var url =
-          Uri.parse(ApiConstants.baseUrl + ApiConstants.encadrants + ApiConstants.all);
+      var url = Uri.parse(
+          ApiConstants.baseUrl + ApiConstants.encadrants + ApiConstants.all);
 
       var response = await http.get(url);
       if (response.statusCode == 200) {
@@ -16,14 +17,14 @@ class ApiEncadrant {
         return model;
       }
     } catch (e) {
-      log(e.toString());
+      log("getAllEncadrant-error::${e.toString()}");
     }
     return null;
   }
+
   Future<List<Encadrant>?> getEncadrant({String? id = ""}) async {
     try {
-      var url =
-          Uri.parse(ApiConstants.baseUrl + ApiConstants.encadrants + id!);
+      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.encadrants + id!);
 
       var response = await http.get(url);
       if (response.statusCode == 200) {
@@ -36,19 +37,11 @@ class ApiEncadrant {
     return null;
   }
 
-  Future<List<Encadrant>?> addEncadrant({
-    String? nom = "",
-    String? prenom = "",
-    String? telephone = "",
-    String? adresse = "",
-    String? email = "",
-    String? motDePasse = "",
-    String? domaine = "",
-    String? departement = "",
-  }) async {
+  Future<List<Encadrant>?> addEncadrant({Encadrant? encadrant}) async {
     try {
       var url =
           Uri.parse("${ApiConstants.baseUrl}${ApiConstants.encadrants}add");
+      log("encadrantencadrant::$encadrant");
       var response = await http.post(
         url,
         headers: <String, String>{
@@ -56,58 +49,50 @@ class ApiEncadrant {
         },
         body: jsonEncode(
           {
-            "domaine": domaine,
-            "adresse": adresse,
-            "email": email,
-            "motdepasse": motDePasse,
-            "nom": nom,
-            "prenom": prenom,
-            "tel": int.parse(telephone!),
-            "departement": departement,
+            "nom": encadrant?.nom,
+            "prenom": encadrant?.prenom,
+            "tel": encadrant?.tel,
+            "adresse": encadrant?.adresse,
+            "email": encadrant?.email,
+            "motdepasse": encadrant?.motdepasse,
+            "domaine": encadrant?.domaine,
+            "departement": encadrant?.departement,
           },
         ),
       );
-      // log("addEncadrant::${response.body}");
+      log("addEncadrant::${response.body}");
       if (response.statusCode == 200) {
-        List<Encadrant> model = encadrantFromJson(response.body);
-        return model;
+        // List<Encadrant> model = encadrantFromJson(response.body);
+        // return model;
       }
     } catch (e) {
-      log(e.toString());
+      debugPrint("addEncadrant-exception::${e.toString()}");
     }
     return null;
   }
 
-  Future<List<Encadrant>?> editEncadrant({    
-    String? id = "",
-    String? nom = "",
-    String? prenom = "",
-    String? telephone = "",
-    String? adresse = "",
-    String? email = "",
-    String? motDePasse = "",
-    String? domaine = "",
-    String? departement = "",
-  }) async {
+  Future<List<Encadrant>?> editEncadrant({Encadrant? editedEncadrant}) async {
+    log("editEncadrant::$editedEncadrant");
+    inspect(editedEncadrant);
     try {
       var url =
-          Uri.parse("${ApiConstants.baseUrl}${ApiConstants.encadrants}add");
-      var response = await http.post(
+          Uri.parse("${ApiConstants.baseUrl}${ApiConstants.encadrants}update");
+      var response = await http.put(
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(
           {
-            "id": int.parse(id!),
-            "domaine": domaine,
-            "adresse": adresse,
-            "email": email,
-            "motdepasse": motDePasse,
-            "nom": nom,
-            "prenom": prenom,
-            "tel": int.parse(telephone!),
-            "departement": departement,
+            "id": editedEncadrant?.idEnc,
+            "nom": editedEncadrant?.nom,
+            "prenom": editedEncadrant?.prenom,
+            "tel": editedEncadrant?.tel,
+            "adresse": editedEncadrant?.adresse,
+            "email": editedEncadrant?.email,
+            "motdepasse": editedEncadrant?.motdepasse,
+            "domaine": editedEncadrant?.domaine,
+            "departement": editedEncadrant?.departement,
           },
         ),
       );
@@ -126,7 +111,7 @@ class ApiEncadrant {
     try {
       var url =
           Uri.parse("${ApiConstants.baseUrl}${ApiConstants.encadrants}$id");
-      // var response = 
+      // var response =
       await http.delete(
         url,
       );

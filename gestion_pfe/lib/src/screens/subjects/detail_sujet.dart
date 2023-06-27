@@ -43,7 +43,7 @@ class _DetailSujetState extends State<DetailSujet> {
                   children: [
                     // Text("Proprietaire: ${widget.doc.proprietaire!}"),
                     Text("Déscription: ${widget.doc.description!}"),
-                    Text("Date dépot: ${widget.doc.datedepot!}"),
+                    Text("Date dépot: ${widget.doc.date!}"),
                     widget.fonction.contains("etudiant")
                         ? const MaterialButton(
                             onPressed: null,

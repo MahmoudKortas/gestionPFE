@@ -10,45 +10,48 @@ String responsableToJson(List<Responsable> data) =>
 
 class Responsable {
   int? idUser;
-  String? email;//
-  String? motdepasse;//
+  String? email; //
+  String? motdepasse; //
+  String? tel; //
+  String? prenom; //
+  String? nom; //
+  String? dateResponsabilite; //
   Departement? departement;
-  String? tel;//
-  String? prenom;//
-  String? nom;//
-  String? dateResponsabilite;//
 
-  Responsable(
-      {this.idUser,
-      this.email,
-      this.motdepasse,
-      this.departement,
-      this.tel,
-      this.prenom,
-      this.nom,
-      this.dateResponsabilite});
+  Responsable({
+    this.idUser,
+    this.email,
+    this.motdepasse,
+    this.tel,
+    this.prenom,
+    this.nom,
+    this.dateResponsabilite,
+    this.departement,
+  });
 
-  Responsable.fromJson(Map<String, dynamic> json) {
-    idUser = json['idUser'];
-    email = json['email'];
-    motdepasse = json['motdepasse'];
-    departement = Departement.fromJson(json['departement']);
-    tel = json['tel'];
-    prenom = json['prenom'];
-    nom = json['nom'];
-    dateResponsabilite = json['Dateresponsabilite'];
-  }
+  factory Responsable.fromJson(Map<String, dynamic> json) => Responsable(
+        idUser: json['idUser'],
+        email: json['email'],
+        motdepasse: json['motdepasse'],
+        tel: json['tel'],
+        prenom: json['prenom'],
+        nom: json['nom'],
+        dateResponsabilite: json['Dateresponsabilite'],
+        departement: json['departement'] != null
+            ? Departement.fromJson(json['departement'])
+            : null,
+      );
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idUser'] = idUser;
     data['email'] = email;
     data['motdepasse'] = motdepasse;
-    data['departement'] = departement?.idDep;
     data['tel'] = tel;
     data['prenom'] = prenom;
     data['nom'] = nom;
     data['Dateresponsabilite'] = dateResponsabilite;
+    data['departement'] = departement?.idDep;
     return data;
   }
 

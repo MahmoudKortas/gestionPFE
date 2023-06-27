@@ -14,18 +14,18 @@ String encadrantToJson(List<Encadrant> data) =>
 
 class Encadrant {
   Encadrant({
-    this.idEns,
+    this.idEnc,
     this.nom,
     this.prenom,
     this.tel,
     this.adresse,
-    this.domaine,
     this.email,
     this.motdepasse,
+    this.domaine,
     this.departement,
   });
 
-  int? idEns;
+  int? idEnc;
   String? nom;
   String? prenom;
   int? tel;
@@ -35,33 +35,35 @@ class Encadrant {
   String? motdepasse;
   Departement? departement;
 
-  factory Encadrant.fromJson(Map<String, dynamic> json) => Encadrant(
-        idEns: json["idEns"],
-        nom: json["nom"],
-        prenom: json["prenom"],
-        tel: json["tel"],
-        adresse: json["adresse"],
-        domaine: json["domaine"],
-        email: json["email"],
-        motdepasse: json["motdepasse"],
-        departement: json['departement'] != null
-            ? Departement.fromJson(json['departement'])
-            : null,
-      );
+  Encadrant.fromJson(Map<String, dynamic> json) {
+    idEnc = json["idEnc"];
+    nom = json["nom"];
+    prenom = json["prenom"];
+    tel = json["tel"];
+    adresse = json["adresse"];
+    domaine = json["domaine"];
+    email = json["email"];
+    motdepasse = json["motdepasse"];
+    departement = json['departement'] != null
+        ? Departement.fromJson(json['departement'])
+        : null;
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['idEnc'] = idEnc;
+    data['nom'] = nom;
+    data['prenom'] = prenom;
+    data['tel'] = tel;
+    data['adresse'] = adresse;
+    data['domaine'] = domaine;
+    data['email'] = email;
+    data['motdepasse'] = motdepasse;
+    data['departement'] = departement;
+    return data;
+  }
 
-  Map<String, dynamic> toJson() => {
-        "idEns": idEns,
-        "nom": nom,
-        "prenom": prenom,
-        "tel": tel,
-        "adresse": adresse,
-        "domaine": domaine,
-        "email": email,
-        "motdepasse": motdepasse,
-        "departement": departement,
-      };
   @override
   String toString() {
-    return 'Encadrant(idEns: $idEns, nom: $nom, prenom: $prenom, tel: $tel, adresse: $adresse, domaine: $domaine, email: $email, motdepasse: $motdepasse, departement: $departement)';
+    return 'Encadrant(idEnc: $idEnc, nom: $nom, prenom: $prenom, tel: $tel, adresse: $adresse, domaine: $domaine, email: $email, motdepasse: $motdepasse, departement: $departement)';
   }
 }
