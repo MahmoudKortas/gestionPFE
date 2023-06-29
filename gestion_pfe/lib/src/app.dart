@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:gestion_pfe/src/screens/encadrant/affecter_note.dart';
+import 'package:gestion_pfe/src/screens/etudiant/consulter_note.dart';
 import 'package:gestion_pfe/src/screens/etudiant/enquete_satisfaction.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_departement.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_ligne_soutenance.dart';
@@ -100,8 +102,10 @@ class MyApp extends StatelessWidget {
                   case Inscription.routeName:
                     return const Inscription();
                   case AccueilEncadrant.routeName:
-                    final args = routeSettings.arguments as AccueilEncadrant;
-                    return AccueilEncadrant(encadrant: args.encadrant);
+                    // final args = routeSettings.arguments as AccueilEncadrant;
+                    return AccueilEncadrant(
+                        // encadrant: args.encadrant
+                        );
                   case AccueilEtudiant.routeName:
                     final args = routeSettings.arguments as AccueilEtudiant;
                     return AccueilEtudiant(
@@ -141,13 +145,17 @@ class MyApp extends StatelessWidget {
                     return const Calander();
                   case GererEtudiant.routeName:
                     return const GererEtudiant();
+                  case AffecterNote.routeName:
+                    return AffecterNote();
+                  case ConsulterNote.routeName:
+                    return ConsulterNote();
                   case ProposerSujet.routeName:
-                    final args = routeSettings.arguments as ProposerSujet;
+                    // final args = routeSettings.arguments as ProposerSujet;
                     return ProposerSujet(
-                      fonction: args.fonction,
-                      encadrant: args.encadrant,
-                      etudiant: args.etudiant,
-                    );
+                        // fonction: args.fonction,
+                        // encadrant: args.encadrant,
+                        // etudiant: args.etudiant,
+                        );
                   case ListeDesSujets.routeName:
                     return const ListeDesSujets();
                   case DetailSujet.routeName:

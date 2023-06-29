@@ -22,24 +22,28 @@ class GererSujet extends StatefulWidget {
 }
 
 class _GererSujetState extends State<GererSujet> {
-  var _sujet;
-  var _encadrant;
-  var _listeEncadrant = [''];
-  var _responsable;
-  var _listeResponsable = [''];
-  var _etudiant;
-  var _listeEtudiant = [''];
-  String? valueEncadrant;
-  String? valueResponsable;
-  String? valueEtudiant;
   File? _image;
   final picker = ImagePicker();
-  Sujet sujet = Sujet();
+
+  var _sujet;
+
   final titreController = TextEditingController();
   final descriptionController = TextEditingController();
-  final dateController = TextEditingController();
+  Sujet sujet = Sujet();
+  List<Etudiant?>? _etudiant;
+  Etudiant? etudiantValue;
+  List<Encadrant?>? _encadrant;
+  Encadrant? encadrantValue;
+  List<Responsable?>? _responsable;
+  Responsable? responsableValue;
+
   final editTitreController = TextEditingController();
   final editDescriptionController = TextEditingController();
+  Sujet editedSujet = Sujet();
+  Etudiant? editEtudiantValue;
+  Encadrant? editEncadrantValue;
+  Responsable? editResponsableValue;
+
   @override
   void initState() {
     super.initState();
@@ -50,7 +54,7 @@ class _GererSujetState extends State<GererSujet> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(' sujets'),
+        title: const Text('sujets'),
       ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),
@@ -95,47 +99,70 @@ class _GererSujetState extends State<GererSujet> {
                 const SizedBox(
                   height: 20,
                 ),
-                DropdownButton<String>(
-                  hint: const Text("choisir l'encadrant"),
-                  value: valueEncadrant,
-                  iconSize: 36,
-                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                  items: _listeEncadrant
-                      .map(buildMenuItem)
-                      .toList(), //_items.map(buildMenuItem).toList(),
-                  onChanged: (value) => setState(() => valueEncadrant = value),
-                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                ),
+                _encadrant != null
+                    ? DropdownButton(
+                        value: encadrantValue,
+                        iconSize: 36,
+                        hint: const Text("choisir l'encadrant"),
+                        items: _encadrant?.map((item) {
+                          return DropdownMenuItem<Encadrant>(
+                            value: item,
+                            child: Text(item!.nom!),
+                          );
+                        }).toList(),
+                        onChanged: (newVal) {
+                          log("newVal::$newVal");
+                          setState(() {
+                            encadrantValue = newVal as Encadrant?;
+                          });
+                        },
+                      )
+                    : Container(),
                 const SizedBox(
                   height: 10,
                 ),
-                DropdownButton<String>(
-                  hint: const Text("choisir le responsable"),
-                  value: valueResponsable,
-                  iconSize: 36,
-                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                  items: _listeResponsable
-                      .map(buildMenuItem)
-                      .toList(), //_items.map(buildMenuItem).toList(),
-                  onChanged: (value) =>
-                      setState(() => valueResponsable = value),
-                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                ),
+                _responsable != null
+                    ? DropdownButton(
+                        value: responsableValue,
+                        iconSize: 36,
+                        hint: const Text("choisir le responsable"),
+                        items: _responsable?.map((item) {
+                          return DropdownMenuItem<Responsable>(
+                            value: item,
+                            child: Text(item!.nom!),
+                          );
+                        }).toList(),
+                        onChanged: (newVal) {
+                          log("newVal::$newVal");
+                          setState(() {
+                            responsableValue = newVal as Responsable?;
+                          });
+                        },
+                      )
+                    : Container(),
                 const SizedBox(
                   height: 10,
                 ),
-                DropdownButton<String>(
-                  hint: const Text("choisir l'etudiant"),
-                  value: valueEtudiant,
-                  iconSize: 36,
-                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                  items: _listeEtudiant
-                      .map(buildMenuItem)
-                      .toList(), //_items.map(buildMenuItem).toList(),
-                  onChanged: (value) => setState(() => valueEtudiant = value),
-                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                ),
-                TextButton(onPressed: getImage, child: _buildImage()),
+                _etudiant != null
+                    ? DropdownButton(
+                        value: etudiantValue,
+                        iconSize: 36,
+                        hint: const Text("choisir l'etudiant"),
+                        items: _etudiant?.map((item) {
+                          return DropdownMenuItem<Etudiant>(
+                            value: item,
+                            child: Text(item!.nom!),
+                          );
+                        }).toList(),
+                        onChanged: (newVal) {
+                          log("newVal::$newVal");
+                          setState(() {
+                            etudiantValue = newVal as Etudiant?;
+                          });
+                        },
+                      )
+                    : Container(),
+                // TextButton(onPressed: getImage, child: _buildImage()),
                 ElevatedButton(
                   // ignore: avoid_print
                   onPressed: () {
@@ -167,11 +194,10 @@ class _GererSujetState extends State<GererSujet> {
                             itemBuilder: (context, index) {
                               return Card(
                                 child: ListTile(
-                                    title: Text(
-                                        _sujet![index].titre.toString()),
-                                    subtitle: Text(_sujet![index]
-                                        .description
-                                        .toString()),
+                                    title:
+                                        Text(_sujet![index].titre.toString()),
+                                    subtitle: Text(
+                                        _sujet![index].description.toString()),
                                     trailing: const Icon(Icons.more_vert),
                                     // isThreeLine: true,
                                     onTap: () =>
@@ -188,10 +214,14 @@ class _GererSujetState extends State<GererSujet> {
     );
   }
 
-//TODO: fix edit sujet
   Future<String?> dialog(BuildContext context, Sujet sujet) {
+    editedSujet = sujet;
     editTitreController.text = sujet.titre ?? "";
     editDescriptionController.text = sujet.description ?? "";
+    // editEtudiantValue = sujet.etudiant;
+    // editEncadrantValue = sujet.encadrant;
+    // editResponsableValue = sujet.responsable;
+
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -199,8 +229,6 @@ class _GererSujetState extends State<GererSujet> {
         content: SingleChildScrollView(
           child: Column(
             children: [
-              
-
               // Image.asset("assets/images/logo-epi.png"),
               TextFormField(
                 decoration: const InputDecoration(
@@ -228,46 +256,72 @@ class _GererSujetState extends State<GererSujet> {
                 },
                 controller: editDescriptionController,
               ),
-              DropdownButton<String>(
-                hint: const Text("choisir l'encadrant"),
-                value: valueEncadrant,
-                iconSize: 36,
-                icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                items: _listeEncadrant
-                    .map(buildMenuItem)
-                    .toList(), //_items.map(buildMenuItem).toList(),
-                onChanged: (value) => setState(() => valueEncadrant = value),
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              ),
+              _encadrant != null
+                  ? DropdownButton(
+                      value: editEncadrantValue,
+                      iconSize: 36,
+                      hint: Text(sujet.encadrant?.nom ?? "choisir encadrant"),
+                      items: _encadrant?.map((item) {
+                        return DropdownMenuItem<Encadrant>(
+                          value: item,
+                          child: Text(item!.nom!),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        log("newVal::$newVal");
+                        setState(() {
+                          editEncadrantValue = newVal as Encadrant?;
+                        });
+                      },
+                    )
+                  : Container(),
               const SizedBox(
                 height: 10,
               ),
-              DropdownButton<String>(
-                hint: const Text("choisir le responsable"),
-                value: valueResponsable,
-                iconSize: 36,
-                icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                items: _listeResponsable
-                    .map(buildMenuItem)
-                    .toList(), //_items.map(buildMenuItem).toList(),
-                onChanged: (value) => setState(() => valueResponsable = value),
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              ),
+              _responsable != null
+                  ? DropdownButton(
+                      value: editResponsableValue,
+                      iconSize: 36,
+                      hint:
+                          Text(sujet.responsable?.nom ?? "choisir responsable"),
+                      items: _responsable?.map((item) {
+                        return DropdownMenuItem<Responsable>(
+                          value: item,
+                          child: Text(item!.nom!),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        log("newVal::$newVal");
+                        setState(() {
+                          editResponsableValue = newVal as Responsable?;
+                        });
+                      },
+                    )
+                  : Container(),
+
               const SizedBox(
                 height: 10,
               ),
-              DropdownButton<String>(
-                hint: const Text("choisir l'etudiant"),
-                value: valueEtudiant,
-                iconSize: 36,
-                icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                items: _listeEtudiant
-                    .map(buildMenuItem)
-                    .toList(), //_items.map(buildMenuItem).toList(),
-                onChanged: (value) => setState(() => valueEtudiant = value),
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              ),
-              TextButton(onPressed: getImage, child: _buildImage()),
+              _etudiant != null
+                  ? DropdownButton(
+                      value: editEtudiantValue,
+                      iconSize: 36,
+                      hint: Text(sujet.etudiant?.nom ?? "choisir etudiant"),
+                      items: _etudiant?.map((item) {
+                        return DropdownMenuItem<Etudiant>(
+                          value: item,
+                          child: Text(item!.nom!),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        log("newVal::$newVal");
+                        setState(() {
+                          editEtudiantValue = newVal as Etudiant?;
+                        });
+                      },
+                    )
+                  : Container(),
+              // TextButton(onPressed: getImage, child: _buildImage()),
             ],
           ),
         ),
@@ -278,14 +332,7 @@ class _GererSujetState extends State<GererSujet> {
           ),
           TextButton(
             onPressed: () {
-              sujet.titre = editTitreController.text;
-              sujet.description = editDescriptionController.text;
-              sujet.date = DateTime.now().toString();
-             
-              sujet.encadrant = Encadrant(); // valueEncadrant;
-              sujet.responsable = Responsable(); // _responsable;
-              sujet.etudiant = Etudiant(); // _etudiant;
-              editSujet(sujet: sujet);
+              editSujet();
               Navigator.pop(context, 'Modifer');
             },
             child: const Text('Modifer'),
@@ -294,8 +341,8 @@ class _GererSujetState extends State<GererSujet> {
             onPressed: () async {
               log(sujet.idSujet.toString());
               var _sujett;
-              _sujett = await ApiSujet()
-                  .deleteSujet(id: sujet.idSujet.toString());
+              _sujett =
+                  await ApiSujet().deleteSujet(id: sujet.idSujet.toString());
               log("_sujett::$_sujett");
               getData();
               Navigator.pop(context, 'Supprimer');
@@ -322,25 +369,9 @@ class _GererSujetState extends State<GererSujet> {
       _encadrant = value[1]?.cast<Encadrant?>();
       _responsable = value[2]?.cast<Responsable?>();
       _sujet = value[3]?.cast<Sujet?>();
-
-      _listeEtudiant.clear();
-      _etudiant
-          .map((l) => {_listeEtudiant.add(l.nom + ' ' + l.prenom)})
-          .toList();
-
-      _listeEncadrant.clear();
-      _encadrant
-          .map((l) => {_listeEncadrant.add(l.nom + ' ' + l.prenom)})
-          .toList();
-
-      _listeResponsable.clear();
-      _responsable
-          .map((l) => {_listeResponsable.add(l.nom + ' ' + l.prenom)})
-          .toList();
-
-      log("_encadrant::$_encadrant");
-      log("_etudiant::$_etudiant");
-      log("Sujet::$_sujet");
+      // log("_encadrant::$_encadrant");
+      // log("_etudiant::$_etudiant");
+      // log("Sujet::$_sujet");
       Future.delayed(const Duration(seconds: 0))
           .then((value) => setState(() {}));
     });
@@ -350,32 +381,32 @@ class _GererSujetState extends State<GererSujet> {
     sujet.titre = titreController.text;
     sujet.description = descriptionController.text;
     sujet.date = DateTime.now().toString();
-    sujet.encadrant = Encadrant(); // valueEncadrant;
-    sujet.responsable = Responsable(); // _responsable;
-    sujet.etudiant = Etudiant(); // _etudiant;
-  
- 
-
-    await ApiSujet()
-        .addSujets(sujet: sujet );
-
-    getData();
-  }
-
-  editSujet({Sujet? sujet}) async {
-    await ApiSujet().updateSujets(sujet: sujet);
+    sujet.encadrant = encadrantValue;
+    sujet.responsable = responsableValue;
+    sujet.etudiant = etudiantValue;
+    encadrantValue = null;
+    responsableValue = null;
+    etudiantValue = null;
+    await ApiSujet().addSujets(sujet: sujet);
 
     getData();
   }
 
-  DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
-        value: item,
-        child: Text(
-          item,
-          // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ), // Text
-      );
-  Future getImage() async {
+  editSujet() async {
+    editedSujet.titre = editTitreController.text;
+    editedSujet.description = editDescriptionController.text;
+    editedSujet.encadrant = editEncadrantValue;
+    editedSujet.responsable = editResponsableValue;
+    editedSujet.etudiant = editEtudiantValue;
+    editEncadrantValue = null;
+    editResponsableValue = null;
+    editEtudiantValue = null;
+    await ApiSujet().updateSujets(editedSujet: editedSujet);
+
+    getData();
+  }
+
+  /*Future getImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     setState(() {
       if (pickedFile != null) {
@@ -384,9 +415,9 @@ class _GererSujetState extends State<GererSujet> {
         log('No image selected.');
       }
     });
-  }
+  }*/
 
-  Widget _buildImage() {
+  /*Widget _buildImage() {
     if (_image == null) {
       return const Padding(
         padding: EdgeInsets.all(5),
@@ -398,5 +429,5 @@ class _GererSujetState extends State<GererSujet> {
     } else {
       return Text(_image!.path);
     }
-  }
+  }*/
 }

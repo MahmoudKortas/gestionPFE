@@ -9,17 +9,26 @@ import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
 import 'package:gestion_pfe/src/models/document.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../helpers/etudiant_api.dart';
+import '../../helpers/responsable_api.dart';
+import '../../helpers/sujet_api.dart';
 import '../../resize_widget.dart';
+
+// ignore_for_file: prefer_typing_uninitialized_variables, prefer_final_fields, no_leading_underscores_for_local_identifiers
+import 'package:gestion_pfe/src/models/responsable.dart';
+import '../../models/sujet.dart';
+import '../../models/encadrant.dart';
+import '../../models/etudiant.dart';
 
 /// Displays detailed information about a SampleItem.
 class ProposerSujet extends StatefulWidget {
-  String fonction;
+  var fonction;
   var etudiant;
   var encadrant;
 
   ProposerSujet({
     Key? key,
-    required this.fonction,
+    this.fonction,
     this.encadrant,
     this.etudiant,
   }) : super(key: key);
@@ -29,16 +38,17 @@ class ProposerSujet extends StatefulWidget {
 }
 
 class _ProposerSujetState extends State<ProposerSujet> {
-  var _encadrant;
-  var _listeEncadrant = [''];
-  String? value;
-  File? _image;
-  final picker = ImagePicker();
-  Document document = Document();
+  // var _sujet;
 
-  final dateController = TextEditingController();
-  final descriptionController = TextEditingController();
   final titreController = TextEditingController();
+  final descriptionController = TextEditingController();
+  Sujet sujet = Sujet();
+  List<Etudiant?>? _etudiant;
+  Etudiant? etudiantValue;
+  List<Encadrant?>? _encadrant;
+  Encadrant? encadrantValue;
+  List<Responsable?>? _responsable;
+  Responsable? responsableValue;
 
   @override
   void initState() {
@@ -48,7 +58,7 @@ class _ProposerSujetState extends State<ProposerSujet> {
 
   @override
   Widget build(BuildContext context) {
-    log(widget.fonction);
+    // log(widget.fonction);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Proposer sujet'),
@@ -60,10 +70,13 @@ class _ProposerSujetState extends State<ProposerSujet> {
             context: context,
             child: Column(
               children: [
+                const SizedBox(
+                  height: 10,
+                ),
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.description),
-                    hintText: 'Saisir titre',
+                    hintText: 'Titre du sujet',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
@@ -73,10 +86,13 @@ class _ProposerSujetState extends State<ProposerSujet> {
                   },
                   controller: titreController,
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.description),
-                    hintText: 'Saisir description',
+                    hintText: 'Description du sujet',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
@@ -86,51 +102,88 @@ class _ProposerSujetState extends State<ProposerSujet> {
                   },
                   controller: descriptionController,
                 ),
-                widget.fonction == "etudiant"
-                    ? DropdownButton<String>(
-                        hint: const Text("choisir l'encadrant"),
-                        value: value,
+                const SizedBox(
+                  height: 20,
+                ),
+                _encadrant != null
+                    ? DropdownButton(
+                        value: encadrantValue,
                         iconSize: 36,
-                        icon: const Icon(Icons.arrow_drop_down,
-                            color: Colors.black),
-                        items: _listeEncadrant
-                            .map(buildMenuItem)
-                            .toList(), //_items.map(buildMenuItem).toList(),
-                        onChanged: (value) =>
-                            setState(() => this.value = value),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10.0)),
+                        hint: const Text("choisir l'encadrant"),
+                        items: _encadrant?.map((item) {
+                          return DropdownMenuItem<Encadrant>(
+                            value: item,
+                            child: Text(item!.nom!),
+                          );
+                        }).toList(),
+                        onChanged: (newVal) {
+                          log("newVal::$newVal");
+                          setState(() {
+                            encadrantValue = newVal as Encadrant?;
+                          });
+                        },
                       )
                     : Container(),
-                TextButton(onPressed: getImage, child: _buildImage()),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Validate will return true if the form is valid, or false if
-                      // the form is invalid.
-                      /*if (_formKey.currentState!.validate()) {
-                          // Process data.
-                        }*/
-                      document.date =
-                          "2022-06-30T12:57:27.000+00:00"; //DateFormat('yyyy-MM-dd hh:mm:ss.SSSS').format(DateTime.now()).toString();
-                      document.description = descriptionController.text;
-                      // document.proprietaire = widget.fonction == "Encadrant"
-                      widget.fonction == "Encadrant"
-                          ? widget.encadrant.nom +
-                              " " +
-                              widget.encadrant.prenom
-                          : widget.etudiant.nom +
-                              " " +
-                              widget.etudiant.prenom; // value ?? "";
-                      document.titre = titreController.text;
-                      document.idDoc = 0;
-                      log("document::$document");
-                      ApiDocument().addDocument(
-                          document: document, filepath: _image!.path);
-                    },
-                    child: const Text("Valider"),
-                  ),
+                const SizedBox(
+                  height: 10,
+                ),
+                _responsable != null
+                    ? DropdownButton(
+                        value: responsableValue,
+                        iconSize: 36,
+                        hint: const Text("choisir le responsable"),
+                        items: _responsable?.map((item) {
+                          return DropdownMenuItem<Responsable>(
+                            value: item,
+                            child: Text(item!.nom!),
+                          );
+                        }).toList(),
+                        onChanged: (newVal) {
+                          log("newVal::$newVal");
+                          setState(() {
+                            responsableValue = newVal as Responsable?;
+                          });
+                        },
+                      )
+                    : Container(),
+                const SizedBox(
+                  height: 10,
+                ),
+                _etudiant != null
+                    ? DropdownButton(
+                        value: etudiantValue,
+                        iconSize: 36,
+                        hint: const Text("choisir l'etudiant"),
+                        items: _etudiant?.map((item) {
+                          return DropdownMenuItem<Etudiant>(
+                            value: item,
+                            child: Text(item!.nom!),
+                          );
+                        }).toList(),
+                        onChanged: (newVal) {
+                          log("newVal::$newVal");
+                          setState(() {
+                            etudiantValue = newVal as Etudiant?;
+                          });
+                        },
+                      )
+                    : Container(),
+                // TextButton(onPressed: getImage, child: _buildImage()),
+                ElevatedButton(
+                  // ignore: avoid_print
+                  onPressed: () {
+                    try {
+                      addSujet();
+                    } catch (e) {
+                      log("gerer-sujet-exception::${e.toString()}");
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text("quelque chose ne va pas"),
+                            backgroundColor: Colors.red),
+                      );
+                    }
+                  },
+                  child: const Text("Ajouter"),
                 ),
               ],
             ),
@@ -140,27 +193,38 @@ class _ProposerSujetState extends State<ProposerSujet> {
     );
   }
 
-  void getData() async {
-    _encadrant = await ApiEncadrant().getEncadrant();
-    log("_encadrant::$_encadrant");
-    _listeEncadrant.clear();
-    _encadrant
-        .map((l) => {_listeEncadrant.add(l.nom + ' ' + l.prenom)})
-        .toList();
+  addSujet() async {
+    sujet.titre = titreController.text;
+    sujet.description = descriptionController.text;
+    sujet.date = DateTime.now().toString();
+    sujet.encadrant = encadrantValue;
+    sujet.responsable = responsableValue;
+    sujet.etudiant = etudiantValue;
+    encadrantValue = null;
+    responsableValue = null;
+    etudiantValue = null;
+    await ApiSujet().addSujets(sujet: sujet);
 
-    log("_listeEncadrant::$_listeEncadrant");
-
-    Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
+    getData();
   }
 
-  DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
-        value: item,
-        child: Text(
-          item,
-          // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ), // Text
-      );
-  Future getImage() async {
+  void getData() async {
+    await Future.wait([
+      ApiEtudiant().getAllEtudiants(),
+      ApiEncadrant().getAllEncadrant(),
+      ApiResponsable().getAllResponsable(),
+      // ApiSujet().getAllSujets(),
+    ]).then((value) async {
+      _etudiant = value[0]?.cast<Etudiant?>();
+      _encadrant = value[1]?.cast<Encadrant?>();
+      _responsable = value[2]?.cast<Responsable?>();
+      // _sujet = value[3]?.cast<Sujet?>();
+      Future.delayed(const Duration(seconds: 0))
+          .then((value) => setState(() {}));
+    });
+  }
+
+  /*Future getImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     setState(() {
       if (pickedFile != null) {
@@ -169,9 +233,9 @@ class _ProposerSujetState extends State<ProposerSujet> {
         log('No image selected.');
       }
     });
-  }
+  }*/
 
-  Widget _buildImage() {
+  /*Widget _buildImage() {
     if (_image == null) {
       return const Padding(
         padding: EdgeInsets.all(5),
@@ -183,5 +247,5 @@ class _ProposerSujetState extends State<ProposerSujet> {
     } else {
       return Text(_image!.path);
     }
-  }
+  }*/
 }

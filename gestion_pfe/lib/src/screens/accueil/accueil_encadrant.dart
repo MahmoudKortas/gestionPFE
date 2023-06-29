@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/icon_widget.dart';
 import 'package:gestion_pfe/src/models/encadrant.dart';
+import 'package:gestion_pfe/src/screens/encadrant/affecter_note.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_ligne_soutenance.dart';
 
 import '../../resize_widget.dart';
 import '../calendar/events_example.dart';
@@ -11,20 +13,18 @@ import '../subjects/proposer_sujet.dart';
 
 /// Displays detailed information about a SampleItem.
 class AccueilEncadrant extends StatefulWidget {
-  Encadrant encadrant;
+  Encadrant? encadrant;
   AccueilEncadrant({
     Key? key,
-    required this.encadrant,
+    this.encadrant,
   }) : super(key: key);
 
   static const routeName = '/AccueilEncadrant';
-   @override
+  @override
   State<AccueilEncadrant> createState() => _AccueilEncadrantState();
 }
 
 class _AccueilEncadrantState extends State<AccueilEncadrant> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +70,9 @@ class _AccueilEncadrantState extends State<AccueilEncadrant> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => TableEventsExample(fonction: 'encadrant',),
+                          builder: (_) => TableEventsExample(
+                            fonction: 'encadrant',
+                          ),
                         ),
                       );
                       /*Navigator.restorablePushNamed(
@@ -95,6 +97,25 @@ class _AccueilEncadrantState extends State<AccueilEncadrant> {
                       Navigator.restorablePushNamed(
                         context,
                         GererDemandeDesSujetsPFE.routeName,
+                      );
+                    },
+                  ),
+                ),
+                Card(
+                  child: ListTile(
+                    leading: iconWidget(Icons.numbers),
+                    title: const Text('affecter note'),
+                    // subtitle: const Text(
+                    // 'A sufficiently long subtitle warrants thre lines.'),
+                    trailing: const Icon(Icons.more_vert),
+                    //isThreLine: true,
+                    onTap: () {
+                      // Navigate to the details page. If the user leaves and returns to
+                      // the app after it has ben killed while running in the
+                      // background, the navigation stack is restored.
+                      Navigator.restorablePushNamed(
+                        context,
+                        AffecterNote.routeName,
                       );
                     },
                   ),

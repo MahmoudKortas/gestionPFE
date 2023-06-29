@@ -41,7 +41,7 @@ class ApiLigneSoutenance {
   }
 
   Future<List<LigneSoutenance>?> addLigneSoutenances(
-      {LigneSoutenance? ligneSoutenance}) async {
+      {LigneSoutenance? ligneSoutenance}) async { 
     try {
       var url = Uri.parse(
           "${ApiConstants.baseUrl}${ApiConstants.ligneSoutenance}add");
@@ -52,11 +52,11 @@ class ApiLigneSoutenance {
         },
         body: jsonEncode(
           {
-            "noteRapport": ligneSoutenance?.noteRapport,
+            "noterapport": ligneSoutenance?.noterapport,
             "noteQR": ligneSoutenance?.noteQR,
-            "notePresentation": ligneSoutenance?.notePresentation,
-            "noteApplication": ligneSoutenance?.noteApplication.toString(),
-            "soutenance": ligneSoutenance?.soutenance?.idSout.toString(),
+            "notepresentation": ligneSoutenance?.notepresentation,
+            "noteapplication": ligneSoutenance?.noteapplication,
+            "soutenance": ligneSoutenance?.soutenance,
           },
         ),
       );
@@ -85,10 +85,10 @@ class ApiLigneSoutenance {
         body: jsonEncode(
           {
             "idLigne": ligneSoutenance.idLigne,
-            "noteRapport": ligneSoutenance.noteRapport,
+            "noterapport": ligneSoutenance.noterapport,
             "noteQR": ligneSoutenance.noteQR,
-            "notePresentation": ligneSoutenance.notePresentation,
-            "noteApplication": ligneSoutenance.noteApplication.toString(),
+            "notepresentation": ligneSoutenance.notepresentation,
+            "noteapplication": ligneSoutenance.noteapplication.toString(),
             "soutenance": ligneSoutenance.soutenance?.idSout.toString(),
           },
         ),

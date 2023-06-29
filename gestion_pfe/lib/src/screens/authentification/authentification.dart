@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'package:gestion_pfe/src/screens/accueil/accueil_etudiant.dart';
 import 'package:gestion_pfe/src/screens/authentification/inscription.dart';
 import 'package:gestion_pfe/src/screens/etudiant/enquete_satisfaction.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/dashboard.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../color_hex.dart';
 import '../../resize_widget.dart';
 import '../../size_config.dart';
@@ -32,6 +34,7 @@ class _AuthentificationState extends State<Authentification> {
   var _encadrant;
   var _etudiant;
   var _responsable;
+  SharedPreferences? prefs;
   @override
   void initState() {
     super.initState();
@@ -202,13 +205,15 @@ class _AuthentificationState extends State<Authentification> {
     debugPrint("_encadrant::$_encadrant");
   }
 
-  void verificationInscription({String? email = "", String? motDepasse = ""}) {
-    getData();
+  Future<void> verificationInscription(
+      {String? email = "", String? motDepasse = ""}) async {
+    prefs = await SharedPreferences.getInstance();
     log("+");
 
     for (var responsable in _responsable) {
       log(".");
       if (responsable.email == email && responsable.motdepasse == motDepasse) {
+        await prefs?.setString('user', jsonEncode(responsable).toString());
         Navigator.restorablePushNamed(
           context,
           Dashboard.routeName,
@@ -218,6 +223,7 @@ class _AuthentificationState extends State<Authentification> {
     for (var etudiant in _etudiant) {
       log("-");
       if (etudiant.email == email && etudiant.motdepasse == motDepasse) {
+        await prefs?.setString('user', jsonEncode(etudiant).toString());
         Navigator.pushNamed(
           context,
           AccueilEtudiant.routeName,
@@ -230,6 +236,7 @@ class _AuthentificationState extends State<Authentification> {
     for (var encadrant in _encadrant) {
       log("_");
       if (encadrant.email == email && encadrant.motdepasse == motDepasse) {
+        await prefs?.setString('user', jsonEncode(encadrant).toString());
         Navigator.pushNamed(context, AccueilEncadrant.routeName,
             arguments: AccueilEncadrant(encadrant: encadrant));
       }

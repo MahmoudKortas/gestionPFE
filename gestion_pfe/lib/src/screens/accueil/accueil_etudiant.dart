@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/icon_widget.dart';
 import 'package:gestion_pfe/src/models/etudiant.dart';
+import 'package:gestion_pfe/src/screens/etudiant/consulter_note.dart';
 
 import '../../resize_widget.dart';
 import '../calendar/events_example.dart';
@@ -89,26 +90,26 @@ class _AccueilEtudiantState extends State<AccueilEtudiant> {
                     },
                   ),
                 ),
-                /*Card(
+             
+                Card(
                   child: ListTile(
                     leading: iconWidget(Icons.offline_pin),
-                    title: const Text('Gerer demande des sujets PFE'),
-                    subtitle: const Text(
-                        'A sufficiently long subtitle warrants three lines.'),
+                    title: const Text('consulter résultat'),
+                    /*subtitle: const Text(
+                        'A sufficiently long subtitle warrants three lines.'),*/
                     trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
-                    onTap: () {
+                     onTap: () {
                       // Navigate to the details page. If the user leaves and returns to
-                      // the app after it has been killed while running in the
+                      // the app after it has ben killed while running in the
                       // background, the navigation stack is restored.
                       Navigator.restorablePushNamed(
                         context,
-                        GererDemandeDesSujetsPFE.routeName,
+                        ConsulterNote.routeName,
                       );
                     },
                   ),
                 ),
-                Card(
+               /* Card(
                   child: ListTile(
                     leading: iconWidget(Icons.dashboard),
                     title: const Text('Tableau de bord'),

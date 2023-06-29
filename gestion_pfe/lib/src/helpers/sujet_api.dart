@@ -51,9 +51,9 @@ class ApiSujet {
             "titre": sujet?.titre,
             "description": sujet?.description,
             "date": sujet?.date,
-            "etudiant": sujet?.etudiant?.idEtud.toString(),
-            "responsable": sujet?.responsable?.idUser.toString(),
-            "encadrant": sujet?.encadrant?.idEnc.toString(),
+            "etudiant": sujet?.etudiant,
+            "responsable": sujet?.responsable,
+            "encadrant": sujet?.encadrant,
           },
         ),
       );
@@ -68,10 +68,10 @@ class ApiSujet {
     return null;
   }
 
-  Future<List<Sujet>?> updateSujets({Sujet? sujet}) async {
+  Future<List<Sujet>?> updateSujets({Sujet? editedSujet}) async {
     try {
       var url = Uri.parse(
-          "${ApiConstants.baseUrl}${ApiConstants.sujets}/${sujet?.idSujet}");
+          "${ApiConstants.baseUrl}${ApiConstants.sujets}${ApiConstants.update}");
       // var response =
       await http.put(
         url,
@@ -80,13 +80,13 @@ class ApiSujet {
         },
         body: jsonEncode(
           {
-            "idSujet": sujet?.idSujet,
-            "titre": sujet?.titre,
-            "description": sujet?.description,
-            "date": sujet?.date,
-            "etudiant": sujet?.etudiant?.idEtud.toString(),
-            "responsable": sujet?.responsable?.idUser.toString(),
-            "encadrant": sujet?.encadrant?.idEnc.toString(),
+            "idSujet": editedSujet?.idSujet,
+            "titre": editedSujet?.titre,
+            "description": editedSujet?.description,
+            "date": editedSujet?.date,
+            "etudiant": editedSujet?.etudiant,
+            "responsable": editedSujet?.responsable,
+            "encadrant": editedSujet?.encadrant,
           },
         ),
       );

@@ -1,4 +1,5 @@
-// import 'package:gestionsoutenance/src/models/encadrant.dart';
+ 
+
 import 'package:gestion_pfe/src/models/soutenance.dart'; 
 
 import 'dart:convert';
@@ -13,35 +14,35 @@ String ligneSoutenanceToJson(List<LigneSoutenance> data) =>
 
 class LigneSoutenance {
   int? idLigne;
-  String? noteRapport;//TODO: convert it to double
-  String? noteQR;//TODO: convert it to double
-  String? notePresentation;//TODO: convert it to double
-  String? noteApplication; //TODO: convert it to double
+  double? noterapport;//TODO: convert it to double
+  double? noteQR;//TODO: convert it to double
+  double? notepresentation;//TODO: convert it to double
+  double? noteapplication; //TODO: convert it to double
   Soutenance? soutenance;
   LigneSoutenance(
       {this.idLigne,
-      this.noteRapport,
+      this.noterapport,
       this.noteQR,
-      this.notePresentation,
-      this.noteApplication, 
+      this.notepresentation,
+      this.noteapplication, 
       this.soutenance});
 
   LigneSoutenance.fromJson(Map<String, dynamic> json) {
     idLigne = json['idLigne'];
-    noteRapport = json['Noterapport'];
-    noteQR = json['NoteQR'];
-    notePresentation = json['Notepresentation'];
-    noteApplication = json['Notepresentation']; 
+    noterapport = json['noterapport'];
+    noteQR = json['noteQR'];
+    notepresentation = json['notepresentation'];
+    noteapplication = json['notepresentation']; 
     soutenance = json['soutenance'] != null ? Soutenance.fromJson(json['soutenance']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idLigne'] = idLigne;
-    data['Noterapport'] = noteRapport;
-    data['NoteQR'] = noteQR;
-    data['Notepresentation'] = notePresentation;
-    data['Noteapplication'] = noteApplication;
+    data['noterapport'] = noterapport;
+    data['noteQR'] = noteQR;
+    data['notepresentation'] = notepresentation;
+    data['noteapplication'] = noteapplication;
  
     if (soutenance != null) {
       data['soutenance'] = soutenance!.toJson();
@@ -51,6 +52,6 @@ class LigneSoutenance {
 
   @override
   String toString() {
-    return 'LigneSoutenance(idLigne: $idLigne, Noterapport: $noteRapport, Noteapplication: $noteApplication, soutenance: $soutenance)';
+    return 'LigneSoutenance(idLigne: $idLigne, noterapport: $noterapport, noteapplication: $noteapplication, soutenance: $soutenance)';
   }
 }

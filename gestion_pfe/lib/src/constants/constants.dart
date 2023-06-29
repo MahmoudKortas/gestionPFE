@@ -15,6 +15,7 @@ class ApiConstants {
   static String ligneSoutenance = "/LigneSoutenance/"; 
   
   static String all = "all";
+  static String update = "update";
 
 }
 
