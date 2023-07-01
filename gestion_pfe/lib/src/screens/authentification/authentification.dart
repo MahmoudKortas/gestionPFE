@@ -164,23 +164,6 @@ class _AuthentificationState extends State<Authentification> {
                                   );
                                 },
                               ),
-                              GestureDetector(
-                                child: Text(
-                                  "satisfaction",
-                                  style: TextStyle(
-                                    decoration: TextDecoration.underline,
-                                    decorationThickness: 1.5,
-                                    color: HexColor("c9242e"),
-                                    fontSize: 20,
-                                  ),
-                                ),
-                                onTap: () {
-                                  Navigator.restorablePushNamed(
-                                      context, EnqueteSatisfaction.routeName
-                                      // Inscription.routeName,
-                                      );
-                                },
-                              ),
                             ],
                           ),
                         ),

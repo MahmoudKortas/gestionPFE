@@ -1,9 +1,12 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/color_hex.dart';
 import 'package:gestion_pfe/src/icon_widget.dart';
 import 'package:gestion_pfe/src/models/etudiant.dart';
 import 'package:gestion_pfe/src/screens/etudiant/consulter_note.dart';
+import 'package:gestion_pfe/src/screens/etudiant/enquete_satisfaction.dart';
+import 'package:gestion_pfe/src/screens/etudiant/reclamation.dart';
 
 import '../../resize_widget.dart';
 import '../calendar/events_example.dart';
@@ -80,7 +83,9 @@ class _AccueilEtudiantState extends State<AccueilEtudiant> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) =>  TableEventsExample(fonction: 'etudiant',),
+                          builder: (_) => TableEventsExample(
+                            fonction: 'etudiant',
+                          ),
                         ),
                       );
                       /*Navigator.restorablePushNamed(
@@ -90,7 +95,6 @@ class _AccueilEtudiantState extends State<AccueilEtudiant> {
                     },
                   ),
                 ),
-             
                 Card(
                   child: ListTile(
                     leading: iconWidget(Icons.offline_pin),
@@ -98,7 +102,7 @@ class _AccueilEtudiantState extends State<AccueilEtudiant> {
                     /*subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),*/
                     trailing: const Icon(Icons.more_vert),
-                     onTap: () {
+                    onTap: () {
                       // Navigate to the details page. If the user leaves and returns to
                       // the app after it has ben killed while running in the
                       // background, the navigation stack is restored.
@@ -109,26 +113,42 @@ class _AccueilEtudiantState extends State<AccueilEtudiant> {
                     },
                   ),
                 ),
-               /* Card(
+                Card(
                   child: ListTile(
-                    leading: iconWidget(Icons.dashboard),
-                    title: const Text('Tableau de bord'),
-                    subtitle: const Text(
-                        'A sufficiently long subtitle warrants three lines.'),
+                    leading: iconWidget(Icons.offline_pin),
+                    title: const Text('satisfaction'),
+                    /*subtitle: const Text(
+                        'A sufficiently long subtitle warrants three lines.'),*/
                     trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
                     onTap: () {
                       // Navigate to the details page. If the user leaves and returns to
-                      // the app after it has been killed while running in the
+                      // the app after it has ben killed while running in the
                       // background, the navigation stack is restored.
                       Navigator.restorablePushNamed(
                         context,
-                        Dashboard.routeName,
+                        EnqueteSatisfaction.routeName,
                       );
                     },
                   ),
                 ),
-             */
+                Card(
+                  child: ListTile(
+                    leading: iconWidget(Icons.offline_pin),
+                    title: const Text('Réclamation'),
+                    /*subtitle: const Text(
+                        'A sufficiently long subtitle warrants three lines.'),*/
+                    trailing: const Icon(Icons.more_vert),
+                    onTap: () {
+                      // Navigate to the details page. If the user leaves and returns to
+                      // the app after it has ben killed while running in the
+                      // background, the navigation stack is restored.
+                      Navigator.restorablePushNamed(
+                        context,
+                        Reclamation.routeName,
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
           ),

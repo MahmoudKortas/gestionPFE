@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gestion_pfe/src/screens/encadrant/affecter_note.dart';
 import 'package:gestion_pfe/src/screens/etudiant/consulter_note.dart';
 import 'package:gestion_pfe/src/screens/etudiant/enquete_satisfaction.dart';
+import 'package:gestion_pfe/src/screens/etudiant/reclamation.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_departement.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_ligne_soutenance.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_role.dart';
@@ -166,6 +167,8 @@ class MyApp extends StatelessWidget {
                     );
                   case EnqueteSatisfaction.routeName:
                     return const EnqueteSatisfaction();
+                  case Reclamation.routeName:
+                    return const Reclamation();
                   default:
                     return const Authentification();
                 }
