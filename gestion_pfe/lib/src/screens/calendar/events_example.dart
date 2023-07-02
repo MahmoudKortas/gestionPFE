@@ -61,7 +61,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
     log("selectedEvents::$selectedEvents");
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Calendrier des soutenances"),
+          title: const Text("Ma soutenance"),
           centerTitle: true,
         ),
         body: Column(
@@ -150,7 +150,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             Column(
               children: [
                 ListTile(
-                  title:const Text("s1"),
+                  title:const Text("séance1:  10:00  \nsalle:  10  \nPFE1:  Gestion des projets"),
                   onTap: () {
                     Navigator.push(
                       context,
@@ -160,15 +160,15 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                     );
                   },
                 ),
-                const ListTile(
-                  title: Text("s2"),
+                /*const ListTile(
+                  title: Text("séance2: 10:00  PFE2: "),
                 ),
                 const ListTile(
-                  title: Text("s3"),
+                  title: Text("séance3: 11:00  PFE3: "),
                 ),
                 const ListTile(
-                  title: Text("s4"),
-                ),
+                  title: Text("séance4: 12:00  PFE4: "),
+                ),*/
               ],
             )
           ],

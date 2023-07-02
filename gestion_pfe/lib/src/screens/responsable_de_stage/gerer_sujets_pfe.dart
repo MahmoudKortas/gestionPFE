@@ -35,7 +35,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
   List<Seance?>? _seance;
   List<Salle?>? _salle;
   // List<Specialite?>? _listeSpecialite;
-  List<Specialite?>? _specialite; 
+  List<Specialite?>? _specialite;
   final encadreurController = TextEditingController();
   final etudiantController = TextEditingController();
   final dateDebutController = TextEditingController();
@@ -55,7 +55,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
   }
 
   @override
-  void dispose() { 
+  void dispose() {
     encadreurController.dispose();
     etudiantController.dispose();
     dateDebutController.dispose();
@@ -76,10 +76,10 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                 text: "Tous",
               ),
               Tab(
-                text: "departement 1",
+                text: "Informatique",
               ),
               Tab(
-                text: "departement 2",
+                text: "Mecanique",
               ),
             ],
           ),
@@ -88,7 +88,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
         body: TabBarView(
           children: [
             SingleChildScrollView(
-              physics: const ScrollPhysics(), 
+              physics: const ScrollPhysics(),
               child: Center(
                 child: resiseWidget(
                   context: context,
@@ -96,7 +96,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                     children: [
                       const SizedBox(
                         height: 10,
-                      ), 
+                      ),
                       _etudiant != null
                           ? DropdownButton(
                               value: etudiantValue,
@@ -151,11 +151,47 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                       const SizedBox(
                         height: 10,
                       ),
-                      const SizedBox(
-                        height: 10,
+                      // const SizedBox(
+                      //   height: 10,
+                      // ),
+                      // const SizedBox(
+                      //   height: 10,
+                      // ),
+                      //TODO: complete logic, sujet
+                      DropdownButton(
+                        value: "",
+                        iconSize: 36,
+                        hint: const Text("choisir le sujet"),
+                        items: _salle?.map((item) {
+                          return DropdownMenuItem<Salle>(
+                            value: item,
+                            child: Text("${item!.nom!} ${item.nom!}"),
+                          );
+                        }).toList(),
+                        onChanged: (newVal) {
+                          log("newVal::$newVal");
+                          setState(() {
+                            // salleValue = newVal as Salle?;
+                          });
+                        },
                       ),
-                      const SizedBox(
-                        height: 10,
+                      //TODO: complete logic, encadrant
+                      DropdownButton(
+                        value: "",
+                        iconSize: 36,
+                        hint: const Text("choisir l'encadrant"),
+                        items: _salle?.map((item) {
+                          return DropdownMenuItem<Salle>(
+                            value: item,
+                            child: Text("${item!.nom!} ${item.nom!}"),
+                          );
+                        }).toList(),
+                        onChanged: (newVal) {
+                          log("newVal::$newVal");
+                          setState(() {
+                            // salleValue = newVal as Salle?;
+                          });
+                        },
                       ),
                       /* _salle != null
                           ? DropdownButton(
@@ -224,9 +260,9 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: ElevatedButton(
                           onPressed: () {
-                            try {  
+                            try {
                               pfe?.dateDebut = dateDebutController.text;
-                              pfe?.dateDepot = dateDepotController.text;  
+                              pfe?.dateDepot = dateDepotController.text;
                               pfe?.etudiant = etudiantValue;
                               pfe?.document = documentValue;
                               pfe?.encadrant = encadrantValue;
@@ -259,7 +295,8 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                                    title: Text('${_pfe?[index].idPFE} $index'),
+                                    title: Text(_pfe?[index].sujet?.titre ??
+                                        "Titre sujet"),
                                     subtitle: Text(
                                         '${_pfe?[index].etudiant?.nom} ${_pfe?[index].etudiant?.prenom}-${_pfe?[index].encadrant?.nom} ${_pfe?[index].encadrant?.prenom}'),
                                     trailing: const Icon(Icons.more_vert),
@@ -285,7 +322,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
     );
   }
 
-  Future<String?> dialog(BuildContext context, PFE pfe) { 
+  Future<String?> dialog(BuildContext context, PFE pfe) {
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -441,7 +478,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
             child: const Text('Annuler'),
           ),
           TextButton(
-            onPressed: () { 
+            onPressed: () {
               editPFE(pfe: pfe);
               Navigator.pop(context, 'Modifer');
             },
