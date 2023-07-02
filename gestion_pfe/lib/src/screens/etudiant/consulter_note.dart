@@ -53,7 +53,7 @@ class _ConsulterNoteState extends State<ConsulterNote> {
     // log(widget.fonction);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Proposer sujet'),
+        title: const Text('Consulter note'),
       ),
       body: SingleChildScrollView(
         // controller: controller,
@@ -68,14 +68,17 @@ class _ConsulterNoteState extends State<ConsulterNote> {
                           shrinkWrap: true,
                           itemCount: _ligneSoutenance!.length,
                           itemBuilder: (context, index) {
+                            inspect(_ligneSoutenance![index]);
                             return Card(
                               child: ListTile(
-                                  title: Text(_ligneSoutenance![index]!
-                                      .idLigne
-                                      .toString()),
-                                  subtitle: Text(_ligneSoutenance![index]!
-                                      .noteapplication
-                                      .toString()),
+                                  title: Text(_ligneSoutenance?[index]
+                                          ?.soutenance
+                                          ?.pfe
+                                          ?.sujet
+                                          ?.titre ??
+                                      "titre sujet"),
+                                  subtitle: Text(
+                                      "Note:  ${_ligneSoutenance![index]!.noteapplication.toString()}"),
                                   trailing: const Icon(Icons.more_vert),
                                   // isThreeLine: true,
                                   onTap: () => dialog(
@@ -99,9 +102,9 @@ class _ConsulterNoteState extends State<ConsulterNote> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Note qr: ${ligneSoutenance?.noteQR}"),
+              Text("Note question/réponse: ${ligneSoutenance?.noteQR}"),
               Text("Note application: ${ligneSoutenance?.noteapplication}"),
-              Text("Note presentation: ${ligneSoutenance?.notepresentation}"),
+              Text("Note présentation: ${ligneSoutenance?.notepresentation}"),
               Text("Note rapport: ${ligneSoutenance?.noterapport}"),
             ],
           ),

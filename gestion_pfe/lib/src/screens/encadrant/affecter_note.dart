@@ -51,7 +51,7 @@ class _AffecterNoteState extends State<AffecterNote> {
     // log(widget.fonction);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Proposer sujet'),
+        title: const Text('Affecter note'),
       ),
       body: SingleChildScrollView(
         // controller: controller,
@@ -90,7 +90,7 @@ class _AffecterNoteState extends State<AffecterNote> {
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.description),
-                    hintText: 'note qr',
+                    hintText: 'note question/réponse ',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
@@ -110,7 +110,7 @@ class _AffecterNoteState extends State<AffecterNote> {
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.description),
-                    hintText: 'Note de presentation',
+                    hintText: 'Note de présentation',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
@@ -130,7 +130,7 @@ class _AffecterNoteState extends State<AffecterNote> {
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.description),
-                    hintText: 'noteapplication',
+                    hintText: "note d'application",
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
@@ -143,6 +143,24 @@ class _AffecterNoteState extends State<AffecterNote> {
                 const SizedBox(
                   height: 10,
                 ),
+                DropdownButton(
+                        // value: soutenanceValue,
+                        iconSize: 36,
+                        hint: const Text("choisir soutenance"),
+                        items: _soutenance?.map((item) {
+                          return DropdownMenuItem<Soutenance>(
+                            value: item,
+                            child: Text(item!.description!),
+                          );
+                        }).toList(),
+                        onChanged: (newVal) {
+                          log("newVal::$newVal");
+                          setState(() {
+                            // soutenanceValue = newVal as Soutenance?;
+                          });
+                        },
+                      ),
+                //TODO:Fix soutenance
                 _soutenance != null
                     ? DropdownButton(
                         value: soutenanceValue,

@@ -10,6 +10,7 @@ import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_ligne_soutena
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_role.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_salle_calender.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_seance.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_soutenance.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_specialite.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_sujet.dart';
 import 'custom_theme.dart';
@@ -150,6 +151,8 @@ class MyApp extends StatelessWidget {
                     return AffecterNote();
                   case ConsulterNote.routeName:
                     return ConsulterNote();
+                  case GererSoutenance.routeName:
+                    return const GererSoutenance();
                   case ProposerSujet.routeName:
                     // final args = routeSettings.arguments as ProposerSujet;
                     return ProposerSujet(

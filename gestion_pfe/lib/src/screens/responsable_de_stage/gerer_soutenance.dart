@@ -58,7 +58,7 @@ class _GererSoutenanceState extends State<GererSoutenance> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(' Soutenances'),
+        title: const Text('Gérer Soutenances'),
       ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),
@@ -130,7 +130,7 @@ class _GererSoutenanceState extends State<GererSoutenance> {
                     ? DropdownButton(
                         value: presidentValue,
                         iconSize: 36,
-                        hint: const Text("choisir l'departement"),
+                        hint: const Text("choisir le président"),
                         items: _president?.map((item) {
                           return DropdownMenuItem<Encadrant>(
                             value: item,
@@ -149,7 +149,7 @@ class _GererSoutenanceState extends State<GererSoutenance> {
                     ? DropdownButton(
                         value: salleValue,
                         iconSize: 36,
-                        hint: const Text("choisir l'departement"),
+                        hint: const Text("choisir la salle"),
                         items: _salle?.map((item) {
                           return DropdownMenuItem<Salle>(
                             value: item,
@@ -168,7 +168,7 @@ class _GererSoutenanceState extends State<GererSoutenance> {
                     ? DropdownButton(
                         value: seanceValue,
                         iconSize: 36,
-                        hint: const Text("choisir l'departement"),
+                        hint: const Text("choisir la séance"),
                         items: _seance?.map((item) {
                           return DropdownMenuItem<Seance>(
                             value: item,
@@ -187,7 +187,7 @@ class _GererSoutenanceState extends State<GererSoutenance> {
                     ? DropdownButton(
                         value: pfeValue,
                         iconSize: 36,
-                        hint: const Text("choisir l'departement"),
+                        hint: const Text("choisir le PFE"),
                         items: _pfe?.map((item) {
                           return DropdownMenuItem<PFE>(
                             value: item,
@@ -218,11 +218,23 @@ class _GererSoutenanceState extends State<GererSoutenance> {
                   },
                   child: const Text("Ajouter"),
                 ),
+                Card(
+                                child: ListTile(
+                                    title:const Text("Soutenance 1"),
+                                    // subtitle: Text(_soutenance![index]!
+                                    //     .description
+                                    //     .toString()),
+                                    trailing: const Icon(Icons.more_vert),
+                                    // isThreeLine: true,
+                                    // onTap: () =>
+                                        // dialog(context, _soutenance![index]!)),
+                                 ) ),
                 /*_Soutenance == null
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )
                     :*/
+                    //TODO: fix below code
                 _soutenance != null
                     ? _soutenance!.isEmpty
                         ? const Text("aucun Soutenance existe")
@@ -246,7 +258,8 @@ class _GererSoutenanceState extends State<GererSoutenance> {
                               );
                             },
                           )
-                    : const Text("aucun Soutenance existe null")
+                    : Container()
+                    // const Text("aucun Soutenance existe null")
                 /*Card(
                   child: ListTile(
                       /*leading: const CircleAvatar(
@@ -380,10 +393,10 @@ class _GererSoutenanceState extends State<GererSoutenance> {
     ]).then((value) async {
       _soutenance = value[0]?.cast<Soutenance?>();
       _rapporteur = value[1]?.cast<Encadrant?>();
-      _president = value[2]?.cast<Encadrant?>();
-      _salle = value[3]?.cast<Salle?>();
-      _seance = value[4]?.cast<Seance?>();
-      _pfe = value[5]?.cast<PFE?>();
+      // _president = value[2]?.cast<Encadrant?>();
+      _salle = value[2]?.cast<Salle?>();
+      _seance = value[3]?.cast<Seance?>();
+      _pfe = value[4]?.cast<PFE?>();
     });
 
     // _listeSoutenance.clear();
