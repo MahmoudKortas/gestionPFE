@@ -24,7 +24,7 @@ class _ReclamationState extends State<Reclamation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Votre satisfaction"),
+        title: const Text("Votre réclamation"),
       ),
       body: SingleChildScrollView(
         // controller: controller,

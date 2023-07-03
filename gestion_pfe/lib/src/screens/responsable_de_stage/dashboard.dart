@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gestion_pfe/src/icon_widget.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_departement.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_document.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_ligne_soutenance.dart';
@@ -36,16 +37,20 @@ class Dashboard extends StatelessWidget {
             context: context,
             child: Column(
               children: [
+                Image.asset(
+                  "assets/images/logo-epi.png",
+                  scale: 2,
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
                 Card(
                   child: ListTile(
-                    /*leading: const CircleAvatar(
-                      foregroundImage:
-                          AssetImage('assets/images/flutter_logo.png'),
-                    ),*/
-                    title: const Text(' sujet PFE'),
-                    subtitle: const Text(''),
+                    leading: iconWidget(Icons.book), 
+                    title: const Text('Gestion projet PFE'),
+                    //subtitle: const Text(''),
                     trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
+                    //isThreeLine: true,
                     onTap: () {
                       // Navigate to the details page. If the user leaves and returns to
                       // the app after it has been killed while running in the
@@ -59,14 +64,15 @@ class Dashboard extends StatelessWidget {
                 ),
                 Card(
                   child: ListTile(
+                    leading: iconWidget(Icons.document_scanner), 
                     /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                    title: const Text(' document'),
-                    subtitle: const Text(''),
+                    title: const Text(' Gestion documents administratifs'),
+                    //subtitle: const Text(''),
                     trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
+                    //isThreeLine: true,
                     onTap: () {
                       // Navigate to the details page. If the user leaves and returns to
                       // the app after it has been killed while running in the
@@ -78,16 +84,16 @@ class Dashboard extends StatelessWidget {
                     },
                   ),
                 ),
-                Card(
+                /*Card(
                   child: ListTile(
                     /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
                     title: const Text(' Sujets'),
-                    subtitle: const Text(''),
+                    //subtitle: const Text(''),
                     trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
+                    //isThreeLine: true,
                     onTap: () {
                       // Navigate to the details page. If the user leaves and returns to
                       // the app after it has been killed while running in the
@@ -98,17 +104,18 @@ class Dashboard extends StatelessWidget {
                       );
                     },
                   ),
-                ),
+                ),*/
                 Card(
                   child: ListTile(
+                    leading: iconWidget(Icons.person), 
                     /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                    title: const Text(' encadrant'),
-                    subtitle: const Text(''),
+                    title: const Text(' Gestion encadrant'),
+                    //subtitle: const Text(''),
                     trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
+                    //isThreeLine: true,
                     onTap: () {
                       // Navigate to the details page. If the user leaves and returns to
                       // the app after it has been killed while running in the
@@ -120,16 +127,17 @@ class Dashboard extends StatelessWidget {
                     },
                   ),
                 ),
-                Card(
+                //TODO: uncomment this
+               /* Card(
                   child: ListTile(
                     /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
                     title: const Text(' soutenances'),
-                    subtitle: const Text(''),
+                    //subtitle: const Text(''),
                     trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
+                    //isThreeLine: true,
                     onTap: () {
                       // Navigate to the details page. If the user leaves and returns to
                       // the app after it has been killed while running in the
@@ -144,17 +152,18 @@ class Dashboard extends StatelessWidget {
                       );
                     },
                   ),
-                ),
+                ),*/
                 Card(
                   child: ListTile(
+                    leading: iconWidget(Icons.person), 
                     /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                    title: const Text(' étudiants'),
-                    subtitle: const Text(''),
+                    title: const Text(' Gestion étudiants'),
+                    //subtitle: const Text(''),
                     trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
+                    //isThreeLine: true,
                     onTap: () {
                       // Navigate to the details page. If the user leaves and returns to
                       // the app after it has been killed while running in the
@@ -166,16 +175,16 @@ class Dashboard extends StatelessWidget {
                     },
                   ),
                 ),
-                Card(
+                /*Card(
                   child: ListTile(
                     /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
                     title: const Text(' seance'),
-                    subtitle: const Text(''),
+                    //subtitle: const Text(''),
                     trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
+                    //isThreeLine: true,
                     onTap: () {
                       // Navigate to the details page. If the user leaves and returns to
                       // the app after it has been killed while running in the
@@ -186,17 +195,17 @@ class Dashboard extends StatelessWidget {
                       );
                     },
                   ),
-                ),
-                Card(
+                ),*/
+                /*Card(
                   child: ListTile(
                     /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
                     title: const Text(' salle'),
-                    subtitle: const Text(''),
+                    //subtitle: const Text(''),
                     trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
+                    //isThreeLine: true,
                     onTap: () {
                       // Navigate to the details page. If the user leaves and returns to
                       // the app after it has been killed while running in the
@@ -207,17 +216,17 @@ class Dashboard extends StatelessWidget {
                       );
                     },
                   ),
-                ),
-                Card(
+                ),*/
+                /* Card(
                   child: ListTile(
                     /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
                     title: const Text(' departement'),
-                    subtitle: const Text(''),
+                    //subtitle: const Text(''),
                     trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
+                    //isThreeLine: true,
                     onTap: () {
                       // Navigate to the details page. If the user leaves and returns to
                       // the app after it has been killed while running in the
@@ -228,17 +237,17 @@ class Dashboard extends StatelessWidget {
                       );
                     },
                   ),
-                ),
-                Card(
+                ),*/
+                /* Card(
                   child: ListTile(
                     /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
                     title: const Text(' role'),
-                    subtitle: const Text(''),
+                    //subtitle: const Text(''),
                     trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
+                    //isThreeLine: true,
                     onTap: () {
                       // Navigate to the details page. If the user leaves and returns to
                       // the app after it has been killed while running in the
@@ -249,17 +258,17 @@ class Dashboard extends StatelessWidget {
                       );
                     },
                   ),
-                ),
-                Card(
+                ),*/
+                /*Card(
                   child: ListTile(
                     /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
                     title: const Text(' specialite'),
-                    subtitle: const Text(''),
+                    //subtitle: const Text(''),
                     trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
+                    //isThreeLine: true,
                     onTap: () {
                       // Navigate to the details page. If the user leaves and returns to
                       // the app after it has been killed while running in the
@@ -270,17 +279,17 @@ class Dashboard extends StatelessWidget {
                       );
                     },
                   ),
-                ),
-                Card(
+                ),*/
+                /* Card(
                   child: ListTile(
                     /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
                     title: const Text(' responsable'),
-                    subtitle: const Text(''),
+                    //subtitle: const Text(''),
                     trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
+                    //isThreeLine: true,
                     onTap: () {
                       // Navigate to the details page. If the user leaves and returns to
                       // the app after it has been killed while running in the
@@ -291,17 +300,18 @@ class Dashboard extends StatelessWidget {
                       );
                     },
                   ),
-                ),
+                ),*/
                 Card(
                   child: ListTile(
+                    leading: iconWidget(Icons.present_to_all), 
                     /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                    title: const Text(' soutenances'),
-                    subtitle: const Text(''),
+                    title: const Text(' Gestion soutenances'),
+                    //subtitle: const Text(''),
                     trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
+                    //isThreeLine: true,
                     onTap: () {
                       // Navigate to the details page. If the user leaves and returns to
                       // the app after it has been killed while running in the
@@ -313,16 +323,16 @@ class Dashboard extends StatelessWidget {
                     },
                   ),
                 ),
-                Card(
+                /*Card(
                   child: ListTile(
                     /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
                     title: const Text(' Ligne soutenance'),
-                    subtitle: const Text(''),
+                    //subtitle: const Text(''),
                     trailing: const Icon(Icons.more_vert),
-                    isThreeLine: true,
+                    //isThreeLine: true,
                     onTap: () {
                       // Navigate to the details page. If the user leaves and returns to
                       // the app after it has been killed while running in the
@@ -333,7 +343,7 @@ class Dashboard extends StatelessWidget {
                       );
                     },
                   ),
-                ),
+                ),*/
               ],
             ),
           ),
