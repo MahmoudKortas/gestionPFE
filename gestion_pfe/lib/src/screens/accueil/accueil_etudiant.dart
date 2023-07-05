@@ -15,8 +15,8 @@ import '../etudiant/liste_des_sujets.dart';
 
 // ignore: must_be_immutable
 class AccueilEtudiant extends StatefulWidget {
-  Etudiant etudiant;
-  AccueilEtudiant({Key? key, required this.etudiant}) : super(key: key);
+  Etudiant? etudiant;
+  AccueilEtudiant({Key? key,  this.etudiant}) : super(key: key);
   static const routeName = '/AccueilEtudiant';
   @override
   State<AccueilEtudiant> createState() => _AccueilEtudiantState();
@@ -28,7 +28,7 @@ class _AccueilEtudiantState extends State<AccueilEtudiant> {
     log("id::${widget.etudiant}");
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bonjour ${widget.etudiant.prenom} ${widget.etudiant.nom}'),
+        title: Text('Bonjour ${widget.etudiant?.prenom} ${widget.etudiant?.nom}'),
       ),
       body: SingleChildScrollView(
         // controller: controller,
@@ -69,6 +69,21 @@ class _AccueilEtudiantState extends State<AccueilEtudiant> {
                         context,
                         ListeDesSujets.routeName,
                       );
+                    },
+                  ),
+                ),
+                Card(
+                  child: ListTile(
+                    leading: iconWidget(Icons.offline_pin),
+                    title: const Text('Choisir encadrant'),
+                    /*subtitle: const Text(
+                        'A sufficiently long subtitle warrants three lines.'),*/
+                    trailing: const Icon(Icons.more_vert),
+                    onTap: () {
+                      // Navigator.restorablePushNamed(
+                      //   context,
+                      //   ListeDesSujets.routeName,
+                      // );
                     },
                   ),
                 ),

@@ -120,6 +120,38 @@ class _AccueilEncadrantState extends State<AccueilEncadrant> {
                     },
                   ),
                 ),
+                Card(
+                  child: ListTile(
+                    leading: iconWidget(Icons.numbers),
+                    title: const Text('traiter demande'),
+                    // subtitle: const Text(
+                    // 'A sufficiently long subtitle warrants thre lines.'),
+                    trailing: const Icon(Icons.more_vert),
+                    //isThreLine: true,
+                    onTap: () { 
+                      // Navigator.restorablePushNamed(
+                      //   context,
+                      //   AffecterNote.routeName,
+                      // );
+                    },
+                  ),
+                ),
+                Card(
+                  child: ListTile(
+                    leading: iconWidget(Icons.numbers),
+                    title: const Text('approuver documents administratives'),
+                    // subtitle: const Text(
+                    // 'A sufficiently long subtitle warrants thre lines.'),
+                    trailing: const Icon(Icons.more_vert),
+                    //isThreLine: true,
+                    onTap: () { 
+                      // Navigator.restorablePushNamed(
+                      //   context,
+                      //   AffecterNote.routeName,
+                      // );
+                    },
+                  ),
+                ),
               ],
             ),
           ),
