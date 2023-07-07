@@ -4,10 +4,12 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:gestion_pfe/src/consts.dart';
 import 'package:gestion_pfe/src/helpers/encadrant_api.dart';
 import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
 import 'package:gestion_pfe/src/helpers/responsable_api.dart';
+import 'package:gestion_pfe/src/notification_service.dart';
 import 'package:gestion_pfe/src/screens/accueil/accueil_encadrant.dart';
 import 'package:gestion_pfe/src/screens/accueil/accueil_etudiant.dart';
 import 'package:gestion_pfe/src/screens/authentification/inscription.dart';
@@ -17,6 +19,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../color_hex.dart';
 import '../../resize_widget.dart';
 import '../../size_config.dart';
+
+// Instance of Flutternotification plugin
+final FlutterLocalNotificationsPlugin _notificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 /// Displays detailed information about a SampleItem.
 class Authentification extends StatefulWidget {
@@ -39,6 +45,7 @@ class _AuthentificationState extends State<Authentification> {
   void initState() {
     super.initState();
     getData();
+    NotificationService.initialize(FlutterLocalNotificationsPlugin());
   }
 
   @override
@@ -164,6 +171,18 @@ class _AuthentificationState extends State<Authentification> {
                                   );
                                 },
                               ),
+                              ElevatedButton(
+                                  onPressed: () async {
+                                    await NotificationService()
+                                        .showBigTextNotification(
+                                            id: 0,
+                                            title: "Notification pfe",
+                                            body: "Pfe",
+                                            payload: "Pfee",
+                                            fln:
+                                                FlutterLocalNotificationsPlugin());
+                                  },
+                                  child: const Text("notification")),
                             ],
                           ),
                         ),
