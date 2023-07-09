@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/icon_widget.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/chart.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_departement.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_document.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_ligne_soutenance.dart';
@@ -11,6 +12,7 @@ import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_sujet.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_sujets_pfe.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_etudiant.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_encadrant.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/resultatPfe.dart';
 
 import '../../resize_widget.dart';
 import '../calendar/events_example.dart';
@@ -319,6 +321,42 @@ class Dashboard extends StatelessWidget {
                       Navigator.restorablePushNamed(
                         context,
                         GererSoutenance.routeName,
+                      );
+                    },
+                  ),
+                ),
+                Card(
+                  child: ListTile(
+                    leading: iconWidget(Icons.present_to_all), 
+                    /*leading: const CircleAvatar(
+                      foregroundImage:
+                          AssetImage('assets/images/flutter_logo.png'),
+                    ),*/
+                    title: const Text(' Résultat PFE'), 
+                    trailing: const Icon(Icons.more_vert),
+                    //isThreeLine: true,
+                    onTap: () {
+                      // Navigate to the details page. If the user leaves and returns to
+                      // the app after it has been killed while running in the
+                      // background, the navigation stack is restored.
+                      Navigator.restorablePushNamed(
+                        context,
+                        ResultatPfe.routeName,
+                      );
+                    },
+                  ),
+                ),
+                Card(
+                  child: ListTile(
+                    leading: iconWidget(Icons.insert_chart_outlined_outlined),  
+                    title: const Text('Statistique'),
+                    //subtitle: const Text(''),
+                    trailing: const Icon(Icons.more_vert),
+                    //isThreeLine: true,
+                    onTap: () { 
+                      Navigator.restorablePushNamed(
+                        context,
+                        Chart.routeName,
                       );
                     },
                   ),

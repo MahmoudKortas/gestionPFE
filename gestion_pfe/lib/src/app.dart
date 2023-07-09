@@ -4,7 +4,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gestion_pfe/src/screens/encadrant/affecter_note.dart';
 import 'package:gestion_pfe/src/screens/etudiant/consulter_note.dart';
 import 'package:gestion_pfe/src/screens/etudiant/enquete_satisfaction.dart';
+import 'package:gestion_pfe/src/screens/etudiant/gerer_document.dart';
 import 'package:gestion_pfe/src/screens/etudiant/reclamation.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/chart.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_departement.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_ligne_soutenance.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_role.dart';
@@ -13,6 +15,7 @@ import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_seance.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_soutenance.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_specialite.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_sujet.dart';
+import 'package:gestion_pfe/src/screens/responsable_de_stage/resultatPfe.dart';
 import 'custom_theme.dart';
 import 'screens/accueil/accueil_encadrant.dart';
 import 'screens/accueil/accueil_etudiant.dart';
@@ -123,6 +126,8 @@ class MyApp extends StatelessWidget {
                     return const GererSujetsPFE();
                   case GererDocument.routeName:
                     return const GererDocument();
+                  case DeposerDocument.routeName:
+                    return const DeposerDocument();
                   case GererSeance.routeName:
                     return const GererSeance();
                   case GererSalle.routeName:
@@ -153,6 +158,10 @@ class MyApp extends StatelessWidget {
                     return ConsulterNote();
                   case GererSoutenance.routeName:
                     return const GererSoutenance();
+                  case ResultatPfe.routeName:
+                    return const ResultatPfe();
+                  case Chart.routeName:
+                    return const Chart();
                   case ProposerSujet.routeName:
                     // final args = routeSettings.arguments as ProposerSujet;
                     return ProposerSujet(

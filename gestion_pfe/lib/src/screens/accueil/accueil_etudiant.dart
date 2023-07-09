@@ -6,6 +6,7 @@ import 'package:gestion_pfe/src/icon_widget.dart';
 import 'package:gestion_pfe/src/models/etudiant.dart';
 import 'package:gestion_pfe/src/screens/etudiant/consulter_note.dart';
 import 'package:gestion_pfe/src/screens/etudiant/enquete_satisfaction.dart';
+import 'package:gestion_pfe/src/screens/etudiant/gerer_document.dart';
 import 'package:gestion_pfe/src/screens/etudiant/reclamation.dart';
 
 import '../../resize_widget.dart';
@@ -53,6 +54,23 @@ class _AccueilEtudiantState extends State<AccueilEtudiant> {
                           fonction: 'Etudiant',
                           etudiant: widget.etudiant,
                         ),
+                      );
+                    },
+                  ),
+                ),
+                Card(
+                  child: ListTile(
+                    leading: iconWidget(Icons.add_chart_outlined),
+                    title: const Text('Déposer document'), 
+                    trailing: const Icon(Icons.more_vert), 
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        DeposerDocument.routeName,
+                        // arguments: ProposerSujet(
+                        //   fonction: 'Etudiant',
+                        //   etudiant: widget.etudiant,
+                        // ),
                       );
                     },
                   ),
