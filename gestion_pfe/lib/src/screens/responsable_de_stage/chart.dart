@@ -87,7 +87,7 @@ class _ChartState extends State<Chart> {
                 ),
                 Card(
                   child: ListTile(
-                    leading: iconWidget(Icons.present_to_all),
+                    leading: iconWidget(Icons.perm_contact_calendar_sharp),
                     title: const Text(' Etudiant'),
                     subtitle: const Text(' 45'),
                     trailing: const Icon(Icons.more_vert),
@@ -102,7 +102,7 @@ class _ChartState extends State<Chart> {
                 ),
                 Card(
                   child: ListTile(
-                    leading: iconWidget(Icons.present_to_all),
+                    leading: iconWidget(Icons.person),
                     title: const Text(' Enseignant'),
                     subtitle: const Text(' 10'),
                     trailing: const Icon(Icons.more_vert),
@@ -117,7 +117,7 @@ class _ChartState extends State<Chart> {
                 ),
                 Card(
                   child: ListTile(
-                    leading: iconWidget(Icons.present_to_all),
+                    leading: iconWidget(Icons.subject),
                     title: const Text(' Sujet'),
                     subtitle: const Text(' 60'),
                     trailing: const Icon(Icons.more_vert),

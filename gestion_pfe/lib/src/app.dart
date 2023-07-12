@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gestion_pfe/src/screens/encadrant/affecter_note.dart';
+import 'package:gestion_pfe/src/screens/encadrant/proposer_sujet.dart';
+import 'package:gestion_pfe/src/screens/etudiant/choisirEncadrant.dart';
 import 'package:gestion_pfe/src/screens/etudiant/consulter_note.dart';
 import 'package:gestion_pfe/src/screens/etudiant/enquete_satisfaction.dart';
 import 'package:gestion_pfe/src/screens/etudiant/gerer_document.dart';
+import 'package:gestion_pfe/src/screens/etudiant/proposer_sujet.dart';
 import 'package:gestion_pfe/src/screens/etudiant/reclamation.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/chart.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_departement.dart';
@@ -17,8 +20,8 @@ import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_specialite.da
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_sujet.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/resultatPfe.dart';
 import 'custom_theme.dart';
-import 'screens/accueil/accueil_encadrant.dart';
-import 'screens/accueil/accueil_etudiant.dart';
+import 'screens/encadrant/accueil_encadrant.dart';
+import 'screens/etudiant/accueil_etudiant.dart';
 import 'screens/responsable_de_stage/calander.dart';
 import 'screens/responsable_de_stage/dashboard.dart';
 import 'screens/responsable_de_stage/gerer_document.dart';
@@ -155,7 +158,9 @@ class MyApp extends StatelessWidget {
                   case AffecterNote.routeName:
                     return AffecterNote();
                   case ConsulterNote.routeName:
-                    return ConsulterNote();
+                    return ConsulterNote(); 
+                  case ChoisirEncadrant.routeName:
+                    return ChoisirEncadrant();
                   case GererSoutenance.routeName:
                     return const GererSoutenance();
                   case ResultatPfe.routeName:
@@ -165,6 +170,20 @@ class MyApp extends StatelessWidget {
                   case ProposerSujet.routeName:
                     // final args = routeSettings.arguments as ProposerSujet;
                     return ProposerSujet(
+                        // fonction: args.fonction,
+                        // encadrant: args.encadrant,
+                        // etudiant: args.etudiant,
+                        );
+                  case ProposerSujetEtudiant.routeName:
+                    // final args = routeSettings.arguments as ProposerSujet;
+                    return ProposerSujetEtudiant(
+                        // fonction: args.fonction,
+                        // encadrant: args.encadrant,
+                        // etudiant: args.etudiant,
+                        );
+                  case ProposerSujetEncadrant.routeName:
+                    // final args = routeSettings.arguments as ProposerSujet;
+                    return ProposerSujetEncadrant(
                         // fonction: args.fonction,
                         // encadrant: args.encadrant,
                         // etudiant: args.etudiant,

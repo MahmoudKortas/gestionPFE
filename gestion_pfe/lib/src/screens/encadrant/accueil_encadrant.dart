@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/icon_widget.dart';
 import 'package:gestion_pfe/src/models/encadrant.dart';
 import 'package:gestion_pfe/src/screens/encadrant/affecter_note.dart';
+import 'package:gestion_pfe/src/screens/encadrant/proposer_sujet.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_ligne_soutenance.dart';
 
 import '../../resize_widget.dart';
 import '../calendar/events_example.dart';
-import '../encadrant/gerer_demande_des_sujets.dart';
+import 'gerer_demande_des_sujets.dart';
 import '../subjects/proposer_sujet.dart';
 
 /// Displays detailed information about a SampleItem.
@@ -49,8 +50,8 @@ class _AccueilEncadrantState extends State<AccueilEncadrant> {
                     onTap: () {
                       Navigator.pushNamed(
                         context,
-                        ProposerSujet.routeName,
-                        arguments: ProposerSujet(
+                        ProposerSujetEncadrant.routeName,
+                        arguments: ProposerSujetEncadrant(
                           fonction: 'Encadrant',
                           encadrant: widget.encadrant,
                         ),
@@ -128,7 +129,7 @@ class _AccueilEncadrantState extends State<AccueilEncadrant> {
                     // 'A sufficiently long subtitle warrants thre lines.'),
                     trailing: const Icon(Icons.more_vert),
                     //isThreLine: true,
-                    onTap: () { 
+                    onTap: () {
                       // Navigator.restorablePushNamed(
                       //   context,
                       //   AffecterNote.routeName,
@@ -144,7 +145,7 @@ class _AccueilEncadrantState extends State<AccueilEncadrant> {
                     // 'A sufficiently long subtitle warrants thre lines.'),
                     trailing: const Icon(Icons.more_vert),
                     //isThreLine: true,
-                    onTap: () { 
+                    onTap: () {
                       // Navigator.restorablePushNamed(
                       //   context,
                       //   AffecterNote.routeName,

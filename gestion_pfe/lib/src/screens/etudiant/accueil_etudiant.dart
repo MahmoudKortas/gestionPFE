@@ -4,15 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/color_hex.dart';
 import 'package:gestion_pfe/src/icon_widget.dart';
 import 'package:gestion_pfe/src/models/etudiant.dart';
+import 'package:gestion_pfe/src/screens/etudiant/choisirEncadrant.dart';
 import 'package:gestion_pfe/src/screens/etudiant/consulter_note.dart';
 import 'package:gestion_pfe/src/screens/etudiant/enquete_satisfaction.dart';
 import 'package:gestion_pfe/src/screens/etudiant/gerer_document.dart';
+import 'package:gestion_pfe/src/screens/etudiant/proposer_sujet.dart';
 import 'package:gestion_pfe/src/screens/etudiant/reclamation.dart';
 
 import '../../resize_widget.dart';
 import '../calendar/events_example.dart';
 import '../subjects/proposer_sujet.dart';
-import '../etudiant/liste_des_sujets.dart';
+import 'liste_des_sujets.dart';
 
 // ignore: must_be_immutable
 class AccueilEtudiant extends StatefulWidget {
@@ -40,7 +42,7 @@ class _AccueilEtudiantState extends State<AccueilEtudiant> {
               children: [
                 Card(
                   child: ListTile(
-                    leading: iconWidget(Icons.add_chart),
+                    leading: iconWidget(Icons.note_add_sharp),
                     title: const Text('Proposer votre sujet'),
                     /*subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),*/
@@ -49,8 +51,8 @@ class _AccueilEtudiantState extends State<AccueilEtudiant> {
                     onTap: () {
                       Navigator.pushNamed(
                         context,
-                        ProposerSujet.routeName,
-                        arguments: ProposerSujet(
+                        ProposerSujetEtudiant.routeName,
+                        arguments: ProposerSujetEtudiant(
                           fonction: 'Etudiant',
                           etudiant: widget.etudiant,
                         ),
@@ -92,16 +94,16 @@ class _AccueilEtudiantState extends State<AccueilEtudiant> {
                 ),
                 Card(
                   child: ListTile(
-                    leading: iconWidget(Icons.offline_pin),
+                    leading: iconWidget(Icons.person_add_alt_outlined),
                     title: const Text('Choisir encadrant'),
                     /*subtitle: const Text(
                         'A sufficiently long subtitle warrants three lines.'),*/
                     trailing: const Icon(Icons.more_vert),
                     onTap: () {
-                      // Navigator.restorablePushNamed(
-                      //   context,
-                      //   ListeDesSujets.routeName,
-                      // );
+                      Navigator.restorablePushNamed(
+                        context,
+                        ChoisirEncadrant.routeName,
+                      );
                     },
                   ),
                 ),
