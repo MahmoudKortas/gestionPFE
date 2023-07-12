@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/helpers/document_api.dart';
-import 'package:gestion_pfe/src/models/document.dart'; 
+import 'package:gestion_pfe/src/models/document.dart';
 import '../../resize_widget.dart';
 import '../subjects/detail_sujet.dart';
 
@@ -41,8 +41,26 @@ class _ListeDesSujetsState extends State<ListeDesSujets> {
             context: context,
             child: Column(
               children: [
+                Card(
+                  child: ListTile(
+                    title: const Text("Sujet 1"),
+                    subtitle: const Text("description sujet 1"),
+                    trailing: const Icon(Icons.more_vert),
+                    // isThreeLine: true,
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        DetailSujet.routeName,
+                        arguments: DetailSujet(
+                          sujet: Document(),
+                          fonction: "etudiant",
+                        ),
+                      );
+                    },
+                  ),
+                ),
                 _document == null || _document.isEmpty
-                    ? const Text("aucun document existe")
+                    ? const Text("aucun sujet existe")
                     : ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
@@ -61,7 +79,7 @@ class _ListeDesSujetsState extends State<ListeDesSujets> {
                                   context,
                                   DetailSujet.routeName,
                                   arguments: DetailSujet(
-                                    doc: _document[index],
+                                    sujet: _document[index],
                                     fonction: "etudiant",
                                   ),
                                 );

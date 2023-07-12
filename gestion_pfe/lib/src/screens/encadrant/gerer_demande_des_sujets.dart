@@ -58,7 +58,7 @@ class _GererDemandeDesSujetsPFEState extends State<GererDemandeDesSujetsPFE> {
                                   context,
                                   DetailSujet.routeName,
                                   arguments: DetailSujet(
-                                    doc: _document[index],
+                                    sujet: _document[index],
                                     fonction: "encadrant",
                                   ),
                                 );
