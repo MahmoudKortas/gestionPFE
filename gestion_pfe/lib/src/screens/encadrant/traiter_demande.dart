@@ -8,15 +8,15 @@ import '../../resize_widget.dart';
 import '../subjects/detail_sujet.dart';
 
 /// Displays detailed information about a SampleItem.
-class ListeDesSujets extends StatefulWidget {
-  const ListeDesSujets({Key? key}) : super(key: key);
+class TraiterDemande extends StatefulWidget {
+  const TraiterDemande({Key? key}) : super(key: key);
 
-  static const routeName = '/ListeDesSujets';
+  static const routeName = '/TraiterDemande';
   @override
-  State<ListeDesSujets> createState() => _ListeDesSujetsState();
+  State<TraiterDemande> createState() => _TraiterDemandeState();
 }
 
-class _ListeDesSujetsState extends State<ListeDesSujets> {
+class _TraiterDemandeState extends State<TraiterDemande> {
   // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   // ignore: prefer_typing_uninitialized_variables
@@ -32,7 +32,7 @@ class _ListeDesSujetsState extends State<ListeDesSujets> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Liste des sujets'),
+        title: const Text('traiter demandes'),
       ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),
@@ -44,25 +44,27 @@ class _ListeDesSujetsState extends State<ListeDesSujets> {
               children: [
                 Card(
                   child: ListTile(
-                      title: const Text("Sujet 1"),
-                      subtitle: const Text("description sujet 1"),
+                      title: const Text("Demande 1"),
+                      subtitle: const Text("description Demande 1"),
                       trailing: const Icon(Icons.more_vert),
                       // isThreeLine: true,
                       onTap: () => dialog(context, Sujet())
+                      // dialog(
+                      //                   context, _ligneSoutenance![index])
                       // {
-                      //   Navigator.pushNamed(
-                      //     context,
-                      //     DetailSujet.routeName,
-                      //     arguments: DetailSujet(
-                      //       sujet: Document(),
-                      //       fonction: "etudiant",
-                      //     ),
-                      //   );
+                      // Navigator.pushNamed(
+                      //   context,
+                      //   DetailSujet.routeName,
+                      //   arguments: DetailSujet(
+                      //     sujet: Document(),
+                      //     fonction: "etudiant",
+                      //   ),
+                      // );
                       // },
                       ),
                 ),
                 _sujet == null || _sujet.isEmpty
-                    ? const Text("") // Text("aucun sujet existe")
+                    ? const Text("aucun sujet existe")
                     : ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
@@ -77,7 +79,7 @@ class _ListeDesSujetsState extends State<ListeDesSujets> {
                                 trailing: const Icon(Icons.more_vert),
                                 // isThreeLine: true,
                                 onTap: () => dialog(context, _sujet[index])
-                                //  {
+                                // {
                                 //   Navigator.pushNamed(
                                 //     context,
                                 //     DetailSujet.routeName,
@@ -180,13 +182,14 @@ class _ListeDesSujetsState extends State<ListeDesSujets> {
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Détail sujet'),
+        title: const Text('Traiter demande'),
         content: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Titre sujet: ${sujet?.titre??"titre sujet 1"}"),
-              Text("Description sujet: ${sujet?.description??"description sujet 1"}"),
+              Text("Titre sujet: ${sujet?.titre ?? "titre sujet 1"}"),
+              Text(
+                  "Description sujet: ${sujet?.description ?? "description sujet 1"}"),
               // Text("Email sujet: ${sujet?.}"),
               // Text("département sujet: ${sujet?.departement?.nom}"),
             ],
@@ -194,8 +197,12 @@ class _ListeDesSujetsState extends State<ListeDesSujets> {
         ),
         actions: <Widget>[
           TextButton(
-            onPressed: () => Navigator.pop(context, 'Choisir'),
-            child: const Text('Choisir'),
+            onPressed: () => Navigator.pop(context, 'valider'),
+            child: const Text('valider'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'invalider'),
+            child: const Text('invalider'),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, 'Annuler'),

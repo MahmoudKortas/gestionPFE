@@ -1,27 +1,28 @@
 import 'dart:developer';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/helpers/document_api.dart';
 import 'package:gestion_pfe/src/models/document.dart';
-import 'package:gestion_pfe/src/models/sujet.dart';
 import '../../resize_widget.dart';
 import '../subjects/detail_sujet.dart';
 
 /// Displays detailed information about a SampleItem.
-class ListeDesSujets extends StatefulWidget {
-  const ListeDesSujets({Key? key}) : super(key: key);
+class ApprouverDocuments extends StatefulWidget {
+  const ApprouverDocuments({Key? key}) : super(key: key);
 
-  static const routeName = '/ListeDesSujets';
+  static const routeName = '/ApprouverDocuments';
   @override
-  State<ListeDesSujets> createState() => _ListeDesSujetsState();
+  State<ApprouverDocuments> createState() => _ApprouverDocumentsState();
 }
 
-class _ListeDesSujetsState extends State<ListeDesSujets> {
+class _ApprouverDocumentsState extends State<ApprouverDocuments> {
   // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   // ignore: prefer_typing_uninitialized_variables
-  var _sujet;
+  var _document;
   Document? doc;
+
+  File? _image;
   @override
   void initState() {
     super.initState();
@@ -32,7 +33,7 @@ class _ListeDesSujetsState extends State<ListeDesSujets> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Liste des sujets'),
+        title: const Text('Approuver documents'),
       ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),
@@ -42,47 +43,46 @@ class _ListeDesSujetsState extends State<ListeDesSujets> {
             context: context,
             child: Column(
               children: [
-                Card(
+                /* Card(
                   child: ListTile(
-                      title: const Text("Sujet 1"),
-                      subtitle: const Text("description sujet 1"),
-                      trailing: const Icon(Icons.more_vert),
-                      // isThreeLine: true,
-                      onTap: () => dialog(context, Sujet())
-                      // {
-                      //   Navigator.pushNamed(
-                      //     context,
-                      //     DetailSujet.routeName,
-                      //     arguments: DetailSujet(
-                      //       sujet: Document(),
-                      //       fonction: "etudiant",
-                      //     ),
-                      //   );
-                      // },
-                      ),
-                ),
-                _sujet == null || _sujet.isEmpty
-                    ? const Text("") // Text("aucun sujet existe")
+                    title: const Text("Document 1"),
+                    subtitle: const Text("description document 1"),
+                    trailing: const Icon(Icons.more_vert),
+                    // isThreeLine: true,
+                    onTap: () {
+                      // Navigator.pushNamed(
+                      //   context,
+                      //   DetailSujet.routeName,
+                      //   arguments: DetailSujet(
+                      //     sujet: Document(),
+                      //     fonction: "etudiant",
+                      //   ),
+                      // );
+                    },
+                  ),
+                ),*/
+                _document == null || _document.isEmpty
+                    ? const Text("aucun document existe")
                     : ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: _sujet!.length,
+                        itemCount: _document!.length,
                         itemBuilder: (context, index) {
-                          log(_sujet[index].titre.toString());
+                          log(_document[index].titre.toString());
                           return Card(
                             child: ListTile(
-                                title: Text(_sujet[index].titre.toString()),
-                                subtitle:
-                                    Text(_sujet[index].description.toString()),
+                                title: Text(_document[index].titre.toString()),
+                                subtitle: Text(
+                                    _document[index].description.toString()),
                                 trailing: const Icon(Icons.more_vert),
                                 // isThreeLine: true,
-                                onTap: () => dialog(context, _sujet[index])
-                                //  {
+                                onTap: () => dialog(context, _document![index])
+                                // {
                                 //   Navigator.pushNamed(
                                 //     context,
                                 //     DetailSujet.routeName,
                                 //     arguments: DetailSujet(
-                                //       sujet: _sujet[index],
+                                //       sujet: _document[index],
                                 //       fonction: "etudiant",
                                 //     ),
                                 //   );
@@ -176,26 +176,30 @@ class _ListeDesSujetsState extends State<ListeDesSujets> {
     );
   }
 
-  Future<String?> dialog(BuildContext context, Sujet? sujet) {
+  Future<String?> dialog(BuildContext context, Document document) {
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Détail sujet'),
+        title: const Text('Approuver document'),
         content: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Titre sujet: ${sujet?.titre??"titre sujet 1"}"),
-              Text("Description sujet: ${sujet?.description??"description sujet 1"}"),
-              // Text("Email sujet: ${sujet?.}"),
-              // Text("département sujet: ${sujet?.departement?.nom}"),
+              Text("Titre document: ${document.titre}"),
+              Text("Description document: ${document.description}"),
+              Text("Date document: ${document.date}"),
+              Text("Photo document: ${document.photo}"),
             ],
           ),
         ),
         actions: <Widget>[
           TextButton(
-            onPressed: () => Navigator.pop(context, 'Choisir'),
-            child: const Text('Choisir'),
+            onPressed: () => Navigator.pop(context, 'Approuver'),
+            child: const Text('Approuver'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'désapprouver'),
+            child: const Text('désapprouver'),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, 'Annuler'),
@@ -206,9 +210,23 @@ class _ListeDesSujetsState extends State<ListeDesSujets> {
     );
   }
 
+  Widget _buildImage() {
+    if (_image == null) {
+      return const Padding(
+        padding: EdgeInsets.all(5),
+        child: Icon(
+          Icons.add,
+          color: Colors.grey,
+        ),
+      );
+    } else {
+      return Text(_image!.path);
+    }
+  }
+
   void getData() async {
-    _sujet = await ApiDocument().getDocument();
-    log("_sujet::$_sujet");
+    _document = await ApiDocument().getAllDocument();
+    log("_document::$_document");
     Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }
 }

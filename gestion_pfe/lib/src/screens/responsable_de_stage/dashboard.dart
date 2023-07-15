@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/icon_widget.dart';
+import 'package:gestion_pfe/src/screens/encadrant/affecter_note.dart';
+import 'package:gestion_pfe/src/screens/etudiant/consulter_note.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/chart.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_departement.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_document.dart';
@@ -48,7 +50,7 @@ class Dashboard extends StatelessWidget {
                 ),
                 Card(
                   child: ListTile(
-                    leading: iconWidget(Icons.book), 
+                    leading: iconWidget(Icons.book),
                     title: const Text('Gestion projet PFE'),
                     //subtitle: const Text(''),
                     trailing: const Icon(Icons.more_vert),
@@ -66,7 +68,7 @@ class Dashboard extends StatelessWidget {
                 ),
                 Card(
                   child: ListTile(
-                    leading: iconWidget(Icons.document_scanner), 
+                    leading: iconWidget(Icons.document_scanner),
                     /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
@@ -109,7 +111,7 @@ class Dashboard extends StatelessWidget {
                 ),*/
                 Card(
                   child: ListTile(
-                    leading: iconWidget(Icons.person), 
+                    leading: iconWidget(Icons.person),
                     /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
@@ -130,7 +132,7 @@ class Dashboard extends StatelessWidget {
                   ),
                 ),
                 //TODO: uncomment this
-               /* Card(
+                /* Card(
                   child: ListTile(
                     /*leading: const CircleAvatar(
                       foregroundImage:
@@ -157,7 +159,7 @@ class Dashboard extends StatelessWidget {
                 ),*/
                 Card(
                   child: ListTile(
-                    leading: iconWidget(Icons.person), 
+                    leading: iconWidget(Icons.person),
                     /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
@@ -305,7 +307,7 @@ class Dashboard extends StatelessWidget {
                 ),*/
                 Card(
                   child: ListTile(
-                    leading: iconWidget(Icons.present_to_all), 
+                    leading: iconWidget(Icons.present_to_all),
                     /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
@@ -327,12 +329,12 @@ class Dashboard extends StatelessWidget {
                 ),
                 Card(
                   child: ListTile(
-                    leading: iconWidget(Icons.present_to_all), 
+                    leading: iconWidget(Icons.present_to_all),
                     /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                    title: const Text(' Résultat PFE'), 
+                    title: const Text(' Résultat PFE'),
                     trailing: const Icon(Icons.more_vert),
                     //isThreeLine: true,
                     onTap: () {
@@ -341,19 +343,21 @@ class Dashboard extends StatelessWidget {
                       // background, the navigation stack is restored.
                       Navigator.restorablePushNamed(
                         context,
-                        ResultatPfe.routeName,
+                        AffecterNote.routeName,
+                        // ConsulterNote.routeName,
+                        // ResultatPfe.routeName,
                       );
                     },
                   ),
                 ),
                 Card(
                   child: ListTile(
-                    leading: iconWidget(Icons.insert_chart_outlined_outlined),  
+                    leading: iconWidget(Icons.insert_chart_outlined_outlined),
                     title: const Text('Statistique'),
                     //subtitle: const Text(''),
                     trailing: const Icon(Icons.more_vert),
                     //isThreeLine: true,
-                    onTap: () { 
+                    onTap: () {
                       Navigator.restorablePushNamed(
                         context,
                         Chart.routeName,

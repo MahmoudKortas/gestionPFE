@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gestion_pfe/src/screens/encadrant/affecter_note.dart';
+import 'package:gestion_pfe/src/screens/encadrant/approuver_documents.dart';
 import 'package:gestion_pfe/src/screens/encadrant/proposer_sujet.dart';
+import 'package:gestion_pfe/src/screens/encadrant/traiter_demande.dart';
 import 'package:gestion_pfe/src/screens/etudiant/choisirEncadrant.dart';
 import 'package:gestion_pfe/src/screens/etudiant/consulter_note.dart';
 import 'package:gestion_pfe/src/screens/etudiant/enquete_satisfaction.dart';
@@ -19,26 +21,26 @@ import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_soutenance.da
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_specialite.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_sujet.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/resultatPfe.dart';
-import 'custom_theme.dart';
-import 'screens/encadrant/accueil_encadrant.dart';
-import 'screens/etudiant/accueil_etudiant.dart';
-import 'screens/responsable_de_stage/calander.dart';
-import 'screens/responsable_de_stage/dashboard.dart';
-import 'screens/responsable_de_stage/gerer_document.dart';
-import 'screens/responsable_de_stage/gerer_responsable.dart';
-import 'screens/responsable_de_stage/gerer_salle.dart';
-import 'screens/responsable_de_stage/gerer_sujets_pfe.dart';
-import 'screens/responsable_de_stage/gerer_etudiant.dart';
-import 'screens/responsable_de_stage/gerer_encadrant.dart';
-import 'screens/authentification/authentification.dart';
-import 'screens/authentification/inscription.dart';
-import 'screens/subjects/detail_sujet.dart';
-import 'screens/subjects/proposer_sujet.dart';
-import 'screens/subjects/consulter_planning.dart';
-import 'screens/etudiant/liste_des_sujets.dart';
-import 'screens/encadrant/gerer_demande_des_sujets.dart';
-import 'settings/settings_controller.dart';
-import 'settings/settings_view.dart';
+import 'src/custom_theme.dart';
+import 'src/screens/encadrant/accueil_encadrant.dart';
+import 'src/screens/etudiant/accueil_etudiant.dart';
+import 'src/screens/responsable_de_stage/calander.dart';
+import 'src/screens/responsable_de_stage/dashboard.dart';
+import 'src/screens/responsable_de_stage/gerer_document.dart';
+import 'src/screens/responsable_de_stage/gerer_responsable.dart';
+import 'src/screens/responsable_de_stage/gerer_salle.dart';
+import 'src/screens/responsable_de_stage/gerer_sujets_pfe.dart';
+import 'src/screens/responsable_de_stage/gerer_etudiant.dart';
+import 'src/screens/responsable_de_stage/gerer_encadrant.dart';
+import 'src/screens/authentification/authentification.dart';
+import 'src/screens/authentification/inscription.dart';
+import 'src/screens/subjects/detail_sujet.dart';
+import 'src/screens/subjects/proposer_sujet.dart';
+import 'src/screens/subjects/consulter_planning.dart';
+import 'src/screens/etudiant/liste_des_sujets.dart';
+import 'src/screens/encadrant/gerer_demande_des_sujets.dart';
+import 'src/settings/settings_controller.dart';
+import 'src/settings/settings_view.dart';
 
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
@@ -190,6 +192,10 @@ class MyApp extends StatelessWidget {
                         );
                   case ListeDesSujets.routeName:
                     return const ListeDesSujets();
+                  case TraiterDemande.routeName:
+                    return const TraiterDemande();
+                  case ApprouverDocuments.routeName:
+                    return const ApprouverDocuments();
                   case DetailSujet.routeName:
                     final args = routeSettings.arguments as DetailSujet;
                     return DetailSujet(

@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:gestion_pfe/src/icon_widget.dart';
 import 'package:gestion_pfe/src/models/encadrant.dart';
 import 'package:gestion_pfe/src/screens/encadrant/affecter_note.dart';
+import 'package:gestion_pfe/src/screens/encadrant/approuver_documents.dart';
 import 'package:gestion_pfe/src/screens/encadrant/proposer_sujet.dart';
+import 'package:gestion_pfe/src/screens/encadrant/traiter_demande.dart';
 import 'package:gestion_pfe/src/screens/responsable_de_stage/gerer_ligne_soutenance.dart';
 
 import '../../resize_widget.dart';
@@ -104,7 +106,7 @@ class _AccueilEncadrantState extends State<AccueilEncadrant> {
                 ),
                 Card(
                   child: ListTile(
-                    leading: iconWidget(Icons.numbers),
+                    leading: iconWidget(Icons.post_add_rounded),
                     title: const Text('affecter note'),
                     // subtitle: const Text(
                     // 'A sufficiently long subtitle warrants thre lines.'),
@@ -130,26 +132,26 @@ class _AccueilEncadrantState extends State<AccueilEncadrant> {
                     trailing: const Icon(Icons.more_vert),
                     //isThreLine: true,
                     onTap: () {
-                      // Navigator.restorablePushNamed(
-                      //   context,
-                      //   AffecterNote.routeName,
-                      // );
+                      Navigator.restorablePushNamed(
+                        context,
+                        TraiterDemande.routeName,
+                      );
                     },
                   ),
                 ),
                 Card(
                   child: ListTile(
-                    leading: iconWidget(Icons.numbers),
+                    leading: iconWidget(Icons.fact_check_outlined),
                     title: const Text('approuver documents administratives'),
                     // subtitle: const Text(
                     // 'A sufficiently long subtitle warrants thre lines.'),
                     trailing: const Icon(Icons.more_vert),
                     //isThreLine: true,
                     onTap: () {
-                      // Navigator.restorablePushNamed(
-                      //   context,
-                      //   AffecterNote.routeName,
-                      // );
+                      Navigator.restorablePushNamed(
+                        context,
+                        ApprouverDocuments.routeName,
+                      );
                     },
                   ),
                 ),

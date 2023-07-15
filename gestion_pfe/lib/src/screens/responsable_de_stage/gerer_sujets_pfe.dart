@@ -97,7 +97,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                       const SizedBox(
                         height: 10,
                       ),
-                      _etudiant != null
+                     /* _etudiant != null
                           ? DropdownButton(
                               value: etudiantValue,
                               iconSize: 36,
@@ -115,7 +115,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                                 });
                               },
                             )
-                          : Container(),
+                          : Container(),*/
                       const SizedBox(
                         height: 10,
                       ),
@@ -158,7 +158,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                       //   height: 10,
                       // ),
                       //TODO: complete logic, sujet
-                      DropdownButton(
+                    /*  DropdownButton(
                         value: "",
                         iconSize: 36,
                         hint: const Text("choisir le sujet"),
@@ -174,9 +174,9 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                             // salleValue = newVal as Salle?;
                           });
                         },
-                      ),
+                      ),*/
                       //TODO: complete logic, encadrant
-                      DropdownButton(
+                    /*  DropdownButton(
                         value: "",
                         iconSize: 36,
                         hint: const Text("choisir l'encadrant"),
@@ -192,7 +192,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                             // salleValue = newVal as Salle?;
                           });
                         },
-                      ),
+                      ),*/
                       /* _salle != null
                           ? DropdownButton(
                               value: salleValue,
@@ -237,7 +237,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                       const SizedBox(
                         height: 10,
                       ),*/
-                      _document != null
+                    /*  _document != null
                           ? DropdownButton(
                               value: documentValue,
                               iconSize: 36,
@@ -255,7 +255,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                                 });
                               },
                             )
-                          : Container(),
+                          : Container(),*/
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: ElevatedButton(
@@ -301,10 +301,10 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                                         '${_pfe?[index].etudiant?.nom} ${_pfe?[index].etudiant?.prenom}-${_pfe?[index].encadrant?.nom} ${_pfe?[index].encadrant?.prenom}'),
                                     trailing: const Icon(Icons.more_vert),
                                     isThreeLine: true,
-                                    onTap: () =>
-                                        dialogStep1(context, _pfe![index]),
-                                    onLongPress: () =>
-                                        dialog(context, _pfe![index]),
+                                    onTap: () =>null,
+                                        // dialogStep1(context, _pfe![index]),
+                                    onLongPress: () =>null
+                                        // dialog(context, _pfe![index]),
                                   ),
                                 );
                               },
@@ -322,7 +322,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
     );
   }
 
-  Future<String?> dialog(BuildContext context, PFE pfe) {
+  /*Future<String?> dialog(BuildContext context, PFE pfe) {
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -670,7 +670,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
       ),
     );
   }
-
+*/
   void getData() async {
     await Future.wait([
       ApiPfe().getAllPFE(),
