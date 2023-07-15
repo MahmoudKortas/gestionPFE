@@ -84,7 +84,7 @@ class ApiEncadrant {
         },
         body: jsonEncode(
           {
-            "id": editedEncadrant?.idEnc,
+            "idEnc": editedEncadrant?.idEnc,
             "nom": editedEncadrant?.nom,
             "prenom": editedEncadrant?.prenom,
             "tel": editedEncadrant?.tel,

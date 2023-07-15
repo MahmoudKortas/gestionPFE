@@ -560,7 +560,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
     editEtudiant?.nom = editNomController.text;
     editEtudiant?.prenom = editPrenomController.text;
     try {
-      editEtudiant?.tel = int.parse(telephoneController.text);
+      editEtudiant?.tel = int.parse(editTelephoneController.text);
     } catch (e) {
       log("editEtudiant?.tel-exception::$e");
     }
@@ -572,7 +572,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
     editEtudiant?.specialite = editSpecialiteValue ?? editEtudiant?.specialite;
     editEtudiant?.departement =
         editDepartementValue ?? editEtudiant?.departement;
-    log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text}  $departementValue");
+    log("editEtudiant::$editEtudiant");
     editDepartementValue = null;
     editSpecialiteValue = null;
     editNiveauValue = null;

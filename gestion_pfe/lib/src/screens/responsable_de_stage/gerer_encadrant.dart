@@ -42,8 +42,8 @@ class _GererEncadrantState extends State<GererEncadrant> {
   final editAdresseController = TextEditingController();
   final editEmailController = TextEditingController();
   final editMotDePasseController = TextEditingController();
-  Departement? editDepartementValue;
   Encadrant? editedEncadrant = Encadrant();
+  Departement? editDepartementValue;
   @override
   void initState() {
     super.initState();
@@ -264,7 +264,7 @@ class _GererEncadrantState extends State<GererEncadrant> {
     editAdresseController.text = encadrant.adresse ?? "";
     editEmailController.text = encadrant.email ?? "";
     editMotDePasseController.text = encadrant.motdepasse ?? "";
-    editDomaineValue = encadrant.domaine;
+    // editDomaineValue = encadrant.domaine;
     log("dialog_encadrant::$_encadrant");
     //log("$nomvalue $prenomvalue $telephonevalue $adressevalue $emailvalue $passwordvalue $domaineValue");
     return showDialog<String>(
@@ -399,7 +399,9 @@ class _GererEncadrantState extends State<GererEncadrant> {
                 icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                 items: _domaineItems.map(buildMenuItem).toList(),
                 onChanged: (value) => setState(() => editDomaineValue = value),
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(10.0),
+                ),
               ),
               _departement != null
                   ? DropdownButton(
@@ -442,6 +444,7 @@ class _GererEncadrantState extends State<GererEncadrant> {
                       backgroundColor: Colors.red),
                 );
               }
+              Navigator.pop(context, 'Modifer');
             },
             child: const Text('Modifer'),
           ),
@@ -516,8 +519,9 @@ class _GererEncadrantState extends State<GererEncadrant> {
     editedEncadrant?.domaine = editDomaineValue;
     editedEncadrant?.departement =
         editDepartementValue ?? editedEncadrant?.departement;
-    log("${nomController.text} ${prenomController.text} ${telephoneController.text} ${adresseController.text} ${emailController.text} ${motDePasseController.text} $domaineValue $departementValue");
+    log("editedEncadrant::$editedEncadrant");
     departementValue = null;
+    editDomaineValue = null;
     await ApiEncadrant().editEncadrant(editedEncadrant: editedEncadrant);
     getData();
   }
