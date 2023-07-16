@@ -35,11 +35,11 @@ class ApiSoutenance {
             "date": soutenance?.date,
             "description": soutenance?.description,
             "etat": soutenance?.etat,
-            "rapporteur": soutenance?.rapporteur?.idEnc,
-            "president": soutenance?.president?.idEnc,
-            "salle": soutenance?.salle?.idSalle,
-            "seance": soutenance?.seance?.idSeance,
-            "pfe": soutenance?.pfe?.idPFE
+            "rapporteur": soutenance?.rapporteur,
+            "president": soutenance?.president,
+            "salle": soutenance?.salle,
+            "seance": soutenance?.seance,
+            "pfe": soutenance?.pfe
           },
         ),
       );

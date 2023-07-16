@@ -47,7 +47,18 @@ class _GererSoutenanceState extends State<GererSoutenance> {
   List<Salle?>? _salle;
   List<Seance?>? _seance;
   List<PFE?>? _pfe;
-  final editNomController = TextEditingController();
+  final editDateController = TextEditingController();
+  final editDescriptionController = TextEditingController();
+  final editEtatController = TextEditingController();
+  final ediMtotdepasseController = TextEditingController();
+  final editTelController = TextEditingController();
+  final editRateResponsabiliteController = TextEditingController();
+  Encadrant? editRapporteurValue;
+  Encadrant? editPresidentValue;
+  Salle? editSalleValue;
+  Seance? editSeanceValue;
+  PFE? editPfeValue;
+  Soutenance? editedSoutenance;
   @override
   void initState() {
     super.initState();
@@ -218,7 +229,7 @@ class _GererSoutenanceState extends State<GererSoutenance> {
                   },
                   child: const Text("Ajouter"),
                 ),
-                Card(
+                /*Card(
                                 child: ListTile(
                                     title:const Text("Soutenance 1"),
                                     // subtitle: Text(_soutenance![index]!
@@ -228,13 +239,13 @@ class _GererSoutenanceState extends State<GererSoutenance> {
                                     // isThreeLine: true,
                                     // onTap: () =>
                                         // dialog(context, _soutenance![index]!)),
-                                 ) ),
+                                 ) ),*/
                 /*_Soutenance == null
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )
                     :*/
-                    //TODO: fix below code
+                //TODO: fix below code
                 _soutenance != null
                     ? _soutenance!.isEmpty
                         ? const Text("aucun Soutenance existe")
@@ -259,7 +270,7 @@ class _GererSoutenanceState extends State<GererSoutenance> {
                             },
                           )
                     : Container()
-                    // const Text("aucun Soutenance existe null")
+                // const Text("aucun Soutenance existe null")
                 /*Card(
                   child: ListTile(
                       /*leading: const CircleAvatar(
@@ -325,7 +336,11 @@ class _GererSoutenanceState extends State<GererSoutenance> {
   }
 
   Future<String?> dialog(BuildContext context, Soutenance soutenance) {
-    editNomController.text = soutenance.description ?? "";
+    editedSoutenance = soutenance;
+    editDateController.text = soutenance.description ?? "";
+    editDescriptionController.text = soutenance.description ?? "";
+    editEtatController.text = soutenance.description ?? "";
+    log("dialog_soutenance::$editedSoutenance");
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -334,26 +349,137 @@ class _GererSoutenanceState extends State<GererSoutenance> {
           child: Column(
             children: [
               TextFormField(
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.description),
-                  hintText: 'Saisir nom du responsable',
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.person),
+                  hintText: editedSoutenance?.date,
                 ),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
-                    return 'entrez la nom du responsable';
+                    return 'Entrez date soutenance';
                   }
                   return null;
                 },
-                controller: editNomController,
+                controller: editDateController,
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.person),
+                  hintText: editedSoutenance?.description,
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Entrez description soutenance';
+                  }
+                  return null;
+                },
+                controller: editDescriptionController,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.person),
+                  hintText: editedSoutenance?.etat,
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Entrez etat soutenance';
+                  }
+                  return null;
+                },
+                controller: editEtatController,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              _rapporteur != null
+                  ? DropdownButton(
+                      value: editRapporteurValue,
+                      iconSize: 36,
+                      hint: Text(
+                          "${soutenance.rapporteur?.prenom ?? "choisir votre rapporteur"} ${soutenance.rapporteur?.nom ?? ""}"),
+                      items: _rapporteur?.map((item) {
+                        return DropdownMenuItem<Encadrant>(
+                          value: item,
+                          child: Text(item!.nom!),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        log("newVal::$newVal");
+                        setState(() {
+                          editRapporteurValue = newVal as Encadrant?;
+                        });
+                      },
+                    )
+                  : Container(),
+              _salle != null
+                  ? DropdownButton(
+                      value: editSalleValue,
+                      iconSize: 36,
+                      hint: Text(soutenance.salle?.nom ?? "choisir salle"),
+                      items: _salle?.map((item) {
+                        return DropdownMenuItem<Salle>(
+                          value: item,
+                          child: Text(item!.nom!),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        log("newVal::$newVal");
+                        setState(() {
+                          editSalleValue = newVal as Salle?;
+                        });
+                      },
+                    )
+                  : Container(),
+              _seance != null
+                  ? DropdownButton(
+                      value: editSeanceValue,
+                      iconSize: 36,
+                      hint: Text(soutenance.seance?.nom ?? "choisir seance"),
+                      items: _seance?.map((item) {
+                        return DropdownMenuItem<Seance>(
+                          value: item,
+                          child: Text(item!.nom!),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        log("newVal::$newVal");
+                        setState(() {
+                          editSeanceValue = newVal as Seance?;
+                        });
+                      },
+                    )
+                  : Container(),
+              _pfe != null
+                  ? DropdownButton(
+                      value: editPfeValue,
+                      iconSize: 36,
+                      hint: Text(soutenance.pfe?.sujet?.titre ?? "choisir pfe"),
+                      items: _pfe?.map((item) {
+                        return DropdownMenuItem<PFE>(
+                          value: item,
+                          child: Text(item?.sujet?.titre ?? ""),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        log("newVal::$newVal");
+                        setState(() {
+                          editPfeValue = newVal as PFE?;
+                        });
+                      },
+                    )
+                  : Container(),
             ],
           ),
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () {
-              soutenance.description = editNomController.text;
-              editSoutenance(soutenance: soutenance);
+              // editSoutenance(soutenance: editedSoutenance);
               Navigator.pop(context, 'Modifer');
             },
             child: const Text('Annuler'),
@@ -393,16 +519,14 @@ class _GererSoutenanceState extends State<GererSoutenance> {
     ]).then((value) async {
       _soutenance = value[0]?.cast<Soutenance?>();
       _rapporteur = value[1]?.cast<Encadrant?>();
-      // _president = value[2]?.cast<Encadrant?>();
       _salle = value[2]?.cast<Salle?>();
       _seance = value[3]?.cast<Seance?>();
       _pfe = value[4]?.cast<PFE?>();
+      Future.delayed(const Duration(seconds: 0))
+          .then((value) => setState(() {}));
     });
-
     // _listeSoutenance.clear();
-
     //log("_Soutenance::$_Soutenance");
-    Future.delayed(const Duration(seconds: 0)).then((value) => setState(() {}));
   }
 
   addSoutenance() async {
@@ -414,15 +538,40 @@ class _GererSoutenanceState extends State<GererSoutenance> {
     soutenance?.salle = salleValue;
     soutenance?.seance = seanceValue;
     soutenance?.pfe = pfeValue;
+    rapporteurValue = null;
+    presidentValue = null;
+    salleValue = null;
+    seanceValue = null;
+    pfeValue = null;
     await ApiSoutenance().addSoutenance(soutenance: soutenance);
 
     getData();
   }
 
-  editSoutenance({Soutenance? soutenance}) async {
+  /*editSoutenance({Soutenance? soutenance}) async {
+    log("editSoutenance");
+    editedSoutenance?.date = editNomController.text;
+
+    editedSoutenance?.description = editAdresseController.text;
+    editedSoutenance?.etat = editEmailController.text;
+    editedSoutenance?.idSout = editMotDePasseController.text;
+    editedSoutenance?.pfe = editNiveauValue ?? editedSoutenance?.niveau;
+    editedSoutenance?.president =
+        editSpecialiteValue ?? editedSoutenance?.specialite;
+    editedSoutenance?.rapporteur =
+        editDepartementValue ?? editedSoutenance?.departement;
+    editedSoutenance?.salle =
+        editSpecialiteValue ?? editedSoutenance?.specialite;
+    editedSoutenance?.seance =
+        editSpecialiteValue ?? editedSoutenance?.specialite;
+
+    log("editedSoutenance::$editedSoutenance");
+    editDepartementValue = null;
+    editSpecialiteValue = null;
+    editNiveauValue = null;
     await ApiSoutenance().updateSoutenance(soutenance: soutenance);
     getData();
-  }
+  }*/
 
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
         value: item,

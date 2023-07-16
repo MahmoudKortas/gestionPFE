@@ -1,14 +1,8 @@
 import 'dart:developer';
-
-import 'package:flutter/material.dart';
-import 'package:gestion_pfe/src/helpers/departement_api.dart';
-import 'package:gestion_pfe/src/helpers/etudiant_api.dart';
-import 'package:gestion_pfe/src/helpers/specialite_api.dart';
+import 'package:flutter/material.dart'; 
 import 'package:gestion_pfe/src/models/departement.dart';
 import 'package:gestion_pfe/src/models/ligne_soutenance.dart';
-import 'package:gestion_pfe/src/models/specialite.dart';
-
-import '../../models/etudiant.dart';
+import 'package:gestion_pfe/src/models/specialite.dart'; 
 import '../../resize_widget.dart';
 
 /// Displays detailed information about a SampleItem.

@@ -42,21 +42,17 @@ class ApiPfe {
   Future<List<PFE>?> addPFE({PFE? pfe}) async {
     try {
       var url = Uri.parse("${ApiConstants.baseUrl}${ApiConstants.pfe}add");
-
-      /*if (pfe?.note != null) {
-        pfe?.note.isEmpty ? pfe?.note = "-2" as double? : pfe?.note = pfe.note;
-      }*/
-
       var response = await http.post(
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode({ 
+        body: jsonEncode({
           "dateDebut": pfe?.dateDebut,
-          "dateDepot": pfe?.dateDepot, 
+          "dateDepot": pfe?.dateDepot,
           "etudiant": pfe?.etudiant,
           "encadrant": pfe?.encadrant,
+          "sujet": pfe?.sujet,
           "document": pfe?.document,
         }),
       );
@@ -82,7 +78,7 @@ class ApiPfe {
         },
         body: jsonEncode(
           {
-            "idDep": pfe?.idPFE, 
+            "idDep": pfe?.idPFE,
           },
         ),
       );

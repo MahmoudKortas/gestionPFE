@@ -7,7 +7,7 @@ import 'package:gestion_pfe/src/models/salle.dart';
 import 'package:gestion_pfe/src/models/seance_model.dart';
 
 List<Soutenance> soutenanceFromJson(String str) =>
-    List<Soutenance>.from(json.decode(str).map((x) => PFE.fromJson(x)));
+    List<Soutenance>.from(json.decode(str).map((x) => Soutenance.fromJson(x)));
 
 String soutenanceToJson(List<Soutenance> data) =>
     json.encode(List<Soutenance>.from(data.map((x) => x.toJson())));

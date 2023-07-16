@@ -7,12 +7,14 @@ import 'package:gestion_pfe/src/helpers/salle_api.dart';
 import 'package:gestion_pfe/src/helpers/seance_api.dart';
 // import 'package:gestion_pfe/src/helpers/soutenance.dart';
 import 'package:gestion_pfe/src/helpers/specialite_api.dart';
+import 'package:gestion_pfe/src/helpers/sujet_api.dart';
 import 'package:gestion_pfe/src/models/document.dart';
 import 'package:gestion_pfe/src/models/encadrant.dart';
 import 'package:gestion_pfe/src/models/etudiant.dart';
 import 'package:gestion_pfe/src/models/salle.dart';
 import 'package:gestion_pfe/src/models/seance_model.dart';
 import 'package:gestion_pfe/src/models/specialite.dart';
+import 'package:gestion_pfe/src/models/sujet.dart';
 import '../../helpers/encadrant_api.dart';
 import '../../models/pfe.dart';
 import '../../resize_widget.dart';
@@ -33,7 +35,9 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
   List<Etudiant?>? _etudiant;
   List<Document?>? _document;
   List<Seance?>? _seance;
-  List<Salle?>? _salle;
+  Sujet? sujetValue;
+  List<Sujet?>? _sujet;
+  // List<Salle?>? _salle;
   // List<Specialite?>? _listeSpecialite;
   List<Specialite?>? _specialite;
   final encadreurController = TextEditingController();
@@ -97,7 +101,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                       const SizedBox(
                         height: 10,
                       ),
-                     /* _etudiant != null
+                      /* _etudiant != null
                           ? DropdownButton(
                               value: etudiantValue,
                               iconSize: 36,
@@ -151,93 +155,66 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                       const SizedBox(
                         height: 10,
                       ),
-                      // const SizedBox(
-                      //   height: 10,
-                      // ),
-                      // const SizedBox(
-                      //   height: 10,
-                      // ),
-                      //TODO: complete logic, sujet
-                    /*  DropdownButton(
-                        value: "",
-                        iconSize: 36,
-                        hint: const Text("choisir le sujet"),
-                        items: _salle?.map((item) {
-                          return DropdownMenuItem<Salle>(
-                            value: item,
-                            child: Text("${item!.nom!} ${item.nom!}"),
-                          );
-                        }).toList(),
-                        onChanged: (newVal) {
-                          log("newVal::$newVal");
-                          setState(() {
-                            // salleValue = newVal as Salle?;
-                          });
-                        },
-                      ),*/
-                      //TODO: complete logic, encadrant
-                    /*  DropdownButton(
-                        value: "",
-                        iconSize: 36,
-                        hint: const Text("choisir l'encadrant"),
-                        items: _salle?.map((item) {
-                          return DropdownMenuItem<Salle>(
-                            value: item,
-                            child: Text("${item!.nom!} ${item.nom!}"),
-                          );
-                        }).toList(),
-                        onChanged: (newVal) {
-                          log("newVal::$newVal");
-                          setState(() {
-                            // salleValue = newVal as Salle?;
-                          });
-                        },
-                      ),*/
-                      /* _salle != null
+                      _etudiant != null
                           ? DropdownButton(
-                              value: salleValue,
+                              value: etudiantValue,
                               iconSize: 36,
-                              hint: const Text("choisir la salle"),
-                              items: _salle?.map((item) {
-                                return DropdownMenuItem<Salle>(
+                              hint: const Text("choisir l'étudiant"),
+                              items: _etudiant?.map((item) {
+                                return DropdownMenuItem<Etudiant>(
                                   value: item,
-                                  child: Text("${item!.nom!} ${item.nom!}"),
+                                  child: Text(
+                                      "${item?.prenom ?? ""} ${item?.nom ?? ""}"),
                                 );
                               }).toList(),
                               onChanged: (newVal) {
                                 log("newVal::$newVal");
                                 setState(() {
-                                  salleValue = newVal as Salle?;
+                                  etudiantValue = newVal as Etudiant?;
                                 });
                               },
                             )
                           : Container(),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      _seance != null
+                      _encadrant != null
                           ? DropdownButton(
-                              value: seanceValue,
+                              value: encadrantValue,
                               iconSize: 36,
-                              hint: const Text("choisir la seance"),
-                              items: _seance?.map((item) {
-                                return DropdownMenuItem<Seance>(
+                              hint: const Text("choisir l'encadrant"),
+                              items: _encadrant?.map((item) {
+                                return DropdownMenuItem<Encadrant>(
                                   value: item,
-                                  child: Text(item!.description!),
+                                  child: Text(
+                                      "${item?.prenom ?? ""} ${item?.nom ?? ""}"),
                                 );
                               }).toList(),
                               onChanged: (newVal) {
                                 log("newVal::$newVal");
                                 setState(() {
-                                  seanceValue = newVal as Seance?;
+                                  encadrantValue = newVal as Encadrant?;
                                 });
                               },
                             )
                           : Container(),
-                      const SizedBox(
-                        height: 10,
-                      ),*/
-                    /*  _document != null
+                      _sujet != null
+                          ? DropdownButton(
+                              value: sujetValue,
+                              iconSize: 36,
+                              hint: const Text("choisir le sujet"),
+                              items: _sujet?.map((item) {
+                                return DropdownMenuItem<Sujet>(
+                                  value: item,
+                                  child: Text(item?.titre ?? ""),
+                                );
+                              }).toList(),
+                              onChanged: (newVal) {
+                                log("newVal::$newVal");
+                                setState(() {
+                                  sujetValue = newVal as Sujet?;
+                                });
+                              },
+                            )
+                          : Container(),
+                      _document != null
                           ? DropdownButton(
                               value: documentValue,
                               iconSize: 36,
@@ -255,7 +232,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                                 });
                               },
                             )
-                          : Container(),*/
+                          : Container(),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: ElevatedButton(
@@ -266,7 +243,12 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                               pfe?.etudiant = etudiantValue;
                               pfe?.document = documentValue;
                               pfe?.encadrant = encadrantValue;
-                              log("pfe::$pfe ");
+                              pfe?.sujet = sujetValue;
+                              sujetValue = null;
+                              etudiantValue = null;
+                              encadrantValue = null;
+                              documentValue = null;
+                              log("pfe::$pfe");
                               addData(
                                 pfe: pfe,
                               );
@@ -291,21 +273,21 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                               itemBuilder: (context, index) {
                                 return Card(
                                   child: ListTile(
-                                    /*leading: const CircleAvatar(
+                                      /*leading: const CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/images/flutter_logo.png'),
                     ),*/
-                                    title: Text(_pfe?[index].sujet?.titre ??
-                                        "Titre sujet"),
-                                    subtitle: Text(
-                                        '${_pfe?[index].etudiant?.nom} ${_pfe?[index].etudiant?.prenom}-${_pfe?[index].encadrant?.nom} ${_pfe?[index].encadrant?.prenom}'),
-                                    trailing: const Icon(Icons.more_vert),
-                                    isThreeLine: true,
-                                    onTap: () =>null,
-                                        // dialogStep1(context, _pfe![index]),
-                                    onLongPress: () =>null
-                                        // dialog(context, _pfe![index]),
-                                  ),
+                                      title: Text(_pfe?[index].sujet?.titre ??
+                                          "Titre sujet"),
+                                      subtitle: Text(
+                                          '${_pfe?[index].etudiant?.nom} ${_pfe?[index].etudiant?.prenom}-${_pfe?[index].encadrant?.nom} ${_pfe?[index].encadrant?.prenom}'),
+                                      trailing: const Icon(Icons.more_vert),
+                                      isThreeLine: true,
+                                      onTap: () => null,
+                                      // dialogStep1(context, _pfe![index]),
+                                      onLongPress: () => null
+                                      // dialog(context, _pfe![index]),
+                                      ),
                                 );
                               },
                             ),
@@ -322,7 +304,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
     );
   }
 
-  /*Future<String?> dialog(BuildContext context, PFE pfe) {
+  /* Future<String?> dialog(BuildContext context, PFE pfe) {
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -499,7 +481,8 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
       ),
     );
   }
-
+*/
+/*
   Future<String?> dialogStep1(BuildContext context, PFE pfe) {
     return showDialog<String>(
       context: context,
@@ -678,7 +661,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
       ApiEtudiant().getAllEtudiants(),
       ApiDocument().getAllDocument(),
       ApiSeance().getAllSeances(),
-      ApiSalle().getAllSalles(),
+      ApiSujet().getAllSujets(),
       ApiSpecialite().getAllSpecialites(),
     ]).then((value) async {
       _pfe = value[0]?.cast<PFE>();
@@ -686,14 +669,14 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
       _etudiant = value[2]?.cast<Etudiant?>();
       _document = value[3]?.cast<Document?>();
       _seance = value[4]?.cast<Seance?>();
-      _salle = value[5]?.cast<Salle?>();
+      _sujet = value[5]?.cast<Sujet?>();
       _specialite = value[6]?.cast<Specialite?>();
       log("_pfe::$_pfe");
       log("_encadrant::$_encadrant");
       log("_etudiant::$_etudiant");
       log("Document::$_document");
       log("_seance::$_seance");
-      log("_salle::$_salle");
+      log("_sujet::$_sujet");
       log("_specialite::$_specialite");
       Future.delayed(const Duration(seconds: 0))
           .then((value) => setState(() {}));

@@ -210,7 +210,7 @@ class _GererEtudiantState extends State<GererEtudiant> {
                         items: _departement?.map((item) {
                           return DropdownMenuItem<Departement>(
                             value: item,
-                            child: Text(item!.nom!),
+                            child: Text(item?.nom??""),
                           );
                         }).toList(),
                         onChanged: (newVal) {
