@@ -329,6 +329,30 @@ class Dashboard extends StatelessWidget {
                 ),
                 Card(
                   child: ListTile(
+                    leading: iconWidget(Icons.calendar_month),
+                    title: const Text('Consulter le planning du PFE'),
+                    // subtitle: const Text(
+                    // 'A sufficiently long subtitle warrants thre lines.'),
+                    trailing: const Icon(Icons.more_vert),
+                    //isThreLine: true,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => TableEventsExample(
+                            fonction: 'encadrant',
+                          ),
+                        ),
+                      );
+                      /*Navigator.restorablePushNamed(
+                        context,
+                        ConsulterPlanning.routeName,
+                      );*/
+                    },
+                  ),
+                ),
+                Card(
+                  child: ListTile(
                     leading: iconWidget(Icons.present_to_all),
                     /*leading: const CircleAvatar(
                       foregroundImage:

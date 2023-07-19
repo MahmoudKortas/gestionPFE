@@ -150,14 +150,30 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             Column(
               children: [
                 ListTile(
-                  title:const Text("séance1:  10:00  \nsalle:  10  \nPFE1:  Gestion des projets"),
+                  title: const Text(
+                      "séance1:  09:00  \nsalle:  10  \nPFE1:  Gestion des projets"),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const GererSalleCalender(),
-                      ),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (_) => const GererSalleCalender(),
+                    //   ),
+                    // );
+                  },
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                ListTile(
+                  title: const Text(
+                      "séance2:  10:00  \nsalle:  21  \nPFE1:  Application mobile bancaire"),
+                  onTap: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (_) => const GererSalleCalender(),
+                    //   ),
+                    // );
                   },
                 ),
                 /*const ListTile(
