@@ -171,18 +171,19 @@ class _AuthentificationState extends State<Authentification> {
                                   );
                                 },
                               ),
-                              ElevatedButton(
-                                  onPressed: () async {
-                                    await NotificationService()
-                                        .showBigTextNotification(
-                                            id: 0,
-                                            title: "Notification pfe",
-                                            body: "Pfe",
-                                            payload: "Pfee",
-                                            fln:
-                                                FlutterLocalNotificationsPlugin());
-                                  },
-                                  child: const Text("notification")),
+                              // ElevatedButton(
+                              //   onPressed: () async {
+                              //     await NotificationService()
+                              //         .showBigTextNotification(
+                              //       id: 0,
+                              //       title: "Notification pfe",
+                              //       body: "Pfe",
+                              //       payload: "Pfee",
+                              //       fln: FlutterLocalNotificationsPlugin(),
+                              //     );
+                              //   },
+                              //   child: const Text("notification"),
+                              // ),
                             ],
                           ),
                         ),

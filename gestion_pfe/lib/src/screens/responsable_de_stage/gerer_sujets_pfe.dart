@@ -35,6 +35,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
   List<Etudiant?>? _etudiant;
   List<Document?>? _document;
   List<Seance?>? _seance;
+  List<Salle?>? _salle;
   Sujet? sujetValue;
   List<Sujet?>? _sujet;
   // List<Salle?>? _salle;
@@ -51,6 +52,8 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
   Document? documentValue;
   Specialite? specialiteValue;
   Encadrant? encadreur2Value;
+  Salle? salle2Value;
+  Seance? seance2Value;
   final editNomController = TextEditingController();
   @override
   void initState() {
@@ -264,7 +267,24 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                           child: const Text('Ajouter'),
                         ),
                       ),
-                      _pfe!.isEmpty
+                      Card(
+                        child: ListTile(
+                            /*leading: const CircleAvatar(
+                      foregroundImage:
+                          AssetImage('assets/images/flutter_logo.png'),
+                    ),*/
+                            title: Text(
+                                _pfe?[0].sujet?.titre ?? "Gestion des projets"),
+                            subtitle: Text(
+                                '${_pfe?[0].etudiant?.nom} ${_pfe?[0].etudiant?.prenom}-${_pfe?[0].encadrant?.nom} ${_pfe?[0].encadrant?.prenom}'),
+                            trailing: const Icon(Icons.more_vert),
+                            isThreeLine: true,
+                            onTap: () => dialogStep1(context, _pfe![0]),
+                            onLongPress: () => null
+                            // dialog(context, _pfe![index]),
+                            ),
+                      )
+                      /* _pfe!.isEmpty
                           ? const Text("aucun pfe existe")
                           : ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
@@ -283,14 +303,13 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                                           '${_pfe?[index].etudiant?.nom} ${_pfe?[index].etudiant?.prenom}-${_pfe?[index].encadrant?.nom} ${_pfe?[index].encadrant?.prenom}'),
                                       trailing: const Icon(Icons.more_vert),
                                       isThreeLine: true,
-                                      onTap: () => null,
-                                      // dialogStep1(context, _pfe![index]),
+                                      onTap: () =>  dialogStep1(context, _pfe![index]),
                                       onLongPress: () => null
                                       // dialog(context, _pfe![index]),
                                       ),
                                 );
                               },
-                            ),
+                            ),*/
                     ],
                   ),
                 ),
@@ -482,7 +501,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
     );
   }
 */
-/*
+
   Future<String?> dialogStep1(BuildContext context, PFE pfe) {
     return showDialog<String>(
       context: context,
@@ -557,31 +576,31 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
         // title: Text('Ajouter salle ${pfe} '),
         content: SingleChildScrollView(
           child: Column(
-              // children: [
-              //   _salle != null
-              //       ? DropdownButton(
-              //           value: salle2Value,
-              //           iconSize: 36,
-              //           hint: const Text("choisir la Salle"),
-              //           items: _salle?.map((item) {
-              //             return DropdownMenuItem<Salle>(
-              //               value: item,
-              //               child: Text(item!.nom!),
-              //             );
-              //           }).toList(),
-              //           onChanged: (newVal) {
-              //             log("newVal::$newVal");
-              //             setState(() {
-              //               salle2Value = newVal as Salle?;
-              //             });
-              //           },
-              //         )
-              //       : Container(),
-              // const SizedBox(
-              //   height: 10,
-              // ),
-              // ],
+            children: [
+              _salle != null
+                  ? DropdownButton(
+                      value: salle2Value,
+                      iconSize: 36,
+                      hint: const Text("choisir la Salle"),
+                      items: _salle?.map((item) {
+                        return DropdownMenuItem<Salle>(
+                          value: item,
+                          child: Text(item!.nom!),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        log("newVal::$newVal");
+                        setState(() {
+                          salle2Value = newVal as Salle?;
+                        });
+                      },
+                    )
+                  : Container(),
+              const SizedBox(
+                height: 10,
               ),
+            ],
+          ),
         ),
         actions: <Widget>[
           TextButton(
@@ -609,26 +628,26 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
         title: const Text('Ajouter seance '),
         content: SingleChildScrollView(
           child: Column(
-            children: const [
-              // _seance != null
-              //     ? DropdownButton(
-              //         value: seance2Value,
-              //         iconSize: 36,
-              //         hint: const Text("choisir la seance"),
-              //         items: _seance?.map((item) {
-              //           return DropdownMenuItem<Seance>(
-              //             value: item,
-              //             child: Text(item!.Nom!),
-              //           );
-              //         }).toList(),
-              //         onChanged: (newVal) {
-              //           log("newVal::$newVal");
-              //           setState(() {
-              //             seance2Value = newVal as Seance?;
-              //           });
-              //         },
-              //       )
-              //     : Container(),
+            children: [
+              _seance != null
+                  ? DropdownButton(
+                      value: seance2Value,
+                      iconSize: 36,
+                      hint: const Text("choisir la seance"),
+                      items: _seance?.map((item) {
+                        return DropdownMenuItem<Seance>(
+                          value: item,
+                          child: Text(item!.nom!),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        log("newVal::$newVal");
+                        setState(() {
+                          seance2Value = newVal as Seance?;
+                        });
+                      },
+                    )
+                  : Container(),
               SizedBox(
                 height: 10,
               ),
@@ -645,7 +664,9 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
               //  pfe.seance=seance;
               // editPfe(pfe);
               // dialogStep3(context, pfe);
-              // Navigator.pop(context, 'Modifer');
+              Navigator.pop(context, 'valider');
+              Navigator.pop(context, 'valider');
+              Navigator.pop(context, 'valider');
             },
             child: const Text('valider'),
           ),
@@ -653,7 +674,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
       ),
     );
   }
-*/
+
   void getData() async {
     await Future.wait([
       ApiPfe().getAllPFE(),
@@ -663,6 +684,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
       ApiSeance().getAllSeances(),
       ApiSujet().getAllSujets(),
       ApiSpecialite().getAllSpecialites(),
+      ApiSalle().getAllSalles(),
     ]).then((value) async {
       _pfe = value[0]?.cast<PFE>();
       _encadrant = value[1]?.cast<Encadrant?>();
@@ -671,6 +693,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
       _seance = value[4]?.cast<Seance?>();
       _sujet = value[5]?.cast<Sujet?>();
       _specialite = value[6]?.cast<Specialite?>();
+      _salle = value[7]?.cast<Salle?>();
       log("_pfe::$_pfe");
       log("_encadrant::$_encadrant");
       log("_etudiant::$_etudiant");
