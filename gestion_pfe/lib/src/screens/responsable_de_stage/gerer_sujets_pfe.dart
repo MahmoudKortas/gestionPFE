@@ -31,6 +31,7 @@ class GererSujetsPFE extends StatefulWidget {
 class _GererSujetsPFEState extends State<GererSujetsPFE> {
   late List<PFE>? _pfe = [];
   PFE? pfe = PFE();
+  PFE? editedPfe = PFE();
   List<Encadrant?>? _encadrant;
   List<Etudiant?>? _etudiant;
   List<Document?>? _document;
@@ -41,11 +42,8 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
   // List<Salle?>? _salle;
   // List<Specialite?>? _listeSpecialite;
   List<Specialite?>? _specialite;
-  final encadreurController = TextEditingController();
-  final etudiantController = TextEditingController();
   final dateDebutController = TextEditingController();
   final dateDepotController = TextEditingController();
-  final documentController = TextEditingController();
   String? domaineValue;
   Encadrant? encadrantValue;
   Etudiant? etudiantValue;
@@ -54,7 +52,15 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
   Encadrant? encadreur2Value;
   Salle? salle2Value;
   Seance? seance2Value;
-  final editNomController = TextEditingController();
+
+  final editDateDebutController = TextEditingController();
+  final editDateDepotController = TextEditingController();
+  String? editDomaineValue;
+  Encadrant? editEncadrantValue;
+  Etudiant? editEtudiantValue;
+  Document? editDocumentValue;
+  Specialite? editSpecialiteValue;
+  Sujet? editSujetValue;
   @override
   void initState() {
     super.initState();
@@ -63,11 +69,8 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
 
   @override
   void dispose() {
-    encadreurController.dispose();
-    etudiantController.dispose();
     dateDebutController.dispose();
     dateDepotController.dispose();
-    documentController.dispose();
     super.dispose();
   }
 
@@ -279,7 +282,8 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                                 '${_pfe?[0].etudiant?.nom} ${_pfe?[0].etudiant?.prenom}-${_pfe?[0].encadrant?.nom} ${_pfe?[0].encadrant?.prenom}'),
                             trailing: const Icon(Icons.more_vert),
                             isThreeLine: true,
-                            onTap: () => dialogStep1(context, _pfe![0]),
+                            onTap: () => dialog(context, _pfe![0]),
+                            // dialogStep1(context, _pfe![0]),
                             onLongPress: () => null
                             // dialog(context, _pfe![index]),
                             ),
@@ -323,7 +327,10 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
     );
   }
 
-  /* Future<String?> dialog(BuildContext context, PFE pfe) {
+  Future<String?> dialog(BuildContext context, PFE pfe) {
+    editedPfe = pfe;
+    editDateDebutController.text = pfe.dateDebut ?? "";
+    editDateDepotController.text = pfe.dateDepot ?? "";
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -332,89 +339,8 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
           child: Column(
             children: [
               TextFormField(
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.description),
-                  hintText: 'Saisir nom du responsable',
-                ),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'entrez la nom du responsable';
-                  }
-                  return null;
-                },
-                controller: editNomController,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Saisir le note du PFE',
-                ),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Saisir le titre du PFE',
-                ),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Saisir le domaine du PFE',
-                ),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: "Saisir l'encadreur du PFE",
-                ),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: "Saisir l'etudiant' du PFE",
-                ),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
+                keyboardType: TextInputType.datetime,
+                controller: editDateDebutController,
                 decoration: const InputDecoration(
                   hintText: 'Saisir date debut du PFE',
                 ),
@@ -429,6 +355,8 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
                 height: 10,
               ),
               TextFormField(
+                keyboardType: TextInputType.number,
+                controller: editDateDepotController,
                 decoration: const InputDecoration(
                   hintText: 'Saisir date fin du PFE',
                 ),
@@ -442,34 +370,84 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
               const SizedBox(
                 height: 10,
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Saisir date soutenance du PFE',
-                ),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Saisir document du PFE',
-                ),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
+              _etudiant != null
+                  ? DropdownButton(
+                      value: editEtudiantValue,
+                      iconSize: 36,
+                      hint: const Text("choisir l'étudiant"),
+                      items: _etudiant?.map((item) {
+                        return DropdownMenuItem<Etudiant>(
+                          value: item,
+                          child:
+                              Text("${item?.prenom ?? ""} ${item?.nom ?? ""}"),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        log("newVal::$newVal");
+                        setState(() {
+                          editEtudiantValue = newVal as Etudiant?;
+                        });
+                      },
+                    )
+                  : Container(),
+              _encadrant != null
+                  ? DropdownButton(
+                      value: editEncadrantValue,
+                      iconSize: 36,
+                      hint: const Text("choisir l'encadrant"),
+                      items: _encadrant?.map((item) {
+                        return DropdownMenuItem<Encadrant>(
+                          value: item,
+                          child:
+                              Text("${item?.prenom ?? ""} ${item?.nom ?? ""}"),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        log("newVal::$newVal");
+                        setState(() {
+                          editEncadrantValue = newVal as Encadrant?;
+                        });
+                      },
+                    )
+                  : Container(),
+              _sujet != null
+                  ? DropdownButton(
+                      value: editSujetValue,
+                      iconSize: 36,
+                      hint: const Text("choisir le sujet"),
+                      items: _sujet?.map((item) {
+                        return DropdownMenuItem<Sujet>(
+                          value: item,
+                          child: Text(item?.titre ?? ""),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        log("newVal::$newVal");
+                        setState(() {
+                          editSujetValue = newVal as Sujet?;
+                        });
+                      },
+                    )
+                  : Container(),
+              _document != null
+                  ? DropdownButton(
+                      value: editDocumentValue,
+                      iconSize: 36,
+                      hint: const Text("choisir document"),
+                      items: _document?.map((item) {
+                        return DropdownMenuItem<Document>(
+                          value: item,
+                          child: Text(item!.titre!),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        log("newVal::$newVal");
+                        setState(() {
+                          editDocumentValue = newVal as Document;
+                        });
+                      },
+                    )
+                  : Container(),
             ],
           ),
         ),
@@ -480,7 +458,7 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
           ),
           TextButton(
             onPressed: () {
-              editPFE(pfe: pfe);
+              editPFE();
               Navigator.pop(context, 'Modifer');
             },
             child: const Text('Modifer'),
@@ -500,7 +478,6 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
       ),
     );
   }
-*/
 
   Future<String?> dialogStep1(BuildContext context, PFE pfe) {
     return showDialog<String>(
@@ -714,7 +691,19 @@ class _GererSujetsPFEState extends State<GererSujetsPFE> {
     getData();
   }
 
-  editPFE({PFE? pfe}) async {
+  editPFE() async {
+    log("editPFE");
+    editedPfe?.dateDebut = editDateDebutController.text;
+    editedPfe?.dateDepot = editDateDepotController.text;
+    editedPfe?.document = editDocumentValue ?? editedPfe?.document;
+    editedPfe?.encadrant = editEncadrantValue ?? editedPfe?.encadrant;
+    editedPfe?.sujet = editSujetValue ?? editedPfe?.sujet;
+    editedPfe?.etudiant = editEtudiantValue ?? editedPfe?.etudiant;
+    log("editPFE::$editedPfe");
+    editDocumentValue = null;
+    editEncadrantValue = null;
+    editSujetValue = null;
+    editEtudiantValue = null;
     await ApiPfe().updatePFE(pfe: pfe);
     getData();
   }
